@@ -1,0 +1,7 @@
+#!/bin/bash
+weather=$(curl -s "https://micro-weather.now.sh/?city=Vladivostok&country=russia")
+min_temp=$(echo $weather|jq .temp_min)
+condition=$(echo $weather|jq .condition|tr '"' ' ')
+hum=$(echo $weather|jq .humidity)
+echo $min_temp"°C -"$condition"(%"$hum")"
+exit 0
