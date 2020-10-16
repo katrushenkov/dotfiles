@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#items=$(curl -s https://hacker-news.firebaseio.com/v0/newstories.json)
+#item_id=$(echo $items|jq .[0])
+#item=$(curl -s "https://hacker-news.firebaseio.com/v0/item/"$item_id".json")
+#title=$(echo $item|jq .title|cut -c1-30)
+#url=$(echo $item|jq .url|tr '"' ' ')
+#
+#case $BLOCK_BUTTON in
+#	1) firefox $url ;; # left click
+#esac
+#
+#echo $title
+#exit 0;
