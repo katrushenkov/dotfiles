@@ -54,10 +54,10 @@ alias \
 	lin="nvim ~/anima/linux/linux_notes.txt"
 
 
-# alias for dotfiles manage
+# alias for dotfiles bare repo
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
 
-#alias by="systemctl poweroff -i"
+alias by="systemctl poweroff -i"
 
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
