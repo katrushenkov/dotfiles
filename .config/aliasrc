@@ -55,7 +55,7 @@ alias \
 
 
 # alias for dotfiles bare repo
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
+alias dots='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
 
 alias by="systemctl poweroff -i"
 
