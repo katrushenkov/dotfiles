@@ -1,0 +1,1062 @@
+#!/bin/sh
+
+# Use neovim for vim if present.
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# Verbosity and settings that you pretty much just always are going to want.
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	mkd="mkdir -pv" \
+	yt="youtube-dl --add-metadata -i" \
+	yta="yt -x -f bestaudio/best" \
+	ffmpeg="ffmpeg -hide_banner"
+
+alias \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi" \
+	la="ls -a" \
+	ll="ls -la" \
+	l="ls" \
+	l.="ls -A | egrep '^\.'"
+
+# These common commands are just too long! Abbreviate them.
+alias \
+	ka="killall" \
+	g="git" \
+	trem="transmission-remote" \
+	YT="youtube-viewer" \
+	sdn="sudo shutdown -h now" \
+	f="$FILE" \
+	e="$EDITOR" \
+	v="$EDITOR" \
+	p="sudo pacman" \
+	xi="sudo xbps-install" \
+	xr="sudo xbps-remove -R" \
+	xq="xbps-query" \
+	z="zathura"
+
+alias \
+	magit="nvim -c MagitOnly" \
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
+	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf"
+
+alias \
+	rem2c="remmina -c /home/ser/.local/share/remmina/group_rdp_Сириус-2c_94-130-216-186-2222.remmina" \
+	remzoo="remmina -c /home/ser/.local/share/remmina/group_rdp_zoovet_drug-office-era25-ru-11010.remmina" \
+	i2pstart="sudo systemctl start i2prouter.service" \
+	i2pstart="sudo systemctl stop i2prouter.service" \
+	slang="nvim ~/anima/2-slang.txt" \
+	lin="nvim ~/anima/linux/linux_notes.txt"
+
+
+# alias for dotfiles manage
+alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+#alias by="systemctl poweroff -i"
+
+#alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
+#alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
+#alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
+
+alias fuck=“sudo !!”
+alias n="cd /mnt/main/anima/ && nvim "
+alias zshconfig="mate ~/.zshrc"
+alias ohmyzsh="mate ~/.oh-my-zsh"
+alias upd="sudo pacman -Syu"
+alias ins="sudo pacman -S"
+alias rem="sudo pacman -R"
+alias za="zathura --fork"
+alias pic="picom -b --experimental-backends"
+alias red2="redshift -O 2000K"
+alias red3="redshift -O 3000K"
+alias red4="redshift -O 4000K"
+alias red5="redshift -O 5000K"
+alias com="python ~/Documents/comment_generator/generator.py"
+alias oc="cd Documents/Octopeek/Scrapping\ linkedin/scrapping"
+alias poly="./.config/polybar/launch.sh"
+alias uni="plasmapkg2 --type=kwinscript -r ."
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"alias l.='ls -d .* --color=auto'alias ports='sudo netstat -tulanp'
+
+alias scro="scrot -s '/home/ser/scrot/%Y%m%d_%H%M%S.png' -e 'xclip -selection c -t image/png < $f'"
+
+alias zoop="echo "👉😎👉 ~Zoop!~" | lolcat"
+alias weather="curl wttr.in"
+
+####### KSM aliases ############
+alias whereami='echo $PWD'
+alias whatami='cat /etc/hostname'
+alias temps='watch -n .1 sensors'
+alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+alias rip='grep --color=auto'
+alias m='mousepad '
+alias tl='tmux list-session'
+alias tk='tmux kill-session'
+alias tn='tmux new'
+alias ta='tmux attach'
+alias weather='curl wttr.in/cmb?0'
+alias weatherfull='curl wttr.in/cmb'
+alias up='uptime -p'
+alias randvid='mpv --shuffle /run/media/diamond/Data/Videos/'
+alias ff='firefox'
+alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
+alias topdf='wkhtmltopdf'
+alias sxiv='sxiv -b'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias jctl="journalctl -p 3 -xb"
+alias sysupgrade="sudo apt update; sudo apt upgrade -y"
+alias p="python3"
+
+#games
+#alias nfsmw='cd ~/games/nfsmw; wine nfsmwres.exe'
+#alias deusex='cd ~/games/Deus_Ex/System; wine DeusEx.exe'
+#alias hl='cd ~/games/Half-Life/; wine hl.exe'
+alias brutaldoom='flatpak run org.zdoom.GZDoom -file brutalv21.pk3'
+alias mc='java -jar ~/games/mc.jar'
+alias botnet="google-chrome-stable"
+
+# Emacs
+#alias em="/usr/bin/emacs -nw"
+#alias vim="emacsclient -t"
+alias et="emacsclient -t"
+alias em="emacsclient -c -a 'emacs'"
+alias startemacs="emacs --daemon"
+alias hardkillemacs="emacsclient -e '(kill-emacs)'"
+alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
+
+
+#Пока не пойму как работает
+#alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
+alias zshconfig="nvim ~/.zshrc"
+alias zshrc="nvim ~/.zshrc"
+alias zconf="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias i3conf="nvim ~/.config/i3/config"
+alias pstart="sh ~/.config/polybar/launch.sh"
+alias pconf="nvim ~/.config/polybar/config"
+#alias polyconf2="nvim ~/.config/polybar/config-light"
+alias init.vim="nvim ~/.config/nvim/init.vim"
+alias piconf="nvim ~/.config/picom.conf"
+
+
+
+alias cfi="nvim ~/.config/i3/config"
+alias cfz="nvim ~/.config/zsh/.zshrc"
+alias cfp="nvim ~/.config/polybar/config"
+alias cfn="nvim ~/.config/nvim/init.vim"
+
+alias df='df -h'                 # human-readable sizes
+#alias free='free -m'            # show sizes in MB
+alias np='nano -w PKGBUILD'
+alias more=less
+
+#alias c='cd'
+#alias c..='cd ..'
+#alias cd..='cd ..'
+#alias lcd='cd'
+#alias d='cd'
+
+#alias ll="ls -lAh"
+#alias ls="ls --color=auto"
+#alias la='ls -Ah'
+
+#youtube-dl
+alias yta-aac="youtube-dl --extract-audio --audio-format aac "
+alias yta-best="youtube-dl --extract-audio --audio-format best "
+alias yta-flac="youtube-dl --extract-audio --audio-format flac "
+alias yta-m4a="youtube-dl --extract-audio --audio-format m4a "
+#alias yta-mp3="youtube-dl --extract-audio --audio-format mp3 "
+alias yta-mp3='youtube-dl --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"'
+alias yta-opus="youtube-dl --extract-audio --audio-format opus "
+alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
+alias yta-wav="youtube-dl --extract-audio --audio-format wav "
+alias ytv-best="youtube-dl -f bestvideo+bestaudio "
+
+#уточнить что за хз
+#alias youtube-dl='youtube-dl --xattrs''
+
+#Recent Installed Packages
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
+
+#Cleanup orphaned packages
+alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+
+#get the error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
+alias nlightdm="sudo nvim /etc/lightdm/lightdm.conf"
+alias npacman="sudo nvim /etc/pacman.conf"
+alias ngrub="sudo nvim /etc/default/grub"
+alias nmkinitcpio="sudo nvim /etc/mkinitcpio.conf"
+alias nslim="sudo nvim /etc/slim.conf"
+alias noblogout="sudo nvim /etc/oblogout.conf"
+alias nmirrorlist="sudo nvim /etc/pacman.d/mirrorlist"
+alias nconfgrub="sudo nvim /boot/grub/grub.cfg"
+
+#gpg
+#verify signature for isos
+alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
+#receive the key of a developer
+alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
+
+#shutdown or reboot
+#alias ssn="sudo shutdown now"
+alias sr="sudo reboot"
+alias sn="shutdown now"
+
+#fix obvious typo's
+alias cd..='cd ..'
+alias pdw="pwd"
+alias udpate='sudo pacman -Syyu'
+
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+#pacman unlock
+alias unlock="sudo rm /var/lib/pacman/db.lck"
+
+#free
+alias free="free -mt"
+
+#use all cores
+alias uac="sh ~/.bin/main/000*"
+
+#continue download
+alias wget="wget -c"
+
+#userlist
+alias userlist="cut -d: -f1 /etc/passwd"
+
+#merge new settings
+alias merge="xrdb -merge ~/.Xresources"
+
+# Aliases for software managment
+# pacman or pm
+alias pacman='sudo pacman --color auto'
+alias update='sudo pacman -Syyu'
+
+# yay as aur helper - updates everything
+alias pksyua="yay -Syu --noconfirm"
+alias upall="yay -Syu --noconfirm"
+
+#ps
+alias psa="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+
+#grub update
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+
+#add new fonts
+alias update-fc='sudo fc-cache -fv'
+
+#copy/paste all content of /etc/skel over to home folder - backup of config created - beware
+alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/skel/* ~'
+#backup contents of /etc/skel to hidden backup folderin home/user
+alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'
+
+#copy bashrc-latest over on bashrc - cb= copy bashrc
+#alias cb='sudo cp /etc/skel/.bashrc ~/.bashrc && source ~/.bashrc'
+#copy /etc/skel/.zshrc over on ~/.zshrc - cb= copy zshrc
+alias cz='sudo cp /etc/skel/.zshrc ~/.zshrc && source ~/.zshrc'
+
+#switch between bash and zsh
+alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
+alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
+
+#quickly kill conkies
+alias kc='killall conky'
+
+#hardware info --short
+alias hw="hwinfo --short"
+
+#skip integrity check
+alias yayskip='yay -S --mflags --skipinteg'
+
+#check vulnerabilities microcode
+alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
+
+#get fastest mirrors in your neighborhood
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
+#mounting the folder Public for exchange between host and guest on virtualbox
+alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Public"
+
+# TIME
+alias now="echo -e $(date +'%H:%M')"
+
+#alias e="exit"
+#alias c="clear"
+
+#alias reload="source ~/.zshrc"
+
+#alias sshcode=" ssh -R 52698:localhost:52698 "
+
+# Show open ports
+#alias openports='netstat -nape --inet'
+
+#alias lsblk='lsblk -f -o +SIZE,MODEL'
+
+alias ga="git add"
+alias gc="git commit -m"
+alias gd="git diff"
+alias gs="git status"
+
+alias r='ranger'
+
+# уменьшить изображение на 50%
+#alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
+
+#alias config='ranger /home/ser/.config/'
+
+#alias zathura="zathura -c ~/.config/zathura "
+#alias g="git"
+#alias trem="transmission-remote"
+#alias mkd="mkdir -pv"
+#alias ref="shortcuts.sh && source ~/.bashrc" # Refresh shortcuts manually and reload bashrc
+
+#alias bw="wal -i ~/.config/wall.png" # Rerun pywal
+#alias pi="bash ~/.larbs/wizard/wizard.sh"
+
+# vi-mode
+#bindkey -v
+# проверить разницу
+#set -o vi
+
+
+# alias x="clear"
+# alias c="cd"
+# alias C for copy stdin
+# alias X for clead + pwd (to clear screen while changing dir)
+# alias xx="quit"
+
+#alias r='\ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"; brc'
+#alias brc='clear && source ~/.bashrc'
+#alias z='brc'
+#alias elinks='\elinks duckduckgo.com'
+#alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
+#alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
+#alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
+#alias q='exit'
+
+#alias em='emacs -nw'$
+#alias dd='dd status=progress'$
+#alias _='sudo'$
+#alias _i='sudo -i'$
+#alias please='sudo'$
+#alias fucking='sudo'$
+#l='ls -CF'$
+#la='ls -lha'$
+#ll='ls -lh'$
+#
+#
+
+#alias mute="pamixer -m"
+#alias vd="pamixer -d 10"
+#alias vu="pamixer -i 10"
+#alias p="mocp -G &> /dev/null"
+#alias next="mocp -f &> /dev/null"
+#alias prev"mocp -r &> /dev/null"
+#alias yt="youtube-dl --ad-metadata -ic"
+#alias yta="youtube-dl -add-metadata -xic"
+#alias webedit="ssh -l user -p 2222 server"
+#alias
+#alias
+#alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
+#
+#alias newnet="sudo systemctl restart NetworkManager"
+#alias alttime="sudo timedatectl set-timezone America/New_Yourk && i3 restart"
+#serversend() { rsync -avr --rsh='ssh -p 2222' $1 luke@lusk.zzz:/home/luke/public_html ;}
+# bl()  {convert $@ -resize 1440x1080\> bl_$0 ;}
+#alias pingme="ping lukesmith.xyz"
+#alias sdn="sudo shutdown now"
+#alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
+#alias p="sudo pacman"
+#alias SS="sudo systemctl"
+#alias sn="sudo neovim"
+#alias sr="sudo ranger"
+#alias ls='ls -hN --color=auto --group-directories-first'
+#alias ccat="hightlight --out-format=ansi" # Color cat - print file with syntax highlighting.
+
+
+#alias editzsh="nvim ~/.zshrc"
+#alias savezsh="source ~/.zshrc"
+#alias editff="sudo nvim /usr/lib/firefox/distribution/distribution.ini"
+#alias nf="neofetch"
+#alias byebye="shutdown now"
+#alias editnvim="nvim ~/.config/nvim/init.vim"
+#alias :q="exit"
+#alias clr="tput reset"
+#alias minecraft="java -jar ~/Downloads/TLauncher-2.66/TLauncher-2.66.jar
+
+
+# Automatically load vim session files
+#alias vis='vim -S Session.vim'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+#alias rm='rm -i '
+
+#alias icat="kitty +kitten icat"
+
+#alias fuck="nordvpn d && nordvpn c AU"
+
+
+
+#alias moo="fortune | cowsay | lolcat"
+#alias tux="fortune | cowsay -f tux | lolcat"
+##alias gnu="fortune | cowsay -f gnu | lolcat"
+#
+#alias timekill="rtv --enable-media -s '/random/top-all'"
+#
+##alias besterm="export FBTERM_BACKGROUND_IMAGE=1 && cat $HOME/Pictures/desktops/space.fbimg > /dev/fb0; fbterm -s 28 -n "Hack""
+##alias whtfnt="echo -en "\e]P7ffffff" && clear"
+#
+#alias davefetch='neofetch --ascii "$(cat $HOME/Pictures/asciis/ilovedos_ascii.txt)"'
+#alias tuxfetch='neofetch --ascii "$(cat $HOME/Pictures/asciis/linux_ascii.txt)"'
+#
+#alias dots="/usr/bin/git --git-dir=$HOME/.dots --work-tree=$HOME"
+#
+
+
+#alias todo='task'
+#alias czas='tty-clock -c'
+#alias feh='feh --scale-down --auto-zoom'
+#
+#alias feh="feh --no-fehbg -B black"
+#
+#alias i3c="nvim ~/.config/i3/config"
+#alias cmc="nvim ~/.config/compton/compton.conf"
+#alias ktc="nvim ~/.config/kitty/kitty.conf"
+#alias rw="ranger ~/Pictures/Wallpapers"
+#alias rs="ranger ~/Skool/"
+#
+#alias porn='mpv "http://www.pornhubcom/random"'
+#
+#alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
+#
+#alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
+#
+#alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
+#
+#alias ls='ls --color'
+#alias ls="ls --color=auto -FHh"
+#alias ll='ls -l'
+#alias la='ls -lA'
+#alias ..='cd ..'
+#alias ...='cd ...'
+#alias mkdir='mkdir -p'
+#alias du='du -ch'
+#alias i3conf="nvim ~/.config/i3/config"
+#alias polyconf="nvim ~/.config/polybar/config"
+#alias vimconf="nvim ~/.vimrc"
+#alias doas='doas '
+#alias r='ranger $HOME/anima'
+#alias em='doas emerge -v'
+#alias vim='nvim'
+#alias ipp='curl ipinfo.io/ip'
+#alias weather='curl wttr.in'
+#alias copy="xclip -selection clipboard"
+#
+#alias myip='curl https://ipinfo.io/ip'
+#alias vim='nvim'
+#alias merg='xrdb -merge /home/adri/.Xresources'
+#alias pac='sudo pacman -S'
+#alias d='ssh dietpi@192.168.0.10'
+#alias i3conf='nvim /home/adri/.config/i3/config'
+#alias bashrc='nvim /home/adri/.bashrc'
+#alias nvimconf='nvim /home/adri/.config/nvim/init.vim'
+#alias randomvpn='sudo protonvpn-cli -r connect'
+#alias fastvpn='sudo protonvpn-cli -f connect'
+#alias fastp2pvpn='sudo protonvpn-cli -p2p connect'
+#alias stopvpn='sudo protonvpn-cli -d'
+#alias vpn='sudo pvpn'
+#alias homecffUni='homecff Charmettes | dmenu'
+#alias homecffGare='homecff Fribourg | dmenu'
+#
+#alias vpn='sudo pvpn'
+#alias ytmp3='youtube-dl --add-metadata -x --audio-format mp3 --output "%(title)s.%(ext)s" --audio-quality 0 --add-metadata --exec "mv {} /home/adri/Music/" $(xclip -o) && notify-send "youtube-dl" "download complete !"'
+#alias music='ncmpcpp'
+#alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+#
+#
+## Example aliases
+## alias zshconfig="mate ~/.zshrc"
+## alias ohmyzsh="mate ~/.oh-my-zsh"
+#alias h="history"
+#alias p="pwd -P"
+#alias s="sudo -s"
+#alias CD="cd"
+#alias hc='herbstclient'
+#alias ff='firefox'
+# Force tmux to use 256 colors
+# Either set this or TERM=xterm (or both if tmux keeps messing up?)
+#alias tmux="tmux -2"
+# clock
+#alias c="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &; clear"
+
+#
+#alias feh="feh --no-fehbg -B black"
+
+#alias cmc="nvim ~/.config/compton/compton.conf"
+#alias ktc="nvim ~/.config/kitty/kitty.conf"
+#alias rw="ranger ~/Pictures/Wallpapers"
+#alias rs="ranger ~/Skool/"
+#
+#alias netprocs="lsof -P -i -n"
+
+#alias up="sudo apt update && sudo apt upgrade"
+
+## So that sudo doesnt override aliases (doesnt work with flags)
+## alias sudo='sudo '
+#
+## Quick edit
+#alias xr="vim ~/.Xresources"
+#alias xrc="vim ~/.wally/Xresources-clean"
+#alias zshrc="vim ~/.zshrc"
+##alias dunstrc="vim ~/.config/dunst/dunstrc"
+#alias tint2rc="vim ~/.config/tint2/tint2rc"
+#alias userChrome.css="vim ~/thm/Firefox/userChrome.css"
+#alias stconf="vim ~/pro/xst/src/config.h"
+#alias playlists="vim ~/.config/mpv/tubify_playlists"
+#alias airlinevim="vim ~/.config/nvim/plugged/vim-airline/autoload/airline/themes/dark.vim"
+#alias quteconf="vim ~/.config/qutebrowser/config.py"
+#alias comptonconf="vim ~/.config/compton/compton.conf"
+#alias rc.lua="vim ~/.config/awesome/rc.lua"
+#alias theme.lua="vim ~/.config/awesome/themes/reasons/theme.lua"
+##alias awesomeconf="vim ~/.config/awesome/rc.lua"
+##alias subl="subl3"
+## Update qutebrowser
+#alias quteup="(cd ~/pro/qutebrowser; git pull origin && tox -r -e mkvenv-pypi-old)"
+#
+## nvidia optimus -> prime select
+#alias nvidia="sudo prime-select nvidia"
+#alias intel="sudo prime-select intel"
+## cpu governor
+#alias gameoff="sudo cpufreq-set -g powersave"
+#alias gameon="sudo cpufreq-set -g performance"
+#
+## translate-shell: brief
+#alias t='trans -brief'
+#
+#alias :q='exit'alias :q!='exit'
+#
+#alias please="beep && sudo"
+#
+#
+#alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
+#
+#alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+#alias grub='sudo nvim /etc/default/grub'
+#alias journal='sudo journalctl -b -p 3'
+#alias prime='DRI_PRIME=1'
+#alias neofetch-bong='neofetch --ascii "$(fortune|cowthink -f bong -W 30)"'
+#
+## SPACED DIR
+#alias le="echo ''; ls; echo ''"
+## EMACS CLIENT
+#alias ec="emacsclient -t"
+## RELOAD XRESOURCES
+#alias xr="xrdb -merge ~/.Xresources"
+## WIFI
+#alias wifi="sudo wifi-menu"
+## BATTERY
+#alias bat="echo -e $(cat /sys/class/power_supply/BAT0/capacity)%"
+
+## UPLOAD TO STREAMABLE
+#alias stream="anypaste -x -s -p streamable"
+
+#alias e="$EDITOR"
+#alias x="sxiv"
+#alias p="sudo pacman"
+#alias SS="sudo systemctl"
+#alias sv="sudo nvim"
+#alias sdn="sudo shutdown -h now"
+
+#alias mkd="mkdir -pv"
+#alias grep="grep --color=auto"
+#alias diff="diff --color=auto"
+#alias ls='ls -hN --color=auto --group-directories-first'
+#alias la='ls -hNa --color=auto --group-directories-first'
+#alias ll='ls -hNl --color=auto --group-directories-first'
+#alias hgrep="history | grep"
+#alias netcon='sudo lsof -n -P -i +c 15'
+#alias ipp="dig +short myip.opendns.com @resolver1.opendns.com"
+#alias clr='clear;echo "Currently logged in on $(tty), as $USER in directory $PWD."'
+#alias ref="shortcuts && source ~/.bashrc"
+#alias mpa="mpv --no-audio-display --script=$HOME/bin/mpa.lua"
+#alias yt="youtube-dl --add-metadata -ic"
+#alias yta="yt -x -f bestaudio/best"
+#alias wttr_lv='curl wttr.in/~Lviv'
+#alias psref="gpg-connect-agent RELOADAGENT /bye"
+#
+#alias yi="yaourt -S "
+#alias ys="yaourt -s "
+#alias yr="yaourt -R "
+#alias yu="yaourt -Sy "
+#alias yupg="yaourt -Syu "
+#alias yii="yaourt --m-arg '--skipchecksums --skippgpcheck --skipinteg'  -S"
+#alias yis="yaourt --m-arg '--skipchecksums --skippgpcheck --skipinteg'  -s"
+#alias yy="sudo pacman -Syy"
+#alias yref="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
+#
+#alias sai="sudo apt install "
+#alias sau="sudo apt update "
+#alias saupg="sudo apt upgrade "
+#alias sas="apt-cache search "
+## alias sai="sudo apt install "
+
+#
+#alias cintel="sudo prime-select intel"
+#alias cnvidia="sudo prime-select nvidia"
+#
+#alias grep='grep -E --color=auto'
+
+#alias crun="g++ ./$0 -o ./$0 && ./%0"
+#
+#alias compstrt="pkill compton && nohup compton & "
+#
+#alias dros="docker run -v /home/kanishkarj/work/workspace:/home/workspace  -it --env=\"DISPLAY\" --env=\"QT_X11_NO_MITSHM=1\" --volume=\"/tmp/.X11-unix:/tmp/.X11-unix:rw\"  ros"
+#
+## Search running processes
+#alias p="ps aux | grep "
+#alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
+#
+## Search files in the current folder
+#alias f="find . | grep "
+#
+## Count all files (recursively) in the current folder
+#alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
+#
+## To see if a command is aliased, a file, or a built-in command
+#alias checkcommand="type -t"
+#
+## Show current network connections to the server
+#alias ipview="netstat -anpl | grep :80 | awk {'print \$5'} | cut -d\":\" -f1 | sort | uniq -c | sort -n | sed -e 's/^ *//' -e 's/ *\$//'"
+
+## Alias's for safe and forced reboots
+#alias rebootsafe='sudo shutdown -r now'
+#alias rebootforce='sudo shutdown -r -n now'
+#
+## Alias's to show disk space and space used in a folder
+#alias diskspace="du -S | sort -n -r |more"
+#alias folders='du -h --max-depth=1'
+#alias folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
+#alias tree='tree -CAhF --dirsfirst'
+#alias treed='tree -CAFd'
+
+## Alias's for archives
+#alias mktar='tar -cvf'
+#alias mkbz2='tar -cvjf'
+#alias mkgz='tar -cvzf'
+#alias untar='tar -xvf'
+#alias unbz2='tar -xvjf'
+#alias ungz='tar -xvzf'
+#
+## Show all logs in /var/log
+#alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+#
+## SHA1
+#alias sha1='openssl sha1'
+#alias dotfiles='/usr/local/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+## Edit this .bashrc file
+#alias ebrc='edit ~/.bashrc'
+#
+## alias to show the date
+#alias da='date "+%Y-%m-%d %A %T %Z"'
+#
+#alias cp='cp -i'
+#alias mv='mv -i'
+#alias rm='rm -iv'
+#alias mkdir='mkdir -p'
+#alias ps='ps auxf'
+#alias ping='ping -c 10'
+#alias less='less -R'
+#alias cls='clear'
+#alias apt-get='sudo apt-get'
+#alias multitail='multitail --no-repeat -c'
+#alias freshclam='sudo freshclam'
+#alias vi='vim'
+#alias svi='sudo vi'
+#alias vis='vim "+set si"'
+#
+## Change directory aliases
+#alias home='cd ~'
+#alias cd..='cd ..'
+#alias ..='cd ..'
+#alias ...='cd ../..'
+#alias ....='cd ../../..'
+#alias .....='cd ../../../..'
+
+## Alias's for multiple directory listing commands
+#alias la='ls -Alh' # show hidden files
+#alias ls='ls -aFh --color=always' # add colors and file type extensions
+#alias lx='ls -lXBh' # sort by extension
+#alias lk='ls -lSrh' # sort by size
+#alias lc='ls -lcrh' # sort by change time
+#alias lu='ls -lurh' # sort by access time
+#alias lr='ls -lRh' # recursive ls
+#alias lt='ls -ltrh' # sort by date
+#alias lm='ls -alh |more' # pipe through 'more'
+#alias lw='ls -xAh' # wide listing format
+#alias ll='ls -Fls' # long listing format
+#alias labc='ls -lap' #alphabetical sort
+#alias lf="ls -l | egrep -v '^d'" # files only
+#alias ldir="ls -l | egrep '^d'" # directories only
+
+## alias chmod commands
+#alias mx='chmod a+x'
+#alias 000='chmod -R 000'
+#alias 644='chmod -R 644'
+#alias 666='chmod -R 666'
+#alias 755='chmod -R 755'
+#alias 777='chmod -R 777'
+
+## cd into the old directory
+#alias bd='cd "$OLDPWD"'
+#
+## Remove a directory and all files
+#alias rmd='/bin/rm  --recursive --force --verbose '
+########################################################
+#Do not accidentally delete root, and also,
+#prompt if deleting more than 3 files at a time
+#(this has saved my ass more times than you would think)
+#alias rm='rm -I --preserve-root'
+
+#Adding confirmation on mv, cp, ln commands
+#alias mv='mv -i' alias cp='cp -i' alias ln='ln -i'
+
+#Parenting changes perms on root
+#alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
+
+#alias DumpID3Tags='id3 -q "title=\"%t\",\nartist=\"%a\",\nalbum=\"%l\",\ntrack=\"%n\",\nyear=\"%y\",\ngenre=\"%g\",\ncomment=\"%c\""'
+#
+#alias gcc='gcc -fdiagnostics-color=auto -std=gnu11'
+#alias gdb='gdb -silent'
+#
+#alias ghci='ghci -v0'
+#
+#alias bc='bc -q -l'
+
+#alias du='du -h'
+#alias free='free --human'
+#
+#alias pdb='ipython --pdb'
+#alias pytrace="python -m trace --ignore-dir /usr/lib/python3.* --trace"
+#
+#alias info='info --vi-keys'
+#
+#alias pscgroups='ps xawf -eo pid,user,cgroup,args'
+
+#alias sshfs='sshfs -o idmap=user -o uid=1000 -o gid=100'
+
+#alias tmux='tmux -f <(~/.tmuxrc)'
+
+#alias win32='WINEARCH=win32 WINEPREFIX=~/.wine'
+
+#alias Startpage='$BROWSER "https://startpage.com/do/mypage.pl?prf=42d1c9d47b691682365d62362ea73b49"'
+
+#alias steam='STEAM_FRAME_FORCE_CLOSE=1 steam'
+#
+## --on-top
+## --on-all-workspaces?
+## --autosync=1 or 30?
+## --heartbeat to work around --stop-screensaver not working?
+## --wid=0 to draw to root window
+##alias MPV.app='mpv --no-border --force-window --idle --keep-open'
+#alias tct='mpv --quiet --vo=tct'
+#alias mpved='mpv --wid=$(NetActiveWindow)'
+#alias clisp='clisp --quiet'
+#alias javadebug='java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y'
+#
+#alias ping='ping -OD'
+#alias ping4='ping -4'
+#alias ping6='ping -6'
+
+#alias ipa='ip address show scope global up'
+#alias ip4='ip -4 address show scope global up'
+#alias ip6='ip -6 address show scope global up'
+#alias ipr='ip -4 route show scope global'
+#alias ip6r='ip -6 route show scope global'
+
+#alias l='ls -C'
+#alias t='lt'
+#alias lt='ls -t'
+#alias lx='ls -X'
+#alias la='ls -A'
+#alias ll='ls -l'
+#alias lg='ls --group-directories-first'
+#alias lD='ls -d'
+#alias lu='ls -U'
+#alias l1='command ls -1'
+#alias llt='ls -lt'
+#
+#alias n='newsboat -q'
+
+#alias MountFat='sudo mount -o uid=$(id -u),gid=$(id -g),fmask=7177,dmask=7077'
+#
+#alias thttpd='thttpd -D -l /dev/stdout'
+#
+#if command -v nvim >/dev/null 2>&1; then
+#    alias vim=nvim
+#    alias vimdiff=nvim -d'
+#fi
+#alias bsdtar='bsdtar -S -f -'
+#alias bsdcpio='bsdcpio -m'
+## TODO: pax format by default.
+#alias tar='bsdtar'
+#alias cpio='bsdcpio'
+#alias zip='deprecated zip bsdtar --format zip -cf'
+#alias unzip='deprecated unzip bsdtar -xf'
+#alias virtualenv='deprecated virtualenv pyvenv'
+#alias pkgfile='deprecated pkgfile pacman -F'
+#alias vim='deprecated vim nvim'
+#alias wget='deprecated wget curl -LO'
+#
+#alias mutt='MAIL_ACCOUNT=$(mail_account) neomutt'
+#
+#alias Binaries='_pacmanQlPrettySearch bin/'
+#alias Manpages='_pacmanQlPrettySearch man/'
+#alias Services='_pacmanQlPrettySearch '\''\.service$'\'
+#
+#alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
+
+
+## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
+#alias time='command time'
+
+#alias r='rg --pretty'
+#alias g='rg --pretty'
+#alias ag='deprecated ag rg --pretty -i'
+#alias rgg='rg --files --glob'
+
+## Force myself to use near-ubiquitous util-linux hexdump
+## NeoVim doesn't include it and don't rely on system having Vim
+#alias xxd='deprecated xxd hexdump -C'
+#alias hex='hexdump -C'
+#
+#alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
+#
+#alias ffmpeg='ffmpeg -hide_banner'
+#alias ffprobe='ffprobe -hide_banner'
+
+
+#alias dirsize="du -hd 0"    #Измеряет размер директории, в которой находитесь
+#alias contsize="du -hd 1"    #Измеряет размер всех директорий в директории, в которой находитесь
+#alias cd..="cd .."    #Не могу искоренить эту привычку, постоянно набираю cd.. =)
+#alias man="man -a"  #Показывает ВСЕ мануалы по названию, попробуйте, к примеру, man -a signal, узнаете, что в Линуксе есть документация по сигналам, которые можно посылать программам
+#alias dhclient="dhclient -v"  #Делает вывод dhclient намного информативнее - показывает запросы и ответы сервера, если есть. Короче, ждать получения IP-адреса уже не так скучно =)
+#alias toinstall="aptitude --schedule-only install"   #Маркирует указанный пакет как помеченный к установке, удобно, когда система обновляется, а ты внезапно нашёл клёвую программу и хочешь не забыть её установить.
+#alias remove="aptitude --schedule-only remove"   #То же самое, только скорее к случаю, когда ты внезапно нашёл в своей системе клёвую программу и хочешь её удалить
+##Использование - toinstall sysvinit / toremove systemd, ну или наоборот =)
+##Применяется, когда в следующий раз запустите aptitude install без указания пакета - просто "aptitude install".
+#alias watch="watch -n 1" #Обновление watch раз в 1 секунду, а не 2.
+#alias wpc="watch usr/local/bin/watch.sh" # Скриптик, в котором выводится acpi, date, ifconfig... короче, всё, что бы хотелось держать в отдельной консоли, постоянно обновлять и иметь возможность в любую минуту посмотреть =)
+#
+#alias dirsize "du -sh"
+#
+#socks="ssh -D 8008 emerald -fN"
+#o="xdg-open"
+#gc="git commit -v -s"
+#gst="git status --short"
+#ga="git add"
+#gd="git diff --minimal"
+#gl="git log --oneline --decorate --graph"
+#ls="ls --color"
+#
+#xi="sudo xbps-install -S"
+#xr="sudo xbps-remove -R"
+#xs="xbps-query -Rs"
+#
+#sf="screenfetch"
+#nf="neofetch"
+#sourceme="source ~/.bashrc"
+#editme="nvim ~/.bashrc"
+#gc="grep -c"
+#gi="grep -i"
+#gw="grep -w"
+#
+#c="clear"
+
+##!/bin/zsh
+## Divers aliases.
+
+#alias ocaml='rlwrap ocaml'
+#
+#alias ls='ls --color -hF'
+#alias emacs='TERM=alacritty-24bit emacs -nw'
+#
+## Because lol
+#alias memfree='killall firefox'
+#
+#alias epimeros='ssh -t dettorer@epimeros.org tmux attach -t main'
+#alias epimeros-weechat='ssh -t dettorer@epimeros.org tmux attach -t weechat'
+#
+#alias up='source ~/.zshrc'
+#
+#if hash mosh > /dev/null 2>&1; then
+#    alias doublonville="mosh doublonville.dettorer.net --"
+#    alias doublonvilles="ssh -t doublonville.dettorer.net"
+#    alias pentapoulpe='mosh -p 222 --ssh="ssh -p 222" root@pentapoulpe.dettorer.net -- su dettorer'
+#    alias pentapoulpes='ssh -p 222 -t pentapoulpe.dettorer.net'
+#    alias toundra='mosh toundra.dettorer.net --'
+#    alias toundras='ssh -t toundra.dettorer.net'
+#
+#    alias rosa='mosh rosa.prologin.org --'
+#    alias rosas='ssh -t rosa.prologin.org'
+#else
+#    alias pentapoulpe='ssh -p 222 -t pentapoulpe.dettorer.net'
+#    alias toundra='ssh -t pentapoulpe.dettorer.net'
+#
+#    alias rosa='ssh -t rosa.prologin.org'
+#fi
+#
+#function doublonville_tmux
+#{
+#    if [ $# -ge 1 ]
+#    then
+#        if [[ "$1" == "new" ]]
+#        then
+#            doublonville tmux -u new-session -s $2
+#        else
+#            doublonville tmux -u attach -t $1
+#        fi
+#    else
+#        doublonville_tmux stuff
+#    fi
+#}
+#
+#alias irc='doublonville_tmux irc'
+#alias work='doublonville_tmux work'
+#alias stuff='doublonville_tmux stuff'
+#
+#alias dusort='du -hs * . | sort -h'
+#
+#alias powder='powder && rm powder.pref'
+#
+#alias rscp="rsync --partial --progress --archive"
+#
+#function upload # This should be cleaned, but later... TODO
+#{
+#    # Main variables
+#    SSH_USER="dettorer"
+#    SSH_HOST="dettorer.net"
+#    SSH="$SSH_USER@$SSH_HOST"
+#    HTTP_SERVER_PATH="/srv/http/dettorer.net"
+#    BASE_URL="https://dettorer.net"
+#
+#    # Parse arguments
+#    if [ $# -lt 2 ]; then
+#        echo "At least two arguments are needed"
+#        return -1
+#    fi
+#    FILES=$*[0,-2]
+#    ADD_PATH=$*[-1]
+#
+#    # Upload files
+#    echo "Uploading $FILES..."
+#    rscp $FILES $SSH:$HTTP_SERVER_PATH/$ADD_PATH
+#    err=$?
+#    if [ $err -ne 0 ]; then
+#        echo "Error while uploading, aborting!"
+#        return $err
+#    fi
+#    unset err
+#
+#    # Correct file permission on the server
+#    echo "Fixing permissions..."
+#    for file in $FILES; do
+#        ssh -q -t $SSH chmod -R +r "$HTTP_SERVER_PATH/$ADD_PATH/`basename $file`"
+#    done
+#
+#    # Prompt links to uploaded files
+#    for file in $FILES; do
+#        echo $BASE_URL/$ADD_PATH/`basename $file`
+#    done
+#}
+#
+#function quicksave
+#{
+#    rscp $* dettorer@dettorer.net:~/quicksave
+#}
+#function quickfetch
+#{
+#    [ $# -gt 0 ] && dest=$1 || dest=.
+#    rscp --remove-source-files dettorer@dettorer.net:~/quickfetch/ "$dest"
+#}
+#function quickfetchi
+#{
+#    [ $# -gt 0 ] && dest=$1 || dest=.
+#    rscp --remove-source-files --inplace dettorer@dettorer.net:~/quickfetch/ "$dest"
+#}
+#function quickfetchpeek
+#{
+#    [ $# -gt 0 ] && dest=$1 || dest=.
+#    rscp dettorer@dettorer.net:~/quickfetch/ "$dest"
+#}
+#function quickfetchpeeki
+#{
+#    [ $# -gt 0 ] && dest=$1 || dest=.
+#    rscp --inplace dettorer@dettorer.net:~/quickfetch/ "$dest"
+#}
+#
+## Self-protection
+#alias mv='mv -i'
+#alias cp='cp -i'
+#
+## If neovim is available, make it the default vim implementation
+#if type nvim > /dev/null 2>&1; then
+#    alias vim=nvim
+#fi
+
+#[ -f ~/.scripts/shortcuts.sh ] && ~/.scripts.shortcuts.sh
+# или вот такой обновленный вариант от люка:
+# source ~/.shortcuts
+
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#export FZF_DEFAULT_OPS="--extended"
+
+# узнать че это за comptinstall
+# The following lines were added by compinstall
+#zstyle :compinstall filename '/home/colew/.zshrc'
+#
+#autoload -Uz promptinit
+#promptinit
+#
+#autoload -Uz compinit
+#compinit
+# End of lines added by compinstall
+
+# prompt fire
+# setopt autocd
+
+### вернуть в конфиг zsh
+#пишут что это должно быть в конце
+#закомментил чтобы посмотреть как будет без этого
+#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# можно в конце еще приписать 2>/dev/null
+
+
+
+#################################################################
+### Невостребованные алиасы
+#alias lock="i3lock -i $HOME/.config/0.jpg -p win"
+###
+#alias ni="npm install --save"
+#alias nid="npm install --save -d"
+#alias nig="npm install --save -g"
+#alias nu="npm install --save"
