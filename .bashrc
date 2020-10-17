@@ -9,6 +9,3 @@ alias ll="ls -la"
 PS1='[\u@\h \W]\$ '
 
 [ -f ~/.config/fzf.bash ] && source ~/.config/fzf.bash
-
-
-#test string
