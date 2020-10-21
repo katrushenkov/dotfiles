@@ -1,10 +1,10 @@
 # You can add comments to these files with #
 cac /home/ser/.cache
-cf  /home/ser/.config
+#cf  /home/ser/.config
 D   /home/ser/Downloads
 d   /home/ser/Documents
 dt  /home/ser/.local/share
-h   /home/ser
+h   $HOME
 mm  /mnt/main/mus
 mn  /mnt
 pp  /mnt/main/pic
@@ -13,10 +13,9 @@ src /home/ser/.local/src
 vv  /mnt/main/vid
 ani /mnt/main/anima
 
-#h   $HOME
 #m   ${XDG_MUSIC_DIR:-$HOME/Music}
 #cac ${XDG_CACHE_HOME:-$HOME/.cache}
-#cf  ${XDG_CONFIG_HOME:-$HOME/.config}
+cf  ${XDG_CONFIG_HOME:-$HOME/.config}
 #D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 #d   ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 #dt  ${XDG_DATA_HOME:-$HOME/.local/share}
