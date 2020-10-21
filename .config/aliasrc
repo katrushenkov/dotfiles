@@ -1060,3 +1060,12 @@ alias r='ranger'
 #alias nid="npm install --save -d"
 #alias nig="npm install --save -g"
 #alias nu="npm install --save"
+
+#alias steal='git clone'
+#alias +="sudo apt-get install" (or pacman, pip, cargo, etc.)
+
+
+## Pseudo Sudo
+#sudo(){
+#	su -c "$*" # пишут, что лучше "$@"
+#}
