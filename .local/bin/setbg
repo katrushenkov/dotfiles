@@ -1,11 +1,23 @@
-#!/bin/bash
-# взял скрипт с инета. Люковские скрипты заебали, не работают почему-то
+#!/bin/sh
 
-## раскомментить для рандома из папки
-##wallpaperdir='/mnt/main/pic/wallpapers'
-##files=($wallpaperdir/*)
-##randompic=`printf "%s\n" "${files[RANDOM % ${#files[@]}]}"`
+# Luke Smith script
 
-xwallpaper --zoom /home/ser/.config/wall0.jpg
+# This script does the following:
+#	Run by itself, set the wallpaper (at X start).
+#	If given a file, set that as the new wallpaper.
+#	If given a directory, choose random file in it.
+#	If wal is installed, also generates a colorscheme.
 
-#xwallpaper --zoom "$randompic"
+# Location of link to wallpaper link.
+#bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
+bgloc="/mnt/main/pic/wallpapers"
+
+[ -f "$1" ] && ln -sf "$(readlink -f "$1")" "$bgloc" && notify-send -i "$bgloc" "Changing wallpaper..."
+
+[ -d "$1" ] && ln -sf "$(find "$(readlink -f "$1")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc" && notify-send -i "$bgloc" "Random Wallpaper chosen."
+
+# If pywal is installed, use it.
+wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
+
+pidof dwm >/dev/null && xdotool key super+F12
+xwallpaper --zoom "$bgloc"
