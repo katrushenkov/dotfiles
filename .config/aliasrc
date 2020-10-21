@@ -18,10 +18,17 @@ alias \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
-	la="ls -a" \
-	ll="ls -la" \
+	la="ls -ah" \
+	ll="ls -lah" \
 	l="ls" \
-	l.="ls -A | egrep '^\.'"
+	l.="ls -A | egrep '^\.'" \
+	c='cd' \
+	c..='cd ..' \
+	cd..='cd ..' \
+	lcd='cd' \
+	d='cd' \
+
+
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -141,7 +148,7 @@ alias zconf="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias i3conf="nvim ~/.config/i3/config"
 alias pstart="sh ~/.config/polybar/launch.sh"
-alias pconf="nvim ~/.config/polybar/config"
+#alias pconf="nvim ~/.config/polybar/config"
 #alias polyconf2="nvim ~/.config/polybar/config-light"
 alias init.vim="nvim ~/.config/nvim/init.vim"
 alias piconf="nvim ~/.config/picom.conf"
@@ -155,16 +162,6 @@ alias df='df -h'                 # human-readable sizes
 #alias free='free -m'            # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-
-#alias c='cd'
-#alias c..='cd ..'
-#alias cd..='cd ..'
-#alias lcd='cd'
-#alias d='cd'
-
-#alias ll="ls -lAh"
-#alias ls="ls --color=auto"
-#alias la='ls -Ah'
 
 #youtube-dl
 alias yta-aac="youtube-dl --extract-audio --audio-format aac "
