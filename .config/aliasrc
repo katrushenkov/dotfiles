@@ -59,6 +59,8 @@ alias dots='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
 
 alias by="systemctl poweroff -i"
 
+
+
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
@@ -143,8 +145,6 @@ alias pconf="nvim ~/.config/polybar/config"
 #alias polyconf2="nvim ~/.config/polybar/config-light"
 alias init.vim="nvim ~/.config/nvim/init.vim"
 alias piconf="nvim ~/.config/picom.conf"
-
-
 
 alias cfi="nvim ~/.config/i3/config"
 alias cfz="nvim ~/.config/zsh/.zshrc"
@@ -359,8 +359,6 @@ alias r='ranger'
 #l='ls -CF'$
 #la='ls -lha'$
 #ll='ls -lh'$
-#
-#
 
 #alias mute="pamixer -m"
 #alias vd="pamixer -d 10"
@@ -371,8 +369,6 @@ alias r='ranger'
 #alias yt="youtube-dl --ad-metadata -ic"
 #alias yta="youtube-dl -add-metadata -xic"
 #alias webedit="ssh -l user -p 2222 server"
-#alias
-#alias
 #alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
 #
 #alias newnet="sudo systemctl restart NetworkManager"
@@ -515,10 +511,9 @@ alias r='ranger'
 #alias ktc="nvim ~/.config/kitty/kitty.conf"
 #alias rw="ranger ~/Pictures/Wallpapers"
 #alias rs="ranger ~/Skool/"
-#
-#alias netprocs="lsof -P -i -n"
 
-#alias up="sudo apt update && sudo apt upgrade"
+alias netprocs="lsof -P -i -n"
+
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
@@ -805,7 +800,6 @@ alias r='ranger'
 #alias l1='command ls -1'
 #alias llt='ls -lt'
 #
-#alias n='newsboat -q'
 
 #alias MountFat='sudo mount -o uid=$(id -u),gid=$(id -g),fmask=7177,dmask=7077'
 #
@@ -835,7 +829,6 @@ alias r='ranger'
 #
 #alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 
-
 ## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
 
@@ -853,7 +846,6 @@ alias r='ranger'
 #
 #alias ffmpeg='ffmpeg -hide_banner'
 #alias ffprobe='ffprobe -hide_banner'
-
 
 #alias dirsize="du -hd 0"    #Измеряет размер директории, в которой находитесь
 #alias contsize="du -hd 1"    #Измеряет размер всех директорий в директории, в которой находитесь
@@ -1068,3 +1060,9 @@ alias r='ranger'
 #sudo(){
 #	su -c "$*" # пишут, что лучше "$@"
 #}
+
+#alias n='newsboat -q'
+
+##################################################################
+### Ubuntu section
+#alias up="sudo apt update && sudo apt upgrade -y"
