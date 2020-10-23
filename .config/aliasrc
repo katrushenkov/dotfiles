@@ -63,7 +63,7 @@ alias \
 
 # alias for dotfiles bare repo
 alias dots='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
-
+alias note='nvim /mnt/main/anima/000.txt'
 alias by="systemctl poweroff -i"
 
 
