@@ -24,6 +24,16 @@ Plug 'ap/vim-css-color'
 Plug 'morhetz/gruvbox'
 Plug 'tek256/simple-dark' " good grayscale theme
 Plug 'mcchrish/nnn.vim'
+" colorschemes
+Plug 'sainnhe/forest-night'
+"Plug 'sainnhe/vim-color-forest-night'
+"Plug 'chriskempson/base16-vim'
+"Plug 'sonph/onehalf', {'rtp': 'vim/'}
+"Plug 'drewtempelmeyer/palenight.vim'
+"Plug 'rakr/vim-one'
+"Plug 'mhartington/oceanic-next'
+"Plug 'joshdick/onedark.vim'
+"Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 
