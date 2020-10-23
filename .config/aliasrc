@@ -57,7 +57,7 @@ alias \
 	remzoo="remmina -c /home/ser/.local/share/remmina/group_rdp_zoovet_drug-office-era25-ru-11010.remmina" \
 	i2pstart="sudo systemctl start i2prouter.service" \
 	i2pstart="sudo systemctl stop i2prouter.service" \
-	slang="nvim ~/anima/2-slang.txt" \
+	slang="nvim ~/anima/slang.txt" \
 	lin="nvim ~/anima/linux/linux_notes.txt"
 
 
