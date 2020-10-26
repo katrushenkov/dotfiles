@@ -36,14 +36,12 @@ Plug 'sainnhe/forest-night'
 "Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
-
-
 set go=a
 set mouse=a
 set nohlsearch
 set clipboard+=unnamedplus
 
-:set ignorecase
+set ignorecase
 "set nobackup
 "set nowb
 "set noswapfile
