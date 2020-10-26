@@ -1,6 +1,5 @@
 # vim: filetype=sh
-alias cac="cd /home/ser/.cache && ls -a" \
-D="cd /home/ser/Downloads && ls -a" \
+alias D="cd /home/ser/Downloads && ls -a" \
 d="cd /home/ser/Documents && ls -a" \
 dt="cd /home/ser/.local/share && ls -a" \
 h="cd /home/ser && ls -a" \
@@ -11,6 +10,7 @@ sc="cd /home/ser/.local/bin && ls -a" \
 src="cd /home/ser/.local/src && ls -a" \
 vv="cd /mnt/main/vid && ls -a" \
 ani="cd /mnt/main/anima && ls -a" \
+cac="cd /home/ser/.cache && ls -a" \
 cf="cd /home/ser/.config && ls -a" \
 bf="$EDITOR /home/ser/.config/files" \
 bd="$EDITOR /home/ser/.config/directories" \
