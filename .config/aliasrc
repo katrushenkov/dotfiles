@@ -72,8 +72,10 @@ alias by="systemctl poweroff -i"
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
 
+alias nnn="nnn -e"
+# alias fuck='sudo $(history -p !!)' # ????
 alias fuck=“sudo !!”
-alias n="cd /mnt/main/anima/ && nvim "
+#alias n="cd /mnt/main/anima/ && nvim "
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias upd="sudo pacman -Syu"
