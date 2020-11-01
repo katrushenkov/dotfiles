@@ -1,6 +1,3 @@
-hash -d D=/home/ser/Downloads 
-hash -d d=/home/ser/Documents 
-hash -d dt=/home/ser/.local/share 
 hash -d h=/home/ser 
 hash -d mm=/mnt/main/mus 
 hash -d mn=/mnt 
@@ -11,3 +8,6 @@ hash -d vv=/mnt/main/vid
 hash -d ani=/mnt/main/anima 
 hash -d cac=/home/ser/.cache 
 hash -d cf=/home/ser/.config 
+hash -d D=/home/ser/Downloads 
+hash -d d=/home/ser/Documents 
+hash -d dt=/home/ser/.local/share 
