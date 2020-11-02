@@ -136,6 +136,12 @@ n ()
     fi
 }
 
+# nnn file manager
+export NNN_PLUG='f:finder;o:fzopen;p:mocplay;d:diffs;t:nmount;v:imgview'
+export NNN_BMS='ani:/mnt/main/ani'
+
+
+
 bindkey -s '^o' 'lfcd\n'
 
 bindkey -s '^a' 'bc -l\n'
