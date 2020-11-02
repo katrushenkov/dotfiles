@@ -2,7 +2,10 @@
 
 Personal configuration files based on Luke Smith's voidrice.
 
-![Alt Text](.local/share/wall.gif)
+
+<p align="center">
+![follow the white rabbit](.local/share/wall.gif)
+</p>
 
 ## Installation
 
