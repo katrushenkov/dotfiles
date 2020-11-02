@@ -168,6 +168,8 @@ source ~/.local/src/powerlevel10k/powerlevel10k.zsh-theme
 #in there. They will not be overwritten by skel.
 [[ -f ~/.zshrc-personal ]] && . ~/.zshrc-personal
 
+# test
+#(wal -r &)
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
