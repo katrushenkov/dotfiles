@@ -4,7 +4,7 @@ Personal configuration files based on Luke Smith's voidrice.
 
 
 <p align="center">
-	<img width="1200" height="600" src=".local/share/wall.gif">
+	<img width="1000" height="560" src=".local/share/wall.gif">
 </p>
 
 ![follow the white rabbit](.local/share/wall.gif)
