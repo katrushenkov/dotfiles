@@ -137,9 +137,8 @@ n ()
 }
 
 # nnn file manager
-export NNN_PLUG='f:finder;o:fzopen;p:mocplay;d:diffs;t:nmount;v:imgview'
-export NNN_BMS='ani:/mnt/main/ani'
-
+export NNN_PLUG='f:finder;o:fzopen;d:diffs;t:nmount;v:imgview;p:bookmarks'
+export NNN_BMS='a:/mnt/main/anima;d:~/Downloads;z:/home/ser/.config/'
 
 
 bindkey -s '^o' 'lfcd\n'
