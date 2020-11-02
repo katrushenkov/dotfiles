@@ -1,6 +1,6 @@
 # dotfiles
 
-This is personal configuration files based on Luke Smith's voidrice.
+Personal configuration files based on Luke Smith's voidrice.
 
 ## Installation
 
