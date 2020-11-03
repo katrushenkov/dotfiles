@@ -11,14 +11,25 @@ Personal configuration files based on Luke Smith's voidrice.
 
 coming soon...
 
-## Description
+## Preferred applications
 
-
--    Operating system: Arch Linux
--    Window manager: dwm
+-    Operating system: [Arch Linux](https://www.archlinux.org/)
+-    Window manager: https://github.com/katrushenkov/dwm
+-    File manager: [nnn](https://github.com/jarun/nnn)
+-    Music: [mpd](https://github.com/MusicPlayerDaemon/MPD)+[ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
+-    Compositor: [xcompmgr](https://github.com/freedesktop/xcompmgr)
+-    Sysinfo: [pfetch](https://github.com/dylanaraps/pfetch)
 -    GTK theme: []
 -    Icon theme: []
 -    Cursor theme: []
--    Fonts: [Consolas], [Rubik] and [Font Awesome]
--    Wallpapers: Link (Also can be found at misc/wallpapers directory)
--    Riced applications: [Compton, neofetch, Polybar, Rofi and Termite]
+-    Text editor: [neovim](https://github.com/neovim/neovim)
+-    Visualization: [cava](https://github.com/karlstav/cava)
+-    Torrents: [transmission](https://github.com/transmission/transmission)
+-    PDF reader: [zathura](https://github.com/pwmt/zathura)
+-    Fuzzy search: [fzf](https://github.com/junegunn/fzf)
+-    Notifications: [dunst](https://github.com/dunst-project/dunst)
+-    Screenshots: [flameshot](https://github.com/flameshot-org/flameshot) (forgive me, [scrot](https://github.com/resurrecting-open-source-projects/scrot))
+-    Notes: [Joplin](https://github.com/laurent22/joplin)
+-    Password manager: [keepassxc](https://github.com/keepassxreboot/keepassxc)
+-    Fonts: [Hack](https://github.com/source-foundry/Hack)
+-    Wallpaper: []
