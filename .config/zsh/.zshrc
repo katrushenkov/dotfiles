@@ -168,7 +168,7 @@ source ~/.local/src/powerlevel10k/powerlevel10k.zsh-theme
 #in there. They will not be overwritten by skel.
 [[ -f ~/.zshrc-personal ]] && . ~/.zshrc-personal
 
-# test
+#play with wal colors
 #(wal -r &)
 
 # Load syntax highlighting; should be last.
