@@ -14,7 +14,7 @@ coming soon...
 ## Preferred applications
 
 -    Operating system: [Arch Linux](https://www.archlinux.org/)
--    Window manager: https://github.com/katrushenkov/dwm
+-    Window manager: my fork of [dwm](https://github.com/katrushenkov/dwm)
 -    File manager: [nnn](https://github.com/jarun/nnn)
 -    Music: [mpd](https://github.com/MusicPlayerDaemon/MPD)+[ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
 -    Compositor: [xcompmgr](https://github.com/freedesktop/xcompmgr)
@@ -32,4 +32,4 @@ coming soon...
 -    Notes: [Joplin](https://github.com/laurent22/joplin)
 -    Password manager: [keepassxc](https://github.com/keepassxreboot/keepassxc)
 -    Fonts: [Hack](https://github.com/source-foundry/Hack)
--    Wallpaper: []
+-    Wallpaper: [link](.local/share/wall.jpg)
