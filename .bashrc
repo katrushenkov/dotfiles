@@ -5,7 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ll="ls -la"
 PS1='[\u@\h \W]\$ '
 
 #Ibus settings if you need them
