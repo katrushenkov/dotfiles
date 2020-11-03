@@ -17,8 +17,11 @@ coming soon...
 -    Operating system: [Arch Linux](https://www.archlinux.org/)
 -    Window manager: my fork of [dwm](https://github.com/katrushenkov/dwm)
 -    Terminal: [st](https://github.com/katrushenkov/st)
+-    Shell: zsh+[Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh)
+-    Launcher: [dmenu](https://tools.suckless.org/dmenu/)
 -    File manager: [nnn](https://github.com/jarun/nnn)
 -    Music: [mpd](https://github.com/MusicPlayerDaemon/MPD)+[ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
+-    Image viewer: [sxiv](https://github.com/muennich/sxiv)
 -    Compositor: [xcompmgr](https://github.com/freedesktop/xcompmgr)
 -    Sysinfo: [pfetch](https://github.com/dylanaraps/pfetch)
 -    GTK theme: []
