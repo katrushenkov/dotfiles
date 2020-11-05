@@ -28,8 +28,6 @@ alias \
 	lcd='cd' \
 	d='cd' \
 
-
-
 # These common commands are just too long! Abbreviate them.
 alias \
 	ka="killall" \
@@ -66,8 +64,6 @@ alias dots='/usr/bin/git --git-dir=$HOME/repos/dotfiles.git/ --work-tree=$HOME'
 alias note='nvim /mnt/main/anima/000.txt'
 alias by="systemctl poweroff -i"
 
-
-
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
@@ -75,7 +71,7 @@ alias by="systemctl poweroff -i"
 alias nnn="nnn -e"
 # alias fuck='sudo $(history -p !!)' # ????
 alias fuck=“sudo !!”
-#alias n="cd /mnt/main/anima/ && nvim "
+#alias a="cd /mnt/main/anima/ && nvim "
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias upd="sudo pacman -Syu"
@@ -312,7 +308,7 @@ alias gc="git commit -m"
 alias gd="git diff"
 alias gs="git status"
 
-alias r='ranger'
+alias r='nnn -e'
 
 # уменьшить изображение на 50%
 #alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
