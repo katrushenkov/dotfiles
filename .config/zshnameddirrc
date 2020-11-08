@@ -1,13 +1,14 @@
 hash -d h=/home/ser 
 hash -d mm=/mnt/main/mus 
-hash -d mn=/mnt 
+hash -d mn=/mnt/main 
 hash -d pp=/mnt/main/pic 
-hash -d sc=/home/ser/.local/bin 
-hash -d src=/home/ser/.local/src 
 hash -d vv=/mnt/main/vid 
 hash -d ani=/mnt/main/anima 
+hash -d dl=/mnt/main/dl 
 hash -d cac=/home/ser/.cache 
 hash -d cf=/home/ser/.config 
 hash -d D=/home/ser/Downloads 
 hash -d d=/home/ser/Documents 
 hash -d dt=/home/ser/.local/share 
+hash -d sc=/home/ser/.local/bin 
+hash -d src=/home/ser/.local/src 
