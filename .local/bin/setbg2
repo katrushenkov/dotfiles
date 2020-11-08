@@ -1,0 +1,11 @@
+#!/bin/bash
+# взял скрипт с инета. Люковские скрипты заебали, не работают почему-то
+
+## раскомментить для рандома из папки
+##wallpaperdir='/mnt/main/pic/wallpapers'
+##files=($wallpaperdir/*)
+##randompic=`printf "%s\n" "${files[RANDOM % ${#files[@]}]}"`
+
+xwallpaper --zoom /home/ser/.config/wall0.jpg
+
+#xwallpaper --zoom "$randompic"
