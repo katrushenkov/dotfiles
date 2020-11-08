@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+#example of $@ using in custom script
+ git log -p -- "$@"
