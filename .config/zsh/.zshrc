@@ -17,6 +17,9 @@ autoload -U colors && colors	# Load colors
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 
+# Handle CTRL-S lock
+stty -ixon
+
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
@@ -137,7 +140,12 @@ n ()
 }
 
 # nnn file manager
-export NNN_PLUG='x:fzcd;f:finder;o:fzopen;t:nmount;v:imgview;p:bookmarks'
+export NNN_PLUG='x:fzcd;f:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed'
+export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
+export NNN_BMS='a:/mnt/main/anima'
+export NNN_FIFO=/tmp/nnn.fifo
+export NNN_SSHFS="sshfs -o follow_symlinks" # set sshfs to follow symlinks
+export NNN_TRASH=1                          # use trash-cli instead of deleting
 
 bindkey -s '^o' 'lfcd\n'
 
@@ -154,20 +162,20 @@ bindkey '^T' transpose-chars
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-[ -f ~/.config/fzf.zsh ] && source ~/.config/fzf.zsh
+#[ -f ~/.config/fzf.zsh ] && source ~/.config/fzf.zsh
 
 source ~/.local/src/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-#from arcolinux zshrc:
-#create a file called .zshrc-personal and put all your personal aliases
-#in there. They will not be overwritten by skel.
-[[ -f ~/.zshrc-personal ]] && . ~/.zshrc-personal
+# fzf Auto-completion
+[[ $- == *i* ]] && source "$HOME/.config/zsh/fzf-completion.zsh" 2> /dev/null
 
-#play with wal colors
-#(wal -r &)
+# fzf Key bindings
+source "$HOME/.config/zsh/fzf-key-bindings.zsh"
+
+[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null

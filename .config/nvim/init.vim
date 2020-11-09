@@ -1,4 +1,5 @@
 let mapleader =","
+"let mapleader="\<Space>"
 
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -22,10 +23,11 @@ Plug 'tpope/vim-commentary'
 Plug 'kovetskiy/sxhkd-vim'
 Plug 'ap/vim-css-color'
 Plug 'morhetz/gruvbox'
-Plug 'tek256/simple-dark' " good grayscale theme
 Plug 'mcchrish/nnn.vim'
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " colorschemes
 Plug 'sainnhe/forest-night'
+Plug 'tek256/simple-dark' " good grayscale theme
 "Plug 'sainnhe/vim-color-forest-night'
 "Plug 'chriskempson/base16-vim'
 "Plug 'sonph/onehalf', {'rtp': 'vim/'}
@@ -40,11 +42,13 @@ set go=a
 set mouse=a
 set nohlsearch
 set clipboard+=unnamedplus
-
 set ignorecase
 "set nobackup
 "set nowb
 "set noswapfile
+
+" Markdown-preview
+"nnoremap <leader>md :MarkdownPreview<CR>
 
 "colorscheme simple-dark
 "colorscheme simple-dark-transparent
@@ -54,7 +58,6 @@ set bg=dark
 colorscheme gruvbox
 
 let g:aurline_theme='simple'
-
 
 " Some basics:
 	nnoremap c "_c
@@ -162,10 +165,19 @@ let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debu
 " Start nnn in the current file's directory
 nnoremap <C-f> :NnnPicker %:p:h<CR>
 
-
+" Insert date by F5
 nnoremap <F5> "=strftime("%Y%m%d")<CR>Po
 inoremap <F5> <C-R>=strftime("%Y%m%d")<CR><CR>
 
+" save on <c-s>
+"nmap <c-s> :w<cr>
+"imap <c-s> <esc>:w<cr>a
+"vnoremap <c-s> <Esc>:w<CR>
+
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
 
 " надо как-то сделать смену языка на английский при InsertLeave
 "function SetUsLayout()
