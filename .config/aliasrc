@@ -55,23 +55,29 @@ alias \
 	remzoo="remmina -c /home/ser/.local/share/remmina/group_rdp_zoovet_drug-office-era25-ru-11010.remmina" \
 	i2pstart="sudo systemctl start i2prouter.service" \
 	i2pstart="sudo systemctl stop i2prouter.service" \
-	slang="nvim ~/anima/slang.txt" \
-	lin="nvim ~/anima/linux/linux_notes.txt"
+	slang="nvim /mnt/main/anima/slang.txt" \
+	lin="nvim /mnt/main/anima/linux/linux_notes.txt"
 
+
+alias last='git log --oneline --graph --decorate --all'
 
 # alias for dotfiles bare repo
-alias dots='/usr/bin/git --git-dir=$HOME/repos/dotfiles.git/ --work-tree=$HOME'
+alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME'
 alias note='nvim /mnt/main/anima/000.txt'
 alias by="systemctl poweroff -i"
+
+# get selected files from nnn
+alias ncp="cat ${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection} | tr '\0' '\n'"
 
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
 
-alias nnn="nnn -e"
+alias nnn="nnn -a -c"
+alias r='nnn -a -c'
 # alias fuck='sudo $(history -p !!)' # ????
 alias fuck=“sudo !!”
-#alias a="cd /mnt/main/anima/ && nvim "
+alias a="cd /mnt/main/anima/ && nvim "
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias upd="sudo pacman -Syu"
@@ -79,28 +85,33 @@ alias ins="sudo pacman -S"
 alias rem="sudo pacman -R"
 alias za="zathura --fork"
 alias pic="picom -b --experimental-backends"
-alias red2="redshift -O 2000K"
-alias red3="redshift -O 3000K"
-alias red4="redshift -O 4000K"
-alias red5="redshift -O 5000K"
-alias com="python ~/Documents/comment_generator/generator.py"
+#alias red2="redshift -O 2000K"
+#alias red3="redshift -O 3000K"
+#alias red4="redshift -O 4000K"
+#alias red5="redshift -O 5000K"
+#alias com="python ~/Documents/comment_generator/generator.py"
 alias oc="cd Documents/Octopeek/Scrapping\ linkedin/scrapping"
 alias poly="./.config/polybar/launch.sh"
 alias uni="plasmapkg2 --type=kwinscript -r ."
-alias myip="dig +short myip.opendns.com @resolver1.opendns.com"alias l.='ls -d .* --color=auto'alias ports='sudo netstat -tulanp'
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias l.='ls -d .* --color=auto'
+alias ports='sudo netstat -tulanp'
+#alias myip='curl https://ipinfo.io/ip'
 
 alias scro="scrot -s '/home/ser/scrot/%Y%m%d_%H%M%S.png' -e 'xclip -selection c -t image/png < $f'"
 
 alias zoop="echo "👉😎👉 ~Zoop!~" | lolcat"
 alias weather="curl wttr.in"
-
+#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
+#alias copy="xclip -sel clipboard"
+#alias r='ranger --choosedir=$HOME/.rangerdir; cd "$(cat $HOME/.rangerdir)"'
+#alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 ####### KSM aliases ############
 alias whereami='echo $PWD'
 alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
 alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 alias rip='grep --color=auto'
-alias m='mousepad '
 alias tl='tmux list-session'
 alias tk='tmux kill-session'
 alias tn='tmux new'
@@ -108,7 +119,7 @@ alias ta='tmux attach'
 alias weather='curl wttr.in/cmb?0'
 alias weatherfull='curl wttr.in/cmb'
 alias up='uptime -p'
-alias randvid='mpv --shuffle /run/media/diamond/Data/Videos/'
+alias randvid='mpv --shuffle /mnt/main/vid/'
 alias ff='firefox'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias topdf='wkhtmltopdf'
@@ -118,14 +129,6 @@ alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 alias jctl="journalctl -p 3 -xb"
 alias sysupgrade="sudo apt update; sudo apt upgrade -y"
 alias p="python3"
-
-#games
-#alias nfsmw='cd ~/games/nfsmw; wine nfsmwres.exe'
-#alias deusex='cd ~/games/Deus_Ex/System; wine DeusEx.exe'
-#alias hl='cd ~/games/Half-Life/; wine hl.exe'
-alias brutaldoom='flatpak run org.zdoom.GZDoom -file brutalv21.pk3'
-alias mc='java -jar ~/games/mc.jar'
-alias botnet="google-chrome-stable"
 
 # Emacs
 #alias em="/usr/bin/emacs -nw"
@@ -152,7 +155,7 @@ alias init.vim="nvim ~/.config/nvim/init.vim"
 alias piconf="nvim ~/.config/picom.conf"
 
 alias cfi="nvim ~/.config/i3/config"
-alias cfz="nvim ~/.config/zsh/.zshrc"
+#alias cfz="nvim ~/.config/zsh/.zshrc"
 alias cfp="nvim ~/.config/polybar/config"
 alias cfn="nvim ~/.config/nvim/init.vim"
 
@@ -288,11 +291,7 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 #mounting the folder Public for exchange between host and guest on virtualbox
 alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Public"
 
-# TIME
-alias now="echo -e $(date +'%H:%M')"
-
-#alias e="exit"
-#alias c="clear"
+# alias now="echo -e $(date +'%H:%M')"
 
 #alias reload="source ~/.zshrc"
 
@@ -301,14 +300,13 @@ alias now="echo -e $(date +'%H:%M')"
 # Show open ports
 #alias openports='netstat -nape --inet'
 
-#alias lsblk='lsblk -f -o +SIZE,MODEL'
+alias lsblk='lsblk -f -o +SIZE,MODEL'
 
-alias ga="git add"
-alias gc="git commit -m"
-alias gd="git diff"
-alias gs="git status"
+#alias ga="git add"
+#alias gc="git commit -m"
+#alias gd="git diff"
+#alias gs="git status"
 
-alias r='nnn -e'
 
 # уменьшить изображение на 50%
 #alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
@@ -329,9 +327,7 @@ alias r='nnn -e'
 # проверить разницу
 #set -o vi
 
-
-# alias x="clear"
-# alias c="cd"
+alias x="clear"
 # alias C for copy stdin
 # alias X for clead + pwd (to clear screen while changing dir)
 # alias xx="quit"
@@ -380,8 +376,6 @@ alias r='nnn -e'
 #alias ls='ls -hN --color=auto --group-directories-first'
 #alias ccat="hightlight --out-format=ansi" # Color cat - print file with syntax highlighting.
 
-
-#alias editzsh="nvim ~/.zshrc"
 #alias savezsh="source ~/.zshrc"
 #alias editff="sudo nvim /usr/lib/firefox/distribution/distribution.ini"
 #alias nf="neofetch"
@@ -391,7 +385,6 @@ alias r='nnn -e'
 #alias clr="tput reset"
 #alias minecraft="java -jar ~/Downloads/TLauncher-2.66/TLauncher-2.66.jar
 
-
 # Automatically load vim session files
 #alias vis='vim -S Session.vim'
 
@@ -399,13 +392,9 @@ alias r='nnn -e'
 #   sleep 10; alert
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#alias rm='rm -i '
-
 #alias icat="kitty +kitten icat"
 
 #alias fuck="nordvpn d && nordvpn c AU"
-
-
 
 #alias moo="fortune | cowsay | lolcat"
 #alias tux="fortune | cowsay -f tux | lolcat"
@@ -443,6 +432,13 @@ alias r='nnn -e'
 #
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #
+
+## If neovim is available, make it the default vim implementation
+#if type nvim > /dev/null 2>&1; then
+#    alias vim=nvim
+#fi
+
+
 #alias ls='ls --color'
 #alias ls="ls --color=auto -FHh"
 #alias ll='ls -l'
@@ -462,8 +458,6 @@ alias r='nnn -e'
 #alias weather='curl wttr.in'
 #alias copy="xclip -selection clipboard"
 #
-#alias myip='curl https://ipinfo.io/ip'
-#alias vim='nvim'
 #alias merg='xrdb -merge /home/adri/.Xresources'
 #alias pac='sudo pacman -S'
 #alias d='ssh dietpi@192.168.0.10'
@@ -482,7 +476,6 @@ alias r='nnn -e'
 #alias ytmp3='youtube-dl --add-metadata -x --audio-format mp3 --output "%(title)s.%(ext)s" --audio-quality 0 --add-metadata --exec "mv {} /home/adri/Music/" $(xclip -o) && notify-send "youtube-dl" "download complete !"'
 #alias music='ncmpcpp'
 #alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-#
 #
 ## Example aliases
 ## alias zshconfig="mate ~/.zshrc"
@@ -669,9 +662,6 @@ alias netprocs="lsof -P -i -n"
 ## alias to show the date
 #alias da='date "+%Y-%m-%d %A %T %Z"'
 #
-#alias cp='cp -i'
-#alias mv='mv -i'
-#alias rm='rm -iv'
 #alias mkdir='mkdir -p'
 #alias ps='ps auxf'
 #alias ping='ping -c 10'
@@ -1000,15 +990,7 @@ alias netprocs="lsof -P -i -n"
 #    [ $# -gt 0 ] && dest=$1 || dest=.
 #    rscp --inplace dettorer@dettorer.net:~/quickfetch/ "$dest"
 #}
-#
-## Self-protection
-#alias mv='mv -i'
-#alias cp='cp -i'
-#
-## If neovim is available, make it the default vim implementation
-#if type nvim > /dev/null 2>&1; then
-#    alias vim=nvim
-#fi
+
 
 #[ -f ~/.scripts/shortcuts.sh ] && ~/.scripts.shortcuts.sh
 # или вот такой обновленный вариант от люка:
@@ -1037,11 +1019,52 @@ alias netprocs="lsof -P -i -n"
 #source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # можно в конце еще приписать 2>/dev/null
 
+#killport(){
+#    kill -9 $(lsof -t -i:$1)
+#}
+
+# DOCKER
+#alias portainer='docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer'
+#
+#dps() {
+#    docker ps -a
+#}
+#
+#dka() {
+#    docker kill $(docker ps -a -q)
+#}
+#dsa() {
+#    docker stop $(docker ps -a -q)
+#}
+#
+#dsh(){
+#    docker exec -ti $1 /bin/bash
+#}
+#
+#dip(){
+#   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+#}
+
+#Make file with random data
+alias rand="head -c 50K < /dev/urandom > $1"
+
+#alias sx="startx"
+# Navigation
+#alias ..="cd .."
+#alias l="ls -F --color=always --group-directories-first"
+#alias ll="ls -AF --color=always --group-directories-first"
+#alias lll="stat -c '%A %a %n' *"
+#alias lll="du -sh *"
+#################################################################
+# Lsiten to plaza.one
+#alias plaza="exec mpv --no-video -- https://radio.plaza.one/ogg"
 
 #################################################################
 ### Невостребованные алиасы
 #alias lock="i3lock -i $HOME/.config/0.jpg -p win"
 ###
+#alias e="exit"
+
 #alias ni="npm install --save"
 #alias nid="npm install --save -d"
 #alias nig="npm install --save -g"
@@ -1058,6 +1081,14 @@ alias netprocs="lsof -P -i -n"
 
 #alias n='newsboat -q'
 
+
+#games
+#alias nfsmw='cd ~/games/nfsmw; wine nfsmwres.exe'
+#alias deusex='cd ~/games/Deus_Ex/System; wine DeusEx.exe'
+#alias hl='cd ~/games/Half-Life/; wine hl.exe'
+#alias brutaldoom='flatpak run org.zdoom.GZDoom -file brutalv21.pk3'
+#alias mc='java -jar ~/games/mc.jar'
+#alias botnet="google-chrome-stable"
 ##################################################################
-### Ubuntu section
+### Debian/Ubuntu section
 #alias up="sudo apt update && sudo apt upgrade -y"

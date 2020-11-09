@@ -13,6 +13,11 @@ st.cwscale: 0.8
 st.cursorblinkstyle:  0
 st.cursorblinkontype: 1
 
+!test
+*.cursorColor:  #F8F8F2
+
+Sxiv.background: #151515
+
 !!st*font: Source Code Pro for Powerline:size=10
 !!st.font:  Source Code Pro for Powerline:pixelsize=16:antialias=true:autohint=true; !! issued line
 !!st*alpha: 0.8
