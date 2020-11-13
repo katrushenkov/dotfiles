@@ -309,7 +309,7 @@ alias lsblk='lsblk -f -o +SIZE,MODEL'
 
 
 # уменьшить изображение на 50%
-#alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
+alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
 #alias config='ranger /home/ser/.config/'
 
