@@ -12,7 +12,7 @@ Personal configuration files based on Luke Smith's voidrice.
 coming soon...
 
 
-## Preferred applications
+## Preferred software
 
 -    Operating system: [Arch Linux](https://www.archlinux.org/)
 -    Window manager: my fork of [dwm](https://github.com/katrushenkov/dwm)
@@ -23,8 +23,8 @@ coming soon...
 -    Music: [mpd](https://github.com/MusicPlayerDaemon/MPD)+[ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
 -    Image viewer: [sxiv](https://github.com/muennich/sxiv)
 -    Compositor: [xcompmgr](https://github.com/freedesktop/xcompmgr)
--    Sysinfo: [pfetch](https://github.com/dylanaraps/pfetch)
--    GTK theme: []
+-    Fetch: [pfetch](https://github.com/dylanaraps/pfetch)
+-    GTK theme: Arc-Gruvbox
 -    Icon theme: []
 -    Cursor theme: []
 -    Text editor: [neovim](https://github.com/neovim/neovim)
