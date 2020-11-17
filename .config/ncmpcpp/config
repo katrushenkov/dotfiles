@@ -32,4 +32,4 @@ statusbar_color = red
 statusbar_time_color = cyan:b
 
 execute_on_song_change = notify-send "Now Playing ♫" "$(mpc current)"
-follow_inside_symlinks = yes
+#follow_inside_symlinks = yes
