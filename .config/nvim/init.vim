@@ -150,6 +150,11 @@ let g:aurline_theme='simple'
 " Run xrdb whenever Xdefaults or Xresources are updated.
 	autocmd BufWritePost *Xresources,*Xdefaults,*xresources,*xdefaults !xrdb %
 
+" Have dwmblocks automatically recompile and run when you edit this file in
+" vim with the following line in your vimrc/init.vim:
+	autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
+
+
 " Turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
 if &diff
     highlight! link DiffText MatchParen
