@@ -101,11 +101,12 @@ handle_pdf() {
 }
 
 handle_audio() {
-    if which mocp >/dev/null 2>&1 && which mocplay >/dev/null 2>&1; then
-        mocplay "${FPATH}" "opener" >/dev/null 2>&1
-        exit 0
-    elif which mpv >/dev/null 2>&1; then
-        mpv "${FPATH}" >/dev/null 2>&1 &
+    #if which mocp >/dev/null 2>&1 && which mocplay >/dev/null 2>&1; then
+    #    mocplay "${FPATH}" "opener" >/dev/null 2>&1
+    #    exit 0
+    if which mpv >/dev/null 2>&1; then
+        #mpv "${FPATH}" >/dev/null 2>&1 &
+        mpv --terminal "${FPATH}"
         exit 0
     elif which media_client >/dev/null 2>&1; then
         media_client play "${FPATH}" >/dev/null 2>&1 &
