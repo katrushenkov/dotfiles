@@ -1,4 +1,5 @@
-let mapleader =","
+let mapleader =";"
+"let mapleader =","
 "let mapleader="\<Space>"
 
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
@@ -25,6 +26,7 @@ Plug 'ap/vim-css-color'
 Plug 'morhetz/gruvbox'
 Plug 'mcchrish/nnn.vim'
 "Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 " colorschemes
 Plug 'sainnhe/forest-night'
 Plug 'tek256/simple-dark' " good grayscale theme
@@ -154,14 +156,12 @@ let g:aurline_theme='simple'
 " vim with the following line in your vimrc/init.vim:
 	autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
 
-
 " Turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
 if &diff
     highlight! link DiffText MatchParen
 endif
 
 	map <C-x> :FZF<CR>
-
 
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " Or override
@@ -176,11 +176,6 @@ inoremap <F5> <C-R>=strftime("%Y%m%d")<CR><CR>
 "nmap <c-s> :w<cr>
 "imap <c-s> <esc>:w<cr>a
 "vnoremap <c-s> <Esc>:w<CR>
-
-"map <C-j> <C-W>j
-"map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
 
 " надо как-то сделать смену языка на английский при InsertLeave
 "function SetUsLayout()
