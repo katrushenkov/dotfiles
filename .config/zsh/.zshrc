@@ -139,30 +139,47 @@ n ()
     fi
 }
 
+# ???
+n2 ()
+{
+    dvtm -m '\\' "nnn -fnrs $@" "nnn -fnrs $@"
+}
+
+# ???
+nsel ()
+{
+    tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
+}
+
 # nnn file manager
-export NNN_PLUG='x:fzcd;f:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed'
+[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
+export NNN_USE_EDITOR=1
+#export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;e:-_ewrap $nnn*'
+export NNN_PLUG='f:fzcd;z:fzz;x:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed'
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
-export NNN_BMS='a:/mnt/main/anima'
+export NNN_BMS='a:/mnt/main/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO=/tmp/nnn.fifo
 export NNN_SSHFS="sshfs -o follow_symlinks" # set sshfs to follow symlinks
-export NNN_TRASH=1                          # use trash-cli instead of deleting
+export NNN_TRASH=2                          # use trash-cli [1] and gio trash [2] instead of deleting
+export NNN_CONTEXT_COLORS="2536"
+export NNN_IDLE_TIMEOUT=900
+export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
+export NNN_SSHFS_OPTS='sshfs -o reconnect,auto_cache,follow_symlinks'
 
 bindkey -s '^o' 'lfcd\n'
 
 bindkey -s '^a' 'bc -lq\n'
 
-bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+#bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
 bindkey '^[[P' delete-char
 
+#bindkey '^T' transpose-chars
 bindkey '^X' fzf-file-widget
-bindkey '^T' transpose-chars
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
-
-#[ -f ~/.config/fzf.zsh ] && source ~/.config/fzf.zsh
 
 source ~/.local/src/powerlevel10k/powerlevel10k.zsh-theme
 
@@ -172,10 +189,8 @@ source ~/.local/src/powerlevel10k/powerlevel10k.zsh-theme
 # fzf Auto-completion
 [[ $- == *i* ]] && source "$HOME/.config/zsh/fzf-completion.zsh" 2> /dev/null
 
-# fzf Key bindings
+# fzf Key bindings (^X - fzf-file-widget, ^F - fzf-cd-widget)
 source "$HOME/.config/zsh/fzf-key-bindings.zsh"
-
-[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
