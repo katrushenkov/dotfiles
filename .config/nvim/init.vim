@@ -40,6 +40,7 @@ Plug 'tek256/simple-dark' " good grayscale theme
 "Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
+
 set go=a
 set mouse=a
 set nohlsearch
