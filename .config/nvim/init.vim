@@ -40,7 +40,7 @@ Plug 'tek256/simple-dark' " good grayscale theme
 "Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
-
+set title
 set go=a
 set mouse=a
 set nohlsearch
@@ -49,6 +49,11 @@ set ignorecase
 "set nobackup
 "set nowb
 "set noswapfile
+set noruler
+set laststatus=0
+set noshowmode
+set noshowcmd
+
 
 " Markdown-preview
 "nnoremap <leader>md :MarkdownPreview<CR>
@@ -73,6 +78,8 @@ let g:aurline_theme='simple'
 	set wildmode=longest,list,full
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" Perform dot commands over visual blocks:
+	vnoremap . :normal .<CR>
 
 " Goyo plugin makes text more readable when writing prose:
 	map <leader>f :Goyo \| set bg=light \| set linebreak<CR>
@@ -93,11 +100,12 @@ let g:aurline_theme='simple'
     endif
 
 " vimling:
-	nm <leader>d :call ToggleDeadKeys()<CR>
-	imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
-	nm <leader>i :call ToggleIPA()<CR>
-	imap <leader>i <esc>:call ToggleIPA()<CR>a
-	nm <leader>q :call ToggleProse()<CR>
+	nm <leader><leader>d :call ToggleDeadKeys()<CR>
+	imap <leader><leader>d <esc>:call ToggleDeadKeys()<CR>a
+	nm <leader><leader>i :call ToggleIPA()<CR>
+	imap <leader><leader>i <esc>:call ToggleIPA()<CR>a
+	nm <leader><leader>q :call ToggleProse()<CR>
+
 
 " Shortcutting split navigation, saving a keypress:
 	map <C-h> <C-w>h
@@ -109,7 +117,7 @@ let g:aurline_theme='simple'
 	map Q gq
 
 " Check file in shellcheck:
-	map <leader>s :!clear && shellcheck %<CR>
+	map <leader>s :!clear && shellcheck -x %<CR>
 
 " Open my bibliography file in split
 	map <leader>b :vsp<space>$BIB<CR>
@@ -146,12 +154,15 @@ let g:aurline_theme='simple'
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 	autocmd BufWritePre * %s/\s\+$//e
-	autocmd BufWritepre * %s/\n\+\%$//e
+	autocmd BufWritePre * %s/\n\+\%$//e
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
 	autocmd BufWritePost bm-files,bm-dirs !shortcuts
 " Run xrdb whenever Xdefaults or Xresources are updated.
-	autocmd BufWritePost *Xresources,*Xdefaults,*xresources,*xdefaults !xrdb %
+	autocmd BufRead,BufNewFile xresources,xdefaults set filetype=xdefaults
+	autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
+" Recompile dwmblocks on config edit.
+	autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
 
 " Have dwmblocks automatically recompile and run when you edit this file in
 " vim with the following line in your vimrc/init.vim:
@@ -161,6 +172,25 @@ let g:aurline_theme='simple'
 if &diff
     highlight! link DiffText MatchParen
 endif
+
+" Function for toggling the bottom statusbar:
+let s:hidden_all = 1
+function! ToggleHiddenAll()
+    if s:hidden_all  == 0
+        let s:hidden_all = 1
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+    else
+        let s:hidden_all = 0
+        set showmode
+        set ruler
+        set laststatus=2
+        set showcmd
+    endif
+endfunction
+nnoremap <leader>h :call ToggleHiddenAll()<CR>
 
 	map <C-x> :FZF<CR>
 
@@ -172,6 +202,10 @@ nnoremap <C-f> :NnnPicker %:p:h<CR>
 " Insert date by F5
 nnoremap <F5> "=strftime("%Y%m%d")<CR>Po
 inoremap <F5> <C-R>=strftime("%Y%m%d")<CR><CR>
+
+"TODO set cursor at middle of page
+nnoremap <C-j> <PageDown>
+nnoremap <C-k> <PageUp>
 
 " save on <c-s>
 "nmap <c-s> :w<cr>
