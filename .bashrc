@@ -33,6 +33,7 @@ shopt -s cmdhist # save multi-line commands in history as single line
 shopt -s dotglob
 shopt -s histappend # do not overwrite history
 shopt -s expand_aliases # expand aliases
+
 # vi-mode
 #set -o vi
 
@@ -74,4 +75,4 @@ ex ()
   fi
 }
 
-[ -f ~/.config/fzf.bash ] && source ~/.config/fzf.bash
+#[ -f ~/.config/fzf.bash ] && source ~/.config/fzf.bash
