@@ -28,20 +28,18 @@ alias \
 	c='cd' \
 	c..='cd ..' \
 	..="cd .." \
+	...='cd ../..' \
+	....='cd ../../..' \
+	.....='cd ../../../..' \
 	cd..='cd ..' \
 	lcd='cd' \
-	d='cd' \
+	home='cd ~' \
+	d='cd'
 #alias l="ls -F --color=always --group-directories-first"
 #alias ll="ls -AF --color=always --group-directories-first"
 #alias lll="stat -c '%A %a %n' *"
 #alias lll="du -sh *"
-## Change directory aliases
-#alias home='cd ~'
-#alias cd..='cd ..'
-#alias ..='cd ..'
-#alias ...='cd ../..'
-#alias ....='cd ../../..'
-#alias .....='cd ../../../..'
+
 
 
 
@@ -343,15 +341,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #alias feh='feh --scale-down --auto-zoom'
 
 #alias feh="feh --no-fehbg -B black"
-
-#alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
-#alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
-
-
-## If neovim is available, make it the default vim implementation
-#if type nvim > /dev/null 2>&1; then
-#    alias vim=nvim
-#fi
 
 #l='ls -CF'$
 #la='ls -lha'$
@@ -937,6 +926,9 @@ alias netprocs="lsof -P -i -n"
 
 #alias davefetch='neofetch --ascii "$(cat $HOME/Pictures/asciis/ilovedos_ascii.txt)"'
 #alias tuxfetch='neofetch --ascii "$(cat $HOME/Pictures/asciis/linux_ascii.txt)"'
+
+#alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
+#alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
 
 #alias mpa="mpv --no-audio-display --script=$HOME/bin/mpa.lua"
 #alias plaza="exec mpv --no-video -- https://radio.plaza.one/ogg"
