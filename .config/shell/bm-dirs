@@ -9,6 +9,8 @@ bb	/mnt/main/books
 dl	/mnt/main/dl
 cac	${XDG_CACHE_HOME:-$HOME/.cache}
 cf	${XDG_CONFIG_HOME:-$HOME/.config}
+cfzd	${XDG_CONFIG_HOME:-$HOME/.config}/zsh
+cfs	${XDG_CONFIG_HOME:-$HOME/.config}/shell
 D	${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 d	${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 dt	${XDG_DATA_HOME:-$HOME/.local/share}

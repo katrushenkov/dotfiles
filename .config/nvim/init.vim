@@ -207,6 +207,14 @@ inoremap <F5> <C-R>=strftime("%Y%m%d")<CR><CR>
 nnoremap <C-j> <PageDown>
 nnoremap <C-k> <PageUp>
 
+function! SetUsLayout()
+  silent !xkblayout-state set 0 > /dev/null
+endfunction
+
+autocmd InsertLeave * call SetUsLayout()
+
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+
 " save on <c-s>
 "nmap <c-s> :w<cr>
 "imap <c-s> <esc>:w<cr>a
@@ -225,5 +233,3 @@ nnoremap <C-k> <PageUp>
 "set iminsert=0
 "set imsearch=0
 "highlight lCursor guifg=NONE guibg=Cyan
-
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
