@@ -17,14 +17,16 @@ alias \
 	ffmpeg="ffmpeg -hide_banner"
 
 alias \
-	ls="ls -hN --color=auto --group-directories-first" \
+	ls="ls -hNF --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
-	la="ls -ah" \
-	ll="ls -lah" \
-	l="ls" \
-	l.="ls -A | egrep '^\.'" \
+	la="ls -ahF" \
+	llll="du -sh *" \
+	lll="stat -c '%A %a %n' *" \
+	ll="ls -lahF" \
+	l="ls -F" \
+	l.="ls -AF | egrep '^\.'" \
 	c='cd' \
 	c..='cd ..' \
 	..="cd .." \
@@ -35,13 +37,6 @@ alias \
 	lcd='cd' \
 	home='cd ~' \
 	d='cd'
-#alias l="ls -F --color=always --group-directories-first"
-#alias ll="ls -AF --color=always --group-directories-first"
-#alias lll="stat -c '%A %a %n' *"
-#alias lll="du -sh *"
-
-
-
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -71,12 +66,11 @@ alias \
 	remzoo="remmina -c /home/ser/.local/share/remmina/group_rdp_zoovet_drug-office-era25-ru-11010.remmina" \
 	i2pstart="sudo systemctl start i2prouter.service" \
 	i2pstart="sudo systemctl stop i2prouter.service" \
-	slang="nvim /mnt/main/anima/slang.txt" \
-	lin="nvim /mnt/main/anima/linux/linux_notes.txt" \
 	dirsize="du -sh" \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
 	a="cd /mnt/main/anima/ && nvim "
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias myip2='curl https://ipinfo.io/ip'
 alias nf="neofetch"
 alias rand="head -c 50K < /dev/urandom > $1"
 alias bashrc='nvim ~.bashrc'
@@ -92,9 +86,12 @@ alias free="free -ht"
 alias da='date "+%Y-%m-%d %A %T %Z"'
 alias xx="exit"
 alias now='tty-clock -c'
+alias now2="echo -e $(date +'%H:%M')"
 alias mute="pamixer -m"
 alias unmute="pamixer -u"
+alias netprocs="lsof -P -i -n"
 
+alias money="echo >> /mnt/main/anima/money.csv"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 # alias for dotfiles bare repo
@@ -109,7 +106,6 @@ alias N='sudo nnn -dn'
 alias nnn="nnn"
 alias r="nnn"
 
-
 # alias fuck='sudo $(history -p !!)' # ????
 alias fuck=“sudo !!”
 alias upd="sudo pacman -Syu"
@@ -120,7 +116,6 @@ alias pic="picom -b --experimental-backends"
 alias oc="cd Documents/Octopeek/Scrapping\ linkedin/scrapping"
 alias l.='ls -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
-alias myip='curl https://ipinfo.io/ip'
 
 
 #alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
@@ -238,11 +233,6 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 #add new fonts
 alias update-fc='sudo fc-cache -fv'
 
-#copy/paste all content of /etc/skel over to home folder - backup of config created - beware
-alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/skel/* ~'
-#backup contents of /etc/skel to hidden backup folderin home/user
-alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'
-
 #copy bashrc-latest over on bashrc - cb= copy bashrc
 #alias cb='sudo cp /etc/skel/.bashrc ~/.bashrc && source ~/.bashrc'
 #copy /etc/skel/.zshrc over on ~/.zshrc - cb= copy zshrc
@@ -270,20 +260,8 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 #mounting the folder Public for exchange between host and guest on virtualbox
 alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Public"
 
-alias now="echo -e $(date +'%H:%M')"
 alias sx="startx"
 alias openports='netstat -nape --inet'
-
-### git
-#alias ga="git add"
-#alias gc="git commit -m"
-#alias gd="git diff"
-#alias gs="git status"
-#gc="git commit -v -s"
-#gst="git status --short"
-#ga="git add"
-#gd="git diff --minimal"
-#gl="git log --oneline --decorate --graph"
 
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
@@ -381,7 +359,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
 #alias feh="feh --no-fehbg -B black"
 
-alias netprocs="lsof -P -i -n"
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
@@ -814,6 +791,97 @@ alias netprocs="lsof -P -i -n"
 
 #Make file with random data
 
+
+### git
+#alias gc="git commit -m"
+#alias gs="git status"
+#gc="git commit -v -s"
+#gst="git status --short"
+#gd="git diff --minimal"
+#gl="git log --oneline --decorate --graph"
+
+# GIT Aliases
+alias gcl='git clone'
+alias ga='git add'
+alias grm='git rm'
+alias gap='git add -p'
+alias gall='git add -A'
+alias gf='git fetch --all --prune'
+alias gft='git fetch --all --prune --tags'
+alias gfv='git fetch --all --prune --verbose'
+alias gftv='git fetch --all --prune --tags --verbose'
+alias gus='git reset HEAD'
+alias gpristine='git reset --hard && git clean -dfx'
+alias gclean='git clean -fd'
+alias gm="git merge"
+alias gmv='git mv'
+alias g='git'
+alias get='git'
+alias gs='git status'
+alias gss='git status -s'
+alias gsu='git submodule update --init --recursive'
+alias gl='git pull'
+alias glum='git pull upstream master'
+alias gpr='git pull --rebase'
+alias gpp='git pull && git push'
+alias gup='git fetch && git rebase'
+alias gp='git push'
+alias gpo='git push origin'
+alias gpu='git push --set-upstream'
+alias gpuo='git push --set-upstream origin'
+alias gpuoc='git push --set-upstream origin $(git symbolic-ref --short HEAD)'
+alias gpom='git push origin master'
+alias gr='git remote'
+alias grv='git remote -v'
+alias gra='git remote add'
+alias gd='git diff'
+alias gdl='git diff --name-only --diff-filter=U'
+alias gds='git diff --staged'
+alias gdv='git diff -w "$@" | vim -R -'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gcm='git commit -v -m'
+alias gcam='git commit -v -am'
+alias gci='git commit --interactive'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gbt='git branch --track'
+alias gbm='git branch -m'
+alias gbd='git branch -d'
+alias gbD='git branch -D'
+alias gcount='git shortlog -sn'
+alias gcp='git cherry-pick'
+alias gco='git checkout'
+alias gcom='git checkout master'
+alias gcb='git checkout -b'
+alias gcob='git checkout -b'
+alias gct='git checkout --track'
+alias gexport='git archive --format zip --output'
+alias gdel='git branch -D'
+alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/master'
+alias gll='git log --graph --pretty=oneline --abbrev-commit'
+alias gg="git log --graph --pretty=format:'%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset' --abbrev-commit --date=relative"
+alias ggs="gg --stat"
+alias gsl="git shortlog -sn"
+alias gwc="git whatchanged"
+alias gt="git tag"
+alias gta="git tag -a"
+alias gtd="git tag -d"
+alias gtl="git tag -l"
+alias gpatch="git format-patch -1"
+# Show commits since last pull
+alias gnew="git log HEAD@{1}..HEAD@{0}"
+# Add uncommitted and unstaged changes to the last commit
+alias gcaa="git commit -a --amend -C HEAD"
+alias ggui="git gui"
+alias gcsam="git commit -S -am"
+alias gst="git stash"
+alias gstb="git stash branch"
+alias gstd="git stash drop"
+alias gstl="git stash list"
+alias gh='cd "$(git rev-parse --show-toplevel)"'
+# Show untracked files
+alias gu='git ls-files . --exclude-standard --others'
 #################################################################
 ### unclaimed aliases
 #alias r='ranger --choosedir=$HOME/.rangerdir; cd "$(cat $HOME/.rangerdir)"'
@@ -969,3 +1037,9 @@ alias netprocs="lsof -P -i -n"
 #alias vd="pamixer -d 10"
 #alias vu="pamixer -i 10"
 #alias svi='sudo vi'
+
+### ArcoLinux
+#copy/paste all content of /etc/skel over to home folder - backup of config created - beware
+#alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/skel/* ~'
+#backup contents of /etc/skel to hidden backup folderin home/user
+#alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'

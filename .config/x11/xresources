@@ -1,22 +1,23 @@
+Sxiv.background: #151515
+
 !! Transparency (0-1):
 !*.alpha: 0.8
 
 !! Set a default font and font size as below:
 !!*.font: monospace:size=10
-*.font: hack:size=10
+!!*.font: hack:size=10
 
 /* проверит на ст */
 ! xst
-st.font: Hack:style=Regular:pixelsize=16:antialias=true:autohint=true;
-st.chscale: 0.8
-st.cwscale: 0.8
-st.cursorblinkstyle:  0
-st.cursorblinkontype: 1
+!st.font: Hack:style=Regular:pixelsize=16:antialias=true:autohint=true;
+!st.chscale: 0.8
+!st.cwscale: 0.8
+!st.cursorblinkstyle:  0
+!st.cursorblinkontype: 1
 
 !test
-*.cursorColor:  #F8F8F2
+!*.cursorColor:  #F8F8F2
 
-Sxiv.background: #151515
 
 !!st*font: Source Code Pro for Powerline:size=10
 !!st.font:  Source Code Pro for Powerline:pixelsize=16:antialias=true:autohint=true; !! issued line
