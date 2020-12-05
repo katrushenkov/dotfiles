@@ -14,6 +14,7 @@ autoload -U colors && colors	# Load colors
 #PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 #PS1='[\u@\h \W]\$ '
 
+setopt +o nomatch	# fix for youtube-dl aliases
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 

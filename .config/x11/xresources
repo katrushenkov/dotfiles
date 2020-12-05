@@ -1,4 +1,7 @@
+!!gruvbox
+Sxiv.font: Hack 9
 Sxiv.background: #151515
+Sxiv.foreground: #4d6e4e
 
 !! Transparency (0-1):
 !*.alpha: 0.8
@@ -17,7 +20,6 @@ Sxiv.background: #151515
 
 !test
 !*.cursorColor:  #F8F8F2
-
 
 !!st*font: Source Code Pro for Powerline:size=10
 !!st.font:  Source Code Pro for Powerline:pixelsize=16:antialias=true:autohint=true; !! issued line
