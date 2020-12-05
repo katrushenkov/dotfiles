@@ -25,7 +25,7 @@ while getopts "hvrpi:c:a:o:d:f:t:e:x:" o; do case "${o}" in
 			exit 1 ;;
 	p) echo "Purge old build files in $cache? [y/N]"
 		read -r confirm
-		echo "$confirm" | grep -iq "^y$" && rm -rf "$cache" && echo "Done."
+		echo "$confim" | grep -iq "^y$" && rm -rf "$cache" && echo "Done."
 		exit ;;
 	v) verbose=True ;;
 	*) echo "$(basename "$0") usage:
@@ -94,7 +94,7 @@ do
 			convert -size "${res:-1920x1080}" canvas:"${bgc:-black}" -gravity center "$content" -resize 1920x1080 -composite "$prepdir/$base"
 	else
 		{ [ ! -f "$prepdir/$base" ] || [ -n "${redo+x}" ] ;} &&
-			convert -size "${res:-1920x1080}" -background "${bgc-black}" -fill "${fgc:-white}" -pointsize "${ppt:-150}" -gravity center label:"$content" "$prepdir/$base"
+			convert -size "${res:-1920x1080}" -background "${bgc:-black}" -fill "${fgc:-white}" -pointsize "${ppt:-150}" -gravity center label:"$content" "$prepdir/$base"
 	fi
 
 	# If the first line, do not write yet.
@@ -119,4 +119,4 @@ fi
 
 # Might also try:
 # -vf "fps=${fps:-24},format=yuv420p" "$outfile"
-# but has given some problems.
+# but has given some problems.r
