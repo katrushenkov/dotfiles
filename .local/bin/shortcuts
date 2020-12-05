@@ -15,12 +15,13 @@ nnn_shortcuts="${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/shortcutsrc"
 
 # Remove, prepare files
 rm -f "$ranger_shortcuts" "$qute_shortcuts" "$zsh_named_dirs" 2>/dev/null
-rm ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/*
+rm -f ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/* 2>/dev/null
+rm -f ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks 2>/dev/null
+mkdir ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks 2>/dev/null
 printf "# vim: filetype=sh\\n" > "$fish_shortcuts"
 printf "# vim: filetype=sh\\nalias " > "$shell_shortcuts"
 printf "\" vim: filetype=vim\\n" > "$vifm_shortcuts"
 #printf(\"rm \${XDG_CACHE_HOME:-\$HOME/.cache}/nnn/bookmarks/*\") >> \"$nnn_shortcuts\" ;
-
 
 # Format the `directories` file in the correct syntax and sent it to all three configs.
 eval "echo \"$(cat "$bmdirs")\"" | \

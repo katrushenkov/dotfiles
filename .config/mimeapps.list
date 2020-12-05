@@ -24,3 +24,5 @@ audio/mpeg=vlc.desktop;
 video/mp4=vlc.desktop;
 video/x-msvideo=vlc.desktop;
 video/x-matroska=vlc.desktop;
+image/gif=brave-browser.desktop;
+application/pdf=org.flameshot.Flameshot.desktop;

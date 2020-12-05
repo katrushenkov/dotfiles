@@ -211,7 +211,8 @@ function! SetUsLayout()
   silent !xkblayout-state set 0 > /dev/null
 endfunction
 
-autocmd InsertLeave * call SetUsLayout()
+"autocmd InsertLeave * call SetUsLayout()
+autocmd CmdlineEnter * call SetUsLayout()
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
