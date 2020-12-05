@@ -90,6 +90,10 @@ alias now2="echo -e $(date +'%H:%M')"
 alias mute="pamixer -m"
 alias unmute="pamixer -u"
 alias netprocs="lsof -P -i -n"
+alias cl="clear"
+
+# alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
+#alias covid='curl "https://covid-graph.cgsimmons.dev/graph?days=60&height=40&disableCases=true&disableRecovered=true"''
 
 alias money="echo >> /mnt/main/anima/money.csv"
 
@@ -151,7 +155,7 @@ alias yta-aac="youtube-dl --extract-audio --audio-format aac "
 alias yta-best="youtube-dl --extract-audio --audio-format best "
 alias yta-flac="youtube-dl --extract-audio --audio-format flac "
 alias yta-m4a="youtube-dl --extract-audio --audio-format m4a "
-alias yta-mp3='youtube-dl --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"' '$'
+alias yta-mp3='youtube-dl --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"'
 alias yta-opus="youtube-dl --extract-audio --audio-format opus "
 alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
 alias yta-wav="youtube-dl --extract-audio --audio-format wav "
@@ -217,11 +221,11 @@ alias merge="xrdb -merge ~/.Xresources"
 
 # Aliases for software managment
 alias pacman='sudo pacman --color auto'
-alias update='sudo pacman -Syyu'
+alias up='sudo pacman -Syyu'
 
 # yay as aur helper - updates everything
 alias pksyua="yay -Syu --noconfirm"
-alias upall="yay -Syu --noconfirm"
+alias all="yay -Syu --noconfirm"
 
 #ps
 alias psa="ps auxf"
@@ -275,6 +279,44 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 # difference?
 #set -o vi
 
+#alias rerc=". ~/.bashrc"
+#alias ta='tmux attach'
+#alias tn='tmux new -s'
+#alias tna='tmux new -As'
+
+#mkcd() {
+#	mkdir $@ && cd $1
+#}
+
+#alias lla="ls -la"
+#alias llt="ls -lt"
+#(which exa > /dev/null) && alias lg="exa -lTa --git"
+#lth() {
+#	ls -t $@ | head
+#}
+#
+#Man() {
+#	nvim "man://man" "++Man $*"
+#}
+#
+# alias md-read="nvim +'set notgc' +'term python3 -m rich.markdown -c % ; sleep infinity'"
+#
+# alias __copy="xclip -selection c"
+#alias __paste="xclip -selection c -o"
+#__copyfile() {
+#	# Like in file managers
+#	for i in "$@"; do \
+#		echo file://$(realpath "$i")
+#	done | xclip -selection clipboard -i -t text/uri-list
+#}
+#
+# alias jj='java -jar'
+
+
+
+#alias -g nu='2>/dev/null'
+#alias -g le = '|less'
+
 #alias C for copy stdin
 #alias X for clead + pwd (to clear screen while changing dir)
 
@@ -283,6 +325,14 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
 #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
 #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
+
+#Why not have an alias to edit your *rc files and reload the shell immediately. An example using bash:
+#nano ~/.bashrc; source ~/.bashrc
+
+#Here is an alias you might find useful: get-remote='git config --get remote.origin.url'. It shows the remote address of any cloned repository.
+
+#alias df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h"
+#This only shows disks instead of all filesystems.
 
 #alias dd='dd status=progress'$
 #alias _='sudo'$
@@ -593,6 +643,9 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #fi
 #alias bsdtar='bsdtar -S -f -'
 #alias bsdcpio='bsdcpio -m'
+
+
+#alias mpy='mpv "$(xclip -o -selection clipboard)"'
 
 ## TODO: pax format by default.
 #alias tar='bsdtar'
