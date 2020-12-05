@@ -17,6 +17,8 @@ autoload -U colors && colors	# Load colors
 setopt +o nomatch	# fix for youtube-dl aliases
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
+setopt interactive_comments
+
 
 # Handle CTRL-S lock
 stty -ixon
