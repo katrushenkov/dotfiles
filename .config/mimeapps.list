@@ -19,7 +19,7 @@ video/x-msvideo=vlc.desktop
 
 [Added Associations]
 application/x-bittorrent=transmission-gtk.desktop;
-text/plain=sublime_text_3.desktop;
+text/plain=libreoffice-writer.desktop;sublime_text_3.desktop;
 audio/mpeg=vlc.desktop;
 video/mp4=vlc.desktop;
 video/x-msvideo=vlc.desktop;
