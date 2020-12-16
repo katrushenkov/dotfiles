@@ -43,7 +43,7 @@ alias \
 	ka="killall" \
 	g="git" \
 	trem="transmission-remote" \
-	YT="youtube-viewer" \
+	#YT="youtube-viewer" \
 	sdn="sudo shutdown -h now" \
 	f="$FILE" \
 	e="$EDITOR" \
