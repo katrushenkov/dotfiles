@@ -17,10 +17,10 @@ case $BLOCK_BUTTON in
 esac
 
 # Check if battery directories are detected
-[ ! -e /sys/class/power_supply/BAT?* ] && echo "No battery found" && exit 1
+[ ! -e /sys/class/power_supply/CMB?* ] && echo "No battery found" && exit 1
 
 # Loop through all attached batteries and format the info
-for battery in /sys/class/power_supply/BAT?*
+for battery in /sys/class/power_supply/CMB?*
 do
 	# Sets up the status and capacity
 	status=$(cat "$battery/status")
