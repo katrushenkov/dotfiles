@@ -16,6 +16,7 @@ inode/directory=file.desktop
 audio/mpeg=vlc.desktop
 video/mp4=vlc.desktop
 video/x-msvideo=vlc.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop
 
 [Added Associations]
 application/x-bittorrent=transmission-gtk.desktop;
@@ -26,3 +27,4 @@ video/x-msvideo=vlc.desktop;
 video/x-matroska=vlc.desktop;
 image/gif=brave-browser.desktop;
 application/pdf=org.flameshot.Flameshot.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop;
