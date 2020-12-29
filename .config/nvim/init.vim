@@ -214,6 +214,9 @@ endfunction
 "autocmd InsertLeave * call SetUsLayout()
 autocmd CmdlineEnter * call SetUsLayout()
 
+"Ctrl+Backspace -> C-W
+inoremap <C-H> <C-W>
+
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 " save on <c-s>
