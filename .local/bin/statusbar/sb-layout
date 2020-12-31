@@ -3,6 +3,7 @@
 
 case $BLOCK_BUTTON in
 	1) xkblayout-state set '+1' ;;
+	2) xkblayout-state set '+1' ;;
 esac
 
 
