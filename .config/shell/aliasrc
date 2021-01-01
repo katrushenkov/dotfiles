@@ -845,6 +845,11 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #Make file with random data
 
 
+#alias pls=please
+#alias please='sudo $(fc -ln -1)'
+
+#alias copy='xclip -sel clip'
+
 ### git
 #alias gc="git commit -m"
 #alias gs="git status"
