@@ -1,3 +1,4 @@
+sftp://ser@192.168.0.114/home/ser 114
 file:///mnt/main main
 file:///mnt/main/anima anima
 sftp://ser@192.168.0.103/home/ser desktop

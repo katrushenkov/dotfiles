@@ -46,6 +46,7 @@ set mouse=a
 set nohlsearch
 set clipboard+=unnamedplus
 set ignorecase
+"set smartcase
 "set nobackup
 "set nowb
 "set noswapfile
@@ -53,7 +54,6 @@ set noruler
 set laststatus=0
 set noshowmode
 set noshowcmd
-
 
 " Markdown-preview
 "nnoremap <leader>md :MarkdownPreview<CR>
@@ -219,6 +219,9 @@ inoremap <C-H> <C-W>
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
+" Automatic reloading of .vimrc
+""autocmd! bufwritepost .vimrc source %
+
 " save on <c-s>
 "nmap <c-s> :w<cr>
 "imap <c-s> <esc>:w<cr>a
@@ -237,3 +240,15 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLM
 "set iminsert=0
 "set imsearch=0
 "highlight lCursor guifg=NONE guibg=Cyan
+
+" Tab navigation like Firefox.
+"nnoremap <C-S-tab> :tabprevious<CR>
+"'nnoremap <C-tab>   :tabnext<CR>
+"nnoremap <C-t>     :tabnew<CR>
+"inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+"inoremap <C-tab>   <Esc>:tabnext<CR>i
+"inoremap <C-t>     <Esc>:tabnew<CR>
+
+" To save, ctrl-s.
+"nmap <c-s> :w<CR>
+"imap <c-s> <Esc>:w<CR>a

@@ -21,10 +21,12 @@ x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop
 [Added Associations]
 application/x-bittorrent=transmission-gtk.desktop;
 text/plain=libreoffice-writer.desktop;sublime_text_3.desktop;
-audio/mpeg=vlc.desktop;
+audio/mpeg=mpv.desktop;vlc.desktop;
 video/mp4=vlc.desktop;
 video/x-msvideo=vlc.desktop;
 video/x-matroska=vlc.desktop;
 image/gif=brave-browser.desktop;
 application/pdf=org.flameshot.Flameshot.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop;
+video/webm=mpv.desktop;vlc.desktop;
+image/jpeg=img.desktop;
