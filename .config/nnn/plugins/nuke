@@ -66,7 +66,7 @@
 # #############################################################################
 
 # set to 1 to enable GUI apps
-GUI="${GUI:-1}"
+GUI="${GUI:-0}"
 
 set -euf -o noclobber -o noglob -o nounset
 IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}" # protect trailing \n
@@ -79,12 +79,19 @@ FNAME=$(basename "$1")
 EDITOR="${EDITOR:-vi}"
 PAGER="${PAGER:-less -R}"
 ext="${FNAME##*.}"
-if ! [ -z "$ext" ]; then
+if [ -n "$ext" ]; then
     ext="$(printf "%s" "${ext}" | tr '[:upper:]' '[:lower:]')"
 fi
 
+is_mac() {
+    uname | grep -q "Darwin"
+}
+
 handle_pdf() {
-    if [ "$GUI" -ne 0 ] && which zathura >/dev/null 2>&1; then
+    if [ "$GUI" -ne 0 ] && is_mac; then
+        open "${FPATH}" >/dev/null 2>&1 &
+        exit 0
+    elif [ "$GUI" -ne 0 ] && which zathura >/dev/null 2>&1; then
         zathura "${FPATH}" >/dev/null 2>&1 &
         exit 0
     elif which pdftotext >/dev/null 2>&1; then
@@ -106,7 +113,7 @@ handle_audio() {
     #    exit 0
     if which mpv >/dev/null 2>&1; then
         #mpv "${FPATH}" >/dev/null 2>&1 &
-        mpv --terminal "${FPATH}"
+	mpv --terminal "${FPATH}" >/dev/null 2>&1 &
         exit 0
     elif which media_client >/dev/null 2>&1; then
         media_client play "${FPATH}" >/dev/null 2>&1 &
@@ -121,7 +128,10 @@ handle_audio() {
 }
 
 handle_video() {
-    if [ "$GUI" -ne 0 ] && which smplayer >/dev/null 2>&1; then
+    if [ "$GUI" -ne 0 ] && is_mac; then
+        open "${FPATH}" >/dev/null 2>&1 &
+        exit 0
+    elif [ "$GUI" -ne 0 ] && which smplayer >/dev/null 2>&1; then
         smplayer "${FPATH}" >/dev/null 2>&1 &
         exit 0
     elif [ "$GUI" -ne 0 ] && which mpv >/dev/null 2>&1; then
@@ -295,7 +305,10 @@ handle_multimedia() {
 
         ## Image
         image/*)
-            if [ "$GUI" -ne 0 ] && which imvr >/dev/null 2>&1; then
+            if [ "$GUI" -ne 0 ] && is_mac; then
+                open "${FPATH}" >/dev/null 2>&1 &
+                exit 0
+            elif [ "$GUI" -ne 0 ] && which imvr >/dev/null 2>&1; then
                 load_dir imvr "${FPATH}" >/dev/null 2>&1 &
                 exit 0
             elif [ "$GUI" -ne 0 ] && which sxiv >/dev/null 2>&1; then
