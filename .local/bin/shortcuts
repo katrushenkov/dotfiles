@@ -17,6 +17,7 @@ nnn_shortcuts="${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/shortcutsrc"
 rm -f "$ranger_shortcuts" "$qute_shortcuts" "$zsh_named_dirs" 2>/dev/null
 [ -d "${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/" ] && rm -f ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/* 2>/dev/null
 [ -d "${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/" ] && rm -f ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks 2>/dev/null
+[ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}/nnn/" ] && mkdir ${XDG_CACHE_HOME:-$HOME/.cache}/nnn 2>/dev/null
 mkdir ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks 2>/dev/null
 printf "# vim: filetype=sh\\n" > "$fish_shortcuts"
 printf "# vim: filetype=sh\\nalias " > "$shell_shortcuts"
