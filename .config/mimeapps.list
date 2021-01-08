@@ -30,3 +30,4 @@ application/pdf=org.flameshot.Flameshot.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop;
 video/webm=mpv.desktop;vlc.desktop;
 image/jpeg=img.desktop;
+application/x-mimearchive=brave-browser.desktop;
