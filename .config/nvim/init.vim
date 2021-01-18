@@ -11,6 +11,7 @@ endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/goyo.vim'
@@ -25,7 +26,7 @@ Plug 'kovetskiy/sxhkd-vim'
 Plug 'ap/vim-css-color'
 Plug 'morhetz/gruvbox'
 Plug 'mcchrish/nnn.vim'
-"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " colorschemes
 Plug 'sainnhe/forest-night'
@@ -46,7 +47,7 @@ set mouse=a
 set nohlsearch
 set clipboard+=unnamedplus
 set ignorecase
-"set smartcase
+"set smartcase " no ignorecase if Uppercase char present
 "set nobackup
 "set nowb
 "set noswapfile
@@ -55,8 +56,11 @@ set laststatus=0
 set noshowmode
 set noshowcmd
 
+"set ai " set auto-indenting on for programming
+
+
 " Markdown-preview
-"nnoremap <leader>md :MarkdownPreview<CR>
+nnoremap <leader>md :MarkdownPreview<CR>
 
 "colorscheme simple-dark
 "colorscheme simple-dark-transparent
@@ -69,11 +73,11 @@ let g:aurline_theme='simple'
 
 " Some basics:
 	nnoremap c "_c
-	set nocompatible
+	set nocompatible		" user vim defaults
 	filetype plugin on
-	syntax on
+	syntax on			" turn syntax highlighting on by default
 	set encoding=utf-8
-	set number relativenumber
+	set number relativenumber	" show line numbers + relative
 " Enable autocompletion:
 	set wildmode=longest,list,full
 " Disables automatic commenting on newline:
@@ -155,6 +159,7 @@ let g:aurline_theme='simple'
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 	autocmd BufWritePre * %s/\s\+$//e
 	autocmd BufWritePre * %s/\n\+\%$//e
+	autocmd BufWritePre *.[ch] %s/\%$/\r/e
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
 	autocmd BufWritePost bm-files,bm-dirs !shortcuts
@@ -243,7 +248,7 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLM
 
 " Tab navigation like Firefox.
 "nnoremap <C-S-tab> :tabprevious<CR>
-"'nnoremap <C-tab>   :tabnext<CR>
+"nnoremap <C-tab>   :tabnext<CR>
 "nnoremap <C-t>     :tabnew<CR>
 "inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 "inoremap <C-tab>   <Esc>:tabnext<CR>i
