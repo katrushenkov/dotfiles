@@ -188,7 +188,6 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # fzf Auto-completion
 [[ $- == *i* ]] && source "$HOME/.config/zsh/fzf-completion.zsh" 2> /dev/null
-
 # fzf Key bindings (^X - fzf-file-widget, ^F - fzf-cd-widget)
 source "$HOME/.config/zsh/fzf-key-bindings.zsh"
 
