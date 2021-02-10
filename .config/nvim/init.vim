@@ -77,6 +77,7 @@ let g:aurline_theme='simple'
 	filetype plugin on
 	syntax on			" turn syntax highlighting on by default
 	set encoding=utf-8
+	set fencs=utf8,cp1251
 	set number relativenumber	" show line numbers + relative
 " Enable autocompletion:
 	set wildmode=longest,list,full
