@@ -27,16 +27,16 @@ alias \
 	ll="ls -lahF" \
 	l="ls -F" \
 	l.="ls -AF | egrep '^\.'" \
-	c='cd' \
-	c..='cd ..' \
+	c="cd" \
+	c..="cd .." \
 	..="cd .." \
-	...='cd ../..' \
-	....='cd ../../..' \
-	.....='cd ../../../..' \
-	cd..='cd ..' \
-	lcd='cd' \
-	home='cd ~' \
-	d='cd'
+	...="cd ../.." \
+	....="cd ../../.." \
+	.....="cd ../../../.." \
+	cd..="cd .." \
+	lcd="cd" \
+	home="cd ~" \
+	d="cd"
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -62,43 +62,46 @@ alias \
 	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf"
 
 alias \
-	rem2c="remmina -c /home/ser/.local/share/remmina/group_rdp_Сириус-2c_94-130-216-186-2222.remmina" \
-	remzoo="remmina -c /home/ser/.local/share/remmina/group_rdp_zoovet_drug-office-era25-ru-11010.remmina" \
 	i2pstart="sudo systemctl start i2prouter.service" \
 	i2pstart="sudo systemctl stop i2prouter.service" \
 	dirsize="du -sh" \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
-	a="cd /mnt/main/anima/ && nvim "
-alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias myip2='curl https://ipinfo.io/ip'
-alias nf="neofetch"
-alias rand="head -c 50K < /dev/urandom > $1"
-alias bashrc='nvim ~.bashrc'
-alias scro="scrot -s '~/scrot/%Y%m%d_%H%M%S.png' -e 'xclip -selection c -t image/png < $f'"
-alias s="sudo -s"
-alias q='exit'
-alias :q='exit'
-alias :q!='exit'
-alias :q="exit"
-alias dusort='du -hs * . | sort -h'
-alias df='df -h'
-alias free="free -ht"
-alias da='date "+%Y-%m-%d %A %T %Z"'
-alias xx="exit"
-alias now='tty-clock -c'
-alias now2="echo -e $(date +'%H:%M')"
-alias mute="pamixer -m"
-alias unmute="pamixer -u"
-alias netprocs="lsof -P -i -n"
-alias cl="clear"
+	a="cd /mnt/main/anima/ && nvim " \
+	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
+	myip2="curl https://ipinfo.io/ip" \
+	nf="neofetch" \
+	rand="head -c 50K < /dev/urandom > $1" \
+	bashrc='nvim ~.bashrc' \
+	scro="scrot -s '~/scrot/%Y%m%d_%H%M%S.png' -e 'xclip -selection c -t image/png < $f'" \
+	s="sudo -s" \
+	q="exit" \
+	:q="exit" \
+	:q!='exit' \
+	:q="exit" \
+	dusort='du -hs * . | sort -h' \
+	df='df -h' \
+	free="free -ht" \
+	da='date "+%Y-%m-%d %A %T %Z"' \
+	xx="exit" \
+	now='tty-clock -c' \
+	now2="echo -e $(date +'%H:%M')" \
+	mute="pamixer -m" \
+	unmute="pamixer -u" \
+	netprocs="lsof -P -i -n" \
+	cl="clear"
 
-# alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
+# Turn off touchpad
+alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
+# Turn on touchpad
+alias touchon="xinput set-int-prop 14 'Device Enabled' 8 1"
+
+#alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 #alias covid='curl "https://covid-graph.cgsimmons.dev/graph?days=60&height=40&disableCases=true&disableRecovered=true"''
 
 alias money="echo >> /mnt/main/anima/money.csv"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
-# alias for dotfiles bare repo
+#alias for dotfiles bare repo
 alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME'
 alias last='git log --oneline --graph --decorate --all'
 alias note='nvim /mnt/main/anima/000.txt'
@@ -117,12 +120,10 @@ alias ins="sudo pacman -S"
 alias rem="sudo pacman -R"
 alias za="zathura --fork"
 alias pic="picom -b --experimental-backends"
-alias oc="cd Documents/Octopeek/Scrapping\ linkedin/scrapping"
+#alias oc="cd Documents/Octopeek/Scrapping\ linkedin/scrapping"
 alias l.='ls -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
 
-
-#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 #alias copy="xclip -sel clipboard"
 
 alias whereami='echo $PWD'
@@ -130,10 +131,13 @@ alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
 alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 alias rip='grep --color=auto'
+#alias tmux='tmux -f <(~/.tmuxrc)'
 alias tl='tmux list-session'
 alias tk='tmux kill-session'
 alias tn='tmux new'
 alias ta='tmux attach'
+#alias tn='tmux new -s'
+#alias tna='tmux new -As'
 alias weather='curl wttr.in/cmb?0'
 alias weatherfull='curl wttr.in/cmb'
 #alias up='uptime -p'
@@ -160,6 +164,8 @@ alias yta-opus="youtube-dl --extract-audio --audio-format opus "
 alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
 alias yta-wav="youtube-dl --extract-audio --audio-format wav "
 alias ytv-best="youtube-dl -f bestvideo+bestaudio "
+alias ytv-360="youtube-dl -f 18 "
+
 #alias yt="youtube-dl --add-metadata -ic"
 #alias yta="yt -x -f bestaudio/best"
 #alias yt="youtube-dl --ad-metadata -ic"
@@ -270,6 +276,19 @@ alias openports='netstat -nape --inet'
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
+
+alias y="yay -S" 		# установка.
+alias yn="yay -S --noconfirm"	# установка без подтверждения.
+alias ys="yay" 			# поиск с дальнейшим выбором по цифре.
+alias ysn="yay --noconfirm" 	# поиск с дальнейшим выбором по цифре, без подтверждения.
+alias yc="yay -Sc" 		# частичная очистка кэша.
+alias yy="yay -Syy" 		# синхронизация баз зеркал.
+alias yu="yay -Syu" 		# обновление
+alias yun="yay -Syu --noconfirm" #обновление без подтверждения.
+alias yr="yay -R" 		# удаление пакет(а,ов).
+alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без подтверждения.
+
+
 #alias zathura="zathura -c ~/.config/zathura "
 
 #alias bw="wal -i ~/.config/wall.png" # Rerun pywal
@@ -280,13 +299,42 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #set -o vi
 
 #alias rerc=". ~/.bashrc"
-#alias ta='tmux attach'
-#alias tn='tmux new -s'
-#alias tna='tmux new -As'
-
 #mkcd() {
 #	mkdir $@ && cd $1
 #}
+
+#mkcd() {
+#	mkdir -vp "$@" && cd "$@";
+#}
+
+#ftext () {
+#grep -iIHrn --color=always "$1" . | less -R -r
+#}
+
+#duplicatefind ()
+#{
+#find -not -empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate
+#}
+
+# more simplified duplicatefind
+#duplicatefiles ()
+#{
+#cksum * 2> /dev/null | sort | awk '
+#{ checksum = $1; bytecount = $2; $1 = $2 = ""; filename = $0
+#if (checksum == prev_checksum && bytecount == prev_bytecount)
+#printf("%s\n%s\n\n", prev_filename, filename);
+#prev_checksum = checksum
+#prev_bytecount = bytecount
+#prev_filename = filename
+#} '
+#}
+
+#generateqr ()
+#{
+#printf "$@" | curl -F-=\<- qrenco.de
+#}
+
+#alias search="history|grep"
 
 #alias lla="ls -la"
 #alias llt="ls -lt"
@@ -310,9 +358,7 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #	done | xclip -selection clipboard -i -t text/uri-list
 #}
 #
-# alias jj='java -jar'
-
-
+#alias jj='java -jar'
 
 #alias -g nu='2>/dev/null'
 #alias -g le = '|less'
@@ -348,7 +394,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #alias pingme="ping lukesmith.xyz"
 #alias sdn="sudo shutdown now"
 #alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
-#alias p="sudo pacman"
 #alias SS="sudo systemctl"
 #alias sn="sudo neovim"
 #alias sr="sudo ranger"
@@ -365,9 +410,7 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #alias besterm="export FBTERM_BACKGROUND_IMAGE=1 && cat $HOME/Pictures/desktops/space.fbimg > /dev/fb0; fbterm -s 28 -n "Hack""
 #alias whtfnt="echo -en "\e]P7ffffff" && clear"
 
-#alias todo='task'
 #alias feh='feh --scale-down --auto-zoom'
-
 #alias feh="feh --no-fehbg -B black"
 
 #l='ls -CF'$
@@ -377,8 +420,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #alias ls="ls --color=auto -FHh"
 #alias ll='ls -l'
 #alias la='ls -lA'
-#alias ..='cd ..'
-#alias ...='cd ...'
 #alias du='du -ch'
 #alias doas='doas '
 #alias em='doas emerge -v'
@@ -537,8 +578,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 ## Edit this .bashrc file
 #alias ebrc='edit ~/.bashrc'
 
-## alias to show the date
-
 #alias ps='ps auxf'
 #alias ping='ping -c 10'
 #alias cls='clear'
@@ -600,8 +639,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
 #alias sshfs='sshfs -o idmap=user -o uid=1000 -o gid=100'
 
-#alias tmux='tmux -f <(~/.tmuxrc)'
-
 #alias steam='STEAM_FRAME_FORCE_CLOSE=1 steam'
 ## --on-top
 ## --on-all-workspaces?
@@ -638,8 +675,8 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #alias llt='ls -lt'
 
 #if command -v nvim >/dev/null 2>&1; then
-#    alias vim=nvim
-#    alias vimdiff=nvim -d'
+#  alias vim=nvim
+#  alias vimdiff=nvim -d'
 #fi
 #alias bsdtar='bsdtar -S -f -'
 #alias bsdcpio='bsdcpio -m'
@@ -695,9 +732,6 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 #
 #alias ls='ls --color -hF'
 #alias emacs='TERM=alacritty-24bit emacs -nw'
-
-## Because lol
-#alias memfree='killall firefox'
 
 #alias epimeros='ssh -t dettorer@epimeros.org tmux attach -t main'
 #alias epimeros-weechat='ssh -t dettorer@epimeros.org tmux attach -t weechat'
@@ -850,15 +884,19 @@ alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
 #alias copy='xclip -sel clip'
 
-### git
-#alias gc="git commit -m"
+# Git aliases
+#alias gitclean="{ git reset; git checkout .; git clean -fdx }" # Clean git repo
+#alias gc="git commit"
+#alias gdh="git diff HEAD"
+#alias gds="git diff --staged"
+#alias gl="git log"
+#alias gp="git push"
 #alias gs="git status"
-#gc="git commit -v -s"
+#alias gsh="git show HEAD"
+# git
 #gst="git status --short"
 #gd="git diff --minimal"
 #gl="git log --oneline --decorate --graph"
-
-# GIT Aliases
 alias gcl='git clone'
 alias ga='git add'
 alias grm='git rm'
@@ -897,6 +935,8 @@ alias gdl='git diff --name-only --diff-filter=U'
 alias gds='git diff --staged'
 alias gdv='git diff -w "$@" | vim -R -'
 alias gc='git commit -v'
+#alias gc="git commit -m"
+#alias gc="git commit -v -s"
 alias gca='git commit -v -a'
 alias gcm='git commit -v -m'
 alias gcam='git commit -v -am'
@@ -940,6 +980,7 @@ alias gstl="git stash list"
 alias gh='cd "$(git rev-parse --show-toplevel)"'
 # Show untracked files
 alias gu='git ls-files . --exclude-standard --others'
+
 #################################################################
 ### unclaimed aliases
 #alias r='ranger --choosedir=$HOME/.rangerdir; cd "$(cat $HOME/.rangerdir)"'
@@ -1070,7 +1111,6 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias uni="plasmapkg2 --type=kwinscript -r ."
 #alias zshconfig="mate ~/.zshrc"
 #alias ohmyzsh="mate ~/.oh-my-zsh"
-#alias e="exit"
 #alias p="mocp -G &> /dev/null"
 #alias next="mocp -f &> /dev/null"
 #alias prev"mocp -r &> /dev/null"
@@ -1079,6 +1119,7 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias MountFat='sudo mount -o uid=$(id -u),gid=$(id -g),fmask=7177,dmask=7077'
 #alias thttpd='thttpd -D -l /dev/stdout'
 #alias zoop="echo "👉😎👉 ~Zoop!~" | lolcat"
+#alias memfree='killall firefox' # because lol
 #alias icat="kitty +kitten icat"
 #alias mutt='MAIL_ACCOUNT=$(mail_account) neomutt'
 #alias c="clear"
@@ -1100,3 +1141,9 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/skel/* ~'
 #backup contents of /etc/skel to hidden backup folderin home/user
 #alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'
+
+
+#alias copy="xclip -r -selection clipboard"
+#alias paste="xclip -selection clipboard -o"
+#alias chx="chmod +x"
+#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
