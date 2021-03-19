@@ -3,6 +3,14 @@
 # Use neovim for vim if present.
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
 
+# Use $XINITRC variable if file exists.
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# sudo not required for some system commands
+for x in mount umount sv pacman updatedb su ; do
+	alias $x="sudo $x"
+done
+
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
 	cp="cp -iv" \
@@ -11,6 +19,7 @@ alias \
 	#prompt if deleting more than 3 files at a time
 	#(this has saved my ass more times than you would think)
 	rm="rm -vI --preserve-root" \
+	bc="bc -ql" \
 	mkd="mkdir -pv" \
 	yt="youtube-dl --add-metadata -i" \
 	yta="yt -x -f bestaudio/best" \
@@ -45,7 +54,6 @@ alias \
 	trem="transmission-remote" \
 	#YT="youtube-viewer" \
 	sdn="sudo shutdown -h now" \
-	f="$FILE" \
 	e="$EDITOR" \
 	v="$EDITOR" \
 	p="sudo pacman" \
@@ -94,6 +102,8 @@ alias \
 alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 # Turn on touchpad
 alias touchon="xinput set-int-prop 14 'Device Enabled' 8 1"
+
+
 
 #alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 #alias covid='curl "https://covid-graph.cgsimmons.dev/graph?days=60&height=40&disableCases=true&disableRecovered=true"''

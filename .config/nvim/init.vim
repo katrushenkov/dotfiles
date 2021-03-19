@@ -56,18 +56,18 @@ set laststatus=0
 set noshowmode
 set noshowcmd
 
-"set ai " set auto-indenting on for programming
+" set ai " set auto-indenting on for programming
 
 
 " Markdown-preview
 nnoremap <leader>md :MarkdownPreview<CR>
 
-"colorscheme simple-dark
-"colorscheme simple-dark-transparent
+" colorscheme simple-dark
+" colorscheme simple-dark-transparent
+colorscheme gruvbox
 
 "set bg=light
 set bg=dark
-colorscheme gruvbox
 
 let g:aurline_theme='simple'
 
@@ -165,7 +165,7 @@ let g:aurline_theme='simple'
 " When shortcut files are updated, renew bash and ranger configs with new material:
 	autocmd BufWritePost bm-files,bm-dirs !shortcuts
 " Run xrdb whenever Xdefaults or Xresources are updated.
-	autocmd BufRead,BufNewFile xresources,xdefaults set filetype=xdefaults
+	autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
 	autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 " Recompile dwmblocks on config edit.
 	autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
@@ -214,10 +214,10 @@ nnoremap <C-j> <PageDown>
 nnoremap <C-k> <PageUp>
 
 function! SetUsLayout()
-  silent !xkblayout-state set 0 > /dev/null
+	silent !xkblayout-state set 0 > /dev/null
 endfunction
 
-"autocmd InsertLeave * call SetUsLayout()
+" autocmd InsertLeave * call SetUsLayout()
 autocmd CmdlineEnter * call SetUsLayout()
 
 "Ctrl+Backspace -> C-W
@@ -240,7 +240,6 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLM
 "autocmd InsertLeave * call SetUsLayout()
 "этот метод не работает
 
-
 """"""""""""""" russian layout
 "set keymap=russian-jcukenwin
 "set iminsert=0
@@ -254,6 +253,10 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLM
 "inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 "inoremap <C-tab>   <Esc>:tabnext<CR>i
 "inoremap <C-t>     <Esc>:tabnew<CR>
+" Или так
+"map  <C-l> :tabn<CR>
+"map  <C-h> :tabp<CR>
+"map  <C-n> :tabnew<CR>
 
 " To save, ctrl-s.
 "nmap <c-s> :w<CR>
