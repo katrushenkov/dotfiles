@@ -2,6 +2,8 @@
 Sxiv.font: Hack 9
 Sxiv.background: #151515
 Sxiv.foreground: #4d6e4e
+!! *.background:#151515
+!! *.foreground:#4d6e4e
 
 !! Transparency (0-1):
 !*.alpha: 0.8
