@@ -1,7 +1,7 @@
 ## gruvbox dunst theme
 [global]
     font = "Hack 10"
-    allow_markup = yes
+    markup = yes
     format = "<b>%s</b>\n%b"
     sort = yes
     indicate_hidden = yes
