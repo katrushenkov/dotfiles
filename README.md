@@ -9,7 +9,7 @@ Personal configuration files based on Luke Smith's voidrice.
 
 ## Installation
 
-coming soon...
+[KARBS](https://github.com/katrushenkov/KARBS)
 
 
 ## Preferred software
@@ -24,7 +24,7 @@ coming soon...
 -    Image viewer: [sxiv](https://github.com/muennich/sxiv)
 -    Compositor: [xcompmgr](https://github.com/freedesktop/xcompmgr)
 -    Fetch: [pfetch](https://github.com/dylanaraps/pfetch)
--    GTK theme: Arc-Gruvbox
+-    GTK theme: [Arc-Gruvbox](https://github.com/stevensonmt/Arc-Gruvbox)
 -    Icon theme: []
 -    Cursor theme: []
 -    Text editor: [neovim](https://github.com/neovim/neovim)
