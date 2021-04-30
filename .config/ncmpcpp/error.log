@@ -1,5 +1,3 @@
-writeCommonTags: couldn't write 'year' tag to 'mucuraev/Mucuraev.mp4' as it's not a positive integer
-writeCommonTags: couldn't write 'track' tag to 'mucuraev/Mucuraev.mp4' as it's not a positive integer
 writeCommonTags: couldn't write 'year' tag to 'mucuraev/Молодой Тимур Муцураев - о сын Адама.mp4' as it's not a positive integer
 writeCommonTags: couldn't write 'track' tag to 'mucuraev/Молодой Тимур Муцураев - о сын Адама.mp4' as it's not a positive integer
 TagLib: ID3v2::Tag::read() - Duplicate ID3v2 tags found.
