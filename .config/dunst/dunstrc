@@ -22,9 +22,13 @@
     horizontal_padding = 8
     separator_color = "#585858"
     startup_notification = false
-    # https://github.com/knopwob/dunst/issues/26#issuecomment-36159395
+    #https://github.com/knopwob/dunst/issues/26#issuecomment-36159395
     #icon_position = left
     #icon_folders = /usr/share/icons/elementary/actions/16/
+    corner_radius = 10
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
 
 [frame]
     width = 1
