@@ -58,7 +58,6 @@ set noshowcmd
 
 " set ai " set auto-indenting on for programming
 
-
 " Markdown-preview
 nnoremap <leader>md :MarkdownPreview<CR>
 
@@ -110,7 +109,6 @@ let g:aurline_theme='simple'
 	nm <leader><leader>i :call ToggleIPA()<CR>
 	imap <leader><leader>i <esc>:call ToggleIPA()<CR>a
 	nm <leader><leader>q :call ToggleProse()<CR>
-
 
 " Shortcutting split navigation, saving a keypress:
 	map <C-h> <C-w>h
@@ -199,6 +197,7 @@ endfunction
 nnoremap <leader>h :call ToggleHiddenAll()<CR>
 
 	map <C-x> :FZF<CR>
+	map <leader>x :FZF<CR>
 
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " Or override
