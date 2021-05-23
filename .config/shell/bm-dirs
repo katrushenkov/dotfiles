@@ -1,12 +1,15 @@
 # You can add comments to these files with #
 h	$HOME
 mm	/mnt/main/mus
+aa	/mnt/main/audio
 mn	/mnt/main
 pp	/mnt/main/pic
 vv	/mnt/main/vid
-ani	/mnt/main/anima
+ani	/mnt/main/sync/anima
 bb	/mnt/main/books
 dl	/mnt/main/dl
+files	/mnt/main/files
+ee	/mnt/main/eee
 cac	${XDG_CACHE_HOME:-$HOME/.cache}
 cf	${XDG_CONFIG_HOME:-$HOME/.config}
 cfzd	${XDG_CONFIG_HOME:-$HOME/.config}/zsh
@@ -15,6 +18,7 @@ D	${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 d	${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 sc	$HOME/.local/bin
+sb	$HOME/.local/bin/statusbar
 src	$HOME/.local/src
 #vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
 #pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
