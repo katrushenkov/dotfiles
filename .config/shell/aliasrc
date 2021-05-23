@@ -61,11 +61,12 @@ alias \
 	xi="sudo xbps-install" \
 	xr="sudo xbps-remove -R" \
 	xq="xbps-query" \
-	z="zathura"
+	z="zathura" \
+	v="nvim"
 
 alias \
 	magit="nvim -c MagitOnly" \
-	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf"
 
@@ -74,7 +75,7 @@ alias \
 	i2pstart="sudo systemctl stop i2prouter.service" \
 	dirsize="du -sh" \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
-	a="cd /mnt/main/anima/ && nvim " \
+	a="cd /mnt/main/sync/anima/ && nvim " \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
 	nf="neofetch" \
@@ -98,14 +99,13 @@ alias \
 	netprocs="lsof -P -i -n" \
 	cl="clear"
 
-# Turn off touchpad
+# Toggle touchpad
 alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
-# Turn on touchpad
 alias touchon="xinput set-int-prop 14 'Device Enabled' 8 1"
 
 
+alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
-#alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 #alias covid='curl "https://covid-graph.cgsimmons.dev/graph?days=60&height=40&disableCases=true&disableRecovered=true"''
 
 alias money="echo >> /mnt/main/anima/money.csv"
@@ -150,6 +150,7 @@ alias ta='tmux attach'
 #alias tna='tmux new -As'
 alias weather='curl wttr.in/cmb?0'
 alias weatherfull='curl wttr.in/cmb'
+#alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 #alias up='uptime -p'
 alias randvid='mpv --shuffle /mnt/main/vid/'
 alias ff='firefox'
@@ -159,7 +160,7 @@ alias x='sxiv -b'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 alias jctl="journalctl -p 3 -xb"
-alias p="python3"
+#alias p="python3"
 
 alias np='nano -w PKGBUILD'
 alias more="less -Ri"
@@ -175,7 +176,6 @@ alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
 alias yta-wav="youtube-dl --extract-audio --audio-format wav "
 alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 alias ytv-360="youtube-dl -f 18 "
-
 #alias yt="youtube-dl --add-metadata -ic"
 #alias yta="yt -x -f bestaudio/best"
 #alias yt="youtube-dl --ad-metadata -ic"
@@ -191,6 +191,8 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 
 #get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
+
+alias neofetch="clear; neofetch"
 
 alias nlightdm="sudo nvim /etc/lightdm/lightdm.conf"
 alias npacman="sudo nvim /etc/pacman.conf"
@@ -299,6 +301,8 @@ alias yr="yay -R" 		# удаление пакет(а,ов).
 alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без подтверждения.
 
 
+alias wg='wget -O /dev/null'
+
 #alias zathura="zathura -c ~/.config/zathura "
 
 #alias bw="wal -i ~/.config/wall.png" # Rerun pywal
@@ -389,6 +393,23 @@ alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без п
 
 #alias df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h"
 #This only shows disks instead of all filesystems.
+#alias youtube-audio='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0'
+#
+#alias s='sudo'
+#alias nf='neofetch'
+#
+#alias pac='sudo pacman'
+#alias pacu='sudo pacman -Suuy'
+#alias pacs='sudo pacman -S'
+#alias pacr='sudo pacman -Rsn'
+#
+#alias apt='sudo apt'
+#alias aptu='sudo apt update'
+#alias aptuu='sudo apt upgrade'
+#alias aptp='sudo apt purge'
+#alias aptr='sudo apt remove'
+#alias apti='sudo apt install'
+#alias apts='sudo apt search'
 
 #alias dd='dd status=progress'$
 #alias _='sudo'$
@@ -925,6 +946,7 @@ alias g='git'
 alias get='git'
 alias gs='git status'
 alias gss='git status -s'
+#alias gss='git status --short'
 alias gsu='git submodule update --init --recursive'
 alias gl='git pull'
 alias glum='git pull upstream master'
@@ -938,6 +960,7 @@ alias gpuo='git push --set-upstream origin'
 alias gpuoc='git push --set-upstream origin $(git symbolic-ref --short HEAD)'
 alias gpom='git push origin master'
 alias gr='git remote'
+alias gr='git rebase'
 alias grv='git remote -v'
 alias gra='git remote add'
 alias gd='git diff'
@@ -948,7 +971,7 @@ alias gc='git commit -v'
 #alias gc="git commit -m"
 #alias gc="git commit -v -s"
 alias gca='git commit -v -a'
-alias gcm='git commit -v -m'
+alias gcm='git commit -v -m' # 'git commit --message'
 alias gcam='git commit -v -am'
 alias gci='git commit --interactive'
 alias gb='git branch'
@@ -988,6 +1011,7 @@ alias gstb="git stash branch"
 alias gstd="git stash drop"
 alias gstl="git stash list"
 alias gh='cd "$(git rev-parse --show-toplevel)"'
+#alias gh='git hist'
 # Show untracked files
 alias gu='git ls-files . --exclude-standard --others'
 
