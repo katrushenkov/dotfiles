@@ -4,9 +4,9 @@
 ## and set up your preferences                              ##
 ##############################################################
 #
-#def_key "mouse"
-#  mouse_event
-#
+def_key "mouse"
+  mouse_event
+
 #def_key "up"
 #  scroll_up
 #
@@ -156,9 +156,9 @@
 #def_key "s"
 #  stop
 #
-#def_key "p"
-#  pause
-#
+def_key "p"
+  pause
+
 #def_key ">"
 #  next
 #
