@@ -135,7 +135,6 @@ alias l.='ls -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
 
 #alias copy="xclip -sel clipboard"
-
 alias whereami='echo $PWD'
 alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
