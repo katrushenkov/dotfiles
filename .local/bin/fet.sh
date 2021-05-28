@@ -9,15 +9,14 @@ exec 2>/dev/null
 set --
 eq() {  # equals  |  [ a = b ] with globbing
 	case $1 in
-		# if the second argument matches the first, exit normally
-		$2) return
-		# if it doesn't match, reverse the output of `:`, which makes an error
-	esac;! :
+		$2) ;;
+		*) return 1;;
+	esac
 }
 
 ## DE
-wm="$XDG_CURRENT_DESKTOP"
-[ "$wm" ] || wm="$DESKTOP_SESSION"
+wm=$XDG_CURRENT_DESKTOP
+[ "$wm" ] || wm=$DESKTOP_SESSION
 
 ## Distro
 # freedesktop.org/software/systemd/man/os-release.html
@@ -33,20 +32,24 @@ if [ -e /proc/$$/comm ]; then
 		# loop over lines in /proc/pid/status until it reaches PPid
 		# then save that to a variable and exit the file
 		while read -r line; do
-			eq "$line" "PPid*" && ppid=${line##*:?} && break
+			eq "$line" 'PPid*' && ppid=${line##*:?} && break
 		done < "/proc/${ppid:-$PPID}/status"
 
 		# Make sure not to do an infinite loop
 		[ "$pppid" = "$ppid" ] && break
-		pppid="$ppid"
+		pppid=$ppid
 
 		# get name of binary
 		read -r name < "/proc/$ppid/comm"
 
 		case $name in
 			*sh|"${0##*/}") ;;  # skip shells
-			*[Ll]ogin*|*init*) break;;  # exit when the top is reached
-			*) term="$name"  # anything else can be assumed to be the terminal
+			*[Ll]ogin*|*init*|*systemd*) break;;  # exit when the top is reached
+			# anything else can be assumed to be the terminal
+			# this has the side affect of catching tmux, but tmux
+			# detaches from the terminal and therefore ignoring that
+			# will just make the init the term
+			*) term=$name
 		esac
 	done
 
@@ -56,7 +59,8 @@ if [ -e /proc/$$/comm ]; then
 		for i in /proc/*/comm; do
 			read -r c < "$i"
 			case $c in
-				awesome|xmonad*|qtile|sway|i3|[bfo]*box|*wm*) wm="${c%%-*}"; break;;
+				*bar*) ;;
+				awesome|xmonad*|qtile|sway|i3|[bfo]*box|*wm*) wm=${c%%-*}; break;;
 			esac
 		done
 
@@ -64,7 +68,7 @@ if [ -e /proc/$$/comm ]; then
 	# loop over lines in /proc/meminfo until it reaches MemTotal,
 	# then convert the amount (second word) from KB to MB
 	while read -r line; do
-		eq "$line" "MemTotal*" && set -- $line && break
+		eq "$line" 'MemTotal*' && set -- $line && break
 	done < /proc/meminfo
 	mem="$(( $2 / 1000 ))MB"
 
@@ -72,7 +76,7 @@ if [ -e /proc/$$/comm ]; then
 	while read -r line; do
 		case $line in
 			vendor_id*) vendor="${line##*: } ";;
-			model\ name*) cpu="${line##*: }"; break;;
+			model\ name*) cpu=${line##*: }; break;;
 		esac
 	done < /proc/cpuinfo
 
@@ -85,22 +89,30 @@ if [ -e /proc/$$/comm ]; then
 
 	## Kernel
 	read -r _ _ version _ < /proc/version
-	kernel="${version%%-*}"
-	eq "$version" "*Microsoft*" && ID="fake $ID"
+	kernel=${version%%-*}
+	eq "$version" '*Microsoft*' && ID="fake $ID"
 
 	## Motherboard // laptop
 	read -r model < /sys/devices/virtual/dmi/id/product_name
+	# invalid model handling
+	case $model in
+		# alternate file with slightly different info
+		# on my laptop it has the device model (instead of 'hp notebook')
+		# on my desktop it has the extended motherboard model
+		'System '*|'Default '*)
+			read -r model < /sys/devices/virtual/dmi/id/board_name
+	esac
 
 	## Packages
 	# clean environment, then make every file in the dir an argument,
 	# then save the argument count to $pkgs
 	set --
-	[ -d /var/db/kiss/installed ] && set -- /var/db/kiss/installed/*
-	[ -d /var/lib/pacman/local  ] && set -- /var/lib/pacman/local/[0-9a-z]*
-	[ -d /var/lib/dpkg/info ] && set -- /var/lib/dpkg/info/*.list
-	[ -d /var/db/xbps ] && set -- /var/db/xbps/.*
-	[ -d /var/db/pkg  ] && set -- /var/db/pkg/*/*  # gentoo
-	pkgs=${###0}
+	# kiss, arch, debian, void, gentoo
+	for i in '/var/db/kiss/installed/*'  '/var/lib/pacman/local/[0-9a-z]*' \
+	'/var/lib/dpkg/info/*.list'  '/var/db/xbps/.*'  '/var/db/pkg/*/*'; do
+		set -- $i
+		[ $# -gt 1 ] && pkgs=$# && break
+	done
 
 	read -r host < /proc/sys/kernel/hostname
 elif [ -f /var/run/dmesg.boot ]; then
@@ -111,7 +123,7 @@ elif [ -f /var/run/dmesg.boot ]; then
 		## OpenBSD cpu/mem/name
 		while read -r line; do
 			case $line in
-				"real mem"*)
+				'real mem'*)
 					# use the pre-formatted value which is in brackets
 					mem=${line##*\(}
 					mem=${mem%\)*}
@@ -152,7 +164,7 @@ elif [ -f /var/run/dmesg.boot ]; then
 				FreeBSD*)
 					# If the OS is already set, no need to set it again
 					[ "$ID" ] && continue
-					ID="${line%%-R*}"
+					ID=${line%%-R*}
 				;;
 
 				CPU:*)
@@ -166,7 +178,7 @@ elif [ -f /var/run/dmesg.boot ]; then
 					vendor="${vendor%%\"*} "
 				;;
 
-				"real memory"*)
+				'real memory'*)
 					# Get the pre-formatted amount which is inside brackets
 					mem=${line##*\(}
 					mem=${mem%\)*}
@@ -200,32 +212,32 @@ elif v=/System/Library/CoreServices/SystemVersion.plist; [ -f "$v" ]; then
 	done < "$v"
 fi
 
-eq "$0" "*fetish" && printf 'Step on me daddy\n' && exit
+eq "$0" '*fetish' && printf 'Step on me daddy\n' && exit
 
 # help i dont know if it's a capital consistently
-eq "$wm" "*[Gg][Nn][Oo][Mm][Ee]*" && wm="foot DE"
+eq "$wm" '*[Gg][Nn][Oo][Mm][Ee]*' && wm='foot DE'
 
 ## GTK
 while read -r line; do
-	eq "$line" "gtk-theme*" && gtk="${line##*=}" && break
+	eq "$line" 'gtk-theme*' && gtk=${line##*=} && break
 done < "${XDG_CONFIG_HOME:=$HOME/.config}/gtk-3.0/settings.ini"
 
 # Shorten $cpu and $vendor
 # this is so messy due to so many inconsistencies in the model names
-vendor="${vendor##*Authentic}"
-vendor="${vendor##*Genuine}"
-cpu="${cpu##*) }"
-cpu="${cpu%% @*}"
-cpu="${cpu%% CPU}"
-cpu="${cpu##CPU }"
-cpu="${cpu##*AMD }"
-cpu="${cpu%% with*}"
-cpu="${cpu% *-Core*}"
+vendor=${vendor##*Authentic}
+vendor=${vendor##*Genuine}
+cpu=${cpu##*) }
+cpu=${cpu%% @*}
+cpu=${cpu%% CPU}
+cpu=${cpu##CPU }
+cpu=${cpu##*AMD }
+cpu=${cpu%% with*}
+cpu=${cpu% *-Core*}
 
 col() {
 	printf '  '
 	for i in 1 2 3 4 5 6; do
-		printf '\033[9%sm▅▅' "$i"
+		printf '\033[9%sm%s' "$i" "${colourblocks:-▅▅}"
 	done
 	printf '\033[0m\n'
 }
