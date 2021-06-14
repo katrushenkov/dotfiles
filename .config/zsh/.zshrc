@@ -192,5 +192,7 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # fzf Key bindings (^X - fzf-file-widget, ^F - fzf-cd-widget)
 source "$HOME/.config/zsh/fzf-key-bindings.zsh"
 
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
