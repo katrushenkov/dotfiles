@@ -32,17 +32,18 @@ alias \
 	ccat="highlight --out-format=ansi" \
 	la="ls -ahF" \
 	llll="du -sh *" \
+	dus="du -h --max-depth=1 | sort -rh"
 	lll="stat -c '%A %a %n' *" \
 	ll="ls -lahF" \
 	l="ls -F" \
-	l.="ls -AF | egrep '^\.'" \
+#	l.="ls -AF | egrep '^\.'" \
 	c="cd" \
-	c..="cd .." \
-	..="cd .." \
-	...="cd ../.." \
-	....="cd ../../.." \
-	.....="cd ../../../.." \
-	cd..="cd .." \
+#	c..="cd .." \
+#	..="cd .." \
+#	...="cd ../.." \
+#	....="cd ../../.." \
+#	.....="cd ../../../.." \
+#	cd..="cd .." \
 	lcd="cd" \
 	home="cd ~" \
 	d="cd"
@@ -87,9 +88,10 @@ alias \
 	:q="exit" \
 	:q!='exit' \
 	:q="exit" \
+	quit="exit" \
 	dusort='du -hs * . | sort -h' \
 	df='df -h' \
-	free="free -ht" \
+	free="free -mht" \
 	da='date "+%Y-%m-%d %A %T %Z"' \
 	xx="exit" \
 	now='tty-clock -c' \
@@ -116,6 +118,7 @@ alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$H
 alias last='git log --oneline --graph --decorate --all'
 alias note='nvim /mnt/main/anima/000.txt'
 alias by="systemctl poweroff -i"
+alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
 # get selected files from nnn
 alias ncp="cat ${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection} | tr '\0' '\n'"
@@ -257,7 +260,7 @@ alias update-fc='sudo fc-cache -fv'
 #copy bashrc-latest over on bashrc - cb= copy bashrc
 #alias cb='sudo cp /etc/skel/.bashrc ~/.bashrc && source ~/.bashrc'
 #copy /etc/skel/.zshrc over on ~/.zshrc - cb= copy zshrc
-alias cz='sudo cp /etc/skel/.zshrc ~/.zshrc && source ~/.zshrc'
+#alias cz='sudo cp /etc/skel/.zshrc ~/.zshrc && source ~/.zshrc'
 
 #switch between bash and zsh
 alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
@@ -604,6 +607,9 @@ alias wg='wget -O /dev/null'
 
 ## SHA1
 #alias sha1='openssl sha1'
+
+
+#alias apply="exec zsh"
 
 ## Edit this .bashrc file
 #alias ebrc='edit ~/.bashrc'
@@ -1028,6 +1034,7 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
 
+#alias npm="sudo npm"
 #alias ni="npm install --save"
 #alias nid="npm install --save -d"
 #alias nig="npm install --save -g"
@@ -1042,7 +1049,7 @@ alias gu='git ls-files . --exclude-standard --others'
 #	su -c "$*" # пишут, что лучше "$@"
 #}
 
-# Emacs
+# emacs
 #alias em='emacs -nw'$
 #alias em="/usr/bin/emacs -nw"
 #alias vim="emacsclient -t"

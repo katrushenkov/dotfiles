@@ -6,10 +6,12 @@ mn	/mnt/main
 pp	/mnt/main/pic
 vv	/mnt/main/vid
 ani	/mnt/main/sync/anima
+bu	/mnt/main/backups
 bb	/mnt/main/books
 dl	/mnt/main/dl
 files	/mnt/main/files
 ee	/mnt/main/eee
+sca	/mnt/main/scan
 cac	${XDG_CACHE_HOME:-$HOME/.cache}
 cf	${XDG_CONFIG_HOME:-$HOME/.config}
 cfzd	${XDG_CONFIG_HOME:-$HOME/.config}/zsh
