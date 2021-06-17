@@ -256,6 +256,17 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLM
 "map  <C-l> :tabn<CR>
 "map  <C-h> :tabp<CR>
 "map  <C-n> :tabnew<CR>
+""""""""""""
+" Faster window navigation with alt
+" (even in the terminal)
+"nnoremap h <C-w>h
+"nnoremap j <C-w>j
+"nnoremap k <C-w>k
+"nnoremap l <C-w>l
+"nnoremap <M-h> <C-w>h
+"nnoremap <M-j> <C-w>j
+"nnoremap <M-k> <C-w>k
+"nnoremap <M-l> <C-w>l
 
 " To save, ctrl-s.
 "nmap <c-s> :w<CR>
