@@ -17,7 +17,7 @@ Personal configuration files based on Luke Smith's voidrice.
 -    Operating system: [Arch Linux](https://www.archlinux.org/)
 -    Window manager: my fork of [dwm](https://github.com/katrushenkov/dwm)
 -    Terminal: [st](https://github.com/katrushenkov/st)
--    Shell: zsh+[dmenu](https://github.com/romkatv/powerlevel10k)
+-    Shell: zsh+[Powerlevel10k](https://github.com/romkatv/powerlevel10k)
 -    Launcher: [dmenu](https://tools.suckless.org/dmenu/)
 -    File manager: [nnn](https://github.com/jarun/nnn)
 -    Music: [mpd](https://github.com/MusicPlayerDaemon/MPD)+[ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
