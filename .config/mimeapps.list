@@ -30,7 +30,7 @@ application/x-extension-xht=firefox.desktop
 
 [Added Associations]
 application/x-bittorrent=transmission-gtk.desktop;
-text/plain=sublime_text.desktop;libreoffice-writer.desktop;nvim.desktop;sublime_text_3.desktop;
+text/plain=nvim.desktop;sublime_text.desktop;libreoffice-writer.desktop;sublime_text_3.desktop;
 audio/mpeg=mpv.desktop;vlc.desktop;
 video/mp4=losslesscut-bin.desktop;org.avidemux.Avidemux.desktop;vlc.desktop;
 video/x-msvideo=vlc.desktop;

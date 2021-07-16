@@ -155,9 +155,7 @@ nsel ()
 export NNN_USE_EDITOR=1
 export NNN_OPTS='acHd'
 #export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;e:-_ewrap $nnn*'
-export NNN_PLUG='f:fzcd;z:fzz;x:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed;w:preview-tui-ext;e:preview-tui;c:getplugs;a:imgresize;d:diffs\
-	;b:boom\
-	;q:cdpath'
+export NNN_PLUG='f:fzcd;z:fzz;x:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed;w:preview-tui-ext;e:preview-tui;c:getplugs;a:imgresize;d:diffs;b:boom;q:cdpath'
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 export NNN_BMS='a:/mnt/main/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO=/tmp/nnn.fifo nnn
@@ -185,7 +183,6 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
