@@ -27,10 +27,11 @@ application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
+image/bmp=viewnior.desktop
 
 [Added Associations]
 application/x-bittorrent=transmission-gtk.desktop;
-text/plain=nvim.desktop;sublime_text.desktop;libreoffice-writer.desktop;sublime_text_3.desktop;
+text/plain=libreoffice-writer.desktop;nvim.desktop;sublime_text.desktop;sublime_text_3.desktop;
 audio/mpeg=mpv.desktop;vlc.desktop;
 video/mp4=losslesscut-bin.desktop;org.avidemux.Avidemux.desktop;vlc.desktop;
 video/x-msvideo=vlc.desktop;
@@ -39,7 +40,7 @@ image/gif=viewnior.desktop;gimp.desktop;brave-browser.desktop;
 application/pdf=gimp.desktop;org.flameshot.Flameshot.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop;
 video/webm=vlc.desktop;mpv.desktop;
-image/jpeg=gimp.desktop;org.gnome.eog.desktop;img.desktop;viewnior.desktop;
+image/jpeg=sxiv.desktop;gimp.desktop;org.gnome.eog.desktop;img.desktop;viewnior.desktop;
 application/x-mimearchive=firefox.desktop;
 application/xml=libreoffice-writer.desktop;sublime_text_3.desktop;
 image/png=gimp.desktop;sxiv.desktop;viewnior.desktop;
@@ -68,3 +69,4 @@ application/x-extension-shtml=firefox.desktop;
 application/xhtml+xml=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
+image/bmp=viewnior.desktop;
