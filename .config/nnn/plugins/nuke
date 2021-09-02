@@ -66,6 +66,7 @@
 
 # set to 1 to enable GUI apps
 GUI="${GUI:-1}"
+BIN="${BIN:-0}"
 
 set -euf -o noclobber -o noglob -o nounset
 IFS="$(printf '%b_' '\n')"; IFS="${IFS%_}" # protect trailing \n
@@ -107,6 +108,23 @@ handle_pdf() {
     fi
     exit 0
 }
+
+#handle_audio() {
+#    if type mocp >/dev/null 2>&1 && type mocq >/dev/null 2>&1; then
+#        mocq "${FPATH}" "opener" >/dev/null 2>&1
+#    elif type mpv >/dev/null 2>&1; then
+#        mpv "${FPATH}" >/dev/null 2>&1 &
+#    elif type media_client >/dev/null 2>&1; then
+#        media_client play "${FPATH}" >/dev/null 2>&1 &
+#    elif type mediainfo >/dev/null 2>&1; then
+#        mediainfo "${FPATH}" | eval "$PAGER"
+#    elif type exiftool >/dev/null 2>&1; then
+#        exiftool "${FPATH}"| eval "$PAGER"
+#    else
+#        return
+#    fi
+#    exit 0
+#}
 
 handle_audio() {
     if #type mocp >/dev/null 2>&1 && type mocplay >/dev/null 2>&1; then
@@ -516,11 +534,29 @@ handle_blocked() {
             exit 0;;
     esac
 }
+handle_bin() {
+    case "${MIMETYPE}" in
+        application/x-executable|application/x-shellscript)
+        clear
+        echo '-------- Executable File --------' && file --dereference --brief -- "${FPATH}"
+        printf "Run executable (y/N/'a'rgs)? "
+        read -r answer
+        case "$answer" in
+            [Yy]* ) exec "${FPATH}";;
+            [Aa]* )
+                printf "args: "
+                read -r args
+                exec "${FPATH}" "$args";;
+            [Nn]* ) exit;;
+        esac
+    esac
+}
 
 MIMETYPE="$( file -bL --mime-type -- "${FPATH}" )"
 handle_extension
 handle_multimedia "${MIMETYPE}"
 handle_mime "${MIMETYPE}"
+[ "$BIN" -ne 0 ] && [ -x "${FPATH}" ] && handle_bin
 handle_blocked "${MIMETYPE}"
 handle_fallback
 
