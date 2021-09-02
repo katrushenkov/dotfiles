@@ -7,7 +7,7 @@
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
 # sudo not required for some system commands
-for command in mount umount sv pacman updatedb su ; do
+for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
 	alias $command="sudo $command"
 done; unset command
 
@@ -107,7 +107,7 @@ alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
 #alias covid='curl "https://covid-graph.cgsimmons.dev/graph?days=60&height=40&disableCases=true&disableRecovered=true"''
 
-alias money="echo >> /mnt/main/anima/money.csv"
+alias money="echo >> /mnt/main/sync/anima/money.csv"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
@@ -525,6 +525,7 @@ alias wg='wget -O /dev/null'
 #alias le="echo ''; ls; echo ''"
 ## EMACS CLIENT
 #alias ec="emacsclient -t"
+#alias ec="emacsclient -n -a emacs"
 ## RELOAD XRESOURCES
 #alias xr="xrdb -merge ~/.Xresources"
 ## WIFI
@@ -712,7 +713,6 @@ alias wg='wget -O /dev/null'
 #fi
 #alias bsdtar='bsdtar -S -f -'
 #alias bsdcpio='bsdcpio -m'
-
 
 #alias mpy='mpv "$(xclip -o -selection clipboard)"'
 
