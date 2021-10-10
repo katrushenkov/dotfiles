@@ -19,7 +19,7 @@ cmd open ${{
         text/*) $EDITOR $fx;;
 	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
 	image/svg+xml) display -- $f ;;
-	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" | sxiv -aio 2>/dev/null | lf-select ;;
+	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" | setsid -f sxiv -aio 2>/dev/null | lf-select & ;;
 	audio/*) mpv --audio-display=no $f ;;
 	video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
 	application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
@@ -54,7 +54,8 @@ cmd moveto ${{
 	clear; echo "Move to where?"
 	#dest="$(cut -d'	' -f2- ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | sed 's/\${.*\://;s/\-\$HOME/~/;s/$HOME/~/;s/}//' | fzf | rev | cut -d' ' -f1 | rev  | sed 's|~|$HOME|' )" &&
 	#dest="$(cut -d'	' -f2- ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|' )" &&
-	dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
+#	dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
+	dest="$(sed -e 's/#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|')" &&
 	for x in $fx; do
 		eval mv -iv \"$x\" \"$dest\"
 	done &&
@@ -92,7 +93,8 @@ map <c-f> $lf -remote "send $id select '$(fzf)'"
 
 #luke update
 #map J $lf -remote "send $id cd $(cut -d'	' -f2 ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
-map J $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
+#map J $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
+map J $lf -remote "send $id cd $(sed -e 's/#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
 
 map gh
 map g top
@@ -121,6 +123,7 @@ map b $setbg $f
 map <c-e> down
 map <c-y> up
 map V push :!nvim<space>
+map W $setsid -f $TERMINAL >/dev/null 2>&1
 
 # Source Bookmarks
 source "~/.config/lf/shortcutrc"
