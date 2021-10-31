@@ -156,7 +156,7 @@ export NNN_OPTS='acHd'
 #export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;e:-_ewrap $nnn*'
 export NNN_PLUG='f:fzcd;z:fzz;x:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed;w:preview-tui-ext;e:preview-tui;c:getplugs;a:imgresize;d:diffs;b:boom;q:cdpath'
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
-export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
+#export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO=/tmp/nnn.fifo nnn
 #export NNN_SSHFS="sshfs -o follow_symlinks" # set sshfs to follow symlinks
 export NNN_TRASH=2                          # use trash-cli [1] and gio trash [2] instead of deleting
@@ -190,7 +190,7 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # fzf Key bindings (^X - fzf-file-widget, ^F - fzf-cd-widget)
 source "$HOME/.config/zsh/fzf-key-bindings.zsh"
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
