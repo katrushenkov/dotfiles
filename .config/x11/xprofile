@@ -1,29 +1,38 @@
 #!/bin/sh
 
+
 # This file runs when a DM logs you into a graphical session.
 # If you use startx/xinit like a Chad, this file will also be sourced.
 
 # Fix Gnome Apps Slow  Start due to failing services
 # Add this when you include flatpak in your system
-dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+#dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
-# Autostart Pulseaudio if installed and not already started by init.
-# Chromium/Brave doesn't automatically start Pulse for some reason.
-[ -x /usr/bin/pulseaudio ] &&
-	! pidof pulseaudio >/dev/null &&
-	setsid -f pulseaudio --start >/dev/null 2>&1
+## Autostart Pulseaudio if installed and not already started by init.
+## Chromium/Brave doesn't automatically start Pulse for some reason.
+#[ -x /usr/bin/pulseaudio ] &&
+#	! pidof pulseaudio >/dev/null &&
+#	setsid -f pulseaudio --start >/dev/null 2>&1
 
+xrandr --dpi "$DPI"
 setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &
-#setxkbmap -model pc105 -layout us,ru &
 setbg &			# set the background with the `setbg` script
 #xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources &	# Uncomment to use Xresources colors/settings on startup
 #mpd &			# music player daemon-you might prefer it as a service though
 remaps &		# run the remaps script, switching caps/esc and more; check it for more info
 #xcompmgr &		# xcompmgr for transparency
-dunst &			# dunst for notifications
+#dunst &			# dunst for notifications
 xset r rate 300 50 &	# Speed xrate up
 #unclutter &		# Remove mouse when idle
 xinput set-int-prop 14 'Device Enabled' 8 0 # touchpadoff
+
+#autostart="mpd xcompmgr dunst unclutter pipewire"
+#autostart="dunst pipewire"
+autostart="dunst"
+
+for program in $autostart; do
+	pidof -s "$program" || setsid -f "$program"
+done >/dev/null 2>&1
 
 # multimonitor
 #xrandr --output VGA1 --auto --left-of eDP1 --auto
@@ -35,3 +44,6 @@ xinput set-int-prop 14 'Device Enabled' 8 0 # touchpadoff
 #pidof -s runit &&
 #	! pidof -s pulseaudio >/dev/null 2>&1 &&
 #	setsid -f pulseaudio --start --exit-idle-time=-1 >/dev/null 2>&1
+
+# Ensure that xrdb has finished running before moving on to start the WM/DE.
+#[ -n "$xrdbpid" ] && wait "$xrdbpid"
