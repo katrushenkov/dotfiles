@@ -30,7 +30,7 @@ alias \
 	ccat="highlight --out-format=ansi" \
 	la="ls -ahF" \
 	llll="du -sh *" \
-	dus="du -h --max-depth=1 | sort -rh"
+	dus="du -h --max-depth=1 | sort -rh" \
 	lll="stat -c '%A %a %n' *" \
 	ll="ls -lahF" \
 	l="ls -F" \
@@ -74,7 +74,7 @@ alias \
 	i2pstart="sudo systemctl stop i2prouter.service" \
 	dirsize="du -sh" \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
-	a="cd /mnt/main/sync/anima/ && nvim " \
+	a="cd /mnt/main/sync/anima/ && nvim -c 'FZF'" \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
 	nf="neofetch" \
@@ -102,6 +102,7 @@ alias \
 # Toggle touchpad
 alias touchoff="xinput set-int-prop 13 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
+alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
 alias cls="clear"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
@@ -305,6 +306,13 @@ alias yr="yay -R" 		# удаление пакет(а,ов).
 alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без подтверждения.
 
 alias wg='wget -O /dev/null'
+
+
+#alias rsync-copy="rsync -avz --progress -h"
+#alias rsync-move="rsync -avz --progress -h --remove-source-files"
+#alias rsync-update="rsync -avzu --progress -h"
+#alias rsync-synchronize="rsync -avzu --delete --progress -h"
+
 
 #alias zathura="zathura -c ~/.config/zathura "
 
