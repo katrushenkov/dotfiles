@@ -13,7 +13,7 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
-Plug 'preservim/nerdtree'
+"Plug 'preservim/nerdtree'
 Plug 'junegunn/goyo.vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'jreybert/vimagit'
@@ -47,7 +47,7 @@ set mouse=a
 set nohlsearch
 set clipboard+=unnamedplus
 set ignorecase
-"set smartcase " no ignorecase if Uppercase char present
+"set smartcase 			" no ignorecase if Uppercase char present
 "set nobackup
 "set nowb
 "set noswapfile
@@ -56,13 +56,13 @@ set laststatus=0
 set noshowmode
 set noshowcmd
 
-" set ai " set auto-indenting on for programming
+" set ai 			" set auto-indenting on for programming
 
 " Markdown-preview
 nnoremap <leader>md :MarkdownPreview<CR>
 
-" colorscheme simple-dark
-" colorscheme simple-dark-transparent
+"colorscheme simple-dark
+"colorscheme simple-dark-transparent
 colorscheme gruvbox
 
 "set bg=light
@@ -95,13 +95,13 @@ let g:aurline_theme='simple'
 	set splitbelow splitright
 
 " Nerd tree
-	map <leader>n :NERDTreeToggle<CR>
-	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    if has('nvim')
-        let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
-    else
-        let NERDTreeBookmarksFile = '~/.vim' . '/NERDTreeBookmarks'
-    endif
+"	map <leader>n :NERDTreeToggle<CR>
+"	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"    if has('nvim')
+"        let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
+"    else
+"        let NERDTreeBookmarksFile = '~/.vim' . '/NERDTreeBookmarks'
+"    endif
 
 " vimling:
 	nm <leader><leader>d :call ToggleDeadKeys()<CR>
