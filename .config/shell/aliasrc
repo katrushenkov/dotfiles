@@ -178,6 +178,7 @@ alias yta-wav="yt-dlp --extract-audio --audio-format wav "
 alias ytv-best="yt-dlp -f bestvideo+bestaudio "
 alias ytv-360="yt-dlp -f 18 "
 alias yta="yt -x -f bestaudio/best"
+alias yt-thumb="yt-dlp --no-download --write-thumbnail "
 
 #alias yt="youtube-dl --add-metadata -ic"
 #alias yta="yt -x -f bestaudio/best"
