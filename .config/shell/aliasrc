@@ -53,12 +53,8 @@ alias \
 	trem="transmission-remote" \
 	sdn="shutdown -h now" \
 	e="$EDITOR" \
-	v="$EDITOR" \
 	p="sudo pacman" \
 	pac="sudo pacman -S" \
-	xi="sudo xbps-install" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
 	z="zathura" \
 	v="nvim" \
 	nv="nvim"
@@ -107,15 +103,10 @@ alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 alias cls="clear"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
-#alias covid='curl "https://covid-graph.cgsimmons.dev/graph?days=60&height=40&disableCases=true&disableRecovered=true"''
-
-alias money="echo >> /mnt/main/sync/anima/money.csv"
-
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
 alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME'
 alias last='git log --oneline --graph --decorate --all'
-alias note='nvim /mnt/main/anima/000.txt'
 alias by="systemctl poweroff -i"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
@@ -125,7 +116,7 @@ alias N='sudo nnn -dn'
 alias nnn="nnn"
 alias r="nnn"
 
-# alias fuck='sudo $(history -p !!)' # ????
+# alias fuck='sudo $(history -p !!)'
 alias fuck="sudo !!"
 alias upd="sudo pacman -Syu"
 alias ins="sudo pacman -S"
@@ -178,7 +169,7 @@ alias yta-wav="yt-dlp --extract-audio --audio-format wav "
 alias ytv-best="yt-dlp -f bestvideo+bestaudio "
 alias ytv-360="yt-dlp -f 18 "
 alias yta="yt -x -f bestaudio/best"
-alias yt-thumb="yt-dlp --no-download --write-thumbnail "
+alias ytt="yt-dlp --no-download --write-thumbnail "
 
 #alias yt="youtube-dl --add-metadata -ic"
 #alias yta="yt -x -f bestaudio/best"
@@ -218,19 +209,12 @@ alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 alias sn="shutdown now"
 
-#fix obvious typo's
-alias pdw="pwd"
-alias udpate='sudo pacman -Syyu'
-
 ## Colorize the grep command output for ease of use (good for log files)##
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 #pacman unlock
 alias unlock="sudo rm /var/lib/pacman/db.lck"
-
-#use all cores
-alias uac="sh ~/.bin/main/000*"
 
 #continue download
 alias wget="wget -c"
@@ -294,7 +278,6 @@ alias openports='netstat -nape --inet'
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
-
 alias y="yay -S" 		# установка.
 alias yn="yay -S --noconfirm"	# установка без подтверждения.
 alias ys="yay" 			# поиск с дальнейшим выбором по цифре.
@@ -313,7 +296,6 @@ alias wg='wget -O /dev/null'
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
 #alias rsync-update="rsync -avzu --progress -h"
 #alias rsync-synchronize="rsync -avzu --delete --progress -h"
-
 
 #alias zathura="zathura -c ~/.config/zathura "
 
@@ -383,8 +365,6 @@ alias wg='wget -O /dev/null'
 #		echo file://$(realpath "$i")
 #	done | xclip -selection clipboard -i -t text/uri-list
 #}
-#
-#alias jj='java -jar'
 
 #alias -g nu='2>/dev/null'
 #alias -g le = '|less'
@@ -392,8 +372,6 @@ alias wg='wget -O /dev/null'
 #alias C for copy stdin
 #alias X for clead + pwd (to clear screen while changing dir)
 
-#alias brc='clear && source ~/.bashrc'
-#alias z='brc'
 #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
 #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
 #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
@@ -407,26 +385,15 @@ alias wg='wget -O /dev/null'
 #This only shows disks instead of all filesystems.
 #alias youtube-audio='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0'
 #
-#alias s='sudo'
 ###
 #alias pac='sudo pacman'
 #alias pacu='sudo pacman -Suuy'
 #alias pacs='sudo pacman -S'
 #alias pacr='sudo pacman -Rsn'
-###
-#alias apt='sudo apt'
-#alias aptu='sudo apt update'
-#alias aptuu='sudo apt upgrade'
-#alias aptp='sudo apt purge'
-#alias aptr='sudo apt remove'
-#alias apti='sudo apt install'
-#alias apts='sudo apt search'
 
 #alias dd='dd status=progress'$
 #alias _='sudo'$
 #alias _i='sudo -i'$
-#alias please='sudo'$
-#alias fucking='sudo'$
 #alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
 #
 #alias newnet="sudo systemctl restart NetworkManager"
@@ -436,9 +403,6 @@ alias wg='wget -O /dev/null'
 #alias pingme="ping lukesmith.xyz"
 #alias sdn="sudo shutdown now"
 #alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
-#alias SS="sudo systemctl"
-#alias sn="sudo neovim"
-#alias sr="sudo ranger"
 #alias ls='ls -hN --color=auto --group-directories-first'
 #alias ccat="hightlight --out-format=ansi" # Color cat - print file with syntax highlighting.
 
@@ -495,35 +459,9 @@ alias wg='wget -O /dev/null'
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
 
-## Quick edit
-#alias xr="vim ~/.Xresources"
-#alias xrc="vim ~/.wally/Xresources-clean"
-#alias zshrc="vim ~/.zshrc"
-##alias dunstrc="vim ~/.config/dunst/dunstrc"
-#alias tint2rc="vim ~/.config/tint2/tint2rc"
-#alias userChrome.css="vim ~/thm/Firefox/userChrome.css"
-#alias stconf="vim ~/pro/xst/src/config.h"
-#alias playlists="vim ~/.config/mpv/tubify_playlists"
-#alias airlinevim="vim ~/.config/nvim/plugged/vim-airline/autoload/airline/themes/dark.vim"
-#alias quteconf="vim ~/.config/qutebrowser/config.py"
-#alias comptonconf="vim ~/.config/compton/compton.conf"
-#alias rc.lua="vim ~/.config/awesome/rc.lua"
-#alias theme.lua="vim ~/.config/awesome/themes/reasons/theme.lua"
-##alias awesomeconf="vim ~/.config/awesome/rc.lua"
-## Update qutebrowser
-#alias quteup="(cd ~/pro/qutebrowser; git pull origin && tox -r -e mkvenv-pypi-old)"
-
-## nvidia optimus -> prime select
-#alias nvidia="sudo prime-select nvidia"
-#alias intel="sudo prime-select intel"
-## cpu governor
-#alias gameoff="sudo cpufreq-set -g powersave"
-#alias gameon="sudo cpufreq-set -g performance"
-
 ## translate-shell: brief
 #alias t='trans -brief'
 
-#alias please="beep && sudo"
 
 #alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
 
@@ -617,15 +555,8 @@ alias wg='wget -O /dev/null'
 ## SHA1
 #alias sha1='openssl sha1'
 
-
-#alias apply="exec zsh"
-
-## Edit this .bashrc file
-#alias ebrc='edit ~/.bashrc'
-
 #alias ps='ps auxf'
 #alias ping='ping -c 10'
-#alias cls='clear'
 #alias apt-get='sudo apt-get'
 #alias multitail='multitail --no-repeat -c'
 #alias freshclam='sudo freshclam'
@@ -922,7 +853,6 @@ alias wg='wget -O /dev/null'
 
 #Make file with random data
 
-
 #alias pls=please
 #alias please='sudo $(fc -ln -1)'
 
@@ -1030,27 +960,9 @@ alias gu='git ls-files . --exclude-standard --others'
 
 #################################################################
 ### unclaimed aliases
-#alias r='ranger --choosedir=$HOME/.rangerdir; cd "$(cat $HOME/.rangerdir)"'
-#alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-#alias r='\ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"; brc'
-#alias rw="ranger ~/Pictures/Wallpapers"
-#alias rs="ranger ~/Skool/"
-#alias rw="ranger ~/Pictures/Wallpapers"
-#alias rs="ranger ~/Skool/"
-
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
 #alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
 #alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
-
-#alias npm="sudo npm"
-#alias ni="npm install --save"
-#alias nid="npm install --save -d"
-#alias nig="npm install --save -g"
-#alias nu="npm install --save"
-
-#alias win32='WINEARCH=win32 WINEPREFIX=~/.wine'
-#alias steal='git clone'
-#alias +="sudo apt-get install" (or pacman, pip, cargo, etc.)
 
 ## Pseudo Sudo
 #sudo(){
@@ -1067,64 +979,10 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias hardkillemacs="emacsclient -e '(kill-emacs)'"
 #alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 
-# games
-#alias nfsmw='cd ~/games/nfsmw; wine nfsmwres.exe'
-#alias deusex='cd ~/games/Deus_Ex/System; wine DeusEx.exe'
-#alias hl='cd ~/games/Half-Life/; wine hl.exe'
-#alias brutaldoom='flatpak run org.zdoom.GZDoom -file brutalv21.pk3'
-#alias mc='java -jar ~/games/mc.jar'
-#alias botnet="google-chrome-stable"
-#alias minecraft="java -jar ~/Downloads/TLauncher-2.66/TLauncher-2.66.jar
-
-#alias red2="redshift -O 2000K"
-#alias red3="redshift -O 3000K"
-#alias red4="redshift -O 4000K"
-#alias red5="redshift -O 5000K"
-
 #alias r='rg --pretty'
 #alias g='rg --pretty'
 #alias ag='deprecated ag rg --pretty -i'
 #alias rgg='rg --files --glob'
-
-#alias yi="yaourt -S "
-#alias ys="yaourt -s "
-#alias yr="yaourt -R "
-#alias yu="yaourt -Sy "
-#alias yupg="yaourt -Syu "
-#alias yii="yaourt --m-arg '--skipchecksums --skippgpcheck --skipinteg'  -S"
-#alias yis="yaourt --m-arg '--skipchecksums --skippgpcheck --skipinteg'  -s"
-
-#xi="sudo xbps-install -S"
-#xr="sudo xbps-remove -R"
-#xs="xbps-query -Rs"
-
-#alias sysupgrade="sudo apt update; sudo apt upgrade -y"
-#alias up="sudo apt update && sudo apt upgrade -y"
-#alias sai="sudo apt install "
-#alias sau="sudo apt update "
-#alias saupg="sudo apt upgrade "
-#alias sas="apt-cache search "
-#alias sai="sudo apt install "
-
-#alias pstart="sh ~/.config/polybar/launch.sh"
-#alias i3conf="nvim ~/.config/i3/config"
-#alias polyconf="nvim ~/.config/polybar/config"
-#alias vimconf="nvim ~/.vimrc"
-#alias lock="i3lock -i $HOME/.config/0.jpg -p win"
-#alias byebye="shutdown now"
-#alias cfp="nvim ~/.config/polybar/config"
-#alias init.vim="nvim ~/.config/nvim/init.vim"
-#alias zconf="nvim ~/.zshrc"
-#alias piconf="nvim ~/.config/picom.conf"
-#alias cmc="nvim ~/.config/compton/compton.conf"
-#alias ktc="nvim ~/.config/kitty/kitty.conf"
-#alias poly="./.config/polybar/launch.sh"
-#alias i3c="nvim ~/.config/i3/config"
-#alias kc='killall conky'
-#alias cfi="nvim ~/.config/i3/config"
-#alias cfp="nvim ~/.config/polybar/config"
-#alias cfn="nvim ~/.config/nvim/init.vim"
-
 # Automatically load vim session files
 #alias vis='vim -S Session.vim'
 
@@ -1134,11 +992,7 @@ alias gu='git ls-files . --exclude-standard --others'
 
 #alias moo="fortune | cowsay | lolcat"
 #alias tux="fortune | cowsay -f tux | lolcat"
-##alias gnu="fortune | cowsay -f gnu | lolcat"
-
-#alias davefetch='neofetch --ascii "$(cat $HOME/Pictures/asciis/ilovedos_ascii.txt)"'
-#alias tuxfetch='neofetch --ascii "$(cat $HOME/Pictures/asciis/linux_ascii.txt)"'
-
+#alias gnu="fortune | cowsay -f gnu | lolcat"
 #alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
 #alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
 
@@ -1146,16 +1000,9 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias plaza="exec mpv --no-video -- https://radio.plaza.one/ogg"
 #alias n='newsboat -q'
 #alias com="python ~/Documents/comment_generator/generator.py"
-#alias reload="source ~/.zshrc"
-#alias porn='mpv "http://www.pornhubcom/random"'
-#alias ohmyzsh="nvim ~/.oh-my-zsh"
-#alias subl="subl3"
-#sf="screenfetch"
 #alias sshcode=" ssh -R 52698:localhost:52698 "
 #alias startpage='$BROWSER "https://startpage.com"'
 #alias uni="plasmapkg2 --type=kwinscript -r ."
-#alias zshconfig="mate ~/.zshrc"
-#alias ohmyzsh="mate ~/.oh-my-zsh"
 #alias p="mocp -G &> /dev/null"
 #alias next="mocp -f &> /dev/null"
 #alias prev"mocp -r &> /dev/null"
@@ -1163,13 +1010,7 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias webedit="ssh -l user -p 2222 server"
 #alias MountFat='sudo mount -o uid=$(id -u),gid=$(id -g),fmask=7177,dmask=7077'
 #alias thttpd='thttpd -D -l /dev/stdout'
-#alias zoop="echo "👉😎👉 ~Zoop!~" | lolcat"
-#alias memfree='killall firefox' # because lol
-#alias icat="kitty +kitten icat"
 #alias mutt='MAIL_ACCOUNT=$(mail_account) neomutt'
-#alias c="clear"
-#alias x="clear"
-#alias pi="bash ~/.larbs/wizard/wizard.sh"
 #alias irc='doublonville_tmux irc'
 #alias work='doublonville_tmux work'
 #alias stuff='doublonville_tmux stuff'
