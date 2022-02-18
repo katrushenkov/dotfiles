@@ -1,10 +1,8 @@
-# DO NOT EDIT! This file will be overwritten by LXAppearance.
-# Any customization should be done in ~/.gtkrc-2.0.mine instead.
-
 include "/home/ser/.gtkrc-2.0.mine"
-gtk-theme-name="Forest-Night"
+#gtk-theme-name="Forest-Night"
+gtk-theme-name="Gruvbox-Material-Dark"
 gtk-icon-theme-name="Adwaita"
-gtk-font-name="Hack 10"
+gtk-font-name="Hack 9"
 gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_TEXT
