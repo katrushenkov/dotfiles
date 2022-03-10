@@ -37,6 +37,7 @@ done >/dev/null 2>&1
 # multimonitor
 #xrandr --output VGA1 --auto --left-of eDP1 --auto
 #xrandr --output HDMI1 --auto --left-of eDP1 --auto
+# xrandr --output HDMI1 --off --output VGA1 --auto # turn HDMI1 off
 
 # This line autostarts an instance of Pulseaudio that does not exit on idle.
 # This is "necessary" on Artix due to a current bug between PA and
