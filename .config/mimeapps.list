@@ -31,7 +31,7 @@ image/bmp=viewnior.desktop
 
 [Added Associations]
 application/x-bittorrent=transmission-gtk.desktop;
-text/plain=codium.desktop;leafpad.desktop;sublime_text.desktop;nvim.desktop;libreoffice-writer.desktop;sublime_text_3.desktop;
+text/plain=leafpad.desktop;codium.desktop;sublime_text.desktop;nvim.desktop;libreoffice-writer.desktop;sublime_text_3.desktop;
 audio/mpeg=mpv.desktop;vlc.desktop;
 video/mp4=org.avidemux.Avidemux.desktop;mpv.desktop;losslesscut-bin.desktop;vlc.desktop;
 video/x-msvideo=mpv.desktop;vlc.desktop;
@@ -42,7 +42,7 @@ x-scheme-handler/tg=userapp-Telegram Desktop-PSFEW0.desktop;userapp-Telegram Des
 video/webm=vlc.desktop;mpv.desktop;
 image/jpeg=gimp.desktop;sxiv.desktop;org.gnome.eog.desktop;img.desktop;viewnior.desktop;
 application/x-mimearchive=firefox.desktop;
-application/xml=libreoffice-writer.desktop;sublime_text_3.desktop;
+application/xml=leafpad.desktop;libreoffice-writer.desktop;sublime_text_3.desktop;
 image/png=gimp.desktop;sxiv.desktop;viewnior.desktop;
 audio/flac=vlc.desktop;
 image/svg+xml=viewnior.desktop;
@@ -72,3 +72,4 @@ application/x-extension-xht=firefox.desktop;
 image/bmp=viewnior.desktop;
 application/x-ole-storage=libreoffice-writer.desktop;
 application/x-partial-download=mpv.desktop;
+video/mpeg=mpv.desktop;
