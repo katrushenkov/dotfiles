@@ -1040,3 +1040,4 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias iso='cat /etc/dev-rel | awk -F '\''='\'' '\''/ISO/ {print }'\'''
 #alias l.='ls -A | egrep '\''^\.'\'''
 #
+alias dotfiles="/usr/bin/git --git-dir=$HOME/.local/src/dotfiles2.git/ --work-tree=$HOME"
