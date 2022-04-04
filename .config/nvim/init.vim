@@ -1,6 +1,4 @@
 let mapleader =";"
-"let mapleader =","
-"let mapleader="\<Space>"
 
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -23,11 +21,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
 Plug 'kovetskiy/sxhkd-vim'
 Plug 'ap/vim-css-color'
-Plug 'morhetz/gruvbox'
 Plug 'mcchrish/nnn.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
 " colorschemes
+Plug 'morhetz/gruvbox'
 Plug 'sainnhe/forest-night'
 Plug 'tek256/simple-dark' " good grayscale theme
 "Plug 'sainnhe/vim-color-forest-night'
@@ -55,23 +52,17 @@ set laststatus=0
 set noshowmode
 set noshowcmd
 
-" set ai 			" set auto-indenting on for programming
-
 " Markdown-preview
 nnoremap <leader>md :MarkdownPreview<CR>
 
-"colorscheme simple-dark
-"colorscheme simple-dark-transparent
 colorscheme gruvbox
 
-"set bg=light
 set bg=dark
 
 let g:aurline_theme='simple'
 
 " Some basics:
 	nnoremap c "_c
-	set nocompatible		" user vim defaults
 	filetype plugin on
 	syntax on			" turn syntax highlighting on by default
 	set encoding=utf-8
