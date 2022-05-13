@@ -6,6 +6,6 @@
 ##files=($wallpaperdir/*)
 ##randompic=`printf "%s\n" "${files[RANDOM % ${#files[@]}]}"`
 
-xwallpaper --zoom /home/ser/.config/wall0.jpg
+xwallpaper --zoom /home/ser/.local/share/wall.jpg
 
 #xwallpaper --zoom "$randompic"
