@@ -41,8 +41,8 @@ set go=a
 set mouse=a
 "set nohlsearch
 set clipboard+=unnamedplus
-set ignorecase
 "set smartcase 			" no ignorecase if Uppercase char present
+set ignorecase
 "set nobackup
 "set nowb
 "set noswapfile
@@ -54,11 +54,12 @@ set noshowcmd
 " Markdown-preview
 nnoremap <leader>md :MarkdownPreview<CR>
 
-colorscheme gruvbox
+"colorscheme simple-dark-transparent
+colorscheme everforest
+"let g:airline_theme='monochrome'
 
 set bg=dark
 
-let g:aurline_theme='simple'
 
 " Some basics:
 	nnoremap c "_c
@@ -82,15 +83,6 @@ let g:aurline_theme='simple'
 
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 	set splitbelow splitright
-
-" Nerd tree
-"	map <leader>n :NERDTreeToggle<CR>
-"	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-"    if has('nvim')
-"        let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
-"    else
-"        let NERDTreeBookmarksFile = '~/.vim' . '/NERDTreeBookmarks'
-"    endif
 
 " vimling:
 	nm <leader><leader>d :call ToggleDeadKeys()<CR>
@@ -185,10 +177,9 @@ function! ToggleHiddenAll()
 endfunction
 nnoremap <leader>h :call ToggleHiddenAll()<CR>
 
-	map <C-x> :FZF<CR>
-	map <leader>x :FZF<CR>
-	map <leader>z :RG<CR>
-
+map <C-x> :FZF<CR>
+map <leader>x :FZF<CR>
+map <leader>z :RG<CR>
 
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'

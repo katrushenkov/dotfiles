@@ -72,7 +72,7 @@ alias \
 	i2pstart="sudo systemctl stop i2prouter.service" \
 	dirsize="du -sh" \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
-	a="cd /mnt/main/sync/anima/ && nvim -c 'FZF'" \
+	a="cd /mnt/main/anima/ && nvim -c 'FZF'" \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
 	nf="neofetch" \
@@ -104,6 +104,9 @@ alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
 alias cls="clear"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
+
+alias doom-update="~/.emacs.d/bin/doom sync"
+alias doom-upgrade="~/.emacs.d/bin/doom upgrade"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
