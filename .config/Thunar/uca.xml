@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<unique-id>1632910019982682-1</unique-id>
+	<command>{ [ -d %f ] &amp;&amp; /usr/bin/alacritty --working-directory %f ; } || { /usr/bin/alacritty --working-directory %d  ; }</command>
+	<description>Example for a custom action</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+</actions>
