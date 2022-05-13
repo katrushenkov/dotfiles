@@ -162,25 +162,28 @@ alias jctl="journalctl -p 3 -xb"
 alias np='nano -w PKGBUILD'
 alias more="less -Ri"
 
-# youtube-dl
-alias yta-aac="yt-dlp --extract-audio --audio-format aac "
-alias yta-best="yt-dlp --extract-audio --audio-format best "
-alias yta-flac="yt-dlp --extract-audio --audio-format flac "
-alias yta-m4a="yt-dlp --extract-audio --audio-format m4a "
-alias yta-mp3='yt-dlp --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"'
-alias yta-opus="yt-dlp --extract-audio --audio-format opus "
-alias yta-vorbis="yt-dlp --extract-audio --audio-format vorbis "
-alias yta-wav="yt-dlp --extract-audio --audio-format wav "
-alias ytv-best="yt-dlp -f bestvideo+bestaudio "
-alias ytv-360="yt-dlp -f 18 "
-alias yta="yt -x -f bestaudio/best"
-alias ytt="yt-dlp --no-download --write-thumbnail "
+# emacs
+#alias em='emacs -nw'$
+#alias em="/usr/bin/emacs -nw"
+#alias et="emacsclient -t"
+#alias em="emacsclient -c -a 'emacs'"
+alias startemacs="emacs --daemon"
+alias hardkillemacs="emacsclient -e '(kill-emacs)'"
+alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 
-#alias yt="youtube-dl --add-metadata -ic"
-#alias yta="yt -x -f bestaudio/best"
-#alias yt="youtube-dl --ad-metadata -ic"
-#alias yta="youtube-dl -add-metadata -xic"
-#alias youtube-dl='youtube-dl --xattrs''
+# youtube-dl
+alias yta-aac="yt-dlp -c --extract-audio --audio-format aac "
+alias yta-best="yt-dlp -c --extract-audio --audio-format best "
+alias yta-flac="yt-dlp -c --extract-audio --audio-format flac "
+alias yta-m4a="yt-dlp -c --extract-audio --audio-format m4a "
+alias yta-mp3='yt-dlp -c --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"'
+alias yta-opus="yt-dlp -c --extract-audio --audio-format opus "
+alias yta-vorbis="yt-dlp -c --extract-audio --audio-format vorbis "
+alias yta-wav="yt-dlp -c --extract-audio --audio-format wav "
+alias ytv-best="yt-dlp -c -f bestvideo+bestaudio "
+alias ytv-360="yt-dlp -c -f 18 "
+alias yta="yt -c -x -f bestaudio/best"
+alias ytt="yt-dlp --no-download --write-thumbnail "
 
 #Recent Installed Packages
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
@@ -248,11 +251,6 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 #add new fonts
 alias update-fc='sudo fc-cache -fv'
 
-#copy bashrc-latest over on bashrc - cb= copy bashrc
-#alias cb='sudo cp /etc/skel/.bashrc ~/.bashrc && source ~/.bashrc'
-#copy /etc/skel/.zshrc over on ~/.zshrc - cb= copy zshrc
-#alias cz='sudo cp /etc/skel/.zshrc ~/.zshrc && source ~/.zshrc'
-
 #switch between bash and zsh
 alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
@@ -295,7 +293,6 @@ alias yr="yay -R" 		# удаление пакет(а,ов).
 alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без подтверждения.
 
 alias wg='wget -O /dev/null'
-
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
@@ -466,7 +463,6 @@ alias wg='wget -O /dev/null'
 
 ## translate-shell: brief
 #alias t='trans -brief'
-
 
 #alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
 
@@ -858,8 +854,8 @@ alias wg='wget -O /dev/null'
 
 #Make file with random data
 
-#alias pls=please
-#alias please='sudo $(fc -ln -1)'
+alias pls=please
+alias please='sudo $(fc -ln -1)'
 
 #alias copy='xclip -sel clip'
 
@@ -965,24 +961,11 @@ alias gu='git ls-files . --exclude-standard --others'
 
 #################################################################
 ### unclaimed aliases
-#alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -hda"
-#alias bootiso="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot d -cdrom"
-#alias bootusb="sudo qemu-system-x86_64 -m 2048 -enable-kvm -vga virtio -full-screen -boot n -net nic -net tap,ifname=virttap,script=nodownscript=no"
 
 ## Pseudo Sudo
 #sudo(){
 #	su -c "$*" # пишут, что лучше "$@"
 #}
-
-# emacs
-#alias em='emacs -nw'$
-#alias em="/usr/bin/emacs -nw"
-#alias vim="emacsclient -t"
-#alias et="emacsclient -t"
-#alias em="emacsclient -c -a 'emacs'"
-#alias startemacs="emacs --daemon"
-#alias hardkillemacs="emacsclient -e '(kill-emacs)'"
-#alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 
 #alias r='rg --pretty'
 #alias g='rg --pretty'
@@ -995,9 +978,6 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias Manpages='_pacmanQlPrettySearch man/'
 #alias Services='_pacmanQlPrettySearch '\''\.service$'\'
 
-#alias moo="fortune | cowsay | lolcat"
-#alias tux="fortune | cowsay -f tux | lolcat"
-#alias gnu="fortune | cowsay -f gnu | lolcat"
 #alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
 #alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
 
@@ -1027,13 +1007,6 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias vu="pamixer -i 10"
 #alias svi='sudo vi'
 
-### ArcoLinux
-#copy/paste all content of /etc/skel over to home folder - backup of config created - beware
-#alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -rf /etc/skel/* ~'
-#backup contents of /etc/skel to hidden backup folderin home/user
-#alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'
-
-
 #alias copy="xclip -r -selection clipboard"
 #alias paste="xclip -selection clipboard -o"
 #alias chx="chmod +x"
@@ -1043,4 +1016,3 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias fix-key='[ -d ~/.gnupg ] || mkdir ~/.gnupg ; cp /etc/pacman.d/gnupg/gpg.conf ~/.gnupg/ ; echo '\''done'\'''
 #alias iso='cat /etc/dev-rel | awk -F '\''='\'' '\''/ISO/ {print }'\'''
 #alias l.='ls -A | egrep '\''^\.'\'''
-#
