@@ -5,7 +5,8 @@ aa	/mnt/main/audio
 mn	/mnt/main
 pp	/mnt/main/pic
 vv	/mnt/main/vid
-ani	/mnt/main/sync/anima
+ani	/mnt/main/anima
+org	/mnt/min/org
 bu	/mnt/main/backups
 bb	/mnt/main/books
 dl	/mnt/main/dl
