@@ -173,14 +173,14 @@ alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 
 # youtube-dl
 alias yta-aac="yt-dlp -c --extract-audio --audio-format aac "
-alias yta-best="yt-dlp -c --extract-audio --audio-format best "
+alias yta-best='yt-dlp -c --extract-audio --audio-format best --output "%(uploader)s%(title)s.%(ext)s"'
 alias yta-flac="yt-dlp -c --extract-audio --audio-format flac "
 alias yta-m4a="yt-dlp -c --extract-audio --audio-format m4a "
 alias yta-mp3='yt-dlp -c --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"'
-alias yta-opus="yt-dlp -c --extract-audio --audio-format opus "
+alias yta-opus='yt-dlp -c --extract-audio --audio-format opus --output "%(uploader)s%(title)s.%(ext)s" '
 alias yta-vorbis="yt-dlp -c --extract-audio --audio-format vorbis "
 alias yta-wav="yt-dlp -c --extract-audio --audio-format wav "
-alias ytv-best="yt-dlp -c -f bestvideo+bestaudio "
+alias ytv-best='yt-dlp -c -f bestvideo+bestaudio --output "%(uploader)s%(title)s.%(ext)s" '
 alias ytv-360="yt-dlp -c -f 18 "
 alias yta="yt -c -x -f bestaudio/best"
 alias ytt="yt-dlp --no-download --write-thumbnail "
