@@ -15,7 +15,7 @@ case $BLOCK_BUTTON in
 	2) td-toggle ;;
 	3) notify-send "🌱 Torrent module" "\- Left click to open tremc.
 - Middle click to toggle transmission.
-- Shift click to editscript.
+- Shift click to edit script.
 Module shows number of torrents:
 🛑: paused
 🕰: idle (seeds needed)
