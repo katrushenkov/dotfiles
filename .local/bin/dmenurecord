@@ -96,7 +96,6 @@ asktoend() { \
 	[ "$response" = "Yes" ] &&  killrecording
 	}
 
-
 videoselected()
 {
 	slop -f "%x %y %w %h" > /tmp/slop
