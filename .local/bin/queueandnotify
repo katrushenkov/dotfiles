@@ -2,12 +2,12 @@
 
 # Podboat sucks. This script replaces it.
 # It reads the newsboat queue, queuing downloads with taskspooler.
-# It also removes the junk from extentions.
+# It also removes the junk from extensions.
 queuefile="${XDG_DATA_HOME:-$HOME/.local/share}/newsboat/queue"
 
 while read -r line; do
 	[ -z "$line" ] && continue
-	url="${line%%[ ]*}"
+	url="${line%%[	 ]*}"
 	qndl "$url" "curl -LO"
 done < "$queuefile"
 

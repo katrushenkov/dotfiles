@@ -31,11 +31,14 @@ do
 		"Not charging") status="🛑" ;;
 		"Unknown") status="♻️" ;;
 	esac
-	capacity=$(cat "$battery/capacity")
+	capacity="$(cat "$battery/capacity" 2>&1)"
 	# Will make a warn variable if discharging and low
 	[ "$status" = "🔋" ] && [ "$capacity" -le 30 ] && warn="❗"
 	# Prints the info
-	printf "%s%s%d%%\n" "$status" "$warn" "$capacity"
-	[ "$status" = "🔋" ] && [ "$capacity" -le 35 ] && notify-send -u critical "$status Plug Power Adapter $warn ($capacity %)"
+	#printf "%s%s%d%%\n" "$status" "$warn" "$capacity"
+	#[ "$status" = "🔋" ] && [ "$capacity" -le 35 ] && notify-send -u critical "$status Plug Power Adapter $warn ($capacity %)"
+#done && return 0
 
-done && return 0
+# Prints the info
+	printf "%s%s%d%%" "$status" "$warn" "$capacity"; unset warn
+done && printf "\\n"
