@@ -3,7 +3,8 @@
 # Prints the current volume or 🔇 if muted.
 
 case $BLOCK_BUTTON in
-	1) setsid -f "$TERMINAL" -e pulsemixer ;;
+	#1) setsid -f "$TERMINAL" -e pulsemixer ;;
+	1) pamixer -t ;;
 	2) pamixer -t ;;
 	4) pamixer --allow-boost -i 10 ;;
 	5) pamixer --allow-boost -d 10 ;;
@@ -14,7 +15,8 @@ case $BLOCK_BUTTON in
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-[ $(pamixer --get-mute) = true ] && echo 🔇 && exit
+[ $(pamixer --get-mute) = true ] && echo 'MUTED' && exit
+#🔇
 
 vol="$(pamixer --get-volume)"
 
@@ -28,4 +30,4 @@ else
         echo   && exit
 fi
 
-echo "$icon$vol%"
+echo "$icon $vol%"
