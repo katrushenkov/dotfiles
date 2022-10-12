@@ -27,14 +27,14 @@ if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi
 #shopt
-shopt -s autocd # change to named directory
-shopt -s cdspell # autocorrects cd misspellings
-shopt -s cmdhist # save multi-line commands in history as single line
+shopt -s autocd		# change to named directory
+shopt -s cdspell	# autocorrects cd misspellings
+shopt -s cmdhist	# save multi-line commands in history as single line
 shopt -s dotglob
-shopt -s histappend # do not overwrite history
+shopt -s histappend	# do not overwrite history
 shopt -s expand_aliases # expand aliases
 
-# vi-mode
+#vi-mode
 #set -o vi
 
 #create a file called .bashrc-personal and put all your personal aliases
@@ -48,8 +48,8 @@ shopt -s expand_aliases # expand aliases
 #    pgrep -x i3 || exec startx
 #fi
 
-# # ex = EXtractor for all kinds of archives
-# # usage: ex <file>
+# ex = EXtractor for all kinds of archives
+# usage: ex <file>
 ex ()
 {
   if [ -f $1 ] ; then
