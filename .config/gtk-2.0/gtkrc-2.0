@@ -3,7 +3,7 @@ include "/home/ser/.gtkrc-2.0.mine"
 gtk-theme-name="Gruvbox-Material-Dark"
 gtk-icon-theme-name="Adwaita"
 #gtk-font-name="Hack 9"
-gtk-font-name="Ubuntu 20"
+gtk-font-name="Ubuntu 9"
 gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=0
 gtk-toolbar-style=GTK_TOOLBAR_TEXT
