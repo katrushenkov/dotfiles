@@ -18,7 +18,7 @@
     "dht-enabled": true,
     "download-dir": "/mnt/main/dl",
     "download-queue-enabled": true,
-    "download-queue-size": 6,
+    "download-queue-size": 11,
     "encryption": 1,
     "idle-seeding-limit": 30,
     "idle-seeding-limit-enabled": false,
