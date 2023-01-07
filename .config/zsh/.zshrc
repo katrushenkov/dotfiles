@@ -4,7 +4,7 @@
 #if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 #  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 #fi
-POWERLEVEL9K_INSTANT_PROMPT=off
+POWERLEVEL9K_INSTANT_PROMPT=on
 
 # Luke's config for the Zoomer Shell
 
@@ -153,9 +153,9 @@ nsel ()
 # nnn file manager
 [ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
 export NNN_USE_EDITOR=1
-export NNN_OPTS='acHdg'
+export NNN_OPTS='acdAH'
 #export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;e:-_ewrap $nnn*'
-export NNN_PLUG='f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed;w:preview-tui-ext;e:preview-tui;c:getplugs;a:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn'
+export NNN_PLUG='f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;i:preview-tabbed;w:preview-tui-ext;e:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp'
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 #export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO=/tmp/nnn.fifo nnn
@@ -203,4 +203,4 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
-[ -f ~/.zsh-personal ] && source ~/.zsh-personal
+#[ -f ~/.zsh-personal ] && source ~/.zsh-personal
