@@ -84,7 +84,7 @@ font:
     #family: Iosevka
       family: Hack
       style: Medium
-      # family: "Fira Code"
+      #family: "Fira Code"
       #family: "Source Code Pro"
 
   # The italic font face
@@ -436,6 +436,8 @@ key_bindings:
   - { key: Q,        mods: Command,       action: Quit                         }
   - { key: N,        mods: Command,       action: SpawnNewInstance             }
   - { key: Return,   mods: Command,       action: ToggleFullscreen             }
+  - { key: Return,   mods: Control, action: SpawnNewInstance             }
+  - { key: Space,    mods: Shift|Control, action: ToggleViMode                 }
 
   - { key: Home,                          chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                          chars: "\x1b[H",   mode: ~AppCursor  }
