@@ -67,7 +67,8 @@ set bg=dark
 	syntax on			" turn syntax highlighting on by default
 	set encoding=utf-8
 	set fencs=utf8,cp1251
-	set number relativenumber	" show line numbers + relative
+	"set number relativenumber	" show line numbers + relative
+	set number
 " Enable autocompletion:
 	set wildmode=longest,list,full
 " Disables automatic commenting on newline:
@@ -265,3 +266,6 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLM
 "imap <c-s> <Esc>:w<CR>a
 
 command Q q!
+
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
