@@ -172,18 +172,20 @@ alias hardkillemacs="emacsclient -e '(kill-emacs)'"
 alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 
 # youtube-dl
-alias yta-aac="yt-dlp -c --extract-audio --audio-format aac "
+alias yta-aac='yt-dlp -c --extract-audio --audio-format aac --output "%(uploader)s%(title)s.%(ext)s"'
 alias yta-best='yt-dlp -c --extract-audio --audio-format best --output "%(uploader)s%(title)s.%(ext)s"'
-alias yta-flac="yt-dlp -c --extract-audio --audio-format flac "
-alias yta-m4a="yt-dlp -c --extract-audio --audio-format m4a "
+alias yta-flac='yt-dlp -c --extract-audio --audio-format flac --output "%(uploader)s%(title)s.%(ext)s"'
+alias yta-m4a='yt-dlp -c --extract-audio --audio-format m4a --output "%(uploader)s%(title)s.%(ext)s"'
 alias yta-mp3='yt-dlp -c --extract-audio --audio-format mp3 --output "%(uploader)s%(title)s.%(ext)s"'
 alias yta-opus='yt-dlp -c --extract-audio --audio-format opus --output "%(uploader)s%(title)s.%(ext)s" '
-alias yta-vorbis="yt-dlp -c --extract-audio --audio-format vorbis "
-alias yta-wav="yt-dlp -c --extract-audio --audio-format wav "
+alias yta-vorbis='yt-dlp -c --extract-audio --audio-format vorbis --output "%(uploader)s%(title)s.%(ext)s"'
+alias yta-wav='yt-dlp -c --extract-audio --audio-format wav --output "%(uploader)s%(title)s.%(ext)s"'
 alias ytv-best='yt-dlp -c -f bestvideo+bestaudio --output "%(uploader)s%(title)s.%(ext)s" '
-alias ytv-360="yt-dlp -c -f 18 "
-alias yta="yt -c -x -f bestaudio/best"
+alias ytv-360='yt-dlp -c -f 18 --output "%(uploader)s%(title)s.%(ext)s"'
+alias yta='yt-dlp -c -x -f bestaudio/best --output "%(uploader)s%(title)s.%(ext)s"'
 alias ytt="yt-dlp --no-download --write-thumbnail "
+#alias youtube-audio='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0'
+#alias ytmp3='youtube-dl --add-metadata -x --audio-format mp3 --output "%(title)s.%(ext)s" --audio-quality 0 --add-metadata --exec "mv {} /home/adri/Music/" $(xclip -o) && notify-send "youtube-dl" "download complete !"'
 
 #Recent Installed Packages
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
@@ -385,9 +387,6 @@ alias wg='wget -O /dev/null'
 
 #alias df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h"
 #This only shows disks instead of all filesystems.
-#alias youtube-audio='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0'
-#
-###
 #alias pac='sudo pacman'
 #alias pacu='sudo pacman -Suuy'
 #alias pacs='sudo pacman -S'
@@ -446,7 +445,6 @@ alias wg='wget -O /dev/null'
 #alias homecffGare='homecff Fribourg | dmenu'
 
 #alias vpn='sudo pvpn'
-#alias ytmp3='youtube-dl --add-metadata -x --audio-format mp3 --output "%(title)s.%(ext)s" --audio-quality 0 --add-metadata --exec "mv {} /home/adri/Music/" $(xclip -o) && notify-send "youtube-dl" "download complete !"'
 #alias music='ncmpcpp'
 
 #alias hc='herbstclient'
