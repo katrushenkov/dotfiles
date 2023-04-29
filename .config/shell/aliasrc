@@ -102,6 +102,9 @@ alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
 alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
+
+alias xkb="setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &"
+
 alias cls="clear"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
@@ -112,7 +115,7 @@ alias doom-upgrade="~/.emacs.d/bin/doom upgrade"
 #alias for dotfiles bare repo
 alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME'
 alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME diff'
-alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME ds'
+alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles.git/ --work-tree=$HOME status'
 alias last='git log --oneline --graph --decorate --all'
 alias by="systemctl poweroff -i"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
