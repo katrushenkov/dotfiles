@@ -72,7 +72,7 @@ alias \
 	i2pstart="sudo systemctl stop i2prouter.service" \
 	dirsize="du -sh" \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
-	a="cd /mnt/main/anima/ && nvim -c 'FZF'" \
+	a="nvim -c 'chdir /mnt/main/anima' -c 'FZF'" \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
 	nf="neofetch" \
