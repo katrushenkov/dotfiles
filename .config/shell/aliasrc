@@ -1015,7 +1015,6 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias chx="chmod +x"
 #alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 
-###
 #alias fix-key='[ -d ~/.gnupg ] || mkdir ~/.gnupg ; cp /etc/pacman.d/gnupg/gpg.conf ~/.gnupg/ ; echo '\''done'\'''
 #alias iso='cat /etc/dev-rel | awk -F '\''='\'' '\''/ISO/ {print }'\'''
 #alias l.='ls -A | egrep '\''^\.'\'''
