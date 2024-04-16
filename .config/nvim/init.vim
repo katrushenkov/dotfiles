@@ -10,6 +10,7 @@ endif
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'phaazon/hop.nvim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/goyo.vim'
 Plug 'jreybert/vimagit'
@@ -24,7 +25,8 @@ Plug 'mcchrish/nnn.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'sainnhe/forest-night'
+Plug 'sainnhe/everforest'
+Plug 'rhysd/vim-color-spring-night'
 Plug 'tek256/simple-dark' " good grayscale theme
 "Plug 'sainnhe/vim-color-forest-night'
 "Plug 'chriskempson/base16-vim'
@@ -34,6 +36,10 @@ Plug 'tek256/simple-dark' " good grayscale theme
 "Plug 'mhartington/oceanic-next'
 "Plug 'joshdick/onedark.vim'
 "Plug 'altercation/vim-colors-solarized'
+"Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 call plug#end()
 
 set title
@@ -55,8 +61,10 @@ set noshowcmd
 nnoremap <leader>md :MarkdownPreview<CR>
 
 "colorscheme simple-dark-transparent
-colorscheme everforest
+"colorscheme everforest
+colorscheme spring-night
 "let g:airline_theme='monochrome'
+let g:airline_theme = 'spring_night'
 
 set bg=dark
 
@@ -77,7 +85,7 @@ set bg=dark
 	vnoremap . :normal .<CR>
 
 " Goyo plugin makes text more readable when writing prose:
-	map <leader>f :Goyo \| set bg=dark \| set linebreak<CR>
+	map <silent> <leader>g :Goyo \| set bg=dark \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>o :setlocal spell! spelllang=en_us<CR>
@@ -144,7 +152,6 @@ set bg=dark
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
 	autocmd BufWritePost bm-files,bm-dirs !shortcuts
-" Run xrdb whenever Xdefaults or Xresources are updated.
 	autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
 	autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 " Recompile dwmblocks on config edit.
@@ -269,3 +276,27 @@ command Q q!
 
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
+
+"lua require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5 }
+"lua require'hop'.setup()
+" :h hop.setup
+
+lua require('config')
+
+"map s <cmd>HopChar1<CR>
+""map s v<cmd>HopChar1<CR>
+map <Leader>w <cmd>HopWordAC<CR>
+map <Leader>b <cmd>HopWordBC<CR>
+map <Leader>j <cmd>HopLineStartAC<CR>
+map <Leader>k <cmd>HopLineStartBC<CR>
+map <Leader>J <cmd>HopLineAC<CR>
+map <Leader>K <cmd>HopLineBC<CR>
+map <Leader>f <cmd>HopChar1AC<CR>
+map <Leader>F <cmd>HopChar1BC<CR>
+map <Leader>s <cmd>HopChar2AC<CR>
+map <Leader>S <cmd>HopChar2BC<CR>
+map <Leader>/ <cmd>HopPattern<CR>
+
+map <silent> <leader>q :bd<CR>
+map <silent> bk :bd<CR>
+map <silent> bn :bnext<CR>
