@@ -102,6 +102,34 @@ alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
 alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
+alias cp='cp -i'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias ipa='ip a|grep -w inet'
+alias l.='ls -d .*'
+alias ll='ls -lah --color=auto'
+alias mc='. /usr/libexec/mc/mc-wrapper.sh'
+alias mv='mv -i'
+alias pa='sudo /opt/puppetlabs/bin/puppet agent -t'
+alias pd='sudo /opt/puppetlabs/bin/puppet agent -td'
+alias pn='sudo /opt/puppetlabs/bin/puppet agent -td --noop'
+alias rm='rm -i'
+alias s='sudo -i'
+alias s-d='systemctl daemon-reload '
+alias s-l='systemctl list-units --no-pager '
+alias s-re='systemctl restart '
+alias s-s='systemctl status '
+alias s-sp='systemctl stop '
+alias s-st='systemctl start '
+alias ssss='sudo /root/.config/nvim/upd_all_plugins.sh; sudo -i'
+alias sssss='sudo /root/.config/nvim/upd_all_plugins_always.sh; sudo -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+alias z='sudo -i zsh'
+alias zzzz='sudo /root/.config/nvim/upd_all_plugins.sh; sudo -i zsh'
+alias zzzzz='sudo /root/.config/nvim/upd_all_plugins_always.sh; sudo -i zsh'
+
+
 
 alias xkb="setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &"
 
@@ -133,11 +161,14 @@ alias ins="sudo pacman -S"
 alias rem="sudo pacman -R"
 alias za="zathura --fork"
 alias pic="picom -b --experimental-backends"
-#alias oc="cd Documents/Octopeek/Scrapping\ linkedin/scrapping"
 alias l.='ls -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
 
 #alias copy="xclip -sel clipboard"
+#alias copy="xclip -selection clipboard"
+#alias copy='xclip -sel clip'
+#alias copy="xclip -r -selection clipboard"
+#alias paste="xclip -selection clipboard -o"
 alias whereami='echo $PWD'
 alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
@@ -366,7 +397,7 @@ alias wg='wget -O /dev/null'
 #
 # alias md-read="nvim +'set notgc' +'term python3 -m rich.markdown -c % ; sleep infinity'"
 #
-# alias __copy="xclip -selection c"
+#alias __copy="xclip -selection c"
 #alias __paste="xclip -selection c -o"
 #__copyfile() {
 #	# Like in file managers
@@ -401,7 +432,7 @@ alias wg='wget -O /dev/null'
 #alias _='sudo'$
 #alias _i='sudo -i'$
 #alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
-#
+
 #alias newnet="sudo systemctl restart NetworkManager"
 #alias alttime="sudo timedatectl set-timezone America/New_Yourk && i3 restart"
 #serversend() { rsync -avr --rsh='ssh -p 2222' $1 luke@lusk.zzz:/home/luke/public_html ;}
@@ -436,7 +467,6 @@ alias wg='wget -O /dev/null'
 #alias doas='doas '
 #alias em='doas emerge -v'
 #alias ipp='curl ipinfo.io/ip'
-#alias copy="xclip -selection clipboard"
 
 #alias merg='xrdb -merge /home/adri/.Xresources'
 #alias d='ssh dietpi@192.168.0.10'
@@ -467,7 +497,6 @@ alias wg='wget -O /dev/null'
 ## translate-shell: brief
 #alias t='trans -brief'
 
-#alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
 
 #alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias grub='sudo nvim /etc/default/grub'
@@ -506,6 +535,7 @@ alias wg='wget -O /dev/null'
 
 #alias yy="sudo pacman -Syy"
 #alias yref="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
+#alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
 
 #alias cintel="sudo prime-select intel"
 #alias cnvidia="sudo prime-select nvidia"
@@ -596,7 +626,9 @@ alias wg='wget -O /dev/null'
 #alias rmd='/bin/rm  --recursive --force --verbose '
 
 #Adding confirmation on mv, cp, ln commands
-#alias mv='mv -i' alias cp='cp -i' alias ln='ln -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
 
 #Parenting changes perms on root
 #alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
@@ -826,7 +858,6 @@ alias wg='wget -O /dev/null'
 #autoload -Uz promptinit
 #promptinit
 
-
 # prompt fire
 
 #killport(){
@@ -855,12 +886,8 @@ alias wg='wget -O /dev/null'
 #   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
 #}
 
-#Make file with random data
-
 alias pls=please
 alias please='sudo $(fc -ln -1)'
-
-#alias copy='xclip -sel clip'
 
 # Git aliases
 #alias gitclean="{ git reset; git checkout .; git clean -fdx }" # Clean git repo
@@ -974,7 +1001,7 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias g='rg --pretty'
 #alias ag='deprecated ag rg --pretty -i'
 #alias rgg='rg --files --glob'
-# Automatically load vim session files
+#Automatically load vim session files
 #alias vis='vim -S Session.vim'
 
 #alias Binaries='_pacmanQlPrettySearch bin/'
@@ -1010,8 +1037,6 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias vu="pamixer -i 10"
 #alias svi='sudo vi'
 
-#alias copy="xclip -r -selection clipboard"
-#alias paste="xclip -selection clipboard -o"
 #alias chx="chmod +x"
 #alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 
