@@ -129,7 +129,7 @@ alias z='sudo -i zsh'
 alias zzzz='sudo /root/.config/nvim/upd_all_plugins.sh; sudo -i zsh'
 alias zzzzz='sudo /root/.config/nvim/upd_all_plugins_always.sh; sudo -i zsh'
 
-
+alias top='top -c -n 1'
 
 alias xkb="setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &"
 
