@@ -15,6 +15,7 @@ done; unset command
 alias \
 	cp="cp -iv" \
 	mv="mv -iv" \
+	ln='ln -i' \
 	#Do not accidentally delete root, and also,
 	#prompt if deleting more than 3 files at a time
 	#(this has saved my ass more times than you would think)
@@ -76,6 +77,7 @@ alias \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
 	nf="neofetch" \
+	neofetch="clear; neofetch" \
 	rand="head -c 50K < /dev/urandom > $1" \
 	bashrc='nvim ~.bashrc' \
 	scro="scrot -s '~/scrot/%Y%m%d_%H%M%S.png' -e 'xclip -selection c -t image/png < $f'" \
@@ -95,22 +97,20 @@ alias \
 	mute="pamixer -m" \
 	unmute="pamixer -u" \
 	netprocs="lsof -P -i -n" \
-	cl="clear"
+	cl="clear" \
+	dd='dd status=progress'$
 
 # Toggle touchpad
 alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
 alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
-alias cp='cp -i'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
-alias grep='grep --color=auto'
 alias ipa='ip a|grep -w inet'
 alias l.='ls -d .*'
 alias ll='ls -lah --color=auto'
 alias mc='. /usr/libexec/mc/mc-wrapper.sh'
-alias mv='mv -i'
 alias pa='sudo /opt/puppetlabs/bin/puppet agent -t'
 alias pd='sudo /opt/puppetlabs/bin/puppet agent -td'
 alias pn='sudo /opt/puppetlabs/bin/puppet agent -td --noop'
@@ -154,7 +154,9 @@ alias N='sudo nnn -dn'
 alias nnn="nnn"
 alias r="nnn"
 
-# alias fuck='sudo $(history -p !!)'
+alias search="history|grep"
+alias hgrep="history|grep"
+#alias fuck='sudo $(history -p !!)'
 alias fuck="sudo !!"
 alias upd="sudo pacman -Syu"
 alias ins="sudo pacman -S"
@@ -163,6 +165,8 @@ alias za="zathura --fork"
 alias pic="picom -b --experimental-backends"
 alias l.='ls -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
+alias f="find . | grep "
+#alias svi='sudo vi'
 
 #alias copy="xclip -sel clipboard"
 #alias copy="xclip -selection clipboard"
@@ -173,7 +177,6 @@ alias whereami='echo $PWD'
 alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
 alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
-alias rip='grep --color=auto'
 #alias tmux='tmux -f <(~/.tmuxrc)'
 alias tl='tmux list-session'
 alias tk='tmux kill-session'
@@ -188,12 +191,10 @@ alias weatherfull='curl wttr.in/cmb'
 alias randvid='mpv --shuffle /mnt/main/vid/'
 alias ff='firefox'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
-alias topdf='wkhtmltopdf'
 alias x='sxiv -b'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 alias jctl="journalctl -p 3 -xb"
-#alias p="python3"
 
 alias np='nano -w PKGBUILD'
 alias more="less -Ri"
@@ -233,8 +234,6 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 #get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
-alias neofetch="clear; neofetch"
-
 alias nlightdm="sudo nvim /etc/lightdm/lightdm.conf"
 alias npacman="sudo nvim /etc/pacman.conf"
 alias ngrub="sudo nvim /etc/default/grub"
@@ -259,19 +258,15 @@ alias sn="shutdown now"
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-#pacman unlock
 alias unlock="sudo rm /var/lib/pacman/db.lck"
 
-#continue download
 alias wget="wget -c"
 
-#userlist
 alias userlist="cut -d: -f1 /etc/passwd"
 
-#merge new settings
 alias merge="xrdb -merge ~/.Xresources"
+#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 
-# Aliases for software managment
 alias pacman='sudo pacman --color auto'
 alias up='sudo pacman -Syyu'
 
@@ -279,17 +274,14 @@ alias up='sudo pacman -Syyu'
 alias pksyua="yay -Syu --noconfirm"
 alias all="yay -Syu --noconfirm"
 
-#ps
 alias psa="ps auxf"
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 
-#grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
 #add new fonts
 alias update-fc='sudo fc-cache -fv'
 
-#switch between bash and zsh
 alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 
@@ -331,6 +323,9 @@ alias yr="yay -R" 		# удаление пакет(а,ов).
 alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без подтверждения.
 
 alias wg='wget -O /dev/null'
+
+alias clearjournal="sudo journalctl --rotate;sudo journalctl --vacuum-time=1s"
+alias renew="source ~/.bashrc"
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
@@ -382,8 +377,6 @@ alias wg='wget -O /dev/null'
 #printf "$@" | curl -F-=\<- qrenco.de
 #}
 
-#alias search="history|grep"
-
 #alias lla="ls -la"
 #alias llt="ls -lt"
 #(which exa > /dev/null) && alias lg="exa -lTa --git"
@@ -419,8 +412,6 @@ alias wg='wget -O /dev/null'
 #Why not have an alias to edit your *rc files and reload the shell immediately. An example using bash:
 #nano ~/.bashrc; source ~/.bashrc
 
-#Here is an alias you might find useful: get-remote='git config --get remote.origin.url'. It shows the remote address of any cloned repository.
-
 #alias df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h"
 #This only shows disks instead of all filesystems.
 #alias pac='sudo pacman'
@@ -428,7 +419,6 @@ alias wg='wget -O /dev/null'
 #alias pacs='sudo pacman -S'
 #alias pacr='sudo pacman -Rsn'
 
-#alias dd='dd status=progress'$
 #alias _='sudo'$
 #alias _i='sudo -i'$
 #alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
@@ -468,19 +458,12 @@ alias wg='wget -O /dev/null'
 #alias em='doas emerge -v'
 #alias ipp='curl ipinfo.io/ip'
 
-#alias merg='xrdb -merge /home/adri/.Xresources'
 #alias d='ssh dietpi@192.168.0.10'
-#alias nvimconf='nvim /home/adri/.config/nvim/init.vim'
 #alias randomvpn='sudo protonvpn-cli -r connect'
 #alias fastvpn='sudo protonvpn-cli -f connect'
 #alias fastp2pvpn='sudo protonvpn-cli -p2p connect'
 #alias stopvpn='sudo protonvpn-cli -d'
 #alias vpn='sudo pvpn'
-#alias homecffUni='homecff Charmettes | dmenu'
-#alias homecffGare='homecff Fribourg | dmenu'
-
-#alias vpn='sudo pvpn'
-#alias music='ncmpcpp'
 
 #alias hc='herbstclient'
 # Force tmux to use 256 colors
@@ -496,7 +479,6 @@ alias wg='wget -O /dev/null'
 
 ## translate-shell: brief
 #alias t='trans -brief'
-
 
 #alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias grub='sudo nvim /etc/default/grub'
@@ -527,7 +509,6 @@ alias wg='wget -O /dev/null'
 #alias ls='ls -hN --color=auto --group-directories-first'
 #alias la='ls -hNa --color=auto --group-directories-first'
 #alias ll='ls -hNl --color=auto --group-directories-first'
-#alias hgrep="history | grep"
 #alias netcon='sudo lsof -n -P -i +c 15'
 #alias clr='clear;echo "Currently logged in on $(tty), as $USER in directory $PWD."'
 #alias ref="shortcuts && source ~/.bashrc"
@@ -540,8 +521,6 @@ alias wg='wget -O /dev/null'
 #alias cintel="sudo prime-select intel"
 #alias cnvidia="sudo prime-select nvidia"
 
-#alias grep='grep -E --color=auto'
-
 #alias crun="g++ ./$0 -o ./$0 && ./%0"
 
 #alias compstrt="pkill compton && nohup compton & "
@@ -552,8 +531,6 @@ alias wg='wget -O /dev/null'
 #alias p="ps aux | grep "
 #alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
-## Search files in the current folder
-#alias f="find . | grep "
 
 ## Count all files (recursively) in the current folder
 #alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
@@ -619,16 +596,13 @@ alias wg='wget -O /dev/null'
 #alias 666='chmod -R 666'
 #alias 755='chmod -R 755'
 #alias 777='chmod -R 777'
+#alias chx="chmod +x"
 
 #alias rscp="rsync --partial --progress --archive"
 
 ## Remove a directory and all files
 #alias rmd='/bin/rm  --recursive --force --verbose '
 
-#Adding confirmation on mv, cp, ln commands
-alias mv='mv -i'
-alias cp='cp -i'
-alias ln='ln -i'
 
 #Parenting changes perms on root
 #alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
@@ -890,6 +864,7 @@ alias pls=please
 alias please='sudo $(fc -ln -1)'
 
 # Git aliases
+alias get-remote='git config --get remote.origin.url'. It shows the remote address of any cloned repository.
 #alias gitclean="{ git reset; git checkout .; git clean -fdx }" # Clean git repo
 #alias gc="git commit"
 #alias gdh="git diff HEAD"
@@ -898,7 +873,6 @@ alias please='sudo $(fc -ln -1)'
 #alias gp="git push"
 #alias gs="git status"
 #alias gsh="git show HEAD"
-# git
 #gst="git status --short"
 #gd="git diff --minimal"
 #gl="git log --oneline --decorate --graph"
@@ -990,7 +964,6 @@ alias gh='cd "$(git rev-parse --show-toplevel)"'
 alias gu='git ls-files . --exclude-standard --others'
 
 #################################################################
-### unclaimed aliases
 
 ## Pseudo Sudo
 #sudo(){
@@ -1001,12 +974,6 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias g='rg --pretty'
 #alias ag='deprecated ag rg --pretty -i'
 #alias rgg='rg --files --glob'
-#Automatically load vim session files
-#alias vis='vim -S Session.vim'
-
-#alias Binaries='_pacmanQlPrettySearch bin/'
-#alias Manpages='_pacmanQlPrettySearch man/'
-#alias Services='_pacmanQlPrettySearch '\''\.service$'\'
 
 #alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
 #alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
@@ -1014,31 +981,22 @@ alias gu='git ls-files . --exclude-standard --others'
 #alias mpa="mpv --no-audio-display --script=$HOME/bin/mpa.lua"
 #alias plaza="exec mpv --no-video -- https://radio.plaza.one/ogg"
 #alias n='newsboat -q'
-#alias com="python ~/Documents/comment_generator/generator.py"
 #alias sshcode=" ssh -R 52698:localhost:52698 "
 #alias startpage='$BROWSER "https://startpage.com"'
 #alias uni="plasmapkg2 --type=kwinscript -r ."
 #alias p="mocp -G &> /dev/null"
 #alias next="mocp -f &> /dev/null"
 #alias prev"mocp -r &> /dev/null"
-#alias elinks='\elinks duckduckgo.com'
 #alias webedit="ssh -l user -p 2222 server"
 #alias MountFat='sudo mount -o uid=$(id -u),gid=$(id -g),fmask=7177,dmask=7077'
 #alias thttpd='thttpd -D -l /dev/stdout'
 #alias mutt='MAIL_ACCOUNT=$(mail_account) neomutt'
-#alias irc='doublonville_tmux irc'
-#alias work='doublonville_tmux work'
-#alias stuff='doublonville_tmux stuff'
 #alias timekill="rtv --enable-media -s '/random/top-all'"
 #alias fuck="nordvpn d && nordvpn c AU"
 #alias sourceme="source ~/.bashrc"
 #alias ref="shortcuts.sh && source ~/.bashrc" # Refresh shortcuts manually and reload bashrc
 #alias vd="pamixer -d 10"
 #alias vu="pamixer -i 10"
-#alias svi='sudo vi'
-
-#alias chx="chmod +x"
-#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 
 #alias fix-key='[ -d ~/.gnupg ] || mkdir ~/.gnupg ; cp /etc/pacman.d/gnupg/gpg.conf ~/.gnupg/ ; echo '\''done'\'''
 #alias iso='cat /etc/dev-rel | awk -F '\''='\'' '\''/ISO/ {print }'\'''
