@@ -26,7 +26,6 @@ alias \
 
 alias \
 	ls="ls -hNF --color=auto --group-directories-first" \
-	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
 	ip="ip -color=auto" \
@@ -107,6 +106,12 @@ alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+alias xzegrep='xzegrep --color=auto'
+alias xzfgrep='xzfgrep --color=auto'
+alias xzgrep='xzgrep --color=auto'
+alias zegrep='zegrep --color=auto'
+alias zfgrep='zfgrep --color=auto'
+alias zgrep='zgrep --color=auto'
 alias ipa='ip a|grep -w inet'
 alias l.='ls -d .*'
 alias ll='ls -lah --color=auto'
@@ -253,10 +258,6 @@ alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 alias sn="shutdown now"
-
-## Colorize the grep command output for ease of use (good for log files)##
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
 
 alias unlock="sudo rm /var/lib/pacman/db.lck"
 
