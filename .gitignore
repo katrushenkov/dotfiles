@@ -2,4 +2,4 @@
 .config/shell/bm-files
 .config/shell/shortcutrc
 .config/shell/zshnameddirrc
-.config/shell/zsh/.zcompdump
+.config/zsh/.zcompdump
