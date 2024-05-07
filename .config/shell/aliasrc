@@ -199,7 +199,7 @@ alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias x='sxiv -b'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
-alias jctl="journalctl -p 3 -xb"
+alias jctl="journalctl -p 3 -xeb" #-p 3
 
 alias np='nano -w PKGBUILD'
 alias more="less -Ri"
