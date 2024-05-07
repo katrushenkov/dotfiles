@@ -261,8 +261,6 @@ alias sn="shutdown now"
 
 alias unlock="sudo rm /var/lib/pacman/db.lck"
 
-alias wget="wget -c"
-
 alias userlist="cut -d: -f1 /etc/passwd"
 
 alias merge="xrdb -merge ~/.Xresources"
