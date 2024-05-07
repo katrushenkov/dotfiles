@@ -139,19 +139,11 @@ n ()
     fi
 }
 
-# ???
-n2 ()
-{
-    dvtm -m '\\' "nnn -fnrs $@" "nnn -fnrs $@"
-}
-
-# ???
 nsel ()
 {
     tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
 }
 
-# nnn file manager
 [ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
 export NNN_USE_EDITOR=1
 export NNN_OPTS='acdAH'
