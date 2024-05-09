@@ -962,6 +962,11 @@ alias gh='cd "$(git rev-parse --show-toplevel)"'
 alias gu='git ls-files . --exclude-standard --others'
 
 #################################################################
+#alias ys='yum search'
+#alias yuli='yum list --installed'
+#alias yi='yum install'
+#alias yu='yum update'
+#alias yr='yum remove'
 
 ## Pseudo Sudo
 #sudo(){
