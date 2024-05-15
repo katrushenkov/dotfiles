@@ -864,7 +864,7 @@ alias pls=please
 alias please='sudo $(fc -ln -1)'
 
 # Git aliases
-alias get-remote='git config --get remote.origin.url'. It shows the remote address of any cloned repository.
+alias get-remote='git config --get remote.origin.url' # It shows the remote address of any cloned repository.
 #alias gitclean="{ git reset; git checkout .; git clean -fdx }" # Clean git repo
 #alias gc="git commit"
 #alias gdh="git diff HEAD"
