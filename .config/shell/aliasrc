@@ -135,6 +135,8 @@ alias zzzzz='sudo /root/.config/nvim/upd_all_plugins_always.sh; sudo -i zsh'
 
 alias top='top -c -n 1'
 
+alias 2p="sudo -u postgres -i"
+
 alias xkb="setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &"
 
 alias cls="clear"
