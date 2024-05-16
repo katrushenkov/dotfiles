@@ -34,7 +34,7 @@ Personal configuration files based on Luke Smith's voidrice.
 -    Fuzzy search: [fzf](https://github.com/junegunn/fzf)
 -    Notifications: [dunst](https://github.com/dunst-project/dunst)
 -    Screenshots: [flameshot](https://github.com/flameshot-org/flameshot) (forgive me, [scrot](https://github.com/resurrecting-open-source-projects/scrot))
--    Notes: [Joplin](https://github.com/laurent22/joplin)
+-    Notes: [Obsidian](https://github.com/obsidianmd)
 -    Password manager: [keepassxc](https://github.com/keepassxreboot/keepassxc)
 -    Fonts: [Hack](https://github.com/source-foundry/Hack)
 -    Wallpaper: [link](.local/share/wall.jpg)
