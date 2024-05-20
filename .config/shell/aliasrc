@@ -58,6 +58,7 @@ alias \
 	pac="sudo pacman -S" \
 	z="zathura" \
 	v="nvim" \
+	vi="nvim" \
 	nv="nvim"
 
 alias \
