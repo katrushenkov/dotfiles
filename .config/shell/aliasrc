@@ -963,7 +963,6 @@ alias gh='cd "$(git rev-parse --show-toplevel)"'
 #alias gh='git hist'
 # Show untracked files
 alias gu='git ls-files . --exclude-standard --others'
-
 #################################################################
 #alias ys='yum search'
 #alias yuli='yum list --installed'
