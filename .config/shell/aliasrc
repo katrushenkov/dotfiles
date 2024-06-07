@@ -97,7 +97,7 @@ alias \
 	mute="pamixer -m" \
 	unmute="pamixer -u" \
 	netprocs="lsof -P -i -n" \
-	cl="clear" \
+	cl="echo -e '\e[3J'" \
 	dd='dd status=progress'$
 
 # Toggle touchpad
@@ -964,11 +964,12 @@ alias gh='cd "$(git rev-parse --show-toplevel)"'
 # Show untracked files
 alias gu='git ls-files . --exclude-standard --others'
 #################################################################
-#alias ys='yum search'
-#alias yuli='yum list --installed'
-#alias yi='yum install'
-#alias yu='yum update'
-#alias yr='yum remove'
+alias ys='yum search'
+alias yuli='yum list --installed'
+alias yi='yum install'
+alias yu='yum update'
+alias yr='yum remove'
+alias rpml='rpm -qa| grep -e'
 
 ## Pseudo Sudo
 #sudo(){
