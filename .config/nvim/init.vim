@@ -277,10 +277,6 @@ command Q q!
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 
-"lua require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', term_seq_bias = 0.5 }
-"lua require'hop'.setup()
-" :h hop.setup
-
 lua require('config')
 
 "map s <cmd>HopChar1<CR>
