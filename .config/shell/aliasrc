@@ -34,7 +34,9 @@ alias \
 	dus="du -h --max-depth=1 | sort -rh" \
 	lll="stat -c '%A %a %n' *" \
 	ll="ls -lahF" \
-	l="ls -F" \
+	l="ls -Fh" \
+	lm='ls -m' \
+	lr='ls -R' \
 #	l.="ls -AF | egrep '^\.'" \
 	c="cd" \
 #	c..="cd .." \
@@ -865,7 +867,6 @@ alias pls=please
 alias please='sudo $(fc -ln -1)'
 
 # Git aliases
-alias get-remote='git config --get remote.origin.url' # It shows the remote address of any cloned repository.
 #alias gitclean="{ git reset; git checkout .; git clean -fdx }" # Clean git repo
 #alias gc="git commit"
 #alias gdh="git diff HEAD"
@@ -874,9 +875,10 @@ alias get-remote='git config --get remote.origin.url' # It shows the remote addr
 #alias gp="git push"
 #alias gs="git status"
 #alias gsh="git show HEAD"
-#gst="git status --short"
-#gd="git diff --minimal"
-#gl="git log --oneline --decorate --graph"
+#alias gd="git diff --minimal"
+#alias gl="git log --oneline --decorate --graph"
+alias get-remote='git config --get remote.origin.url' # It shows the remote address of any cloned repository.
+alias gi='git init'
 alias gcl='git clone'
 alias ga='git add'
 alias grm='git rm'
