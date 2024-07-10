@@ -6,8 +6,6 @@
 #fi
 POWERLEVEL9K_INSTANT_PROMPT=on
 
-# Luke's config for the Zoomer Shell
-
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 # uncomment when no powerline10k
@@ -15,7 +13,7 @@ autoload -U colors && colors	# Load colors
 #PS1='[\u@\h \W]\$ '
 
 setopt +o nomatch	# fix for youtube-dl aliases
-setopt autocd		# Automatically cd into typed directory.
+setopt autocd		  # Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 
