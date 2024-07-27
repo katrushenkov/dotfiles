@@ -75,7 +75,7 @@ return {
           ["core.keybinds"] = {
             -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
             config = {
-              --default_keybinds = true,
+              default_keybinds = true,
               neorg_leader = ";", --"<Leader><Leader>",
               --neorg_leader = "<Leader><Leader>",
 
