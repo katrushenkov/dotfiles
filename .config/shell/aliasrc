@@ -271,8 +271,8 @@ alias merge="xrdb -merge ~/.Xresources"
 #alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 
 alias pacman='sudo pacman --color auto'
-alias up='sudo pacman -Syyu'
-
+#alias up='sudo pacman -Syyu'
+alias up='yay  -Syyu --devel'
 # yay as aur helper - updates everything
 alias pksyua="yay -Syu --noconfirm"
 alias all="yay -Syu --noconfirm"
