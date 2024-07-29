@@ -1,12 +1,15 @@
 -- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- You can also add or configure plugins by creating files in this `plugins/` folder
--- Here are some examples:
 
 return {
   {
     "nvim-telescope/telescope-project.nvim",
     config = function() require("telescope").load_extension "project" end,
+  },
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
   },
   {
     --https://github.com/luukvbaal/nnn.nvim
@@ -76,35 +79,35 @@ return {
             -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
             config = {
               default_keybinds = true,
-              neorg_leader = ";", --"<Leader><Leader>",
-              --neorg_leader = "<Leader><Leader>",
+              --    neorg_leader = ";", --"<Leader><Leader>",
+              --    --neorg_leader = "<Leader><Leader>",
 
-              hook = function(keybinds)
-                local local_leader = keybinds.leader
-                keybinds.map_to_mode("norg", {
-                  n = {
-                    { local_leader .. "jj", ":Neorg journal today<CR>", opts = { desc = "Go to Today's Journal" } },
-                    {
-                      local_leader .. "jh",
-                      ":Neorg journal yesterday<CR>",
-                      opts = { desc = "Go to Yesterday's Journal" },
-                    },
-                    {
-                      local_leader .. "jl",
-                      ":Neorg journal tomorrow<CR>",
-                      opts = { desc = "Go to Tomorrow's Journal" },
-                    },
-                    { local_leader .. "jc", ":Neorg journal custom ", opts = { desc = "Go to Custom Journal" } },
-                  },
-                })
+              --    hook = function(keybinds)
+              --      local local_leader = keybinds.leader
+              --      keybinds.map_to_mode("norg", {
+              --        n = {
+              --          { local_leader .. "jj", ":Neorg journal today<CR>", opts = { desc = "Go to Today's Journal" } },
+              --          {
+              --            local_leader .. "jh",
+              --            ":Neorg journal yesterday<CR>",
+              --            opts = { desc = "Go to Yesterday's Journal" },
+              --          },
+              --          {
+              --            local_leader .. "jl",
+              --            ":Neorg journal tomorrow<CR>",
+              --            opts = { desc = "Go to Tomorrow's Journal" },
+              --          },
+              --          { local_leader .. "jc", ":Neorg journal custom ", opts = { desc = "Go to Custom Journal" } },
+              --        },
+              --      })
 
-                keybinds.map_to_mode("all", {
-                  n = {
-                    { local_leader .. "a", ":Neorg index<CR>", opts = { desc = "Go to index" } },
-                    { local_leader .. "b", ":Neorg index<CR>", opts = { desc = "Go to index" } },
-                  },
-                })
-              end,
+              --      keybinds.map_to_mode("all", {
+              --        n = {
+              --          { local_leader .. "a", ":Neorg index<CR>", opts = { desc = "Go to index" } },
+              --          { local_leader .. "b", ":Neorg index<CR>", opts = { desc = "Go to index" } },
+              --        },
+              --      })
+              --    end,
             },
           },
           ["core.dirman"] = {
