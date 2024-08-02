@@ -1,0 +1,2 @@
+xdotool type "$(grep -v '^#' ~/.local/src/datagrip/org/snippets | dmenu -i -l 50)"
+
