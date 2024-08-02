@@ -24,14 +24,7 @@ require("telescope").setup {
       override_generic_sorter = true, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
       case_mode = "ignore_case", -- or "ignore_case" or "respect_case"
-      -- the default case_mode is "smart_case"
     },
-  },
-}
-require("telescope").load_extension "fzf"
-
-require("telescope").setup {
-  extensions = {
     project = {
       base_dirs = {
         --{ "~/.local/src/datagrip/org" },
@@ -42,14 +35,15 @@ require("telescope").setup {
       },
       --display_type = true,
       display_type = true,
-      theme = "dropdown",
+      -- theme = "dropdown",
+      order_by = "asc",
+      search_by = "title",
       hidden_files = true, -- default: false
       --on_project_selected = function(prompt_bufnr)
       --on_project_selected = function(prompt_bufnr) _actions.find_project_files(prompt_bufnr, hidden_files) end,
       --  vim.notify("Test!")
     },
   },
-  -- Добавлял на ура, не факт что это работает
   pickers = {
     find_files = {
       theme = "ivy", --dropdown
@@ -72,16 +66,17 @@ require("telescope").setup {
     },
     --find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "--glob", "!.git", "etc", "etc" },
     --find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden" },
-    --find_command = { "fzf" },
   },
 }
---require("telescope").load_extension "project"
---vim.api.nvim_set_keymap(
---  "n",
---  "<C-p>",
---  ":lua require'telescope'.extensions.project.project{}<CR>",
---  { noremap = true, silent = true }
---)
+require("telescope").load_extension "fzf"
+
+require("telescope").load_extension "project"
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-p>",
+  ":lua require'telescope'.extensions.project.project{}<CR>",
+  { noremap = true, silent = true }
+)
 
 vim.cmd "set timeoutlen=0"
 
