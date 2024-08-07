@@ -143,13 +143,10 @@ vim.api.nvim_set_keymap("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "To
 -- Move to the first non-blank character of the line
 -- vim.api.nvim_set_keymap("n", "0", "^", { noremap = true })
 
--- Как-то для неорга можно использовать
 --vim.api.nvim_create_autocmd("BufNewFile", {
 --  command = "Neorg templates load journal",
 --  pattern = { "/home/ser/org/journal/*.norg" },
 --})
-
---vim.cmd "set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
 
 --require "lazy_setup"
 require "polish"

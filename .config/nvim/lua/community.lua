@@ -11,5 +11,6 @@ return {
   { import = "astrocommunity.motion.hop-nvim" },
   { import = "astrocommunity.note-taking.neorg" },
   { import = "astrocommunity.colorscheme.catppuccin" },
+  { import = "astrocommunity.editing-support.conform-nvim" },
   -- import/override with your plugins folder
 }
