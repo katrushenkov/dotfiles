@@ -113,8 +113,8 @@ n ()
     # Block nesting of nnn in subshells
     if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
         #echo "nnn is already running"
-	exit
-        return
+	      exit
+    return
     fi
 
     # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
@@ -142,7 +142,7 @@ nsel ()
     tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
 }
 
-[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
+#[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
 export NNN_USE_EDITOR=1
 export NNN_OPTS='acdAH'
 #export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;e:-_ewrap $nnn*'
@@ -163,6 +163,10 @@ bindkey -s '^a' '^ubc -lq\n'
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
 bindkey -s '^a' 'bc -lq\n'
+
+bindkey -s '^v' 'nvim\n'
+
+bindkey -s '^p' 'nvim -c "Telescope project"\n'
 
 # Use fzf-key-bindings.zsh instead of this
 #bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
