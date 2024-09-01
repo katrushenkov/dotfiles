@@ -17,6 +17,7 @@ end
 
 require "lazy_setup"
 
+local project_actions = require "telescope._extensions.project.actions"
 require("telescope").setup {
   extensions = {
     fzf = {
@@ -30,18 +31,20 @@ require("telescope").setup {
         --{ "~/.local/src/datagrip/org" },
         --{ "~/.local/src" },
         --        { "~/dev/src3", max_depth = 4 },
-        { path = "~/.local/src", max_depth = 9 },
+        { path = "~/.local/src", max_depth = 2 },
         --        { path = "~/dev/src5", max_depth = 2 },
       },
+      --display_type = false,не влияет
       --display_type = true,
-      display_type = true,
-      -- theme = "dropdown",
+      theme = "dropdown",
       order_by = "asc",
       search_by = "title",
       hidden_files = true, -- default: false
-      --on_project_selected = function(prompt_bufnr)
+      on_project_selected = function(prompt_bufnr)
+        --require("telescope._extensions.project.actions").change_working_directory(prompt_bufnr)
+        project_actions.change_working_directory(prompt_bufnr)
+      end,
       --on_project_selected = function(prompt_bufnr) _actions.find_project_files(prompt_bufnr, hidden_files) end,
-      --  vim.notify("Test!")
     },
   },
   pickers = {
@@ -53,20 +56,39 @@ require("telescope").setup {
       no_ignore_parent = true,
     },
   },
-  defaults = {
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--ignore-case",
-      "--hidden",
-    },
-    --find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden", "--glob", "!.git", "etc", "etc" },
-    --find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden" },
+  --  defaults = {
+  -- vimgrep_arguments = {
+  --   "fd",
+  --   "--color=never",
+  --   "--no-heading",
+  --   "--with-filename",
+  --   "--line-number",
+  --   "--column",
+  --   "--ignore-case",
+  --   "--hidden",
+  --   "--recursive",
+  --   "--no-messages",
+  --   "--exclude-dir=*cache*",
+  --   "--exclude-dir=*.git",
+  --   --"--exclude=.*",
+  --   "--exclude=*.pp",
+  --   "--binary-files=without-match",
+  --   "--vimgrep",
+  -- },
+  find_command = {
+    "rg",
+    "--files",
+    "--color",
+    "never",
+    "--no-ignore",
+    "--hidden",
+    "--glob",
+    "!.git",
+    "etc",
   },
+  --find_command = { "rg", "--files", "--color", "never", "--no-ignore", "--hidden" },
+  -- },
+  --:lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 10 }))
 }
 require("telescope").load_extension "fzf"
 
@@ -86,7 +108,8 @@ vim.api.nvim_set_keymap(
   "n",
   ";j",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
-  ":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
+  --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
+  ":edit /home/ser/.local/src/datagrip/org/journal/ksmjournal.norg<cr>Go<ESC>:put =strftime('[%F]')<CR>$a ",
   --":Neorg journal today<cr>:Neorg templates add journal<cr>",
   --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
@@ -124,6 +147,7 @@ vim.api.nvim_set_keymap(
 )
 vim.api.nvim_set_keymap("n", ";x", ":Telescope find_files<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
+vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the whole buffer" })
 --vim.keymap.set("n", "<lhs>", "<Plug>(neorg.telescope.search_headings)")
 --vim.keymap.set('n', '<leader>E', '<Cmd>Neotree<CR>', {position=current})
 --vim.keymap.set({ "n" }, "<leader>x", ":NnnExplorer<cr>", { desc = "Toggle nnn" })
