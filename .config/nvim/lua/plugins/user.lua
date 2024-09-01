@@ -46,9 +46,10 @@ return {
           ["core.summary"] = {},
           ["core.journal"] = {
             config = {
-              strategy = "flat",
+              strategy = "flat", --"nested",
               workspace = "org",
-              --template_name = { "template.norg" },
+              template_name = { "template.norg" }, -- for default ":Neorg journal template", file from journal_folder
+              use_template = true,
               journal_folder = "journal",
             }, -- Enables support for the journal module
           },
