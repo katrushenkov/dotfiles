@@ -1,0 +1,5 @@
+[user]
+	email = katrushenkov@gmail.com
+	name = Sergey Katrushenkov
+[credential]
+	helper = store
