@@ -114,7 +114,7 @@ return {
           ["core.dirman"] = {
             config = {
               workspaces = {
-                org = "~/.local/src/datagrip/org",
+                org = "~/.local/src/datagrip",
               },
               default_workspace = "org",
             },
