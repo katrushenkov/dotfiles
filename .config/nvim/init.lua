@@ -28,7 +28,7 @@ require("telescope").setup {
     },
     project = {
       base_dirs = {
-        --{ "~/.local/src/datagrip/org" },
+        --{ "~/.local/src/datagrip" },
         --{ "~/.local/src" },
         --        { "~/dev/src3", max_depth = 4 },
         { path = "~/.local/src", max_depth = 2 },
