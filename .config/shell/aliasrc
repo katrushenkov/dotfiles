@@ -158,7 +158,6 @@ alias by="systemctl poweroff -i"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
 # get selected files from nnn
-alias ncp="cat ${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection} | tr '\0' '\n'"
 alias N='sudo nnn -dn'
 alias nnn="nnn"
 alias r="nnn"
