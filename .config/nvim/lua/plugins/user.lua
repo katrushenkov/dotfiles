@@ -123,28 +123,26 @@ return {
       }
     end,
   },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = function(_, opts)
+      opts.filesystem.filtered_items = {
+        hide_gitignored = false,
+        visible = true,
+        hide_dotfiles = false,
+      }
+      --opts.filesystem = {
+      --    window = {
+      --       mappings = {
+      --       -- disable fuzzy finder -- fix search by /
+      --       ["/"] = "noop"
+      --       }
+      --     }
+      -- }
+      return opts
+    end,
+  },
 }
-
--- Пробовал кастомизировать, но на арчкрафте вроде не нужно
---  {
---    "nvim-neo-tree/neo-tree.nvim",
---   -- opts = function(_, opts)
---   --  opts.filesystem.filtered_items = {
---   --     hide_gitignored = false,
---   --     visible = true,
---   --    hide_dotfiles = false,
---   --   }
---   --  --opts.filesystem = {
---   --  --    window = {
---   --  --       mappings = {
---   --  --       -- disable fuzzy finder  (чтобы поиск работал просто по /)
---   --  --       ["/"] = "noop"
---   --  --       }
---   --  --     }
---   --  -- }
---   --   return opts
---   -- end
---  },
 
 -- ---@type LazySpec
 -- return {
