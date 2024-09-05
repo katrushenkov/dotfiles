@@ -114,7 +114,10 @@ vim.api.nvim_set_keymap(
   --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
 ) -- set via neorg_leader
-vim.keymap.set({ "n" }, "<leader>E", ":Neotree position=float toggle<cr>", { desc = "Toggle neotree" })
+vim.keymap.set({ "n" }, "<leader>E", ":Neotree float<cr>", { desc = "Toggle neotree" })
+vim.keymap.set({ "n" }, "<leader>e", ":Neotree float<cr>", { desc = "Toggle neotree" })
+vim.keymap.set({ "n" }, ";e", ":Neotree float<cr>", { desc = "Toggle neotree" })
+vim.keymap.set({ "n" }, ";E", ":Neotree float<cr>", { desc = "Toggle neotree" })
 vim.keymap.set({ "n" }, "<leader>bk", "<Cmd>bd<CR>", { desc = "kill buffer" })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true })
