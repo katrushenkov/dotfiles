@@ -147,6 +147,7 @@ vim.api.nvim_set_keymap(
 )
 vim.api.nvim_set_keymap("n", ";x", ":Telescope find_files<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
+vim.api.nvim_set_keymap("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
 vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the whole buffer" })
 --vim.keymap.set("n", "<lhs>", "<Plug>(neorg.telescope.search_headings)")
 --vim.keymap.set('n', '<leader>E', '<Cmd>Neotree<CR>', {position=current})
