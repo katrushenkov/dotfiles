@@ -101,7 +101,6 @@ return {
               --          { local_leader .. "jc", ":Neorg journal custom ", opts = { desc = "Go to Custom Journal" } },
               --        },
               --      })
-
               --      keybinds.map_to_mode("all", {
               --        n = {
               --          { local_leader .. "a", ":Neorg index<CR>", opts = { desc = "Go to index" } },
@@ -142,6 +141,8 @@ return {
       return opts
     end,
   },
+  -- You can disable default plugins as follows:
+  { "max397574/better-escape.nvim", enabled = false },
 }
 
 -- ---@type LazySpec
@@ -178,8 +179,6 @@ return {
 --     end,
 --   },
 --
---   -- You can disable default plugins as follows:
---   { "max397574/better-escape.nvim", enabled = false },
 --
 --   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
 --   {
