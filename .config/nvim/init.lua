@@ -104,6 +104,10 @@ vim.cmd "set timeoutlen=0"
 
 vim.opt.clipboard:append { "unnamed", "unnamedplus" }
 
+-- Автоматически использовать системный буфер обмена для копирования и вставки
+vim.keymap.set("n", "y", '"+y') -- Копировать в системный буфер обмена
+vim.keymap.set("n", "p", '"+p') -- Вставить из системного буфера обмена
+
 vim.api.nvim_set_keymap(
   "n",
   ";j",
