@@ -14,7 +14,23 @@ return {
   {
     --https://github.com/luukvbaal/nnn.nvim
     "luukvbaal/nnn.nvim",
-    config = function() require("nnn").setup() end,
+    config = function()
+      require("nnn").setup {
+        picker = {
+          cmd = "nnn", -- command override (-p flag is implied)
+          style = {
+            width = 0.9, -- percentage relative to terminal size when < 1, absolute otherwise
+            height = 0.8, -- ^
+            xoffset = 0.5, -- ^
+            yoffset = 0.5, -- ^
+            border = "single", -- border decoration for example "rounded"(:h nvim_open_win)
+          },
+          session = "", -- or "global" / "local" / "shared"
+          tabs = true, -- separate nnn instance per tab
+          fullscreen = false, -- whether to fullscreen picker window when current tab is empty
+        },
+      }
+    end,
   },
   { "folke/zen-mode.nvim", cmd = "ZenMode" },
   { "ivanesmantovich/xkbswitch.nvim", config = function() require("xkbswitch").setup() end },
