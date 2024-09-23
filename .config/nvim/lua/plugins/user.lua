@@ -146,14 +146,31 @@ return {
         visible = true,
         hide_dotfiles = false,
       }
-      --opts.filesystem = {
+      opts.buffers = {
+        follow_current_file = {
+          enabled = true,
+        },
+      }
+      opts.filesystem = {
+        follow_current_file = {
+          enabled = true,
+        },
+      }
+      -- opts.filesystem = {
+      --
+      --   bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
+      --   cwd_target = {
+      --     sidebar = "tab", -- sidebar is when position = left or right
+      --     current = "window", -- current is when position = current
+      --     --    float = "tab"
+      --   },
       --    window = {
       --       mappings = {
       --       -- disable fuzzy finder -- fix search by /
       --       ["/"] = "noop"
       --       }
       --     }
-      -- }
+      --}
       return opts
     end,
   },

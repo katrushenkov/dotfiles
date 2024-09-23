@@ -12,5 +12,7 @@ return {
   { import = "astrocommunity.note-taking.neorg" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.editing-support.conform-nvim" },
+  --  { import = "astrocommunity.recipes.heirline-clock-statusline" },
+  --{ import = "astrocommunity.recipes.heirline-mode-text-statusline" },
   -- import/override with your plugins folder
 }
