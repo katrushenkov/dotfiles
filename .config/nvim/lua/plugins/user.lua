@@ -140,39 +140,71 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    opts = function(_, opts)
-      opts.filesystem.filtered_items = {
-        hide_gitignored = false,
-        visible = true,
-        hide_dotfiles = false,
-      }
-      opts.buffers = {
-        follow_current_file = {
-          enabled = true,
-        },
-      }
-      opts.filesystem = {
-        follow_current_file = {
-          enabled = true,
-        },
-      }
-      -- opts.filesystem = {
-      --
-      --   bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
-      --   cwd_target = {
-      --     sidebar = "tab", -- sidebar is when position = left or right
-      --     current = "window", -- current is when position = current
-      --     --    float = "tab"
-      --   },
-      --    window = {
-      --       mappings = {
-      --       -- disable fuzzy finder -- fix search by /
-      --       ["/"] = "noop"
-      --       }
-      --     }
-      --}
-      return opts
-    end,
+    --config = function()
+    --  require("neo-tree").setup {
+    --    filesystem = {
+    --      filtered_items = {
+    --        visible = true,
+    --        show_hidden_count = true,
+    --        hide_dotfiles = false,
+    --        hide_gitignored = true,
+    --        hide_by_name = {
+    --          -- add extension names you want to explicitly exclude
+    --          -- '.git',
+    --          -- '.DS_Store',
+    --          -- 'thumbs.db',
+    --        },
+    --        never_show = {},
+    --      },
+    --    },
+    --  }
+    --        vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left<CR>", {})
+    --end,
+
+    -- ksm not working
+    -- opts = function(_, opts)
+    --   opts.filesystem.filtered_items = {
+    --     hide_gitignored = false,
+    --     visible = true,
+    --     hide_dotfiles = false,
+    --     show_hidden_count = true,
+    --     hide_by_name = {
+    --       ".json",
+    --       ".yaml",
+    --       ".lua",
+    --       -- '.git',
+    --       -- '.DS_Store',
+    --       -- 'thumbs.db',
+    --     },
+    --     never_show = {},
+    --   }
+    --   opts.buffers = {
+    --     follow_current_file = {
+    --       enabled = true,
+    --     },
+    --   }
+    --   opts.filesystem = {
+    --     follow_current_file = {
+    --       enabled = true,
+    --     },
+    --   }
+    -- opts.filesystem = {
+    --
+    --   bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
+    --   cwd_target = {
+    --     sidebar = "tab", -- sidebar is when position = left or right
+    --     current = "window", -- current is when position = current
+    --     --    float = "tab"
+    --   },
+    --    window = {
+    --       mappings = {
+    --       -- disable fuzzy finder -- fix search by /
+    --       ["/"] = "noop"
+    --       }
+    --     }
+    --}
+    -- return opts
+    --end,
   },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
