@@ -15,12 +15,12 @@ dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 ee	/mnt/main/private
 files	/mnt/main/files
-grip /home/ser/.local/src/datagrip
+gr /home/ser/.local/src/datagrip
 h   $HOME
 m   ${XDG_MUSIC_DIR:-$HOME/Music}
 mm	/mnt/main/mus
 mn	/mnt/main
-org  /home/ser/.local/src/datagrip
+org  /home/ser/.local/src/datagripli
 pp	/mnt/main/pic
 #pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
 rr	$HOME/.local/src

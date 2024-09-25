@@ -16,13 +16,13 @@ alias \
 	cp="cp -iv" \
 	mv="mv -iv" \
 	ln='ln -i' \
-	#Do not accidentally delete root, and also,
-	#prompt if deleting more than 3 files at a time
-	#(this has saved my ass more times than you would think)
 	rm="rm -vI --preserve-root" \
 	bc="bc -ql" \
 	mkd="mkdir -pv" \
 	ffmpeg="ffmpeg -hide_banner"
+	#Do not accidentally delete root, and also,
+	#prompt if deleting more than 3 files at a time
+	#(this has saved my ass more times than you would think)
 
 alias \
 	ls="ls -hNF --color=auto --group-directories-first" \
@@ -37,17 +37,17 @@ alias \
 	l="ls -Fh" \
 	lm='ls -m' \
 	lr='ls -R' \
-#	l.="ls -AF | egrep '^\.'" \
 	c="cd" \
+	lcd="cd" \
+	home="cd ~"
+
 #	c..="cd .." \
 #	..="cd .." \
 #	...="cd ../.." \
 #	....="cd ../../.." \
 #	.....="cd ../../../.." \
 #	cd..="cd .." \
-	lcd="cd" \
-	home="cd ~" \
-	d="cd"
+#	l.="ls -AF | egrep '^\.'" \
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -909,8 +909,8 @@ alias gpu='git push --set-upstream'
 alias gpuo='git push --set-upstream origin'
 alias gpuoc='git push --set-upstream origin $(git symbolic-ref --short HEAD)'
 alias gpom='git push origin master'
-alias gr='git remote'
-alias gr='git rebase'
+alias grm='git remote'
+alias grb='git rebase'
 alias grv='git remote -v'
 alias gra='git remote add'
 alias gd='git diff'

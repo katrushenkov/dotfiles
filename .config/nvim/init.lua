@@ -118,14 +118,35 @@ vim.api.nvim_set_keymap(
   --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
 ) -- set via neorg_leader
-vim.keymap.set({ "n" }, "<leader>E", ":Neotree float<cr>", { desc = "Toggle neotree" })
-vim.keymap.set({ "n" }, "<leader>e", ":Neotree float<cr>", { desc = "Toggle neotree" })
-vim.keymap.set({ "n" }, ";e", ":Neotree float<cr>", { desc = "Toggle neotree" })
-vim.keymap.set({ "n" }, ";E", ":Neotree float<cr>", { desc = "Toggle neotree" })
+vim.keymap.set(
+  { "n" },
+  "<leader>E",
+  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
+  { desc = "Toggle neotree" }
+)
+vim.keymap.set(
+  { "n" },
+  "<leader>e",
+  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
+  { desc = "Toggle neotree" }
+)
+vim.keymap.set(
+  { "n" },
+  ";e",
+  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
+  { desc = "Toggle neotree" }
+)
+vim.keymap.set(
+  { "n" },
+  ";E",
+  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
+  { desc = "Toggle neotree" }
+)
 vim.keymap.set({ "n" }, "<leader>bk", "<Cmd>bd<CR>", { desc = "kill buffer" })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
+vim.api.nvim_set_keymap("n", "<C-c>", ":Gitsigns blame_line<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "f", ":HopWord<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", ":HopLineAC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", ":HopLineBC<cr>", { silent = true })
@@ -134,6 +155,9 @@ vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
 vim.api.nvim_set_keymap("n", ";a", ":Neorg index<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "J", ":bnext<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
+--vim.api.nvim_set_keymap("n", "<leader>fs", "<cmd>lua require("telescope.builtin").live_grep({ glob_pattern = "!{spec,test}"}).<cr>", { silent = true })
+--vim.api.nvim_set_keymap("n", "<leader>fc", "<cmd>lua require("telescope")extensions.live_grep_args.live_grep_args()<cr>", { silent = true })
+
 vim.keymap.set(
   "n",
   "<leader>fG",
@@ -153,6 +177,7 @@ vim.api.nvim_set_keymap(
   { silent = true, noremap = true }
 )
 vim.api.nvim_set_keymap("n", ";x", ":Telescope find_files<cr>", { silent = true })
+vim.api.nvim_set_keymap("n", ";f", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
 vim.api.nvim_set_keymap("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
 vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the whole buffer" })
