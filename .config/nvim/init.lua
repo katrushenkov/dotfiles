@@ -155,6 +155,7 @@ vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
 vim.api.nvim_set_keymap("n", ";a", ":Neorg index<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "J", ":bnext<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
+vim.keymap.set("n", ";w", ":Telescope live_grep<cr>", { desc = "Telescope live grep" })
 --vim.api.nvim_set_keymap("n", "<leader>fs", "<cmd>lua require("telescope.builtin").live_grep({ glob_pattern = "!{spec,test}"}).<cr>", { silent = true })
 --vim.api.nvim_set_keymap("n", "<leader>fc", "<cmd>lua require("telescope")extensions.live_grep_args.live_grep_args()<cr>", { silent = true })
 
