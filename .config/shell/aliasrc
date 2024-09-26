@@ -61,7 +61,8 @@ alias \
 	z="zathura" \
 	v="nvim" \
 	vi="nvim" \
-	nv="nvim"
+	nv="nvim" \
+	lg="lazygit"
 
 alias \
 	lf="lfub" \
