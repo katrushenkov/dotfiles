@@ -138,6 +138,8 @@ alias z='sudo -i zsh'
 alias zzzz='sudo /root/.config/nvim/upd_all_plugins.sh; sudo -i zsh'
 alias zzzzz='sudo /root/.config/nvim/upd_all_plugins_always.sh; sudo -i zsh'
 
+alias passgen="pwgen -Ccsn 32 1"
+
 alias top='top -c -n 1'
 
 alias 2p="sudo -u postgres -i"
