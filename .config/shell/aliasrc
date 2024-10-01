@@ -139,6 +139,7 @@ alias zzzz='sudo /root/.config/nvim/upd_all_plugins.sh; sudo -i zsh'
 alias zzzzz='sudo /root/.config/nvim/upd_all_plugins_always.sh; sudo -i zsh'
 
 alias passgen="pwgen -Ccsn 32 1"
+alias nsl="nslookup"
 
 alias top='top -c -n 1'
 
