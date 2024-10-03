@@ -3,3 +3,5 @@
 	name = Sergey Katrushenkov
 [credential]
 	helper = store
+[safe]
+	directory = * 
