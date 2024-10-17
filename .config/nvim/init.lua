@@ -102,9 +102,10 @@ vim.api.nvim_set_keymap(
 
 vim.cmd "set timeoutlen=0"
 
+vim.cmd "set clipboard+=unnamedplus"
 --vim.opt.clipboard:append { "unnamed", "unnamedplus" }
 
--- Автоматически использовать системный буфер обмена для копирования и вставки
+--Автоматически использовать системный буфер обмена для копирования и вставки
 --vim.keymap.set("n", "y", '"+y') -- Копировать в системный буфер обмена
 --vim.keymap.set("n", "p", '"+p') -- Вставить из системного буфера обмена
 
@@ -118,18 +119,18 @@ vim.api.nvim_set_keymap(
   --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
 ) -- set via neorg_leader
-vim.keymap.set(
-  { "n" },
-  "<leader>E",
-  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
-  { desc = "Toggle neotree" }
-)
-vim.keymap.set(
-  { "n" },
-  "<leader>e",
-  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
-  { desc = "Toggle neotree" }
-)
+--vim.keymap.set(
+--  { "n" },
+--  "<leader>E",
+--  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
+--  { desc = "Toggle neotree" }
+--)
+--vim.keymap.set(
+--  { "n" },
+--  "<leader>e",
+--  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
+--  { desc = "Toggle neotree" }
+--)
 vim.keymap.set(
   { "n" },
   ";e",
