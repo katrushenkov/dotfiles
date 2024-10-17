@@ -1,0 +1,2 @@
+cat ~/win | dmenu -i -l 20 | xargs -I {} remmina -c "rdp://domain\\username:pss@{}"
+#cat ~/win | rofi -dmenu | xargs -I {} remmina -c "rdp://domain\\username:pss@{}"
