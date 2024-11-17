@@ -4,3 +4,4 @@
 .config/shell/shortcutrc
 .config/shell/zshnameddirrc
 .config/zsh/.zcompdump
+.local/bin/rem
