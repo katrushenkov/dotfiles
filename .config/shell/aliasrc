@@ -109,6 +109,7 @@ alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
 alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
+alias grep='grep --color=auto -iE'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias xzegrep='xzegrep --color=auto'
@@ -143,7 +144,7 @@ alias nsl="nslookup"
 
 alias top='top -c -n 1'
 
-alias 2p="sudo -u postgres -i"
+alias 2p="sudo -iu postgres"
 
 alias xkb="setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &"
 
@@ -331,7 +332,7 @@ alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без п
 
 alias wg='wget -O /dev/null'
 
-alias clearjournal="sudo journalctl --rotate;sudo journalctl --vacuum-time=1s"
+alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
 alias renew="source ~/.bashrc"
 
 #alias rsync-copy="rsync -avz --progress -h"
