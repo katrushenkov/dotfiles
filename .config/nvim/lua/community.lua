@@ -13,7 +13,8 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.everforest" },
   { import = "astrocommunity.editing-support.conform-nvim" },
-  --  { import = "astrocommunity.recipes.heirline-clock-statusline" },
+  { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
+  --{ import = "astrocommunity.recipes.heirline-clock-statusline" },
   --{ import = "astrocommunity.recipes.heirline-mode-text-statusline" },
   -- import/override with your plugins folder
 }
