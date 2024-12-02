@@ -151,8 +151,9 @@ export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 #export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO=/tmp/nnn.fifo nnn
 export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
-export NNN_TRASH=2                          # use trash-cli [1] and gio trash [2] instead of deleting
-export NNN_CONTEXT_COLORS="2536"
+export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
+#export NNN_FCOLORS='c1e2272e006033f7c6d6abc4'
+#export NNN_COLORS='2555'
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 
