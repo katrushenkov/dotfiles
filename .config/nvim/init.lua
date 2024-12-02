@@ -17,6 +17,23 @@ end
 
 require "lazy_setup"
 
+-- --------------------------------
+-- init.lua
+-- if vim.env.WAYLAND_DISPLAY and vim.fn.executable "wl-copy" and vim.fn.executable "wl-paste" then
+--   vim.g.clipboard = {
+--     name = "wl-copy",
+--     copy = {
+--       ["+"] = { "wl-copy", "--type", "text/plain" },
+--       ["*"] = { "wl-copy", "--primary", "--type", "text/plain" },
+--     },
+--     paste = {
+--       ["+"] = { "wl-paste", "--no-newline" },
+--       ["*"] = { "wl-paste", "--no-newline", "--primary" },
+--     },
+--   }
+-- end
+-- --------------------------------
+
 local project_actions = require "telescope._extensions.project.actions"
 require("telescope").setup {
   extensions = {
@@ -153,7 +170,8 @@ vim.api.nvim_set_keymap("n", "<C-j>", ":HopLineAC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", ":HopLineBC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", ":ZenMode<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
-vim.api.nvim_set_keymap("n", ";a", ":Neorg index<cr>", { silent = true })
+--vim.api.nvim_set_keymap("n", ";a", ":Neorg index<cr>", { silent = true })
+vim.api.nvim_set_keymap("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "J", ":bnext<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
 vim.keymap.set("n", ";w", ":Telescope live_grep<cr>", { desc = "Telescope live grep" })
@@ -178,11 +196,19 @@ vim.api.nvim_set_keymap(
   ":lua require'telescope'.extensions.project.project{}<cr>",
   { silent = true, noremap = true }
 )
+vim.api.nvim_set_keymap("n", ";h", ":chdir ~/.local/src/datagrip<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";x", ":Telescope find_files<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";f", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
 vim.api.nvim_set_keymap("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
 vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the whole buffer" })
+-- vim.api.nvim_set_keymap(
+--   "i",
+--   "<ESC>",
+--   ":!hyprctl switchxkblayout e-signal-usb-gaming-mouse-keyboard 0",
+--   { silent = true }
+-- )
+
 --vim.keymap.set("n", "<lhs>", "<Plug>(neorg.telescope.search_headings)")
 --vim.keymap.set('n', '<leader>E', '<Cmd>Neotree<CR>', {position=current})
 --vim.keymap.set({ "n" }, "<leader>x", ":NnnExplorer<cr>", { desc = "Toggle nnn" })
@@ -207,5 +233,26 @@ vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the
 --  pattern = { "/home/ser/org/journal/*.norg" },
 --})
 
---require "lazy_setup"
+-- почему-то не всегда отрабатывает
+--vim.api.nvim_create_autocmd("InsertLeave", {
+--  desc = "update diff",
+--  group = init_group,
+--  pattern = "*",
+--  -- command = "if &l:diff | diffupdate | endif",
+--  --command = "!hyprctl switchxkblayout e-signal-usb-gaming-mouse-keyboard next",
+--  callback = function() vim.cmd "silent !hyprctl switchxkblayout e-signal-usb-gaming-mouse-keyboard 0" end,
+--})
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = "*",
+  group = init_group,
+  command = "silent !/home/ser/.local/bin/toen",
+})
+
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  pattern = "*",
+  group = init_group,
+  command = "silent !/home/ser/.local/bin/toen",
+})
+
 require "polish"
