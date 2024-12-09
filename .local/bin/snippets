@@ -1,3 +1,4 @@
 wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi )"
+#ydotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
 #wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | wofi --dmenu -i -W '1500')"
 #xdotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
