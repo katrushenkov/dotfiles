@@ -131,7 +131,7 @@ vim.api.nvim_set_keymap(
   ";j",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
-  ":edit /home/ser/.local/src/datagrip/journal/ksmjournal.norg<cr>Go<ESC>:put =strftime('[%F]')<CR>$a ",
+  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>Go<ESC>:put =strftime('[%F]')<CR>$a ",
   --":Neorg journal today<cr>:Neorg templates add journal<cr>",
   --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
@@ -148,6 +148,8 @@ vim.api.nvim_set_keymap(
 --  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
 --  { desc = "Toggle neotree" }
 --)
+vim.keymap.set({ "n" }, ";z", ":wq!<cr>", { desc = "Quit without save" })
+
 vim.keymap.set(
   { "n" },
   ";e",
@@ -169,6 +171,7 @@ vim.api.nvim_set_keymap("n", "f", ":HopWord<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", ":HopLineAC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", ":HopLineBC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", ":ZenMode<cr>", { silent = true })
+-- ("n", "<leader>zm", ":ZenMode<CR>")
 vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
 --vim.api.nvim_set_keymap("n", ";a", ":Neorg index<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
@@ -246,13 +249,14 @@ vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
   group = init_group,
-  command = "silent !/home/ser/.local/bin/toen",
+  command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
+  --command = "silent !/home/ser/.local/bin/toen",
 })
 
 vim.api.nvim_create_autocmd("CmdlineEnter", {
   pattern = "*",
   group = init_group,
-  command = "silent !/home/ser/.local/bin/toen",
+  command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
 })
 
 require "polish"
