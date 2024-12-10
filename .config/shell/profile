@@ -8,14 +8,14 @@
 # Adds `~/.local/bin` to $PATH
 #export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 #PATH=$PATH$( find $HOME/scripts/ -type d -printf ":%p" )
-export PATH="$PATH:$(find ~/.local/bin -type d | paste -sd ':' -)"
+export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 
 unsetopt PROMPT_SP 2>/dev/null
 
 # Default programs:
 export EDITOR="nvim"
 export TERMINAL="st"
-export BROWSER="firefox"
+export BROWSER="vivaldi"
 export KUBE_EDITOR="nvim"
 
 # ~/ Clean-up:

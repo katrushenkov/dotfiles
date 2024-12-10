@@ -1,0 +1,76 @@
+#!/bin/bash
+
+file="$HOME/bookmarks.txt"
+fileother="$HOME/bookmarks_other.txt"
+case $1 in
+	-a)
+	if grep "^$bookmark " "$file"; then 
+		notify-send "Oops" "Bookmark already present."
+	else 
+		name="$(bemenu -l 40 -p 'add name >' --no-exec --scrollbar autohide -i < /dev/null)"
+		bookmarkline="$bookmark | $name |"
+		tags="some_initial_value_lol"
+		while [ -n "$tags" ] ; do
+			tags="$(cut -d'|' -f 3- ~/bookmarks.txt | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'add tags >' --no-exec --scrollbar autohide)"
+			bookmarkline+=" $tags"
+		done
+		echo "$bookmarkline" >> "$file" 
+		notify-send "Bookmark Added" "$bookmark"
+	fi
+	;;
+	-ao)
+	if grep "^$bookmark " "$fileother"; then 
+		notify-send "Oops" "Bookmark already present."
+	else 
+		name="$(bemenu -i -l 40 -p 'add name >' --no-exec --scrollbar autohide < /dev/null)"
+		bookmarkline="$bookmark | $name |"
+		tags="some_initial_value_lol"
+		while [ -n "$tags" ] ; do
+			tags="$(cut -d'|' -f 3- ~/bookmarks_other.txt | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'add tags >' --no-exec --scrollbar autohide)"
+			bookmarkline+=" $tags"
+		done
+		echo "$bookmarkline" >> "$fileother" 
+		notify-send "Bookmark Added" "$bookmark"
+	fi
+	;;
+	-s)
+		# search and open
+		selection=$(cat ~/bookmarks.txt | bemenu -i -l 30 -p '>' --no-exec --scrollbar autohide | cut -d'|' -f 1)
+		#wtype "$selection"
+		vivaldi "$selection"
+	;;
+	-st)
+		# search tags and open
+		tagsel="$(cat ~/bookmarks.txt ~/bookmarks_other.txt | cut -d'|' -f 3- - | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'select tag>' --no-exec --scrollbar autohide)"
+		wtype $(cat ~/bookmarks.txt ~/bookmarks_other.txt | grep "$tagsel" | awk -F '|' '{print $2 "(" $1 ")" "[" $3 "]"}' | bemenu -i -l 40 -p '>' --no-exec --scrollbar autohide --fn iosevka 17 | cut -d'(' -f 2 | cut -d')' -f 1 )
+
+	;;
+	-so)
+		# search other and open
+		#selection=$(cat ~/bookmarks_other.txt | bemenu -i -l 30 -p '>' --no-exec --scrollbar autohide | cut -d'|' -f 1)
+    selection=$(cat ~/.local/src/datagrip/bookmarks-web.txt | tofi | cut -d '|' -f 1)
+    if [ -n "$selection" ]; then
+    		vivaldi "$selection";
+		    ~/.local/bin/focus-or-start "vivaldi-stable" "vivaldi-stable" "2";
+		fi
+		#wtype "$selection"
+		#vivaldi "$selection"
+	;;
+	-am)	
+		# add manually
+		bookmark="$(bemenu -i -l 40 -p 'add bookmark >' --no-exec --scrollbar autohide < /dev/null)"
+		name="$(bemenu -i -l 40 -p 'add name >' --no-exec --scrollbar autohide < /dev/null)"
+		bookmarkline="$bookmark | $name |"
+		tags="some_initial_value_lol"
+		while [ -n "$tags" ] ; do
+			tags="$(cut -d'|' -f 3- ~/bookmarks_other.txt | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'add tags >' --no-exec --scrollbar autohide)"
+			bookmarkline+=" $tags"
+		done
+		echo "$bookmarkline" >> "$fileother" 
+		notify-send "Bookmark Added" "$bookmark"
+		
+	;;
+	*)
+		echo "invalid option"
+	;;
+esac
