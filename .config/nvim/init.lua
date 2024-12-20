@@ -148,6 +148,9 @@ vim.api.nvim_set_keymap(
 --  ":Neotree source=filesystem reveal_force_cwd position=float<cr>",
 --  { desc = "Toggle neotree" }
 --)
+
+-- clear search highlights keymap.set("n", "<leader>nh", ":nohl<CR>")
+
 vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { desc = "Quit without save" })
 
 vim.keymap.set(
