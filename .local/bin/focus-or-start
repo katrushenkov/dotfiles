@@ -5,16 +5,16 @@
 #instead of switching workspace you can just do
 #hyprctl dispatch focuswindow "(${className})"
 
-
-
 execCommand=$1
 className=$2
 workspaceOnStart=$3
 
-running=$(hyprctl -j clients | jq -r ".[] | select(.class == \"${className}\") | .workspace.id")
+# | grep -v "-" -> choose windows not in magic (scratchpad) workspace
+running=$(hyprctl -j clients | jq -r ".[] | select(.class == \"${className}\") | .workspace.id" | grep -v "-")
+
 echo $running
 
-if [[ $running != "" ]]
+if [[ $running != "" ]] 
 then
 	echo "focus"
 	hyprctl dispatch workspace $running    
