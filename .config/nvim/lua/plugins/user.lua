@@ -32,11 +32,11 @@ return {
     end,
   },
   { "folke/zen-mode.nvim", cmd = "ZenMode" },
-  {
-    "ivanesmantovich/xkbswitch.nvim",
-    cond = function() return os.getenv "SSH_CLIENT" == nil end,
-    config = function() require("xkbswitch").setup() end,
-  },
+  --{
+  --  "ivanesmantovich/xkbswitch.nvim",
+  --  cond = function() return os.getenv "SSH_CLIENT" == nil end,
+  --  config = function() require("xkbswitch").setup() end,
+  --},
   {
     "nvim-neorg/neorg",
     dependencies = {
