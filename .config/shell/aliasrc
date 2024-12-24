@@ -335,6 +335,12 @@ alias wg='wget -O /dev/null'
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
 alias renew="source ~/.bashrc"
 
+
+alias ls="eza"
+alias la="eza -A"
+alias ll="eza -lAh"
+#alias cat='bat --theme="Catppuccin-mocha"'
+
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
 #alias rsync-update="rsync -avzu --progress -h"
@@ -977,6 +983,17 @@ alias yi='yum install'
 alias yu='yum update'
 alias yr='yum remove'
 alias rpml='rpm -qa| grep -e'
+
+grib() {
+    if [[ -n "$1" ]]; then
+        git rebase -i HEAD~"$1"
+    else
+        git rebase -i --root
+    fi
+}
+#gll() {
+#    git log -L"$2",+1:"$1"
+#}
 
 ## Pseudo Sudo
 #sudo(){
