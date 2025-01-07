@@ -1,0 +1,1 @@
+find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
