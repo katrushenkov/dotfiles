@@ -545,7 +545,6 @@ alias ll="eza -lAh"
 #alias p="ps aux | grep "
 #alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
-
 ## Count all files (recursively) in the current folder
 #alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
 
@@ -616,7 +615,6 @@ alias ll="eza -lAh"
 
 ## Remove a directory and all files
 #alias rmd='/bin/rm  --recursive --force --verbose '
-
 
 #Parenting changes perms on root
 #alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
