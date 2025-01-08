@@ -1,0 +1,4 @@
+cat ~/.local/src/datagrip/winhosts | tofi | xargs -I {} remmina -c "rdp://partner\\katrushenkov.sm:dnska_000@{}"
+#cat ~/winhosts | wofi -d | xargs -I {} remmina -c "rdp://partner\\katrushenkov.sm:dnska_111@{}"
+#cat ~/winhosts | dmenu -i -l 20 | xargs -I {} remmina -c "rdp://partner\\katrushenkov.sm:dnska_111@{}"
+#cat ~/winhosts | rofi -dmenu | xargs -I {} remmina -c "rdp://partner\\katrushenkov.sm:dnska_111@{}"
