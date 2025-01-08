@@ -131,7 +131,8 @@ vim.api.nvim_set_keymap(
   ";j",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
-  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>Go<ESC>:put =strftime('[%F]')<CR>$a ",
+  -- ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>Go<ESC>:put =strftime('[%F]')<CR>$a ",
+  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>",
   --":Neorg journal today<cr>:Neorg templates add journal<cr>",
   --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
