@@ -1,16 +1,59 @@
-#dos
-width = 100%
-height = 100%
-border-width = 0
-outline-width = 0
-padding-left = 35%
-padding-top = 35%
-result-spacing = 5
-num-results = 10
+# Padding
+padding-top = 5
+padding-bottom = 0
+padding-left = 5
+padding-right = 0
+
+# Font size
+font-size = 11
 font = monospace
-font-size=14
-#font = /usr/share/fonts/noto/NotoSansMono-Regular.ttf
-background-color = #000A
+min-input-width = 120
+result-spacing = 2
+
+## Dracula theme
+background-color = #282A36
+
+# Prompt
+prompt-text = "Search: "
+prompt-color = #F8F8F2
+
+# Input
+input-color = #50FA7B
+input-background = #44475A
+input-background-padding = 3
+input-background-corner-radius = 8
+
+# Result color
+default-result-color = #6272A4
+
+# Selection text
+selection-color = #8BE9FD
+selection-match-color = #50FA7B
+
+# Border color
+border-width = 1
+border-color = #6272A4
+
+# Outline width
+outline-width = 0
+
+width = 80%
+height = 50%
+
+# #dos
+# width = 100%
+# height = 100%
+# border-width = 0
+# outline-width = 0
+# padding-left = 25%
+# padding-top = 35%
+# result-spacing = 1
+# num-results = 20
+# font = monospace
+# font-size=11
+# #fuzzy-match = true
+# #font = /usr/share/fonts/noto/NotoSansMono-Regular.ttf
+# background-color = #000A
 
 # dmenu style
 #anchor = top
