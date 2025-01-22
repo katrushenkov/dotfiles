@@ -45,11 +45,9 @@ require("telescope").setup {
     },
     project = {
       base_dirs = {
+        { path = "~/.local/src", max_depth = 2 },
         --{ "~/.local/src/datagrip" },
         --{ "~/.local/src" },
-        --        { "~/dev/src3", max_depth = 4 },
-        { path = "~/.local/src", max_depth = 2 },
-        --        { path = "~/dev/src5", max_depth = 2 },
       },
       --display_type = false,не влияет
       --display_type = true,
@@ -130,11 +128,8 @@ vim.api.nvim_set_keymap(
   "n",
   ";j",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
-  --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
-  -- ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>Go<ESC>:put =strftime('[%F]')<CR>$a ",
-  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>",
+  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>:put =strftime('[%F]')<CR>$a ",
   --":Neorg journal today<cr>:Neorg templates add journal<cr>",
-  --":Neorg journal today<cr>",
   { silent = true, desc = "Journal today" }
 ) -- set via neorg_leader
 --vim.keymap.set(
