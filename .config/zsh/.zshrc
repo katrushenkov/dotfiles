@@ -165,8 +165,6 @@ bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
 bindkey -s '^a' 'bc -lq\n'
 
-bindkey -s '^v' 'nvim\n'
-
 bindkey -s '^p' 'nvim -c "Telescope project"\n'
 
 # Use fzf-key-bindings.zsh instead of this
