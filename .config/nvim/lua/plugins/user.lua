@@ -22,7 +22,7 @@ return {
             height = 0.8, -- ^
             xoffset = 0.5, -- ^
             yoffset = 0.5, -- ^
-            border = "single", -- border decoration for example "rounded"(:h nvim_open_win)
+            border = "rounded", -- border decoration for example "rounded"(:h nvim_open_win)
           },
           session = "", -- or "global" / "local" / "shared"
           tabs = true, -- separate nnn instance per tab
