@@ -48,6 +48,7 @@ return {
       { "pysan3/neorg-templates", dependencies = { "L3MON4D3/LuaSnip" } },
       { "nvim-neorg/neorg-telescope" },
     },
+    lazy = false,
     version = "*",
     config = function()
       require("neorg").setup {
