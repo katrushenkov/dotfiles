@@ -336,9 +336,9 @@ alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journ
 alias renew="source ~/.bashrc"
 
 
-alias ls="eza"
+alias ls="eza -a --icons"
 alias la="eza -A"
-alias ll="eza -lAh"
+alias ll="eza -lAh --icons --tree --level=1"
 #alias cat='bat --theme="Catppuccin-mocha"'
 
 #alias rsync-copy="rsync -avz --progress -h"
