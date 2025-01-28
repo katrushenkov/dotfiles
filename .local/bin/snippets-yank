@@ -1,1 +1,1 @@
-grep -v '^#' ~/.local/src/datagrip/snippets | tofi | wl-copy -n
+rg -v '^#' ~/.local/src/datagrip/snippets | tofi | wl-copy -n
