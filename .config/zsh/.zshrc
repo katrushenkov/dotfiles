@@ -175,6 +175,8 @@ bindkey '^[[P' delete-char
 #bindkey '^T' transpose-chars
 bindkey '^X' fzf-file-widget
 
+source <(fzf --zsh)
+
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
@@ -185,11 +187,6 @@ bindkey -M visual '^[[P' vi-delete
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
-
-# fzf Auto-completion
-[[ $- == *i* ]] && source "$HOME/.config/zsh/fzf-completion.zsh" 2> /dev/null
-# fzf Key bindings (^X - fzf-file-widget, ^F - fzf-cd-widget)
-source "$HOME/.config/zsh/fzf-key-bindings.zsh"
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-capture-completion
