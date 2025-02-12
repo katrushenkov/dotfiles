@@ -265,14 +265,17 @@ vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
   group = init_group,
-  command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
+  --command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
+  command = 'silent !/usr/bin/hyprctl switchxkblayout "logitech-usb-keyboard" 0 > /dev/null',
+
   --command = "silent !/home/ser/.local/bin/toen",
 })
 
 vim.api.nvim_create_autocmd("CmdlineEnter", {
   pattern = "*",
   group = init_group,
-  command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
+  --command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
+  command = 'silent !/usr/bin/hyprctl switchxkblayout "logitech-usb-keyboard" 0 > /dev/null',
 })
 
 require "polish"
