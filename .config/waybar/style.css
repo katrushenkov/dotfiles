@@ -12,7 +12,8 @@ Waybar Config File by Arfan Zubi
 */
 
 * {
-    font-family: 'FiraCode Nerd Font', sans-serif;
+    /*font-family: 'FiraCode Nerd Font', sans-serif;*/
+    font-family: 'JetBrains Mono', sans-serif;
     font-size: 14px;
     min-height: 0;
 }
