@@ -7,14 +7,14 @@
     "include": ["$HOME/.config/waybar/modules.json"],
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["group/system", "group/keyboard", "group/hardware"],
-//    "modules-right": ["group/system", "group/keyboard", "group/hardware", "custom/wlogout"],
+    "modules-center": [],
+    "modules-right": ["custom/scc","group/system","group/hardware","group/keyboard","clock"],
+//  "modules-right": ["group/system", "group/keyboard", "group/hardware", "custom/wlogout"],
 
     "group/system": {
         "orientation": "horizontal",
         "modules": [
-            //"backlight",//only for laptops
+            // "backlight", // only for laptops
             "pulseaudio",
             "network"
         ]
@@ -35,5 +35,5 @@
             "cpu",
             "memory"
         ]
-    }
+    },
 }
