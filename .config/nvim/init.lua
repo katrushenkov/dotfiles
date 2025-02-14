@@ -16,6 +16,7 @@ if not pcall(require, "lazy") then
 end
 
 require "lazy_setup"
+require "polish"
 
 -- --------------------------------
 -- init.lua
@@ -105,7 +106,7 @@ require("telescope").setup {
   -- },
   --:lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 10 }))
 }
-require("telescope").load_extension "fzf"
+--require("telescope").load_extension "fzf"
 
 require("telescope").load_extension "project"
 vim.api.nvim_set_keymap(
@@ -126,11 +127,17 @@ vim.cmd "set clipboard+=unnamedplus"
 
 vim.api.nvim_set_keymap(
   "n",
+  ";J",
+  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
+  { silent = true, desc = "Show journal" }
+)
+vim.api.nvim_set_keymap(
+  "n",
   ";j",
   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
   ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>:put =strftime('[%F]')<CR>$a ",
   --":Neorg journal today<cr>:Neorg templates add journal<cr>",
-  { silent = true, desc = "Journal today" }
+  { silent = true, desc = "Add to journal" }
 ) -- set via neorg_leader
 --vim.keymap.set(
 --  { "n" },
@@ -145,7 +152,7 @@ vim.api.nvim_set_keymap(
 --  { desc = "Toggle neotree" }
 --)
 
--- clear search highlights keymap.set("n", "<leader>nh", ":nohl<CR>")
+vim.keymap.set("n", "<leader>sh", ":nohl<CR>")
 
 vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { desc = "Quit without save" })
 
@@ -195,7 +202,6 @@ vim.keymap.set(
 --vim.api.nvim_set_keymap("n", "<leader>fs", "<cmd>lua require("telescope.builtin").live_grep({ glob_pattern = "!{spec,test}"}).<cr>", { silent = true })
 --vim.api.nvim_set_keymap("n", "<leader>fc", "<cmd>lua require("telescope")extensions.live_grep_args.live_grep_args()<cr>", { silent = true })
 --:Telescope live_grep search_dirs={"app/","lib/"}
---
 
 vim.keymap.set(
   "n",
@@ -235,17 +241,17 @@ vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the
 --vim.keymap.set({ "i" }, "<C-b>", "<ESC><Cmd>Neotree toggle<CR>")
 --vim.keymap.set("n","<leader>z", ":lua require('zen-mode').toggle({})<cr>", {desc = "Toggle [z]enmode"})
 --vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Copy from system clipboard' })
--- vim.cmd("nnoremap Q <nop>") -- don't fuck with Ex mode
--- vim.cmd("nnoremap j gj") -- don't fuck with line-wrapping
--- vim.cmd("nnoremap k gk") -- don't fuck with line-wrapping
--- alternative in lua
--- Disable the Q command
--- vim.api.nvim_set_keymap("n", "Q", "<nop>", { noremap = true })
--- Move by display lines, not actual lines
--- vim.api.nvim_set_keymap("n", "j", "gj", {})
--- vim.api.nvim_set_keymap("n", "k", "gk", {})
--- Move to the first non-blank character of the line
--- vim.api.nvim_set_keymap("n", "0", "^", { noremap = true })
+--vim.cmd("nnoremap Q <nop>") -- don't fuck with Ex mode
+--vim.cmd("nnoremap j gj") -- don't fuck with line-wrapping
+--vim.cmd("nnoremap k gk") -- don't fuck with line-wrapping
+--alternative in lua
+--Disable the Q command
+--vim.api.nvim_set_keymap("n", "Q", "<nop>", { noremap = true })
+--Move by display lines, not actual lines
+--vim.api.nvim_set_keymap("n", "j", "gj", {})
+--vim.api.nvim_set_keymap("n", "k", "gk", {})
+--Move to the first non-blank character of the line
+--vim.api.nvim_set_keymap("n", "0", "^", { noremap = true })
 
 --vim.api.nvim_create_autocmd("BufNewFile", {
 --  command = "Neorg templates load journal",
@@ -277,5 +283,3 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
   --command = 'silent !/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null',
   command = 'silent !/usr/bin/hyprctl switchxkblayout "logitech-usb-keyboard" 0 > /dev/null',
 })
-
-require "polish"
