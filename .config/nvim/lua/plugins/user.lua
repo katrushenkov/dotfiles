@@ -31,7 +31,7 @@ return {
       }
     end,
   },
-  { "folke/zen-mode.nvim", cmd = "ZenMode" },
+  -- { "folke/zen-mode.nvim", cmd = "ZenMode" },
   --{
   --  "ivanesmantovich/xkbswitch.nvim",
   --  cond = function() return os.getenv "SSH_CLIENT" == nil end,
