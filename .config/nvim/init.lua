@@ -125,12 +125,7 @@ vim.cmd "set clipboard+=unnamedplus"
 --vim.keymap.set("n", "y", '"+y') -- Копировать в системный буфер обмена
 --vim.keymap.set("n", "p", '"+p') -- Вставить из системного буфера обмена
 
-vim.api.nvim_set_keymap(
-  "n",
-  ";J",
-  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
-  { silent = true, desc = "Show journal" }
-)
+vim.api.nvim_set_keymap( "n", ";J", ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",  { silent = true, desc = "Show journal" })
 vim.api.nvim_set_keymap(
   "n",
   ";j",
@@ -177,9 +172,7 @@ vim.api.nvim_set_keymap("n", "f", ":HopWord<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", ":HopLineAC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", ":HopLineBC<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<C-h>", ":ZenMode<cr>", { silent = true })
--- ("n", "<leader>zm", ":ZenMode<CR>")
 vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
---vim.api.nvim_set_keymap("n", ";a", ":Neorg index<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "J", ":bnext<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
