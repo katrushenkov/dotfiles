@@ -156,9 +156,9 @@ alias doom-upgrade="~/.emacs.d/bin/doom upgrade"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
-alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME -uno'
-alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME -uno diff'
-alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME -uno status'
+alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME'
+alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME diff'
+alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME status -uno'
 alias last='git log --oneline --graph --decorate --all'
 alias by="systemctl poweroff -i"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
