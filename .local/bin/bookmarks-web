@@ -52,7 +52,7 @@ case $1 in
     selection=$(cat ~/.local/src/datagrip/bookmarks-web.txt | tofi | cut -d '|' -f 1)
     if [ -n "$selection" ]; then
     		vivaldi "$selection";
-		    ~/.local/bin/focus-or-start "Vivaldi-stable" "Vivaldi-stable" "2";
+		    ~/.local/bin/focus-or-start "vivaldi-stable" "vivaldi-stable" "2";
 		fi
 		#wtype "$selection"
 		#vivaldi "$selection"
