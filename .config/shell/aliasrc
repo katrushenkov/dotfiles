@@ -313,13 +313,12 @@ alias mirrorxx="sudo reflector --age 6 --latest 20 --fastest 20 --threads 20 --s
 #mounting the folder Public for exchange between host and guest on virtualbox
 alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Public"
 
-alias sx="startx"
 alias openports='netstat -nape --inet'
 
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
-alias y="yay -S" 		# установка.
+alias yi="yay -S" 		# установка.
 alias yn="yay -S --noconfirm"	# установка без подтверждения.
 alias ys="yay" 			# поиск с дальнейшим выбором по цифре.
 alias ysn="yay --noconfirm" 	# поиск с дальнейшим выбором по цифре, без подтверждения.
@@ -333,8 +332,7 @@ alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без п
 alias wg='wget -O /dev/null'
 
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
-alias renew="source ~/.bashrc"
-
+alias renew="source ~/.zshrc"
 
 alias ls="eza -a --icons"
 alias la="eza -A"
