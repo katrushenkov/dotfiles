@@ -49,6 +49,17 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
+# yazi shell wrapper for changing cwd when exiting
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
      case $KEYMAP in
@@ -195,5 +206,4 @@ bindkey '^ ' autosuggest-capture-completion
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 
 [ -f ~/.config/zsh/.zsh-personal ] && source ~/.config/zsh/.zsh-personal
-
 
