@@ -3,8 +3,18 @@
 # Determine which output is currently active (where the mouse pointer is). 🤔
 #MONITOR_ID=XWAYLAND$(swaymsg -t get_outputs | jq '[.[].focused] | index(true)')
 
-# Let's pick our emojis! 🎉
+#hyprctl devices -j | jq -r '.keyboards[] | .active_keymap' |  head -n1 | cut -c1-2 | tr 'a-z' 'A-Z'
 
+hyprctl \
+  --batch "$(
+    hyprctl devices -j |
+      jq -r '.keyboards[] | .name' |
+      while IFS= read -r keyboard; do
+        printf '%s %s %s;' 'switchxkblayout' "${keyboard}" '0'
+      done
+  )" &> /dev/null
+
+# Let's pick our emojis! 🎉
 
 rofimoji --selector tofi --action copy --skin-tone light 
 # --selector-args="-theme solarized -font 'Hack 12' -monitor ${MONITOR_ID}"
