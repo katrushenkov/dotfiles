@@ -11,7 +11,6 @@ return {
     build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
   },
   {
-    --https://github.com/luukvbaal/nnn.nvim
     "luukvbaal/nnn.nvim",
     config = function()
       require("nnn").setup {
@@ -39,6 +38,7 @@ return {
   --},
   {
     "nvim-neorg/neorg",
+    enabled = false,
     dependencies = {
       {
         "vhyrro/luarocks.nvim",
@@ -247,7 +247,6 @@ return {
 --       return opts
 --     end,
 --   },
---
 --
 --   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
 --   {
