@@ -8,9 +8,9 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
-  { import = "astrocommunity.pack.sql" },
+  -- { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.motion.hop-nvim" },
-  { import = "astrocommunity.note-taking.neorg" },
+  --{ import = "astrocommunity.note-taking.neorg" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.everforest" },
   { import = "astrocommunity.editing-support.conform-nvim" },
