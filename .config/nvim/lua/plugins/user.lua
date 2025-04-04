@@ -37,10 +37,6 @@ return {
   --  config = function() require("xkbswitch").setup() end,
   --},
   {
-    "kevinhwang91/nvim-ufo",
-    enabled = false,
-  },
-  {
     "nvim-neorg/neorg",
     enabled = false,
     dependencies = {
@@ -216,6 +212,7 @@ return {
   },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
+  { "kevinhwang91/nvim-ufo",        enabled = false },
 }
 
 -- ---@type LazySpec
