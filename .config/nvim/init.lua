@@ -71,6 +71,11 @@ require("telescope").setup {
       no_ignore = true,
       no_ignore_parent = true,
     },
+    live_grep = {
+      additional_args = function(opts)
+           return {"--hidden","--no-ignore"}
+        end
+    },
   },
   --  defaults = {
   -- vimgrep_arguments = {
@@ -176,25 +181,8 @@ vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
 vim.api.nvim_set_keymap("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "J", ":bnext<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
-vim.keymap.set(
-  "n",
-  ";w",
-  --":Telescope live_grep hidden=true no_ignore=true no_ignore_parent=true<cr>",
-  '<cmd>lua require("telescope.builtin").live_grep {additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,}<CR>',
-  { desc = "Find word in all files" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>fw",
-  --":Telescope live_grep hidden=true no_ignore=true no_ignore_parent=true<cr>",
-  '<cmd>lua require("telescope.builtin").live_grep {additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,}<CR>',
-  { desc = "Find word in all files" }
-)
-
---vim.keymap.set("n", "<leader>fw", "<leader>fW", { desc = "Telescope live grep" })
---vim.api.nvim_set_keymap("n", "<leader>fs", "<cmd>lua require("telescope.builtin").live_grep({ glob_pattern = "!{spec,test}"}).<cr>", { silent = true })
---vim.api.nvim_set_keymap("n", "<leader>fc", "<cmd>lua require("telescope")extensions.live_grep_args.live_grep_args()<cr>", { silent = true })
---:Telescope live_grep search_dirs={"app/","lib/"}
+vim.keymap.set("n",";w",":Telescope live_grep<cr>",{ desc = "Find word in all files" })
+vim.keymap.set("n","<leader>fw",":Telescope live_grep<cr>",{ desc = "Find word in all files" })
 
 vim.keymap.set(
   "n",
