@@ -1,6 +1,3 @@
--- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
--- You can also add or configure plugins by creating files in this `plugins/` folder
-
 return {
   {
     "nvim-telescope/telescope-project.nvim",
@@ -259,7 +256,6 @@ return {
 --       luasnip.filetype_extend("javascript", { "javascriptreact" })
 --     end,
 --   },
---
 --   {
 --     "windwp/nvim-autopairs",
 --     config = function(plugin, opts)
