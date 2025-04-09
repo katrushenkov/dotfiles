@@ -23,10 +23,10 @@ mn	/mnt/main
 org  /home/ser/.local/src/datagripli
 pp	/mnt/main/pic
 #pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
+src $HOME/.local/src
 rr	$HOME/.local/src
 sb	$HOME/.local/bin/statusbar
 sc  $HOME/.local/bin
 sca	/mnt/main/scan
-src $HOME/.local/src
 vv	/mnt/main/vid
 #vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
