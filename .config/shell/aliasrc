@@ -325,6 +325,7 @@ alias yu="yay -Syu" 		# обновление
 alias yun="yay -Syu --noconfirm" #обновление без подтверждения.
 alias yr="yay -R" 		# удаление пакет(а,ов).
 alias yrn="yay -R --noconfirm" 	# удаление пакет(а,ов) без подтверждения.
+alias yq="yay -Q | grep"
 
 alias wg='wget -O /dev/null'
 
