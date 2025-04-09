@@ -13,7 +13,6 @@ cfzd ${XDG_CONFIG_HOME:-$HOME/.config}/zsh
 d   ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
-ee	/mnt/main/private
 files	/mnt/main/files
 gr /home/ser/.local/src/datagrip
 h   $HOME
