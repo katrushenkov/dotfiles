@@ -12,14 +12,15 @@ workspaceOnStart=$3
 # | grep -v "-" -> choose windows not in magic (scratchpad) workspace
 running=$(hyprctl -j clients | jq -r ".[] | select(.class == \"${className}\") | .workspace.id" | grep -v "-" | head -1)
 
-echo $running
+# echo $running
 
-if [[ $running != "" ]] 
+# if [[ $running != "" ]] 
+if [ "$running" != "" ]
 then
-	echo "focus"
+	# echo "focus"
 	hyprctl dispatch workspace $running    
 else 
-	echo "start"
+	# echo "start"
 	hyprctl dispatch workspace $workspaceOnStart 
 	${execCommand} & 
 fi
