@@ -8,6 +8,15 @@ return {
     build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
   },
   {
+      "samharju/yeet.nvim",
+      dependencies = {
+          "stevearc/dressing.nvim", -- optional, provides sane UX
+      },
+      version = "*", -- use the latest release, remove for master
+      cmd = "Yeet",
+      opts = {},
+  },
+  {
     "luukvbaal/nnn.nvim",
     config = function()
       require("nnn").setup {

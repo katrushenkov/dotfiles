@@ -120,6 +120,14 @@ vim.api.nvim_set_keymap(
   ":lua require'telescope'.extensions.project.project{}<CR>",
   { noremap = true, silent = true }
 )
+vim.api.nvim_set_keymap("n","<leader>fp",":lua require'telescope'.extensions.project.project{}<CR>",{ noremap = true, silent = true, desc = "Show projects" })
+
+vim.keymap.set("v", "<leader>yy", function()
+    require("yeet").execute_selection(
+        "source venv/bin/activate",
+        { clear_before_yeet = true }
+    )
+end)
 
 vim.cmd "set timeoutlen=0"
 
