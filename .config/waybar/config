@@ -2,7 +2,7 @@
 
 {
     "layer": "top",
-    "height": 32,
+    "height": 34,
 
     "include": ["$HOME/.config/waybar/modules.json"],
 
