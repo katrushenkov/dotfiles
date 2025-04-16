@@ -215,7 +215,7 @@ vim.api.nvim_set_keymap("n", ";x", ":Telescope find_files<cr>", { silent = true 
 vim.api.nvim_set_keymap("n", ";f", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
 vim.api.nvim_set_keymap("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
-vim.api.nvim_set_keymap("n", ";y", ":%y+<cr>", { silent = true, desc = "Yank the whole buffer" })
+vim.api.nvim_set_keymap("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Yank the whole buffer" })
 -- vim.api.nvim_set_keymap(
 --   "i",
 --   "<ESC>",
