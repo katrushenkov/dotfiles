@@ -1,0 +1,11 @@
+#!/usr/bin/sh
+
+# kbd="your-keyboard"
+# or
+kbd="$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | .name')"
+
+# wl-paste -np | /tmp/switch.py | wtype -
+
+# a hack to force updateModifiers() to do it's job
+# hyprctl switchxkblayout $kbd prev
+hyprctl switchxkblayout $kbd next
