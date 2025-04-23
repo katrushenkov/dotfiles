@@ -1,74 +1,29 @@
-# Padding
+font = "/usr/share/fonts/archcraft/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf"
+font-size = 14
+background-color = #3d484
+border-color = #a7c080
+corner-radius = 25
 padding-top = 5
-padding-bottom = 0
-padding-left = 5
-padding-right = 0
+padding-left = 10
+num-results = 20
+text-color = #c0caf5
+selection-color = #ffa500
+selection-background = #3d484
+prompt-text = " "
+width = 1800
+border-width = 2
 
-# Font size
-font-size = 11
-font = monospace
-min-input-width = 120
-result-spacing = 2
-
-## Dracula theme
-background-color = #282A36
-
-# Prompt
-prompt-text = "Search: "
-prompt-color = #F8F8F2
-
-# Input
-input-color = #50FA7B
-input-background = #44475A
-input-background-padding = 3
-input-background-corner-radius = 8
-
-# Result color
-default-result-color = #6272A4
-
-# Selection text
-selection-color = #8BE9FD
-selection-match-color = #50FA7B
-
-# Border color
-border-width = 1
-border-color = #6272A4
-
-# Outline width
-outline-width = 0
-
-width = 80%
-height = 50%
-
-# #dos
-# width = 100%
-# height = 100%
-# border-width = 0
-# outline-width = 0
-# padding-left = 25%
-# padding-top = 35%
-# result-spacing = 1
-# num-results = 20
-# font = monospace
-# font-size=11
-# #fuzzy-match = true
-# #font = /usr/share/fonts/noto/NotoSansMono-Regular.ttf
-# background-color = #000A
-
-# dmenu style
-#anchor = top
-#width = 100%
-#height = 30
-#horizontal = true
-#font-size = 14
-#prompt-text = " run: "
-#font = monospace
-#outline-width = 0
-#border-width = 0
-#background-color = #000000
-#min-input-width = 120
-#result-spacing = 15
-#padding-top = 0
-#padding-bottom = 0
-#padding-left = 0
-#padding-right = 0
+#font = "/usr/share/fonts/nerd-fonts-complete/TTF/JetBrains Mono Regular Nerd Font Complete.ttf"
+#font-size = 16
+#background-color = #1a1b26
+#border-color = #9f79ee
+#corner-radius = 25
+#padding-top = 15
+#padding-left = 30
+#num-results = 9
+#text-color = #c0caf5
+#selection-color = #ffa500
+#selection-background = #1a1b26
+#prompt-text = " "
+#width = 1000
+#border-width = 5
