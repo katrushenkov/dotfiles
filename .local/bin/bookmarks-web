@@ -49,7 +49,7 @@ case $1 in
 	-so)
 		# search other and open
 		#selection=$(cat ~/bookmarks_other.txt | bemenu -i -l 30 -p '>' --no-exec --scrollbar autohide | cut -d'|' -f 1)
-    selection=$(cat ~/.local/src/datagrip/bookmarks-web.txt | tofi | cut -d '|' -f 1)
+    selection=$(cat ~/.local/src/datagrip/bookmarks-web.txt | tofi --config /home/ser/.config/tofi/config_wide | cut -d '|' -f 1)
     if [ -n "$selection" ]; then
     		vivaldi "$selection";
 		    ~/.local/bin/focus-or-start "vivaldi-stable" "vivaldi-stable" "2";
