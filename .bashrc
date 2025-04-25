@@ -75,4 +75,3 @@ ex ()
   fi
 }
 
-#[ -f ~/.config/fzf.bash ] && source ~/.config/fzf.bash
