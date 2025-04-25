@@ -17,7 +17,6 @@
         "sort-by-number": true,
         "active-only": false,
         "show-special": true,
-
     },
     "hyprland/window": {
         "format": "<span foreground=\"#A7C080\"> </span> {}",

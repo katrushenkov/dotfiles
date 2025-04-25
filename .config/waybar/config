@@ -6,10 +6,9 @@
 
     "include": ["$HOME/.config/waybar/modules.json"],
 
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["hyprland/workspaces"],
     "modules-center": [],
     "modules-right": ["custom/scc","group/system","group/hardware","group/keyboard","clock"],
-//  "modules-right": ["group/system", "group/keyboard", "group/hardware", "custom/wlogout"],
 
     "group/system": {
         "orientation": "horizontal",
