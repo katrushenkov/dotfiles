@@ -35,7 +35,7 @@ require "polish"
 -- end
 -- --------------------------------
 
-local project_actions = require "telescope._extensions.project.actions"
+local project_actions = require("telescope._extensions.project.actions")
 require("telescope").setup {
   extensions = {
     fzf = {
@@ -50,10 +50,9 @@ require("telescope").setup {
         --{ "~/.local/src/datagrip" },
         --{ "~/.local/src" },
       },
-      --display_type = false,не влияет
-      --display_type = true,
       theme = "dropdown",
-      order_by = "asc",
+      order_by = "recent",
+      sync_with_nvim_tree = true,
       search_by = "title",
       hidden_files = true, -- default: false
       on_project_selected = function(prompt_bufnr)
