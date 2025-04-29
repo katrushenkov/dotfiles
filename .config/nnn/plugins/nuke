@@ -109,23 +109,6 @@ handle_pdf() {
     exit 0
 }
 
-#handle_audio() {
-#    if type mocp >/dev/null 2>&1 && type mocq >/dev/null 2>&1; then
-#        mocq "${FPATH}" "opener" >/dev/null 2>&1
-#    elif type mpv >/dev/null 2>&1; then
-#        mpv "${FPATH}" >/dev/null 2>&1 &
-#    elif type media_client >/dev/null 2>&1; then
-#        media_client play "${FPATH}" >/dev/null 2>&1 &
-#    elif type mediainfo >/dev/null 2>&1; then
-#        mediainfo "${FPATH}" | eval "$PAGER"
-#    elif type exiftool >/dev/null 2>&1; then
-#        exiftool "${FPATH}"| eval "$PAGER"
-#    else
-#        return
-#    fi
-#    exit 0
-#}
-
 handle_audio() {
     if #type mocp >/dev/null 2>&1 && type mocplay >/dev/null 2>&1; then
         #mocplay "${FPATH}" "opener" >/dev/null 2>&1
@@ -248,7 +231,8 @@ handle_extension() {
                 glow -sdark "${FPATH}" | eval "$PAGER"
                 exit 0
             elif type lowdown >/dev/null 2>&1; then
-                lowdown -Tterm "${FPATH}" | eval "$PAGER"
+    			cols=$(tput cols)
+                lowdown -Tterm --term-width="$cols" --term-column="$cols" "${FPATH}" | eval "$PAGER"
                 exit 0
             fi
             ;;
@@ -424,7 +408,7 @@ handle_multimedia() {
         #                  "${FPATH}";
         #     then
         #         convert -- "${preview_png}" "${IMAGE_CACHE_PATH}" \
-        #             && rm "${preview_png}" \
+        #             && rm -- "${preview_png}" \
         #             && exit 6
         #     else
         #         exit 1
