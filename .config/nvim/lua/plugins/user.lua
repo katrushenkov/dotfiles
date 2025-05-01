@@ -8,13 +8,13 @@ return {
     build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
   },
   {
-      "samharju/yeet.nvim",
-      dependencies = {
-          "stevearc/dressing.nvim", -- optional, provides sane UX
-      },
-      version = "*", -- use the latest release, remove for master
-      cmd = "Yeet",
-      opts = {},
+    "samharju/yeet.nvim",
+    dependencies = {
+      "stevearc/dressing.nvim", -- optional, provides sane UX
+    },
+    version = "*", -- use the latest release, remove for master
+    cmd = "Yeet",
+    opts = {},
   },
   {
     "luukvbaal/nnn.nvim",
@@ -216,9 +216,31 @@ return {
     -- return opts
     --end,
   },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      dashboard = {
+        preset = {
+          header = table.concat({
+            " █████  ███████ ████████ ██████   ██████ ",
+            "██   ██ ██         ██    ██   ██ ██    ██",
+            "███████ ███████    ██    ██████  ██    ██",
+            "██   ██      ██    ██    ██   ██ ██    ██",
+            "██   ██ ███████    ██    ██   ██  ██████ ",
+            "",
+            "███    ██ ██    ██ ██ ███    ███",
+            "████   ██ ██    ██ ██ ████  ████",
+            "██ ██  ██ ██    ██ ██ ██ ████ ██",
+            "██  ██ ██  ██  ██  ██ ██  ██  ██",
+            "██   ████   ████   ██ ██      ██",
+          }, "\n"),
+        },
+      },
+    },
+  },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
-  { "kevinhwang91/nvim-ufo",        enabled = false },
+  { "kevinhwang91/nvim-ufo", enabled = false },
 }
 
 -- ---@type LazySpec
@@ -232,29 +254,7 @@ return {
 --     config = function() require("lsp_signature").setup() end,
 --   },
 --
---   -- == Examples of Overriding Plugins ==
---   -- customize alpha options
---   {
---     "goolord/alpha-nvim",
---     opts = function(_, opts)
---       -- customize the dashboard header
---       opts.section.header.val = {
---         " █████  ███████ ████████ ██████   ██████",
---         "██   ██ ██         ██    ██   ██ ██    ██",
---         "███████ ███████    ██    ██████  ██    ██",
---         "██   ██      ██    ██    ██   ██ ██    ██",
---         "██   ██ ███████    ██    ██   ██  ██████",
---         " ",
---         "    ███    ██ ██    ██ ██ ███    ███",
---         "    ████   ██ ██    ██ ██ ████  ████",
---         "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
---         "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
---         "    ██   ████   ████   ██ ██      ██",
---       }
---       return opts
---     end,
---   },
---
+
 --   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
 --   {
 --     "L3MON4D3/LuaSnip",

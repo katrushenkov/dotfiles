@@ -15,9 +15,6 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
-require "lazy_setup"
-require "polish"
-
 -- --------------------------------
 -- init.lua
 -- if vim.env.WAYLAND_DISPLAY and vim.fn.executable "wl-copy" and vim.fn.executable "wl-paste" then
@@ -35,7 +32,10 @@ require "polish"
 -- end
 -- --------------------------------
 
-local project_actions = require("telescope._extensions.project.actions")
+require "lazy_setup"
+require "polish"
+
+local project_actions = require "telescope._extensions.project.actions"
 require("telescope").setup {
   extensions = {
     fzf = {
@@ -71,9 +71,7 @@ require("telescope").setup {
       no_ignore_parent = true,
     },
     live_grep = {
-      additional_args = function(opts)
-           return {"--hidden","--no-ignore"}
-        end
+      additional_args = function(opts) return { "--hidden", "--no-ignore" } end,
     },
   },
   --  defaults = {
@@ -119,14 +117,18 @@ vim.api.nvim_set_keymap(
   ":lua require'telescope'.extensions.project.project{}<CR>",
   { noremap = true, silent = true }
 )
-vim.api.nvim_set_keymap("n","<leader>fp",":lua require'telescope'.extensions.project.project{}<CR>",{ noremap = true, silent = true, desc = "Show projects" })
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>fp",
+  ":lua require'telescope'.extensions.project.project{}<CR>",
+  { noremap = true, silent = true, desc = "Show projects" }
+)
 
-vim.keymap.set("v", "<leader>yy", function()
-    require("yeet").execute_selection(
-        "source venv/bin/activate",
-        { clear_before_yeet = true }
-    )
-end)
+vim.keymap.set(
+  "v",
+  "<leader>yy",
+  function() require("yeet").execute_selection("source venv/bin/activate", { clear_before_yeet = true }) end
+)
 
 vim.cmd "set timeoutlen=0"
 
@@ -137,7 +139,12 @@ vim.cmd "set clipboard+=unnamedplus"
 --vim.keymap.set("n", "y", '"+y') -- Копировать в системный буфер обмена
 --vim.keymap.set("n", "p", '"+p') -- Вставить из системного буфера обмена
 
-vim.api.nvim_set_keymap( "n", ";J", ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",  { silent = true, desc = "Show journal" })
+vim.api.nvim_set_keymap(
+  "n",
+  ";J",
+  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
+  { silent = true, desc = "Show journal" }
+)
 vim.api.nvim_set_keymap(
   "n",
   ";j",
@@ -188,8 +195,8 @@ vim.api.nvim_set_keymap("n", ";f", "<leader>f", { silent = true })
 vim.api.nvim_set_keymap("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "J", ":bnext<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
-vim.keymap.set("n",";w",":Telescope live_grep<cr>",{ desc = "Find word in all files" })
-vim.keymap.set("n","<leader>fw",":Telescope live_grep<cr>",{ desc = "Find word in all files" })
+vim.keymap.set("n", ";w", ":Telescope live_grep<cr>", { desc = "Find word in all files" })
+vim.keymap.set("n", "<leader>fw", ":Telescope live_grep<cr>", { desc = "Find word in all files" })
 
 vim.keymap.set(
   "n",
