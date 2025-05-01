@@ -137,7 +137,7 @@ handle_video() {
         # elif type smplayer >/dev/null 2>&1; then
             # nohup smplayer "${FPATH}" >/dev/null 2>&1 &
         if type mpv >/dev/null 2>&1; then
-            mpv "${FPATH}"
+            mpv --no-terminal "${FPATH}"
             #nohup mpv "${FPATH}" >/dev/null 2>&1 &
         else
             return
