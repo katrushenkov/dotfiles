@@ -8,6 +8,7 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.fuzzy-finder.telescope-nvim" },
   -- { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.motion.hop-nvim" },
   --{ import = "astrocommunity.note-taking.neorg" },
