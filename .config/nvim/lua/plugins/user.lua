@@ -3,10 +3,10 @@ return {
     "nvim-telescope/telescope-project.nvim",
     config = function() require("telescope").load_extension "project" end,
   },
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
-  },
+  -- {
+  --   "nvim-telescope/telescope-fzf-native.nvim",
+  --   build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+  -- },
   {
     "samharju/yeet.nvim",
     dependencies = {
