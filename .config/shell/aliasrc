@@ -68,7 +68,8 @@ alias \
 	vi="nvim" \
 	nv="nvim" \
 	lg="lazygit" \
-	kx="kubectx"
+	kx="kubectx" \
+	k = "k9s"
 
 alias \
 	lf="lfub" \
