@@ -9,28 +9,14 @@ vim.opt.rtp:prepend(lazypath)
 
 -- validate that lazy is available
 if not pcall(require, "lazy") then
-  -- stylua: ignore
-  vim.api.nvim_echo({ { ("Unable to load lazy from: %s\n"):format(lazypath), "ErrorMsg" }, { "Press any key to exit...", "MoreMsg" } }, true, {})
+  vim.api.nvim_echo(
+    { { ("Unable to load lazy from: %s\n"):format(lazypath), "ErrorMsg" }, { "Press any key to exit...", "MoreMsg" } },
+    true,
+    {}
+  )
   vim.fn.getchar()
   vim.cmd.quit()
 end
-
--- --------------------------------
--- init.lua
--- if vim.env.WAYLAND_DISPLAY and vim.fn.executable "wl-copy" and vim.fn.executable "wl-paste" then
---   vim.g.clipboard = {
---     name = "wl-copy",
---     copy = {
---       ["+"] = { "wl-copy", "--type", "text/plain" },
---       ["*"] = { "wl-copy", "--primary", "--type", "text/plain" },
---     },
---     paste = {
---       ["+"] = { "wl-paste", "--no-newline" },
---       ["*"] = { "wl-paste", "--no-newline", "--primary" },
---     },
---   }
--- end
--- --------------------------------
 
 require "lazy_setup"
 require "polish"
@@ -253,24 +239,12 @@ vim.api.nvim_set_keymap("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Y
 --  pattern = { "/home/ser/org/journal/*.norg" },
 --})
 
--- почему-то не всегда отрабатывает
---vim.api.nvim_create_autocmd("InsertLeave", {
---  desc = "update diff",
---  group = init_group,
---  pattern = "*",
---  -- command = "if &l:diff | diffupdate | endif",
---  --command = "!hyprctl switchxkblayout e-signal-usb-gaming-mouse-keyboard next",
---  callback = function() vim.cmd "silent !hyprctl switchxkblayout e-signal-usb-gaming-mouse-keyboard 0" end,
---})
-
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
-  group = init_group,
   command = "silent !/home/ser/.local/bin/hypr-switch-en",
 })
 
 vim.api.nvim_create_autocmd("CmdlineEnter", {
   pattern = "*",
-  group = init_group,
   command = "silent !/home/ser/.local/bin/hypr-switch-en",
 })
