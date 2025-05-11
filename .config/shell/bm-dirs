@@ -10,6 +10,7 @@ cac ${XDG_CACHE_HOME:-$HOME/.cache}
 cf  ${XDG_CONFIG_HOME:-$HOME/.config}
 cfs	${XDG_CONFIG_HOME:-$HOME/.config}/shell
 cfzd ${XDG_CONFIG_HOME:-$HOME/.config}/zsh
+cfvd ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 d   ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
