@@ -1,3 +1,3 @@
-wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi --config /home/ser/.config/tofi/config_wide )"
+wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi --config /home/ser/.config/tofi/config_wide --fuzzy-match true)"
 #ydotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
 #wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | wofi --dmenu -i -W 1900 -M fuzzy)"
