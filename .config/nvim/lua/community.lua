@@ -11,6 +11,7 @@ return {
   { import = "astrocommunity.fuzzy-finder.telescope-nvim" },
   -- { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.motion.hop-nvim" },
+  { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   --{ import = "astrocommunity.note-taking.neorg" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.everforest" },
