@@ -34,8 +34,8 @@ require("telescope").setup {
     fzf = {
       fuzzy = true, -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "ignore_case", -- or "ignore_case" or "respect_case"
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "ignore_case",      -- "respect_case"
     },
     project = {
       base_dirs = {
@@ -47,9 +47,8 @@ require("telescope").setup {
       order_by = "recent",
       sync_with_nvim_tree = true,
       search_by = "title",
-      hidden_files = true, -- default: false
+      hidden_files = true,
       on_project_selected = function(prompt_bufnr)
-        --require("telescope._extensions.project.actions").change_working_directory(prompt_bufnr)
         project_actions.change_working_directory(prompt_bufnr)
       end,
       --on_project_selected = function(prompt_bufnr) _actions.find_project_files(prompt_bufnr, hidden_files) end,
@@ -63,9 +62,9 @@ require("telescope").setup {
       no_ignore = true,
       no_ignore_parent = true,
     },
-    live_grep = {
-      additional_args = function(opts) return { "--hidden", "--no-ignore" } end,
-    },
+    -- live_grep = {
+    --   additional_args = function(opts) return { "--hidden", "--no-ignore", "-i" } end,
+    -- },
   },
   --  defaults = {
   -- vimgrep_arguments = {
@@ -101,7 +100,7 @@ require("telescope").setup {
   -- },
   --:lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 10 }))
 }
---require("telescope").load_extension "fzf"
+require("telescope").load_extension "fzf"
 
 require("telescope").load_extension "project"
 vim.api.nvim_set_keymap(
