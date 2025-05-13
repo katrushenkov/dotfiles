@@ -149,6 +149,13 @@ return {
     end,
   },
   {
+    "Kurren123/mssql.nvim",
+    branch = "katrushenkov",
+    opts = {},
+    -- optional. You also need to call set_keymaps (see below)
+    dependencies = { "folke/which-key.nvim" },
+  },
+  {
     "nvim-neo-tree/neo-tree.nvim",
     --config = function()
     --  require("neo-tree").setup {
