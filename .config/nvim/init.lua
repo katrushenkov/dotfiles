@@ -21,6 +21,13 @@ end
 require "lazy_setup"
 require "polish"
 
+require("mssql").setup {
+  max_rows = 50,
+  max_column_width = 50,
+}
+-- then in your keymaps file with a prefix of your choice:
+require("mssql").set_keymaps "<leader>m"
+
 local project_actions = require "telescope._extensions.project.actions"
 require("telescope").setup {
   extensions = {
