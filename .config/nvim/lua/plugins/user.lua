@@ -1,7 +1,33 @@
 return {
   {
     "nvim-telescope/telescope-project.nvim",
-    config = function() require("telescope").load_extension "project" end,
+    config = function()
+      require("telescope").setup {
+      extensions = {
+        project = {
+          base_dirs = {
+            { path = "~/.local/src", max_depth = 2 },
+            --{ "~/.local/src/datagrip" },
+            --{ "~/.local/src" },
+          },
+          theme = "dropdown",
+          order_by = "recent",
+          sync_with_nvim_tree = true,
+          search_by = "title",
+          hidden_files = true,
+          on_project_selected = function(prompt_bufnr)
+            local project_actions = require "telescope._extensions.project.actions"
+            project_actions.change_working_directory(prompt_bufnr)
+          end,
+          --on_project_selected = function(prompt_bufnr) _actions.find_project_files(prompt_bufnr, hidden_files) end,
+        },
+      }
+      }
+      require("telescope").load_extension "project" end,
+  },
+  {
+    "d4wns-l1ght/telescope-messages.nvim",
+    config = function() require("telescope").load_extension("messages") end,
   },
   {
     "samharju/yeet.nvim",
