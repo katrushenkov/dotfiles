@@ -12,6 +12,7 @@ nnn_shortcuts="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks/shortcutsrc"
 
 # Remove, prepare files
 [ -d "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks" ] && rm -f ${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks/* 2>/dev/null
+[ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks" ] && mkdir ${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks 2>/dev/null
 [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/" ] && mkdir ${XDG_CONFIG_HOME:-$HOME/.config}/nnn 2>/dev/null
 printf "# vim: filetype=sh\\n" > "$fish_shortcuts"
 printf "# vim: filetype=sh\\nalias " > "$shell_shortcuts"
