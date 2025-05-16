@@ -19,9 +19,6 @@
 # Bonus tip: Add `$BOOKMARKS_DIR` to your `$CDPATH`
 # https://linux.101hacks.com/cd-command/cdpath/
 #
-# TODO:
-#   1. Remove `fzf` dependency
-#
 # Shell: POSIX compliant
 # Author: Todd Yamakawa
 
