@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 bmdirs="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs"
 bmfiles="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files"
 
@@ -9,13 +8,15 @@ shell_shortcuts="${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 zsh_named_dirs="${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
 qute_shortcuts="/dev/null"
 fish_shortcuts="/dev/null"
-nnn_shortcuts="${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/shortcutsrc"
+nnn_shortcuts="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks/shortcutsrc"
 
 # Remove, prepare files
-[ -d "${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks" ] && rm -f ${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks/* 2>/dev/null
-[ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}/nnn/" ] && mkdir ${XDG_CACHE_HOME:-$HOME/.cache}/nnn 2>/dev/null
+[ -d "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks" ] && rm -f ${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks/* 2>/dev/null
+[ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/" ] && mkdir ${XDG_CONFIG_HOME:-$HOME/.config}/nnn 2>/dev/null
 printf "# vim: filetype=sh\\n" > "$fish_shortcuts"
 printf "# vim: filetype=sh\\nalias " > "$shell_shortcuts"
+printf "# vim: filetype=sh\\nalias " > "$shell_shortcuts"
+printf "# zsh named dirs\n" > "$zsh_named_dirs"
 #printf(\"rm \${XDG_CACHE_HOME:-\$HOME/.cache}/nnn/bookmarks/*\") >> \"$nnn_shortcuts\" ;
 
 # Format the `directories` file in the correct syntax and sent it to all three configs.
@@ -26,7 +27,7 @@ awk "!/^\s*#/ && !/^\s*\$/ {gsub(\"\\\s*#.*$\",\"\");
 	printf(\"hash -d %s=%s \n\",\$1,\$2)                 >> \"$zsh_named_dirs\"  ;
 	printf(\"abbr %s \42cd %s; and ls -a\42\n\",\$1,\$2) >> \"$fish_shortcuts\"  ;
 	printf(\"config.bind(';%s', \42set downloads.location.directory %s ;; hint links download\42) \n\",\$1,\$2) >> \"$qute_shortcuts\" ;
-	printf(\"ln -s %s/ \${XDG_CACHE_HOME:-\$HOME/.cache}/nnn/bookmarks/%s ;\n\",\$2,\$1) >> \"$nnn_shortcuts\" }"
+	printf(\"ln -s %s/ \${XDG_CONGIG_HOME:-\$HOME/.config}/nnn/bookmarks/%s ;\n\",\$2,\$1) >> \"$nnn_shortcuts\" }"
 
 chmod +x $nnn_shortcuts
 sh $nnn_shortcuts
