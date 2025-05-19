@@ -1,4 +1,4 @@
 hypr-switch-en
-wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi --config /home/ser/.config/tofi/config_wide --fuzzy-match true)"
+wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi --config $HOME/.config/tofi/config_wide)"
 #ydotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
 #wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | wofi --dmenu -i -W 1900 -M fuzzy)"
