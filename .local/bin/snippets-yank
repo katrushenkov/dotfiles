@@ -1,2 +1,4 @@
-rg -v '^#' ~/.local/src/datagrip/snippets | tofi --config "$XDG_CONFIG_HOME/tofi/config_wide" | wl-copy -n
+hypr-switch-en
+rg -v '^#' ~/.local/src/datagrip/snippets | tofi --config "${XDG_CONFIG_HOME:-$HOME/.config}/tofi/config_wide" | wl-copy -n
+
 #rg -v '^#' ~/.local/src/datagrip/snippets | tofi --config "$XDG_CONFIG_HOME/tofi/config_wide" | wl-copy -n
