@@ -41,7 +41,7 @@ vim.keymap.set("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent =
 vim.keymap.set("n", "J", ":bnext<cr>", { silent = true })
 vim.keymap.set("n", "<leader>ss", ":Telescope current_buffer_fuzzy_find<cr>", { silent = true })
 vim.keymap.set("n", ";w", ":Telescope live_grep<cr>", { desc = "Find word in all files" })
-vim.keymap.set("n", "<leader>fw", ":Telescope live_grep<cr>", { desc = "Find word in all files" })
+-- vim.keymap.set("n", "<leader>fw", ":Telescope live_grep<cr>", { desc = "Find word in all files" })
 
 vim.keymap.set("n","<leader>fG","<Plug>(neorg.telescope.search_headings)",{ silent = true, desc = "Telescope neorg headings" })
 
