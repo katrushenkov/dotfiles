@@ -1,2 +1,10 @@
+#!/bin/sh
+
+if pgrep -x "tofi"; then
+  wtype -k ESCAPE
+  exit 0
+else
+  find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
+fi
+
 #find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
-find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
