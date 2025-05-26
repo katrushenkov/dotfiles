@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function go-ssh () {
+local selected_host=$(cat ~/.local/src/datagrip/hosts | tofi)
+
+  if [ -n "$selected_host" ]; then
+    #footclient "ssh -t katrushenkov@${selected_host} 'sudo -i'"
+    echo ${selected_host}
+    footclient ssh -t katrushenkov@${selected_host} 'sudo -i'
+  fi
+}
+
+go-ssh
+
+
