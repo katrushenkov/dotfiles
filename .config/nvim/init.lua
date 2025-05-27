@@ -21,12 +21,6 @@ end
 require "lazy_setup"
 require "polish"
 
-require("mssql").setup {
-  max_rows = 50,
-  max_column_width = 50,
-}
-
-require("mssql").set_keymaps ";m"
 require "mappings"
 
 -- -- local project_actions = require "telescope._extensions.project.actions"
@@ -141,25 +135,6 @@ vim.cmd "set timeoutlen=0"
 
 vim.cmd "set clipboard+=unnamedplus"
 --vim.opt.clipboard:append { "unnamed", "unnamedplus" }
-
---vim.keymap.set("n", "<lhs>", "<Plug>(neorg.telescope.search_headings)")
---vim.keymap.set('n', '<leader>E', '<Cmd>Neotree<CR>', {position=current})
---vim.keymap.set({ "n" }, "<leader>x", ":NnnExplorer<cr>", { desc = "Toggle nnn" })
---vim.keymap.set({"n"}, '<C-b>', '<Cmd>Neotree toggle<CR>')
---vim.keymap.set({ "i" }, "<C-b>", "<ESC><Cmd>Neotree toggle<CR>")
---vim.keymap.set("n","<leader>z", ":lua require('zen-mode').toggle({})<cr>", {desc = "Toggle [z]enmode"})
---vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Copy from system clipboard' })
---vim.cmd("nnoremap Q <nop>") -- don't fuck with Ex mode
---vim.cmd("nnoremap j gj") -- don't fuck with line-wrapping
---vim.cmd("nnoremap k gk") -- don't fuck with line-wrapping
---alternative in lua
---Disable the Q command
---vim.api.nvim_set_keymap("n", "Q", "<nop>", { noremap = true })
---Move by display lines, not actual lines
---vim.api.nvim_set_keymap("n", "j", "gj", {})
---vim.api.nvim_set_keymap("n", "k", "gk", {})
---Move to the first non-blank character of the line
---vim.api.nvim_set_keymap("n", "0", "^", { noremap = true })
 
 --vim.api.nvim_create_autocmd("BufNewFile", {
 --  command = "Neorg templates load journal",
