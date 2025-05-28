@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if pgrep -x "tofi"; then
+  wtype -k ESCAPE
+  exit 0
+fi
+
 bookmark="$(wl-paste )"
 file="$HOME/bookmarks.txt"
 fileother="$HOME/bookmarks_other.txt"
