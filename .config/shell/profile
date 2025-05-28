@@ -71,4 +71,9 @@ export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 # sudo -n loadkeys "${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap" 2>/dev/null
 
 # start Hyprland
-Hyprland
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+             #if uwsm check may-start && uwsm select; then
+             #  exec systemd-cat -t uwsm_start uwsm start Hyprland
+             #fi
+             Hyprland
+fi
