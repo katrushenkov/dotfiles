@@ -136,17 +136,3 @@ vim.cmd "set timeoutlen=0"
 vim.cmd "set clipboard+=unnamedplus"
 --vim.opt.clipboard:append { "unnamed", "unnamedplus" }
 
---vim.api.nvim_create_autocmd("BufNewFile", {
---  command = "Neorg templates load journal",
---  pattern = { "/home/ser/org/journal/*.norg" },
---})
-
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-  command = "silent !/home/ser/.local/bin/hypr-switch-en",
-})
-
-vim.api.nvim_create_autocmd("CmdlineEnter", {
-  pattern = "*",
-  command = "silent !/home/ser/.local/bin/hypr-switch-en",
-})
