@@ -23,6 +23,7 @@ stty -ixon
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
+HISTCONTROL=ignoredups:erasedups
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Load aliases and shortcuts if existent.
