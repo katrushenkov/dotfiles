@@ -2,13 +2,20 @@
 
 {
     "layer": "top",
-    "height": 34,
+    "height": 29,
 
     "include": ["$HOME/.config/waybar/modules.json"],
 
     "modules-left": ["hyprland/workspaces"],
     "modules-center": [],
-    "modules-right": ["custom/scc","group/system","group/hardware","group/keyboard","clock"],
+    "modules-right": ["group/custom","group/system","group/hardware","group/keyboard","clock"],
+
+    "group/custom": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/vpn",
+        ]
+    },
 
     "group/system": {
         "orientation": "horizontal",

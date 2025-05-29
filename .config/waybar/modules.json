@@ -43,8 +43,8 @@
         "format-icons": {
             "headphone": "",
             "default": [
-                "",
-                ""
+                "  ",
+                "  "
             ]
         },
         "scroll-step": 1,
@@ -56,7 +56,7 @@
     "network": {
         "format": "<span foreground=\"#3D484D\">|</span> {ifname}",
         "format-wifi": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\"></span> {signalStrength}%",
-        "format-ethernet": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\">󰊗</span> {ipaddr}/{cidr}",
+        "format-ethernet": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\">󰊗 </span> {ipaddr}/{cidr}",
         "format-disconnected": "",
         "tooltip-format": "{ifname} via {gwaddr}",
         "tooltip-format-wifi": "{essid} ({signalStrength}%)",
@@ -65,7 +65,7 @@
         "max-length": 50
     },
     "hyprland/language": {
-        "format": "<span foreground=\"#A7C080\">󰌌</span> {short} <span foreground=\"#3D484D\">|</span>"
+        "format": "<span foreground=\"#A7C080\">󰌌 </span> {short} <span foreground=\"#3D484D\">|</span>"
     },
     "keyboard-state": {
         "capslock": true,
@@ -76,7 +76,7 @@
         }
     },
     "disk": {
-        "interval": 30,
+        "interval": 60,
         "format": "<span foreground=\"#A7C080\" weight=\"bold\">/</span> {percentage_used}% ",
         "path": "/"
     },
@@ -100,6 +100,17 @@
         "exec": "echo $0",
         "exec-if": "exit 0",
         "interval": 60,
-        "on-click": "kitty -e yay -Syu"
+        "on-click": "notify-send test"
+    },
+    "custom/vpn": {
+        "format": "vpn: {}",
+        "tooltip": false,
+        "exec": "echo $(systemctl is-active v2raya.service)",
+        "exec-on-event": true,
+        //"interval": 60,
+        "signal": 10,
+        "on-click": "/home/ser/.local/bin/statusbar/wb-vpn"
     },
 }
+// "on-click": "kitty -e yay -Syu"
+
