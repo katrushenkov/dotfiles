@@ -1,4 +1,4 @@
-fuzzy-match = false
+matching-algorithm = normal
 #font = "/usr/share/fonts/archcraft/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf"
 font-size = 14
 background-color = #3d484
