@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if test $(systemctl is-active v2raya.service) = active ; then
+    sudo systemctl stop v2raya && pkill -RTMIN+10 waybar
+else
+    sudo systemctl start v2raya && pkill -RTMIN+10 waybar
+fi
+
+# notify-send 'vpn is ' "$(systemctl is-active v2raya.service) now"
+

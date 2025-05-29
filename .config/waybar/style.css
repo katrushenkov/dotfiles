@@ -13,8 +13,12 @@ Waybar Config File by Arfan Zubi
 
 * {
     /*font-family: 'FiraCode Nerd Font', sans-serif;*/
-    font-family: 'JetBrains Mono', sans-serif;
-    font-size: 14px;
+    /* font-family: 'JetBrains Mono', sans-serif; */
+    /* font-family: 'Ubuntu Condensed','Ubuntu Mono:style=Bold Italic'; */
+    /* font-family: 'Roboto Medium', "Font Awesome 5 Pro Solid", "Font Awesome 5 Brands"; */
+    /* font-family: "Adwaita Sans","Regular"; */
+    font-family: "Ubuntu","Regular";
+    font-size: 12px;
     min-height: 0;
 }
 
@@ -24,7 +28,7 @@ window#waybar {
     color: #D3C6AA;
 }
 
-#window, #clock, #system, #keyboard, #hardware {
+#window, #clock, #system, #keyboard, #hardware, #custom {
     margin: 5px;
     padding: 0 10px;
     background-color: #272E33;
