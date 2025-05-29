@@ -205,6 +205,3 @@ bindkey '^ ' autosuggest-capture-completion
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
-[ -f ~/.config/zsh/.zsh-personal ] && source ~/.config/zsh/.zsh-personal
-
