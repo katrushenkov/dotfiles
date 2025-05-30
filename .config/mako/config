@@ -1,0 +1,27 @@
+width=600
+height=300
+#font=FiraMono Nerd Font
+font=Ubuntu Nerd Font Mono
+#font=Terminus
+#font=CaskaydiaCove Nerd Font Mono
+format=<b>%a\n%s</b>\n%b
+background-color=#282a36
+margin=10
+padding=0,5,10
+border-size=3
+border-color=#8be9fd
+border-radius=15
+
+[urgency=low]
+border-color=#3D484D
+background-color=#272E33
+
+[urgency=normal]
+border-color=#8be9fd
+background-color=#272E33
+
+[urgency=high]
+border-color=#ff5555
+
+[actionable=true]
+on-button-right=exec makoctl menu -n "${id}" wofi_run.sh dmenu
