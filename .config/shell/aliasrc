@@ -831,14 +831,6 @@ alias ll="eza -lAh --icons --tree --level=1"
 #    rscp --inplace dettorer@dettorer.net:~/quickfetch/ "$dest"
 #}
 
-
-#[ -f ~/.scripts/shortcuts.sh ] && ~/.scripts.shortcuts.sh
-# или вот такой обновленный вариант от люка:
-# source ~/.shortcuts
-
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#export FZF_DEFAULT_OPS="--extended"
-
 # узнать че это за comptinstall
 # The following lines were added by compinstall
 #zstyle :compinstall filename '/home/colew/.zshrc'
