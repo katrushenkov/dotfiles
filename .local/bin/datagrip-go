@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} foot nvim '/home/ser/.local/src/datagrip/{}'
+find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | grep -v "^.git/" | tofi | xargs -I {} foot nvim '/home/ser/.local/src/datagrip/{}'
