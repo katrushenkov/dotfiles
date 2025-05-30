@@ -1,5 +1,7 @@
 #!/bin/bash
 
+systemctl list-unit-files v2raya.service || notify-send "no v2raya.service" & exit 0
+
 if test $(systemctl is-active v2raya.service) = active ; then
     sudo systemctl stop v2raya && pkill -RTMIN+10 waybar
 else
