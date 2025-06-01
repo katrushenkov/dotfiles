@@ -73,13 +73,18 @@ return {
   },
   {
     "rebelot/heirline.nvim",
+    dependencies = { "Kurren123/mssql.nvim"},
     opts = function(_, opts)
       local status = require "astroui.status"
+      local lualine_component = require("mssql").lualine_component
+      local mssql_heirline_component = {
+        provider = lualine_component[1],
+        condition = lualine_component.cond,
+      }
       opts.statusline = {
         -- default highlight for the entire statusline
         hl = { fg = "fg", bg = "bg" },
         -- each element following is a component in astroui.status module
-
         -- add the vim mode component
         status.component.mode {
           -- enable mode text with padding as well as an icon before it
@@ -114,7 +119,6 @@ return {
             --fname = function() return vim.fn.system { "pwd" } end,
             fallback = "Empty",
           },
-
           -- disable some of the info
           filetype = false,
           file_read_only = false,
@@ -123,6 +127,7 @@ return {
           -- define the section separator
           surround = { separator = "left", condition = false },
         },
+        mssql_heirline_component,
         -- add a component for the current git branch if it exists and use no separator for the sections
         status.component.git_branch {
           git_branch = { padding = { left = 1 } },
