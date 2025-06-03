@@ -7,14 +7,14 @@ vim.keymap.set("n", "<leader>sh", ":nohl<CR>")
 
 vim.keymap.set("n",";J",":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
 
-vim.keymap.set(
-  "n",
-  ";j",
-  --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
-  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>:put =strftime('[%F]')<CR>$a ",
-  --":Neorg journal today<cr>:Neorg templates add journal<cr>",
-  { silent = true, desc = "Add to journal" }
-) -- set via neorg_leader
+-- vim.keymap.set(
+--   "n",
+--   ";j",
+--   --":Neorg journal today<cr>:w<cr>G$a<cr><ESC>:Neorg templates add journal<cr>",
+--   ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>:put =strftime('[%F]')<CR>$a ",
+--   --":Neorg journal today<cr>:Neorg templates add journal<cr>",
+--   { silent = true, desc = "Add to journal" }
+-- ) -- set via neorg_leader
 --vim.keymap.set("n","<leader>E",":Neotree source=filesystem reveal_force_cwd position=float<cr>",{ desc = "Toggle neotree" })
 --vim.keymap.set("n","<leader>e",":Neotree source=filesystem reveal_force_cwd position=float<cr>",{ desc = "Toggle neotree" })
 
@@ -83,3 +83,62 @@ vim.keymap.set("v","<leader>yy",function() require("yeet").execute_selection("so
 --vim.api.nvim_set_keymap("n", "k", "gk", {})
 --Move to the first non-blank character of the line
 --vim.api.nvim_set_keymap("n", "0", "^", { noremap = true })
+
+-- Sudo write
+vim.api.nvim_create_user_command("W", "silent! write !sudo tee % >/dev/null | edit!", {})
+
+-- Replace ex mode with gq
+vim.keymap.set("n", "Q", "gq", { noremap = true })
+
+function JOURNAL_ADD()
+    local date_str = os.date('[%Y-%m-%d]')
+    local file_path = '/home/ser/.local/src/datagrip/journal/journal.md'
+    -- Читаем содержимое файла
+    local lines = {}
+    local file = io.open(file_path, 'r')
+    if file then
+        for line in file:lines() do
+            table.insert(lines, line)
+        end
+        file:close()
+    end
+    -- Проверяем, есть ли строка с текущей датой
+    local date_found = false
+    for line in ipairs(lines) do
+        if line:match(os.date("%Y-%m-%d")) then
+            date_found = true
+            break
+        end
+    end
+    -- Открываем файл для записи
+    file = io.open(file_path, 'w')
+    if not file then
+        vim.notify('Не удалось открыть файл для записи: ' .. file_path, vim.log.levels.ERROR)
+        return
+    end
+    -- Записываем все существующие строки
+    for _, line in ipairs(lines) do
+        file:write(line .. '\n')
+    end
+    -- Если дата не найдена, добавляем её в конец файла
+    if not date_found then
+        file:write('\n' .. date_str .. '\n')
+    else
+        -- Если дата найдена, добавляем новый пункт
+        file:write('\n- ')
+    end
+    file:close()
+    -- Открываем файл в Neovim
+    vim.cmd('edit ' .. file_path)
+    -- Перемещаем курсор в нужное место
+    vim.cmd('normal G')  -- Переход в конец файла
+    if date_found then
+        vim.cmd('normal $')  -- Если дата была, курсор в конец последней строки
+    else
+        vim.cmd('normal k$')  -- Если дата добавлена, курсор на строку с датой
+    end
+end
+
+vim.keymap.set("n", ";j", "<cmd>lua JOURNAL_ADD()<CR>", opts)
+
+  --{ noremap = true, silent = false, desc = "test"})
