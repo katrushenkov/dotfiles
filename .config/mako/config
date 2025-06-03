@@ -1,5 +1,7 @@
 width=600
 height=300
+max-visible=7
+actions=1
 #font=FiraMono Nerd Font
 font=Ubuntu Nerd Font Mono
 #font=Terminus
@@ -24,4 +26,12 @@ background-color=#272E33
 border-color=#ff5555
 
 [actionable=true]
-on-button-right=exec makoctl menu -n "${id}" wofi_run.sh dmenu
+#on-notify=exec makoctl menu wofi -d -p 'Choose Action: '
+#on-button-right=exec makoctl menu wofi -d 
+#on-button-right=exec makoctl menu tofi
+#on-button-right=exec makoctl menu -n "${id}" wofi_run.sh wofi
+#on-button-right=exec makoctl menu -n "${id}" tofi
+#on-button-middle=exec makoctl menu -n "$id" dmenu -p 'Select action: '
+
+#  notify-send -u CRITICAL "test" -A "fsdafsdf:mousepad"
+
