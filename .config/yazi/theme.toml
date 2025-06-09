@@ -2,7 +2,7 @@
 
 # : Manager {{{
 
-[manager]
+[mgr]
 cwd = { fg = "#a7c080" } # Soft Green
 
 # Hovered
@@ -32,7 +32,6 @@ syntect_theme = "~/.config/bat/themes/Everforest-Soft.tmTheme"
 
 # : }}}
 
-
 # : Status {{{
 
 [status]
@@ -59,7 +58,6 @@ permissions_s = { fg = "#687d68" } # Muted Green
 
 # : }}}
 
-
 # : Input {{{
 
 [input]
@@ -70,7 +68,6 @@ selected = { reversed = true }
 
 # : }}}
 
-
 # : Select {{{
 
 [select]
@@ -80,7 +77,6 @@ inactive = {}
 
 # : }}}
 
-
 # : Tasks {{{
 
 [tasks]
@@ -89,7 +85,6 @@ title = {}
 hovered = { underline = true }
 
 # : }}}
-
 
 # : Which {{{
 
@@ -115,9 +110,7 @@ footer = { fg = "#2c313a", bg = "#d3c6aa" } # Dark background, Soft beige foregr
 
 # : }}}
 
-
 # : File-specific styles {{{
-
 [filetype]
 
 rules = [
@@ -141,5 +134,4 @@ rules = [
   { name = "*", fg = "#d3c6aa" },  # Soft beige
   { name = "*/", fg = "#d3c6aa" }, # Soft beige
 ]
-
 # : }}}
