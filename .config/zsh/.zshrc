@@ -186,6 +186,8 @@ bindkey '^[[P' delete-char
 #bindkey '^T' transpose-chars
 bindkey '^X' fzf-file-widget
 
+bindkey -s '^n' 'n\n'
+
 source <(fzf --zsh)
 
 # Edit line in vim with ctrl-e:
