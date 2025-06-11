@@ -5,7 +5,7 @@ if pgrep -x "tofi"; then
   exit 0
 else
   hypr-switch-en
-  wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi --config $HOME/.config/tofi/config_wide | awk -F ' #' '{print $1}' )"
+  wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' )"
 fi
 #ydotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
 #wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | wofi --dmenu -i -W 1900 -M fuzzy)"
