@@ -11,7 +11,8 @@ text-color = #c0caf5
 selection-color = #ffa500
 # selection-background = #3d484
 prompt-text = " "
-width = 800
+width = 80%
+height = 50%
 border-width = 2
 
 #font = "/usr/share/fonts/nerd-fonts-complete/TTF/JetBrains Mono Regular Nerd Font Complete.ttf"
