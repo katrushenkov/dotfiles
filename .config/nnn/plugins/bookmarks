@@ -23,7 +23,7 @@
 # Author: Todd Yamakawa
 
 if [ -z "$BOOKMARKS_DIR" ]; then
-  BOOKMARKS_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/nnn/bookmarks"
+  BOOKMARKS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks"
 fi
 
 # Check if NNN_PIPE is set
