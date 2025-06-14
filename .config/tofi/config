@@ -1,6 +1,6 @@
-matching-algorithm = fuzzy
+fuzzy-match = true
 #font = "/usr/share/fonts/archcraft/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf"
-font-size = 14
+font-size = 10
 # background-color = #3d484
 border-color = #a7c080
 corner-radius = 25
