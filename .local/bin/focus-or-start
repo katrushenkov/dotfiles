@@ -10,7 +10,7 @@ className=$2
 workspaceOnStart=$3
 
 # | grep -v "-" -> choose windows not in magic (scratchpad) workspace
-running=$(hyprctl -j clients | jq -r ".[] | select(.class == \"${className}\") | .workspace.id" | grep -v "-" | head -1)
+running=$(hyprctl -j clients | jq -r ".[] | select(.class | ascii_downcase == \"${className}\") | .workspace.id" | grep -v "-" | head -1)
 
 # echo $running
 
