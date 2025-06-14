@@ -7,5 +7,3 @@ else
   hypr-switch-en
   rg -v '^#' ~/.local/src/datagrip/snippets | tofi | wl-copy -n
 fi
-
-#rg -v '^#' ~/.local/src/datagrip/snippets | tofi --config "$XDG_CONFIG_HOME/tofi/config_wide" | wl-copy -n
