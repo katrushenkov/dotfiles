@@ -1,9 +1,9 @@
-width=600
-height=300
+width=300
+height=200
 max-visible=7
 actions=1
 #font=FiraMono Nerd Font
-font=Ubuntu Nerd Font Mono
+font=Ubuntu Nerd Font Mono 10
 #font=Terminus
 #font=CaskaydiaCove Nerd Font Mono
 format=<b>%a\n%s</b>\n%b
@@ -13,6 +13,8 @@ padding=0,5,10
 border-size=3
 border-color=#8be9fd
 border-radius=15
+
+default-timeout=3000
 
 [urgency=low]
 border-color=#3D484D
@@ -36,3 +38,6 @@ on-button-right=exec makoctl dismiss -a
 
 #  notify-send -u CRITICAL "test" -A "fsdafsdf:mousepad"
 
+[category=mpd]
+default-timeout=2000
+group-by=category
