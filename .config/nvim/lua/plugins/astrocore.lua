@@ -13,14 +13,14 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
+      diagnostics = { virtual_text = false, virtual_lines = false }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
-      virtual_text = true,
-      underline = true,
+      virtual_text = false,
+      underline = false,
     },
     -- passed to `vim.filetype.add`
     filetypes = {
@@ -43,9 +43,10 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = true, -- sets vim.opt.wrap
-        timeoutlen = 0
+        timeoutlen = 0,
       },
       g = { -- vim.g.<key>
+        snacks_animate = false,
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
@@ -100,12 +101,12 @@ return {
         ["<C-S-V>"] = { "<C-R>+" }, -- paste from clipboard on command mode (neovide)
       },
 
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
+      -- tables with just a `desc` key will be registered with which-key if it's installed
+      -- this is useful for naming menus
+      -- ["<Leader>b"] = { desc = "Buffers" },
 
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
+      -- setting a mapping to false will disable it
+      -- ["<C-S>"] = false,
     },
   },
 }
