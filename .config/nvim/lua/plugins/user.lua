@@ -1,35 +1,5 @@
 return {
   {
-     "nvim-telescope/telescope-project.nvim",
-     config = function()
-       require("telescope").setup {
-       extensions = {
-         project = {
-           base_dirs = {
-             { path = "~/.local/src", max_depth = 2 },
-             --{ "~/.local/src/datagrip" },
-             --{ "~/.local/src" },
-           },
-           theme = "dropdown",
-           order_by = "recent",
-           sync_with_nvim_tree = true,
-           search_by = "title",
-           hidden_files = true,
-           on_project_selected = function(prompt_bufnr)
-             local project_actions = require "telescope._extensions.project.actions"
-             project_actions.change_working_directory(prompt_bufnr)
-           end,
-           --on_project_selected = function(prompt_bufnr) _actions.find_project_files(prompt_bufnr, hidden_files) end,
-         },
-       }
-       }
-       require("telescope").load_extension "project" end,
-  },
-  {
-    "d4wns-l1ght/telescope-messages.nvim",
-    config = function() require("telescope").load_extension("messages") end,
-  },
-  {
     "samharju/yeet.nvim",
     dependencies = {
       "stevearc/dressing.nvim", -- optional, provides sane UX
@@ -68,7 +38,7 @@ return {
         config = true,
       },
       { "pysan3/neorg-templates", dependencies = { "L3MON4D3/LuaSnip" } },
-      { "nvim-neorg/neorg-telescope" },
+      -- { "nvim-neorg/neorg-telescope" },
     },
     lazy = false,
     version = "*",
@@ -102,7 +72,7 @@ return {
             },
           }, -- Enables support for completion plugins
           ["core.integrations.nvim-cmp"] = {},
-          ["core.integrations.telescope"] = {},
+          -- ["core.integrations.telescope"] = {},
           --["core.mode"] = {}, -- на версии 9.1.1 не работает
           ["core.integrations.treesitter"] = {},
           ["core.neorgcmd"] = {},
@@ -177,80 +147,11 @@ return {
     dependencies = { "folke/which-key.nvim" },
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    --config = function()
-    --  require("neo-tree").setup {
-    --    filesystem = {
-    --      filtered_items = {
-    --        visible = true,
-    --        show_hidden_count = true,
-    --        hide_dotfiles = false,
-    --        hide_gitignored = true,
-    --        hide_by_name = {
-    --          -- add extension names you want to explicitly exclude
-    --          -- '.git',
-    --          -- '.DS_Store',
-    --          -- 'thumbs.db',
-    --        },
-    --        never_show = {},
-    --      },
-    --    },
-    --  }
-    --        vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal left<CR>", {})
-    --end,
-
-    -- ksm not working
-    -- opts = function(_, opts)
-    --   opts.filesystem.filtered_items = {
-    --     hide_gitignored = false,
-    --     visible = true,
-    --     hide_dotfiles = false,
-    --     show_hidden_count = true,
-    --     hide_by_name = {
-    --       ".json",
-    --       ".yaml",
-    --       ".lua",
-    --       -- '.git',
-    --       -- '.DS_Store',
-    --       -- 'thumbs.db',
-    --     },
-    --     never_show = {},
-    --   }
-    --   opts.buffers = {
-    --     follow_current_file = {
-    --       enabled = true,
-    --     },
-    --   }
-    --   opts.filesystem = {
-    --     follow_current_file = {
-    --       enabled = true,
-    --     },
-    --   }
-    -- opts.filesystem = {
-    --
-    --   bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
-    --   cwd_target = {
-    --     sidebar = "tab", -- sidebar is when position = left or right
-    --     current = "window", -- current is when position = current
-    --     --    float = "tab"
-    --   },
-    --    window = {
-    --       mappings = {
-    --       -- disable fuzzy finder -- fix search by /
-    --       ["/"] = "noop"
-    --       }
-    --     }
-    --}
-    -- return opts
-    --end,
-  },
-  {
     "folke/snacks.nvim",
     opts = {
       dashboard = {
         preset = {
-          header = table.concat({
-          }, "\n"),
+          header = table.concat({}, "\n"),
         },
       },
     },
@@ -258,57 +159,293 @@ return {
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
   { "kevinhwang91/nvim-ufo", enabled = false },
+  {
+    "windwp/nvim-autopairs",
+    config = function(plugin, opts)
+      require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts)
+      -- add more custom autopairs configuration such as custom rules
+      local npairs = require "nvim-autopairs"
+      local Rule = require "nvim-autopairs.rule"
+      local cond = require "nvim-autopairs.conds"
+      npairs.add_rules(
+        {
+          Rule("$", "$", { "tex", "latex" })
+            -- don't add a pair if the next character is %
+            :with_pair(cond.not_after_regex "%%")
+            -- don't add a pair if the previous character is xxx
+            :with_pair(cond.not_before_regex("xxx", 3))
+            -- don't move right when repeat character
+            :with_move(cond.none())
+            -- don't delete if the next character is xx
+            :with_del(cond.not_after_regex "xx")
+            -- disable adding a newline when you press <cr>
+            :with_cr(cond.none()),
+        },
+        -- disable for .vim files, but it work for another filetypes
+        Rule("a", "a", "-vim")
+      )
+    end,
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      matcher = {
+        fuzzy = true,
+        ignorecase = true,
+        smartcase = true,
+        sort_empty = false,
+        file_pos = true, -- Support patterns like file:line:col
+        cwd_bonus = false, -- Bonus for items in current directory
+      },
+      picker = {
+        ui_select = true,
+        sources = {
+          explorer = {
+            auto_close = true,
+            hidden = true,
+            layout = {
+              --preset = "list",
+              preview = false,
+            },
+            actions = {
+              copy_file_path = {
+                action = function(_, item)
+                  if not item then return end
+
+                  local vals = {
+                    ["BASENAME"] = vim.fn.fnamemodify(item.file, ":t:r"),
+                    ["EXTENSION"] = vim.fn.fnamemodify(item.file, ":t:e"),
+                    ["FILENAME"] = vim.fn.fnamemodify(item.file, ":t"),
+                    ["PATH"] = item.file,
+                    ["PATH (CWD)"] = vim.fn.fnamemodify(item.file, ":."),
+                    ["PATH (HOME)"] = vim.fn.fnamemodify(item.file, ":~"),
+                    ["URI"] = vim.uri_from_fname(item.file),
+                  }
+
+                  local options = vim.tbl_filter(function(val) return vals[val] ~= "" end, vim.tbl_keys(vals))
+                  if vim.tbl_isempty(options) then
+                    vim.notify("No values to copy", vim.log.levels.WARN)
+                    return
+                  end
+                  table.sort(options)
+                  vim.ui.select(options, {
+                    prompt = "Choose to copy to clipboard:",
+                    format_item = function(list_item) return ("%s: %s"):format(list_item, vals[list_item]) end,
+                  }, function(choice)
+                    local result = vals[choice]
+                    if result then
+                      vim.fn.setreg("+", result)
+                      Snacks.notify.info("Yanked `" .. result .. "`")
+                    end
+                  end)
+                end,
+              },
+              search_in_directory = {
+                action = function(_, item)
+                  if not item then return end
+                  local dir = vim.fn.fnamemodify(item.file, ":p:h")
+                  Snacks.picker.grep {
+                    cwd = dir,
+                    cmd = "rg",
+                    args = {
+                      "-g",
+                      "!.git",
+                      "-g",
+                      "!node_modules",
+                      "-g",
+                      "!dist",
+                      "-g",
+                      "!build",
+                      "-g",
+                      "!coverage",
+                      "-g",
+                      "!.DS_Store",
+                      "-g",
+                      "!.docusaurus",
+                      "-g",
+                      "!.dart_tool",
+                    },
+                    show_empty = true,
+                    hidden = true,
+                    ignored = true,
+                    follow = false,
+                    supports_live = true,
+                  }
+                end,
+              },
+              diff = {
+                action = function(picker)
+                  picker:close()
+                  local sel = picker:selected()
+                  if #sel > 0 and sel then
+                    Snacks.notify.info(sel[1].file)
+                    vim.cmd("tabnew " .. sel[1].file)
+                    vim.cmd("vert diffs " .. sel[2].file)
+                    Snacks.notify.info("Diffing " .. sel[1].file .. " against " .. sel[2].file)
+                    return
+                  end
+
+                  Snacks.notify.info "Select two entries for the diff"
+                end,
+              },
+            },
+            win = {
+              list = {
+                keys = {
+                  ["y"] = "copy_file_path",
+                  ["s"] = "search_in_directory",
+                  ["D"] = "diff",
+                },
+              },
+            },
+          },
+          projects = {
+            finder = "recent_projects",
+            format = "file",
+            dev = { "~/.local/src" },
+            patterns = { "=src", ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "Makefile", "config" },
+            confirm = "load_session",
+            --confirm = function(picker, item)
+            --  picker:close()
+            --  if item then
+            --    vim.schedule(function()
+            --      Snacks.picker.recent {
+            --        filter = {
+            --          cwd = Snacks.git.get_root(item.text),
+            --        },
+            --        finder = "recent_files",
+            --        format = "file",
+            --      }
+            --    end)
+            --  end
+            --end,
+            -- patterns = {},
+            recent = true,
+            matcher = {
+              frecency = false,
+              sort_empty = false,
+              cwd_bonus = false,
+            },
+            -- sort = { fields = { "score:desc", "idx" } },
+            projects = {
+              -- "~/.local/src/datagrip",
+            },
+            win = {
+              preview = { minimal = true },
+              input = {
+                keys = {
+                  -- every action will always first change the cwd of the current tabpage to the project
+                  ["<c-e>"] = { { "tcd", "picker_explorer" }, mode = { "n", "i" } },
+                  ["<c-f>"] = { { "tcd", "picker_files" }, mode = { "n", "i" } },
+                  ["<c-g>"] = { { "tcd", "picker_grep" }, mode = { "n", "i" } },
+                  ["<c-r>"] = { { "tcd", "picker_recent" }, mode = { "n", "i" } },
+                  ["<c-w>"] = { { "tcd" }, mode = { "n", "i" } },
+                  ["<CR>"] = { { "tcd", "close" }, mode = { "n", "i" } },
+                  ["<c-t>"] = {
+                    function(picker)
+                      vim.cmd "tabnew"
+                      Snacks.notify "New tab opened"
+                      picker:close()
+                      Snacks.picker.projects()
+                    end,
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      explorer = {},
+    },
+    keys = {
+      -- Top Pickers & Explorer
+      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+      { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+      { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
+
+      -- find
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      {
+        "<leader>fc",
+        function() Snacks.picker.files { cwd = vim.fn.stdpath "config" } end,
+        desc = "Find Config File",
+      },
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+      { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+      { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+      { "<C-p>", function() Snacks.picker.projects() end, desc = "Projects" },
+      { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+      -- git
+      { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+      { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+      { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+      { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+      { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+      { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+      { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
+      -- Grep
+      { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+      { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+      { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+      {
+        "<leader>sw", -- <leader>*
+        function() Snacks.picker.grep_word() end,
+        desc = "Visual selection or word",
+        mode = { "n", "x" },
+      },
+      -- search
+      { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
+      { "<leader>s/", function() Snacks.picker.search_history() end, desc = "Search History" },
+      { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
+      { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+      { "<leader>sc", function() Snacks.picker.command_history() end, desc = "Command History" },
+      { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+      { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+      { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+      { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+      { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+      { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
+      { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
+      { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
+      { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
+      { "<leader>sp", function() Snacks.picker.lazy() end, desc = "Search for Plugin Spec" },
+      { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+      { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+      { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
+      { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+      -- LSP
+      { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+      { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+      { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+      { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+      { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+
+      { "<leader>r", function() Snacks.picker.resume() end, desc = "Snacks Resume" },
+      -- { "<leader>F", function() Snacks.zen.zoom() end, desc = "Zoom Window" },
+      { "<C-H", function() Snacks.zen() end, desc = "Zoom Window" },
+      --{ "<leader>S", function() Snacks.picker() end, desc = "Snacks Pickers" },
+    },
+  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   ---@type Flash.Config
+  --   opts = {},
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+  --     { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+  --     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+  --     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+  --     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  --   },
+  -- }
 }
-
--- ---@type LazySpec
--- return {
---
---   -- == Examples of Adding Plugins ==
---   "andweeb/presence.nvim",
---   {
---     "ray-x/lsp_signature.nvim",
---     event = "BufRead",
---     config = function() require("lsp_signature").setup() end,
---   },
---
-
---   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
---   {
---     "L3MON4D3/LuaSnip",
---     config = function(plugin, opts)
---       require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
---       -- add more custom luasnip configuration such as filetype extend or custom snippets
---       local luasnip = require "luasnip"
---       luasnip.filetype_extend("javascript", { "javascriptreact" })
---     end,
---   },
---   {
---     "windwp/nvim-autopairs",
---     config = function(plugin, opts)
---       require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts) -- include the default astronvim config that calls the setup call
---       -- add more custom autopairs configuration such as custom rules
---       local npairs = require "nvim-autopairs"
---       local Rule = require "nvim-autopairs.rule"
---       local cond = require "nvim-autopairs.conds"
---       npairs.add_rules(
---         {
---           Rule("$", "$", { "tex", "latex" })
---             -- don't add a pair if the next character is %
---             :with_pair(cond.not_after_regex "%%")
---             -- don't add a pair if  the previous character is xxx
---             :with_pair(
---               cond.not_before_regex("xxx", 3)
---             )
---             -- don't move right when repeat character
---             :with_move(cond.none())
---             -- don't delete if the next character is xx
---             :with_del(cond.not_after_regex "xx")
---             -- disable adding a newline when you press <cr>
---             :with_cr(cond.none()),
---         },
---         -- disable for .vim files, but it work for another filetypes
---         Rule("a", "a", "-vim")
---       )
---     end,
---   },
--- }
