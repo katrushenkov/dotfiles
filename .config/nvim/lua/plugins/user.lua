@@ -150,6 +150,7 @@ return {
     "folke/snacks.nvim",
     opts = {
       dashboard = {
+        enabled = false,
         preset = {
           header = table.concat({}, "\n"),
         },
@@ -201,12 +202,23 @@ return {
         ui_select = true,
         sources = {
           explorer = {
-            auto_close = true,
+            auto_close = false,
             hidden = true,
+            follow_file = true,
+            tree = true,
+            focus = "list",
+            --jump = { close = false },
             layout = {
               --preset = "list",
               preview = false,
             },
+            win = {
+                         list = {
+                           keys = {
+                             ["."] = "explorer_focus",
+                           },
+                         },
+                       },
             actions = {
               copy_file_path = {
                 action = function(_, item)
@@ -301,6 +313,7 @@ return {
           },
           projects = {
             finder = "recent_projects",
+            layout = "vscode",
             format = "file",
             dev = { "~/.local/src" },
             patterns = { "=src", ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "Makefile", "config" },
@@ -397,6 +410,14 @@ return {
         desc = "Visual selection or word",
         mode = { "n", "x" },
       },
+      --{ "<leader>e", function()
+      --    Snacks.explorer()
+      --    vim.schedule(function()
+      --      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('.', true, false, true), 'n', false)
+      --      end)
+      --  end,
+      --    desc = "Focus File Explorer"
+      --  },
       -- search
       { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
       { "<leader>s/", function() Snacks.picker.search_history() end, desc = "Search History" },
@@ -430,7 +451,7 @@ return {
 
       { "<leader>r", function() Snacks.picker.resume() end, desc = "Snacks Resume" },
       -- { "<leader>F", function() Snacks.zen.zoom() end, desc = "Zoom Window" },
-      { "<C-H", function() Snacks.zen() end, desc = "Zoom Window" },
+      { "<C-H>", function() Snacks.zen.zen() end, desc = "Zoom Window" },
       --{ "<leader>S", function() Snacks.picker() end, desc = "Snacks Pickers" },
     },
   },
