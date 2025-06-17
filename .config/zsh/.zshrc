@@ -176,7 +176,7 @@ bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
 bindkey -s '^a' 'bc -lq\n'
 
-bindkey -s '^p' 'nvim -c "Telescope project"\n'
+bindkey -s '^p' 'nvim -c "lua Snacks.picker.projects()"\n'
 
 # Use fzf-key-bindings.zsh instead of this
 #bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
