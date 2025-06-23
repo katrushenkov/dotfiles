@@ -39,6 +39,10 @@ alias \
 	dus="du -h --max-depth=1 | sort -rh" \
 	lll="stat -c '%A %a %n' *" \
 	ll="ls -lahF" \
+  ls="eza -a --icons" \
+  la="eza -A" \
+  ll="eza -lAh --icons" \
+  #ll="eza -lAh --icons --tree --level=1" \
 	l="ls -Fh" \
 	lm='ls -m' \
 	lr='ls -R' \
@@ -147,10 +151,6 @@ alias nsl="nslookup"
 
 alias top='top -c -n 1'
 
-alias 2p="sudo -iu postgres"
-
-alias xkb="setxkbmap -model pc105 -layout us,ru -option grp:ctrl_shift_toggle &"
-
 alias cls="clear"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
@@ -174,8 +174,11 @@ alias r="nnn"
 
 alias search="history|grep"
 alias hgrep="history|grep"
-#alias fuck='sudo $(history -p !!)'
-alias fuck="sudo !!"
+alias fuck='sudo $(history -p !!)'
+#alias fuck="sudo !!"
+alias pls=please
+alias please='sudo $(fc -ln -1)'
+
 alias upd="sudo pacman -Syu"
 alias ins="sudo pacman -S"
 #alias rem="sudo pacman -R"
@@ -340,9 +343,6 @@ alias wg='wget -O /dev/null'
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
 alias renew="source ~/.zshrc"
 
-alias ls="eza -a --icons"
-alias la="eza -A"
-alias ll="eza -lAh --icons --tree --level=1"
 #alias cat='bat --theme="Catppuccin-mocha"'
 
 #alias rsync-copy="rsync -avz --progress -h"
@@ -867,9 +867,6 @@ alias ll="eza -lAh --icons --tree --level=1"
 #dip(){
 #   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
 #}
-
-alias pls=please
-alias please='sudo $(fc -ln -1)'
 
 # Git aliases
 #alias gitclean="{ git reset; git checkout .; git clean -fdx }" # Clean git repo
