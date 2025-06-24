@@ -15,12 +15,14 @@
         },
         "on-click": "activate",
         "sort-by-number": true,
-        "active-only": false,
+        "active-only": true,
         "show-special": true,
+        "special-visible-only": true
     },
     "hyprland/window": {
         "format": "<span foreground=\"#A7C080\"> </span> {}",
-        "max-length": 100
+        "max-length": 100,
+        "separate-outputs": true
     },
     "clock": {
         "format":  "{:%A, %d %b -   %H:%M}",

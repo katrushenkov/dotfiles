@@ -11,6 +11,7 @@ workspaceOnStart=$3
 
 # | grep -v "-" -> choose windows not in magic (scratchpad) workspace
 running=$(hyprctl -j clients | jq -r ".[] | select(.class | ascii_downcase == \"${className}\") | .workspace.id" | grep -v "-" | head -1)
+# ascii_downcase is used becaurce initial class maybe either "Vivaldi-stable" or "vivaldi-stable"
 
 # echo $running
 

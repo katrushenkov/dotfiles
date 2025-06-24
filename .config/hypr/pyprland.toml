@@ -7,7 +7,7 @@ plugins = [
 
 [scratchpads.term]
 animation = "fromTop"
-# command = "kitty --class kitty-dropterm"
+    # command = "kitty --class kitty-dropterm"
 command = "foot --app-id foot-dropterm"
 class = "foot-dropterm"
 margin = 50
