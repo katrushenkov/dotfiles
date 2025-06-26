@@ -156,10 +156,28 @@ return {
         },
       },
     },
+	  --  keys = {
+	  --  	{
+	  --  		"<leader>e",
+	  --  		function()
+	  --  			local snacks = Snacks.picker.current
+	  --  			if snacks then
+	  --  				snacks.input.win:focus()
+	  --  			else
+	  --  				Snacks.explorer({ focus = "input" })
+	  --  			end
+	  --  		end,
+	  --  		desc = "Find files",
+	  --  	},
+	  -- },
   },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
   { "kevinhwang91/nvim-ufo", enabled = false },
+  { "MunifTanjim/nui.nvim", enabled = false },
+  { "nvim-neo-tree/neo-tree.nvim", enabled = false },
+  { "s1n7ax/nvim-window-picker", enabled = false },
+  { "stevearc/resession.nvim", enabled = false },
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
@@ -207,6 +225,7 @@ return {
             follow_file = true,
             tree = true,
             focus = "list",
+            replace_netrw = true,
             --jump = { close = false },
             layout = {
               --preset = "list",
@@ -378,8 +397,24 @@ return {
       { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
       { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-      { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
-
+      -- { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
+      -- { '<C-e>', function() Snacks.explorer.reveal() end },
+      {
+          "<leader>e",
+          function()
+            local explorer_pickers = Snacks.picker.get({ source = "explorer" })
+            for _, v in pairs(explorer_pickers) do
+              if v:is_focused() then
+                v:close()
+              else
+                v:focus()
+              end
+            end
+            if #explorer_pickers == 0 then
+              Snacks.picker.explorer()
+            end
+          end,
+        },
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
       {
