@@ -6,16 +6,12 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
-  -- { import = "astrocommunity.fuzzy-finder.telescope-nvim" },
-  -- { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.motion.hop-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
-  --{ import = "astrocommunity.note-taking.neorg" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.everforest" },
-  -- { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
-  --{ import = "astrocommunity.recipes.heirline-clock-statusline" },
-  --{ import = "astrocommunity.recipes.heirline-mode-text-statusline" },
-  -- import/override with your plugins folder
+  -- { import = "astrocommunity.editing-support.conform-nvim" },
+  -- { import = "astrocommunity.note-taking.neorg" },
+  -- { import = "astrocommunity.pack.sql" },
 }
