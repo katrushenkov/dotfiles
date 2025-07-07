@@ -1,9 +1,11 @@
 width=300
 height=200
+layer=overlay
+sort=-time
 max-visible=7
 actions=1
-#font=FiraMono Nerd Font
 font=Ubuntu Nerd Font Mono 10
+#font=FiraMono Nerd Font
 #font=Terminus
 #font=CaskaydiaCove Nerd Font Mono
 format=<b>%a\n%s</b>\n%b
@@ -13,7 +15,9 @@ padding=0,5,10
 border-size=3
 border-color=#8be9fd
 border-radius=15
+icons=1
 
+ignore-timeout=1
 default-timeout=3000
 
 [urgency=low]
@@ -26,6 +30,7 @@ background-color=#272E33
 
 [urgency=high]
 border-color=#ff5555
+default-timeout=0
 
 [actionable=true]
 #on-notify=exec makoctl menu wofi -d -p 'Choose Action: '
@@ -41,3 +46,26 @@ on-button-right=exec makoctl dismiss -a
 [category=mpd]
 default-timeout=2000
 group-by=category
+
+[app-name=wp-vol]
+layer=overlay
+history=0
+anchor=top-center
+# Group all volume notifications together
+group-by=app-name
+# Hide the group-index
+format=<b>%s</b>\n%b
+
+[app-name=volume group-index=0]
+# Only show last notification
+invisible=0
+
+[mode=do-not-disturb]
+invisible=1
+
+# ... the [app-name=wp-vol] section from earlier should be placed after the do-not-disturb definition,
+# so it can override it
+
+[app-name=volume grouped=false]
+# Force initial volume notification to be visible
+invisible=0
