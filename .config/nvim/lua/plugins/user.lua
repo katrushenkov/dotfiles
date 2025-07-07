@@ -218,6 +218,15 @@ return {
       },
       picker = {
         ui_select = true,
+        formatters = {
+          file = {
+            filename_first = false, -- display filename before the file path
+            truncate = 100, -- truncate the file path to (roughly) this length
+            filename_only = false, -- only show the filename
+            icon_width = 2, -- width of the icon (in characters)
+            git_status_hl = true, -- use the git status highlight group for the filename
+          },
+        },
         sources = {
           explorer = {
             auto_close = false,
@@ -401,6 +410,22 @@ return {
       -- { '<C-e>', function() Snacks.explorer.reveal() end },
       {
           "<leader>e",
+          function()
+            local explorer_pickers = Snacks.picker.get({ source = "explorer" })
+            for _, v in pairs(explorer_pickers) do
+              if v:is_focused() then
+                v:close()
+              else
+                v:focus()
+              end
+            end
+            if #explorer_pickers == 0 then
+              Snacks.picker.explorer()
+            end
+          end,
+        },
+      {
+          "<leader>o",
           function()
             local explorer_pickers = Snacks.picker.get({ source = "explorer" })
             for _, v in pairs(explorer_pickers) do
