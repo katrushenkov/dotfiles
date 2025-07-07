@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if pgrep -x "tofi"; then
   wtype -k ESCAPE
