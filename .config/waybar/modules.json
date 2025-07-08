@@ -19,7 +19,7 @@
             "whatsapp": ""
         },
         "on-click": "activate",
-        "all-outputs": false,
+        "all-outputs": true,
         "show-only-current-monitor": true,
         "sort-by-number": true,
         "active-only": false,
@@ -120,6 +120,13 @@
         "exec": "echo $0",
         "exec-if": "exit 0",
         "interval": 60,
+        "on-click": "notify-send test"
+    },
+    "custom/inbox": {
+        "format": "[ {} unread ] ",
+        "exec": "sh /home/ser/.local/bin/ksm/get-outlook-unseen",
+        "exec-if": "exit 0",
+        "interval": 10,
         "on-click": "notify-send test"
     },
     "custom/vpn": {
