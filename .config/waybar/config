@@ -11,6 +11,7 @@
     "group/custom": {
         "orientation": "horizontal",
         "modules": [
+            "custom/inbox",
             "custom/vpn",
         ]
     },
