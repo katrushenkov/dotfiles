@@ -139,8 +139,11 @@ return {
     opts = {},
     config = function()
       require("mssql").setup {
+        keymap_prefix = "<leader>m",
         max_rows = 50,
         max_column_width = 50,
+      	open_results_in = "current_window",
+	      --connections_file = nil,
       }
       require("mssql").set_keymaps ";m"
     end,
