@@ -1,6 +1,7 @@
 .config/shell/bm-dirs
 .config/shell/bm-files
 .config/zsh/.zsh-personal
+.config/hypr/hyprland-by-hostname.conf
 .config/shell/shortcutrc
 .config/shell/zshnameddirrc
 .config/zsh/.zcompdump
