@@ -5,5 +5,5 @@ if pgrep -x "tofi"; then
   exit 0
 else
   hypr-switch-en
-  rg -v '^#' ~/.local/src/datagrip/snippets | tofi | wl-copy -n
+  rg -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' | wl-copy -n
 fi
