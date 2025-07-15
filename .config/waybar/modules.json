@@ -123,14 +123,14 @@
         "on-click": "notify-send test"
     },
     "custom/inbox": {
-        "format": "[ {} unread ] ",
+        "format": "<span foreground=\"#A7C080\" weight=\"bold\">{}</span> unread <span foreground=\"#3D484D\">|</span> ",
         "exec": "sh /home/ser/.local/bin/ksm/get-outlook-unseen",
         "exec-if": "exit 0",
         "interval": 10,
         "on-click": "notify-send test"
     },
     "custom/vpn": {
-        "format": "vpn: {}",
+        "format": "<span foreground=\"#A7C080\" weight=\"bold\">VPN</span> {}",
         "tooltip": false,
         "exec": "echo $(systemctl is-active v2raya.service)",
         "exec-on-event": true,
