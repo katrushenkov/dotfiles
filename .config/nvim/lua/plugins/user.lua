@@ -209,6 +209,33 @@ return {
     end,
   },
   {
+    "folke/flash.nvim",
+    config = function()
+            require("flash").setup({
+                modes = {
+                    search = {
+                        enabled = true,
+                    },
+                    char = {
+                        keys = { "f", "F", "t", "T", "," },
+                        enabled = true,
+                    },
+                },
+            })
+        end,
+  --   keys = {
+  --       { ";", nil },
+  --     },
+  --   modes = {
+  --      char = {
+  --        -- keys = { "f", "F", "t", "T", "," },
+  --         keys = {
+  --             { ";", nil },
+  --           }
+  --      }
+  --   },
+  },
+  {
     "folke/snacks.nvim",
     opts = {
       matcher = {
