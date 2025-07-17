@@ -18,6 +18,10 @@ export TERMINAL="foot"
 export BROWSER="vivaldi"
 export KUBE_EDITOR="nvim"
 
+export HYPRCAP_DIR="$HOME"
+export XDG_VIDEOS_DIR="$HOME"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -77,5 +81,13 @@ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
              #if uwsm check may-start && uwsm select; then
              #  exec systemd-cat -t uwsm_start uwsm start Hyprland
              #fi
+
+             # Import Hyprland settings unique to this computer
+             # This automatically symlinks the correct file based on hostname
+             ln -f -s "$HOME/.config/hypr/hyprland-$HOSTNAME.conf" $HOME/.config/hypr/hyprland-by-hostname.conf &> /dev/null
              Hyprland
 fi
+
+[[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
+
+! { which werf | grep -qsE "^/home/ser/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "2" "stable")
