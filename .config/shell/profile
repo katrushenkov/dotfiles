@@ -84,7 +84,7 @@ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 
              # Import Hyprland settings unique to this computer
              # This automatically symlinks the correct file based on hostname
-             ln -f -s "$HOME/.config/hypr/hyprland-$HOSTNAME.conf" $HOME/.config/hypr/hyprland-by-hostname.conf &> /dev/null
+             ln -f -s "$HOME/.config/hypr/hyprland-$(uname -n).conf" $HOME/.config/hypr/hyprland-by-hostname.conf &> /dev/null
              Hyprland
 fi
 
