@@ -20,7 +20,7 @@ if pgrep -x "rofimoji"; then
   wtype -k ESCAPE
   exit 0
 else
-  rofimoji --selector tofi --action copy --skin-tone light 
+  rofimoji --selector tofi --action copy --skin-tone light --selector-args='-c /home/ser/.config/tofi/config_emoji'
 fi
 
 # --selector-args="-theme solarized -font 'Hack 12' -monitor ${MONITOR_ID}"
