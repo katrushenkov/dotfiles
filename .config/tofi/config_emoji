@@ -1,4 +1,4 @@
-font-size = 14
+font-size = 11
 background-color = #3d484
 border-color = #a7c080
 corner-radius = 25
@@ -9,7 +9,7 @@ text-color = #c0caf5
 selection-color = #ffa500
 selection-background = #3d484
 prompt-text = " "
-width = 500
+width = 600
 border-width = 2
 
 #font = "/usr/share/fonts/nerd-fonts-complete/TTF/JetBrains Mono Regular Nerd Font Complete.ttf"
