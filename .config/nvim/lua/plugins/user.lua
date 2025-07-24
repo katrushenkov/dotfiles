@@ -219,21 +219,22 @@ return {
                     char = {
                         keys = { "f", "F", "t", "T", "," },
                         enabled = true,
+                        jump_labels = true,
                     },
                 },
             })
         end,
-  --   keys = {
-  --       { ";", nil },
-  --     },
-  --   modes = {
-  --      char = {
-  --        -- keys = { "f", "F", "t", "T", "," },
-  --         keys = {
-  --             { ";", nil },
-  --           }
-  --      }
-  --   },
+  -- --   keys = {
+  -- --       { ";", nil },
+  -- --     },
+  -- --   modes = {
+  -- --      char = {
+  -- --        -- keys = { "f", "F", "t", "T", "," },
+  -- --         keys = {
+  -- --             { ";", nil },
+  -- --           }
+  -- --      }
+  -- --   },
   },
   {
     "folke/snacks.nvim",
@@ -433,7 +434,8 @@ return {
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep" },
+      -- { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>f/", function() Snacks.picker.lines() end, desc = "Buffer lines" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
       { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
       -- { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
