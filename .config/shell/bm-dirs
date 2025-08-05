@@ -20,7 +20,7 @@ h   $HOME
 m   ${XDG_MUSIC_DIR:-$HOME/Music}
 mm	/mnt/main/mus
 mn	/mnt/main
-org  /home/ser/.local/src/datagripli
+org  /home/ser/.local/src/datagrip
 pp	/mnt/main/pic
 #pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
 src $HOME/.local/src

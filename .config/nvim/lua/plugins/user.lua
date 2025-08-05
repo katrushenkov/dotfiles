@@ -29,6 +29,40 @@ return {
     end,
   },
   {
+    "obsidian-nvim/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = false,
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+    --   -- refer to `:h file-pattern` for more examples
+    --   "BufReadPre path/to/my-vault/*.md",
+    --   "BufNewFile path/to/my-vault/*.md",
+    -- },
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      legacy_commands = false,
+      ui = {
+        enable = false,
+      },
+      workspaces = {
+        -- {
+          -- name = "personal",
+          -- path = "~/vaults/personal",
+        -- },
+        {
+          name = "work",
+          path = "/home/ser/.local/src/datagrip",
+        },
+      },
+  
+      -- see below for full list of options 👇
+    },
+  },
+  {
     "nvim-neorg/neorg",
     enabled = false,
     dependencies = {
@@ -238,6 +272,7 @@ return {
   },
   {
     "folke/snacks.nvim",
+    enabled=true,
     opts = {
       matcher = {
         fuzzy = true,
@@ -248,7 +283,8 @@ return {
         cwd_bonus = false, -- Bonus for items in current directory
       },
       picker = {
-        ui_select = true,
+        ui_select = false,
+        prompt = ' ',
         formatters = {
           file = {
             filename_first = false, -- display filename before the file path
@@ -258,6 +294,28 @@ return {
             git_status_hl = true, -- use the git status highlight group for the filename
           },
         },
+        previewers = {
+                           git = {
+                               native = true,
+                           },
+        },
+        win = {
+                           input = {
+                               keys = {
+                                   -- ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+                                   -- ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+                                   ['<c-x>'] = { 'edit_split', mode = { 'i', 'n' } },
+                                   ['<c-u>'] = {
+                                       'preview_scroll_up',
+                                       mode = { 'i', 'n' },
+                                   },
+                                   ['<c-d>'] = {
+                                       'preview_scroll_down',
+                                       mode = { 'i', 'n' },
+                                   },
+                               },
+                           },
+                       },
         sources = {
           explorer = {
             auto_close = false,
@@ -430,6 +488,34 @@ return {
       },
       explorer = {},
     },
+    init = function()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "VeryLazy",
+          callback = function()
+            -- Setup some globals for debugging (lazy-loaded)
+            _G.dd = function(...)
+              Snacks.debug.inspect(...)
+            end
+            _G.bt = function()
+              Snacks.debug.backtrace()
+            end
+            vim.print = _G.dd -- Override print to use snacks for `:=` command
+    
+            -- Create some toggle mappings
+            Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+            Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+            Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+            Snacks.toggle.diagnostics():map("<leader>ud")
+            Snacks.toggle.line_number():map("<leader>ul")
+            Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
+            Snacks.toggle.treesitter():map("<leader>uT")
+            Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
+            Snacks.toggle.inlay_hints():map("<leader>uh")
+            Snacks.toggle.indent():map("<leader>ug")
+            Snacks.toggle.dim():map("<leader>uD")
+          end,
+        })
+      end,
     keys = {
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
