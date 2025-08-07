@@ -1,4 +1,4 @@
 #!/bin/bash
 
-pidof hyprlock || hyprlock -q --no-fade-in
+pidof hyprlock || hyprlock -q
 
