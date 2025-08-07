@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Determine which output is currently active (where the mouse pointer is). 🤔
-#MONITOR_ID=XWAYLAND$(swaymsg -t get_outputs | jq '[.[].focused] | index(true)')
-
-#hyprctl devices -j | jq -r '.keyboards[] | .active_keymap' |  head -n1 | cut -c1-2 | tr 'a-z' 'A-Z'
-
 hyprctl \
   --batch "$(
     hyprctl devices -j |
@@ -13,8 +8,6 @@ hyprctl \
         printf '%s %s %s;' 'switchxkblayout' "${keyboard}" '0'
       done
   )" &> /dev/null
-
-# Let's pick our emojis! 🎉
 
 if pgrep -x "rofimoji"; then
   wtype -k ESCAPE
