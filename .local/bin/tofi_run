@@ -1,4 +1,4 @@
 #!/bin/bash
 
-/usr/bin/hyprctl switchxkblayout "2.4g-mouse" 0 > /dev/null
+hypr-switch-en > /dev/null
 tofi-run | xargs hyprctl dispatch exec --
