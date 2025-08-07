@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# pidof hyprcap || hyprcap rec-stop && notify-send "Recording stopped..."
+# if pgrep -x "hyprcap" > /dev/null; then
+
+current_date=$(date +"%Y-%m-%d_%H-%M-%S")
+
+if ps aux | grep "[h]yprcap" ; then
+  hyprcap rec-stop 
+  #notify-send "Recording stopped..."
+  sleep 1 & pkill -RTMIN+1 waybar
+  exit 0
+else
+  hyprcap rec region -o "$HOME" -f "recording_$current_date.mp4" --disable-title -v &
+  # sleep 1 & pkill -RTMIN+1 waybar
+  pkill -RTMIN+1 waybar
+fi

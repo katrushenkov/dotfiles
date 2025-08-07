@@ -115,11 +115,12 @@
       	"icon-size":18,
       	"spacing": 10
     },
-    "custom/scc": {
-        "format": "{} Update(s)",
-        "exec": "echo $0",
+    "custom/recording": {
+        "format": "🔴 recording",
+        "exec": "ps aux | grep \"[h]yprcap\"",
         "exec-if": "exit 0",
-        "interval": 60,
+        "signal": 1,
+        "escape": true,
         "on-click": "notify-send test"
     },
     "custom/inbox": {
