@@ -13,6 +13,7 @@
         "modules": [
             "custom/inbox",
             "custom/vpn",
+            "custom/recording",
         ]
     },
 
