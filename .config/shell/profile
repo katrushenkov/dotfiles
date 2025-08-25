@@ -26,6 +26,7 @@ export XDG_PICTURES_DIR="$HOME/Pictures"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CACHE_DIR="$HOME/.cache" # for Hyprcap
 #export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
 export ZCOMPINIT="${XDG_DATA_HOME:-$HOME/.local/share}/.zcompinit"
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
