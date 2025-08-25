@@ -3,7 +3,7 @@
 #vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
 D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 aa	/mnt/main/audio
-ani	/mnt/angar/anima
+ani	/home/ser/.local/src/anima
 bb	/mnt/main/books
 bu	/mnt/main/backup
 cac ${XDG_CACHE_HOME:-$HOME/.cache}

@@ -7,7 +7,7 @@ cfx	${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources	# Colors, themes and variab
 cfb	~/.local/src/dwmblocks/config.h				            # dwmblocks: the status bar for dwm
 
 # These do not update automatically, but on the next new instance of a program:
-oi /home/ser/.local/src/datagrip/org/index.norg
+oi /home/ser/.local/src/datagrip/org/index.md
 cfzp /home/ser/.config/zsh/.zsh-personal
 cfh /home/ser/.config/hypr/hyprland.conf
 
