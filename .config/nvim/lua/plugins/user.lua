@@ -288,7 +288,7 @@ return {
         cwd_bonus = false, -- Bonus for items in current directory
       },
       picker = {
-        ui_select = false,
+        ui_select = true,
         prompt = ' ',
         formatters = {
           file = {
