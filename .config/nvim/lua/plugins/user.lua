@@ -50,8 +50,8 @@ return {
       },
       workspaces = {
         -- {
-          -- name = "personal",
-          -- path = "~/vaults/personal",
+        -- name = "personal",
+        -- path = "~/vaults/personal",
         -- },
         {
           name = "work",
@@ -174,8 +174,8 @@ return {
         keymap_prefix = "<leader>m",
         max_rows = 50,
         max_column_width = 50,
-      	open_results_in = "current_window",
-	      --connections_file = nil,
+        open_results_in = "current_window",
+        --connections_file = nil,
       }
       require("mssql").set_keymaps ";m"
     end,
@@ -191,20 +191,20 @@ return {
         },
       },
     },
-	  --  keys = {
-	  --  	{
-	  --  		"<leader>e",
-	  --  		function()
-	  --  			local snacks = Snacks.picker.current
-	  --  			if snacks then
-	  --  				snacks.input.win:focus()
-	  --  			else
-	  --  				Snacks.explorer({ focus = "input" })
-	  --  			end
-	  --  		end,
-	  --  		desc = "Find files",
-	  --  	},
-	  -- },
+    --  keys = {
+    --  	{
+    --  		"<leader>e",
+    --  		function()
+    --  			local snacks = Snacks.picker.current
+    --  			if snacks then
+    --  				snacks.input.win:focus()
+    --  			else
+    --  				Snacks.explorer({ focus = "input" })
+    --  			end
+    --  		end,
+    --  		desc = "Find files",
+    --  	},
+    -- },
   },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
@@ -243,19 +243,19 @@ return {
   {
     "folke/flash.nvim",
     config = function()
-            require("flash").setup({
-                modes = {
-                    search = {
-                        enabled = false, -- "/" labels mode
-                    },
-                    char = {
-                        keys = { "f", "F", "t", "T", "," },
-                        enabled = true,
-                        jump_labels = true,
-                    },
-                },
-            })
-        end,
+      require("flash").setup {
+        modes = {
+          search = {
+            enabled = false, -- "/" labels mode
+          },
+          char = {
+            keys = { "f", "F", "t", "T", "," },
+            enabled = true,
+            jump_labels = true,
+          },
+        },
+      }
+    end,
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
@@ -263,21 +263,21 @@ return {
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
-  -- --   keys = {
-  -- --       { ";", nil },
-  -- --     },
-  -- --   modes = {
-  -- --      char = {
-  -- --        -- keys = { "f", "F", "t", "T", "," },
-  -- --         keys = {
-  -- --             { ";", nil },
-  -- --           }
-  -- --      }
-  -- --   },
+    -- --   keys = {
+    -- --       { ";", nil },
+    -- --     },
+    -- --   modes = {
+    -- --      char = {
+    -- --        -- keys = { "f", "F", "t", "T", "," },
+    -- --         keys = {
+    -- --             { ";", nil },
+    -- --           }
+    -- --      }
+    -- --   },
   },
   {
     "folke/snacks.nvim",
-    enabled=true,
+    enabled = true,
     opts = {
       matcher = {
         fuzzy = true,
@@ -288,8 +288,8 @@ return {
         cwd_bonus = false, -- Bonus for items in current directory
       },
       picker = {
-        ui_select = false,
-        prompt = ' ',
+        ui_select = true,
+        prompt = " ",
         formatters = {
           file = {
             filename_first = false, -- display filename before the file path
@@ -300,27 +300,27 @@ return {
           },
         },
         previewers = {
-                           git = {
-                               native = true,
-                           },
+          git = {
+            native = true,
+          },
         },
         win = {
-                           input = {
-                               keys = {
-                                   -- ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
-                                   -- ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
-                                   ['<c-x>'] = { 'edit_split', mode = { 'i', 'n' } },
-                                   ['<c-u>'] = {
-                                       'preview_scroll_up',
-                                       mode = { 'i', 'n' },
-                                   },
-                                   ['<c-d>'] = {
-                                       'preview_scroll_down',
-                                       mode = { 'i', 'n' },
-                                   },
-                               },
-                           },
-                       },
+          input = {
+            keys = {
+              -- ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
+              -- ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
+              ["<c-x>"] = { "edit_split", mode = { "i", "n" } },
+              ["<c-u>"] = {
+                "preview_scroll_up",
+                mode = { "i", "n" },
+              },
+              ["<c-d>"] = {
+                "preview_scroll_down",
+                mode = { "i", "n" },
+              },
+            },
+          },
+        },
         sources = {
           explorer = {
             auto_close = false,
@@ -335,12 +335,12 @@ return {
               preview = false,
             },
             win = {
-                         list = {
-                           keys = {
-                             ["."] = "explorer_focus",
-                           },
-                         },
-                       },
+              list = {
+                keys = {
+                  ["."] = "explorer_focus",
+                },
+              },
+            },
             actions = {
               copy_file_path = {
                 action = function(_, item)
@@ -494,33 +494,31 @@ return {
       explorer = {},
     },
     init = function()
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "VeryLazy",
-          callback = function()
-            -- Setup some globals for debugging (lazy-loaded)
-            _G.dd = function(...)
-              Snacks.debug.inspect(...)
-            end
-            _G.bt = function()
-              Snacks.debug.backtrace()
-            end
-            vim.print = _G.dd -- Override print to use snacks for `:=` command
-    
-            -- Create some toggle mappings
-            Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-            Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-            Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-            Snacks.toggle.diagnostics():map("<leader>ud")
-            Snacks.toggle.line_number():map("<leader>ul")
-            Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
-            Snacks.toggle.treesitter():map("<leader>uT")
-            Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-            Snacks.toggle.inlay_hints():map("<leader>uh")
-            Snacks.toggle.indent():map("<leader>ug")
-            Snacks.toggle.dim():map("<leader>uD")
-          end,
-        })
-      end,
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          -- Setup some globals for debugging (lazy-loaded)
+          _G.dd = function(...) Snacks.debug.inspect(...) end
+          _G.bt = function() Snacks.debug.backtrace() end
+          vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+          -- Create some toggle mappings
+          Snacks.toggle.option("spell", { name = "Spelling" }):map "<leader>us"
+          Snacks.toggle.option("wrap", { name = "Wrap" }):map "<leader>uw"
+          Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map "<leader>uL"
+          Snacks.toggle.diagnostics():map "<leader>ud"
+          Snacks.toggle.line_number():map "<leader>ul"
+          Snacks.toggle
+            .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+            :map "<leader>uc"
+          Snacks.toggle.treesitter():map "<leader>uT"
+          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map "<leader>ub"
+          Snacks.toggle.inlay_hints():map "<leader>uh"
+          Snacks.toggle.indent():map "<leader>ug"
+          Snacks.toggle.dim():map "<leader>uD"
+        end,
+      })
+    end,
     keys = {
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
@@ -532,37 +530,39 @@ return {
       -- { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
       -- { '<C-e>', function() Snacks.explorer.reveal() end },
       {
-          "<leader>e",
-          function()
-            local explorer_pickers = Snacks.picker.get({ source = "explorer" })
-            for _, v in pairs(explorer_pickers) do
-              if v:is_focused() then
-                v:close()
-              else
-                v:focus()
-              end
+        "<leader>e",
+        function()
+          local explorer_pickers = Snacks.picker.get { source = "explorer" }
+          for _, v in pairs(explorer_pickers) do
+            if v:is_focused() then
+              v:close()
+            else
+              v:focus()
             end
-            if #explorer_pickers == 0 then
-              Snacks.picker.explorer()
-            end
-          end,
-        },
+          end
+          if #explorer_pickers == 0 then Snacks.picker.explorer() end
+        end,
+      },
       {
-          "<leader>o",
-          function()
-            local explorer_pickers = Snacks.picker.get({ source = "explorer" })
-            for _, v in pairs(explorer_pickers) do
-              if v:is_focused() then
-                v:close()
-              else
-                v:focus()
-              end
+        "<leader>o",
+        function()
+          local explorer_pickers = Snacks.picker.get { source = "explorer" }
+          for _, v in pairs(explorer_pickers) do
+            if v:is_focused() then
+              v:close()
+            else
+              v:focus()
             end
-            if #explorer_pickers == 0 then
-              Snacks.picker.explorer()
-            end
-          end,
-        },
+          end
+          if #explorer_pickers == 0 then Snacks.picker.explorer() end
+        end,
+      },
+      { ";s", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { ";l", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      { ";d", function() Snacks.dim() end, desc = "dim active scope" },
+      { ";D", function() Snacks.dim.disable() end, desc = "dim active scope" },
+      { ";e", function() Snacks.explorer.reveal() end, desc = "dim active scope" },
+
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
       {
