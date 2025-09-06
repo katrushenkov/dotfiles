@@ -522,6 +522,7 @@ return {
     keys = {
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { ";x", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
       -- { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>f/", function() Snacks.picker.lines() end, desc = "Buffer lines" },
