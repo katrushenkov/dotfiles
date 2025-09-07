@@ -265,6 +265,13 @@ return {
     },
   },
   {
+    "sysid/bkmr-nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("bkmr").setup() -- Zero config required!
+    end,
+  },
+  {
     "folke/snacks.nvim",
     enabled = true,
     opts = {
