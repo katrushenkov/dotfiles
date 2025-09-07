@@ -82,13 +82,19 @@
         "tooltip-format-wifi": "{essid} ({signalStrength}%)",
         "tooltip-format-ethernet": "{ifname}",
         "tooltip-format-disconnected": "Disconnected",
-        "max-length": 50
+        "max-length": 50,
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "hyprland/language": {
-        "format": "<span foreground=\"#A7C080\">󰌌 </span> {short} <span foreground=\"#3D484D\">|</span>"
+        "format": "<span foreground=\"#A7C080\">󰌌 </span> {short} <span foreground=\"#3D484D\">|</span>",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "keyboard-state": {
         "capslock": true,
+        "on-scroll-up": "",
+        "on-scroll-down": "",
         "format": " <span foreground=\"#A7C080\">󰪛</span> {icon}",
         "format-icons": {
             "locked": "",
@@ -109,11 +115,16 @@
     "custom/wlogout": {
         "format": "⏻",
         "on-click": "wlogout",
-        "tooltip": false
+        "tooltip": false,
+        "on-scroll-up": "",
+        "on-scroll-down": ""
+
     },
     "tray":{
       	"icon-size":18,
-      	"spacing": 10
+      	"spacing": 10,
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "custom/recording": {
         "format": "🔴 recording",
@@ -121,14 +132,18 @@
         "exec-if": "exit 0",
         "signal": 1,
         "escape": true,
-        "on-click": "notify-send test"
+        "on-click": "notify-send test",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "custom/inbox": {
         "format": "<span foreground=\"#A7C080\" weight=\"bold\">{}</span> unread <span foreground=\"#3D484D\">|</span> ",
         "exec": "sh /home/ser/.local/bin/ksm/get-outlook-unseen",
         "exec-if": "exit 0",
         "interval": 10,
-        "on-click": "notify-send test"
+        "on-click": "notify-send test",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "custom/vpn": {
         "format": "<span foreground=\"#A7C080\" weight=\"bold\">VPN</span> {}",
@@ -137,7 +152,9 @@
         "exec-on-event": true,
         //"interval": 60,
         "signal": 10,
-        "on-click": "/home/ser/.local/bin/statusbar/wb-vpn"
+        "on-click": "/home/ser/.local/bin/statusbar/wb-vpn",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
 }
 // "on-click": "kitty -e yay -Syu"
