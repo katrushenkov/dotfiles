@@ -187,7 +187,6 @@ alias pic="picom -b --experimental-backends"
 alias l.='ls -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
 alias f="find . | grep "
-#alias svi='sudo vi'
 
 #alias copy="xclip -sel clipboard"
 #alias copy="xclip -selection clipboard"
@@ -256,15 +255,6 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 #get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
-alias nlightdm="sudo nvim /etc/lightdm/lightdm.conf"
-alias npacman="sudo nvim /etc/pacman.conf"
-alias ngrub="sudo nvim /etc/default/grub"
-alias nmkinitcpio="sudo nvim /etc/mkinitcpio.conf"
-alias nslim="sudo nvim /etc/slim.conf"
-alias noblogout="sudo nvim /etc/oblogout.conf"
-alias nmirrorlist="sudo nvim /etc/pacman.d/mirrorlist"
-alias nconfgrub="sudo nvim /boot/grub/grub.cfg"
-
 #gpg
 #verify signature for isos
 alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
@@ -279,9 +269,6 @@ alias sn="shutdown now"
 alias unlock="sudo rm /var/lib/pacman/db.lck"
 
 alias userlist="cut -d: -f1 /etc/passwd"
-
-alias merge="xrdb -merge ~/.Xresources"
-#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
 
 alias pacman='sudo pacman --color auto'
 #alias up='sudo pacman -Syyu'
