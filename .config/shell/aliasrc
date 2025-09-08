@@ -193,6 +193,7 @@ alias f="find . | grep "
 #alias copy='xclip -sel clip'
 #alias copy="xclip -r -selection clipboard"
 #alias paste="xclip -selection clipboard -o"
+alias incognito='unset HISTFILE'
 alias whereami='echo $PWD'
 alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
