@@ -248,13 +248,11 @@
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
       { ";x", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { ";w", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      -- { "<leader>f/", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>f/", function() Snacks.picker.lines() end, desc = "Buffer lines" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
       { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-      -- { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
-      -- { '<C-e>', function() Snacks.explorer.reveal() end },
       {
         "<leader>e",
         function()
