@@ -1,0 +1,42 @@
+#!/bin/bash
+
+CONFIG_FILES=(
+    "~/.zshrc"
+    "~/.zprofile"
+    "~/.config/nvim/init.vim"
+    "~/.config/alacritty/alacritty.toml"
+    "~/.config/waybar/config"
+    "~/.config/waybar/style.css"
+    "~/.config/hypr/hyprland.conf"
+    "~/.tmux.conf"
+    "~/.gitconfig"
+    "/etc/shadow"
+    "/etc/default/grub"
+    "/boot/grub/grub.cfg"
+    "/etc/pacman.conf"
+    "/etc/pacman.d/mirrorlist"
+    "/etc/mkinitcpio.conf"
+)
+
+TMP_FILE=$(mktemp)
+
+for file in "${CONFIG_FILES[@]}"; do
+    expanded_file="${file//\~/$HOME}"
+    if [[ -f "$expanded_file" ]]; then
+        echo "$expanded_file" >> "$TMP_FILE"
+    fi
+done
+
+if [[ ! -s "$TMP_FILE" ]]; then
+    echo "Нет доступных config-файлов"
+    rm "$TMP_FILE"
+    exit 1
+fi
+
+SELECTED_FILE=$(cat "$TMP_FILE" | tofi --prompt "Config: " --width 80% --height 60%)
+
+rm "$TMP_FILE"
+
+if [[ -n "$SELECTED_FILE" && -f "$SELECTED_FILE" ]]; then
+    ${EDITOR:-nano} "$SELECTED_FILE"
+fi
