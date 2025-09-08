@@ -280,9 +280,6 @@ alias unlock="sudo rm /var/lib/pacman/db.lck"
 
 alias userlist="cut -d: -f1 /etc/passwd"
 
-alias merge="xrdb -merge ~/.Xresources"
-#alias xres="vim ~/.Xresources; xrdb merge ~/.Xresources"
-
 alias pacman='sudo pacman --color auto'
 #alias up='sudo pacman -Syyu'
 alias up='yay  -Syyu --devel'
