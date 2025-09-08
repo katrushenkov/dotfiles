@@ -11,5 +11,3 @@ local selected_host=$(cat ~/.local/src/datagrip/hosts | tofi)
 }
 
 go-ssh
-
-
