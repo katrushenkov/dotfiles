@@ -16,4 +16,5 @@ else
   rofimoji --selector tofi --action copy --skin-tone light --selector-args='-c /home/ser/.config/tofi/config_emoji'
 fi
 
+# | xargs wl-paste -t text
 # --selector-args="-theme solarized -font 'Hack 12' -monitor ${MONITOR_ID}"

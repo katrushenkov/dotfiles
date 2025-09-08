@@ -1,0 +1,19 @@
+#!/bin/bash
+
+selected=$(ps -eo pid,user,comm,args --sort=-pcpu | \
+    awk 'NR>1 {printf "%-8s %-10s %-15s %s\n", $1, $2, $3, substr($0, index($0,$4))}' | \
+    tofi --prompt "Выберите процесс: " --width 90% --height 60%)
+
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+pid=$(echo "$selected" | awk '{print $1}')
+
+if [[ -z "$pid" ]] || ! [[ "$pid" =~ ^[0-9]+$ ]]; then
+    echo "Ошибка: Неверный PID процесса"
+    exit 1
+fi
+
+echo "Завершаем процесс PID: $pid"
+kill "$pid"
