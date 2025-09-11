@@ -2,6 +2,7 @@
 # hyprctl clients | awk '/class: ./ { gsub("\t*class: *", ""); print}' | tofi | xargs -I{} hyprctl dispatch focuswindow "class:{}" 
 
 
+hypr-switch-en > /dev/null
 hyprctl clients | awk '
 /class: / {
     gsub(/^[[:space:]]*class: /, "")
