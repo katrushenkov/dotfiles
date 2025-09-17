@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST_LIST=~/.local/src/datagrip/winhosts
+HOST_LIST=$HOME/.local/src/datagrip/winhosts
 
 if pgrep -x "tofi"; then
   wtype -k ESCAPE
