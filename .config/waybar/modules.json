@@ -104,13 +104,19 @@
     "disk": {
         "interval": 60,
         "format": "<span foreground=\"#A7C080\" weight=\"bold\">/</span> {percentage_used}% ",
-        "path": "/"
+        "path": "/",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "cpu": {
-        "format": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\" weight=\"bold\">CPU</span> {usage}% "
+        "format": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\" weight=\"bold\">CPU</span> {usage}% ",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "memory": {
-        "format": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\" weight=\"bold\">RAM</span> {}% "
+        "format": "<span foreground=\"#3D484D\">|</span> <span foreground=\"#A7C080\" weight=\"bold\">RAM</span> {}% ",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "custom/wlogout": {
         "format": "⏻",
