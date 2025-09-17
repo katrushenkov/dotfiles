@@ -20,6 +20,8 @@
         },
         "on-click": "activate",
         "all-outputs": true,
+        "disable-scroll": true,
+        "scroll": false,
         "show-only-current-monitor": true,
         "sort-by-number": true,
         "active-only": false,
