@@ -1,5 +1,3 @@
-matching-algorithm = fuzzy
-
 font = "/usr/share/fonts/archcraft/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf"
 font-size = 14
 background-color = #3d484
