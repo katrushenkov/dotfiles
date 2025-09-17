@@ -1,1 +1,14 @@
-/home/ser/.local/src/dotfiles/.local/bin/ksm/rem
+#!/bin/bash
+
+HOST_LIST=~/.local/src/datagrip/winhosts
+
+if pgrep -x "tofi"; then
+  wtype -k ESCAPE
+  exit 0
+else
+  hypr-switch-en
+  DOMAIN="$(gopass show -o domain domain)"
+  USERNAME="$(gopass show -o domain username)"
+  PASSWORD="$(gopass show -o domain)"
+  cat $HOST_LIST | tofi --config /home/ser/.config/tofi/config_tight | xargs -I {} remmina -c "rdp://$DOMAIN\\$USERNAME:$PASSWORD@{}" --enable-extra-hardening
+fi
