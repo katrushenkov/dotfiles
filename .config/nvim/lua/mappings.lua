@@ -15,15 +15,10 @@ vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { desc = "Quit without save" })
 vim.keymap.set({ "n" }, "<leader>bk", "<Cmd>bd<CR>", { desc = "kill buffer" })
 vim.keymap.set("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { noremap = true })
--- vim.keymap.set("n", "S", ":HopWord<cr>", { silent = true })
 vim.keymap.set("n", "<C-c>", ":Gitsigns blame_line<cr>", { silent = true })
--- vim.keymap.set("n", "f", ":HopWord<cr>", { silent = true })
--- vim.keymap.set("n", "<C-j>", ":HopLineAC<cr>", { silent = true })
--- vim.keymap.set("n", "<C-k>", ":HopLineBC<cr>", { silent = true })
 vim.keymap.set("n", ";f", "<leader>f", { silent = true })
 vim.keymap.set("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
 vim.keymap.set("n", "J", ":bnext<cr>", { silent = true })
-
 vim.keymap.set("n", ";h", ":chdir ~/.local/src/datagrip<cr>", { silent = true })
 vim.keymap.set("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
 vim.keymap.set("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
@@ -34,6 +29,15 @@ vim.keymap.set(
   "<leader>yy",
   function() require("yeet").execute_selection("source venv/bin/activate", { clear_before_yeet = true }) end
 )
+
+vim.keymap.set('n', ';g', function()
+    require('snacks').picker.files({
+        cwd = vim.fn.expand('~/.config/nnn/bookmarks'),
+        hidden = true,  -- показывать скрытые файлы
+        follow_symlinks = true,
+        respect_gitignore = true,
+    })
+end, { desc = 'Shortcuts picker' })
 
 --vim.keymap.set('n', '<leader>E', '<Cmd>Neotree<CR>', {position=current})
 --vim.keymap.set({ "n" }, "<leader>x", ":NnnExplorer<cr>", { desc = "Toggle nnn" })
