@@ -15,7 +15,7 @@ export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 unsetopt PROMPT_SP 2>/dev/null
 
 export EDITOR="nvim"
-export TERMINAL="foot"
+export TERMINAL="footclient"
 export BROWSER="vivaldi"
 export KUBE_EDITOR="nvim"
 
@@ -78,4 +78,3 @@ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
              ln -f -s "$HOME/.config/hypr/hyprland-$(uname -n).conf" $HOME/.config/hypr/hyprland-by-hostname.conf &> /dev/null
              Hyprland
 fi
-
