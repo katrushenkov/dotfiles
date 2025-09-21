@@ -37,6 +37,9 @@ SELECTED_FILE=$(cat "$TMP_FILE" | tofi --prompt "Config: " --width 80% --height 
 
 rm "$TMP_FILE"
 
-if [[ -n "$SELECTED_FILE" && -f "$SELECTED_FILE" ]]; then
-    ${EDITOR:-nano} "$SELECTED_FILE"
+if [[ -n "$SELECTED_FILE" && -f "$SELECTED_FILE" ]] && [ "$TERM" != "dumb" ]; then
+    ${EDITOR:-vi} "$SELECTED_FILE"
+else
+    #kitty -e ${EDITOR:-vi} ${SELECTED_FILE}
+    $TERMINAL -e ${EDITOR:-vi} ${SELECTED_FILE}
 fi
