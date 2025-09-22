@@ -89,8 +89,6 @@ alias \
 	lsblk="lsblk -f -o +SIZE,MODEL" \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
-	nf="neofetch" \
-	neofetch="clear; neofetch" \
 	rand="head -c 50K < /dev/urandom > $1" \
 	bashrc='nvim ~.bashrc' \
 	s="sudo -s" \
