@@ -273,7 +273,7 @@ alias userlist="cut -d: -f1 /etc/passwd"
 
 alias pacman='sudo pacman --color auto'
 #alias up='sudo pacman -Syyu'
-alias up='yay  -Syyu --devel'
+alias up='yay -Syyu --devel'
 # yay as aur helper - updates everything
 alias pksyua="yay -Syu --noconfirm"
 alias all="yay -Syu --noconfirm"
