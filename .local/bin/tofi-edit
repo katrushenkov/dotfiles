@@ -8,6 +8,7 @@ CONFIG_FILES=(
     "~/.config/waybar/config"
     "~/.config/waybar/style.css"
     "~/.config/hypr/hyprland.conf"
+    "~/.config/hypr/hypridle.conf"
     "~/.tmux.conf"
     "~/.gitconfig"
     "/etc/shadow"
