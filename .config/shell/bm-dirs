@@ -11,6 +11,7 @@ cf  ${XDG_CONFIG_HOME:-$HOME/.config}
 cfs	${XDG_CONFIG_HOME:-$HOME/.config}/shell
 cfzd ${XDG_CONFIG_HOME:-$HOME/.config}/zsh
 cfvd ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
+cfwd ${XDG_CONFIG_HOME:-$HOME/.config}/waybar
 d   ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
