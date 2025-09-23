@@ -1,0 +1,11 @@
+/* test configuration for tessen integration */
+configuration {
+    /* Tessen */
+    kb-custom-1: "Alt+Return"; /* autotype */
+    kb-custom-2: "Alt+u";      /* autotype user */
+    kb-custom-3: "Alt+p";      /* autotype password */
+    kb-custom-5: "Alt+t";      /* copy user */
+    kb-custom-6: "Alt+c";      /* copy password */
+    kb-custom-8: "Alt+o";      /* autotype otp */
+}
+@import "config"               /* import default config */
