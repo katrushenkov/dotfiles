@@ -1,0 +1,3 @@
+
+# dmenu_backend="rofi"
+# rofi_config_file="$HOME/.config/rofi/tessen.rasi"
