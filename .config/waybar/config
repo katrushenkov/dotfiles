@@ -20,9 +20,8 @@
     "group/system": {
         "orientation": "horizontal",
         "modules": [
-            // "backlight", // only for laptops
             "pulseaudio",
-            "network"
+            "network",
         ]
     },
 
