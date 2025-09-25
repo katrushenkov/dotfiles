@@ -27,6 +27,8 @@
         "active-only": false,
         "show-special": true,
         "special-visible-only": true,
+        "on-scroll-up": "",
+        "on-scroll-down": "",
         "persistent-workspaces": {
            //"*": 4, // 5 workspaces by default on every monitor
            //"DVI-D-1", // but only three on HDMI-A-1
@@ -42,7 +44,9 @@
     "hyprland/window": {
         "format": "<span foreground=\"#A7C080\"> </span> {}",
         "max-length": 100,
-        "separate-outputs": true
+        "separate-outputs": true,
+        "on-scroll-up": "",
+        "on-scroll-down": ""
     },
     "clock": {
         "format":  "{:%A, %d %b -   %H:%M}",
@@ -56,6 +60,8 @@
             ""
         ],
         "on-click": "pkill -USR1 gammastep || gammastep",
+        "on-scroll-up": "",
+        "on-scroll-down": "",
         "tooltip-format": "Brightness"
     },
     "pulseaudio": {
