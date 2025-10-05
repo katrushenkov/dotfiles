@@ -51,6 +51,8 @@
     "clock": {
         "format":  "{:%A, %d %b -   %H:%M}",
         "format-alt": "{:%H:%M}",
+        "on-scroll-up": "",
+        "on-scroll-down": "",
     },
     "backlight": {
         "device": "intel_backlight",
