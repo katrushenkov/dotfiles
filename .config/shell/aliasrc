@@ -67,7 +67,7 @@ alias \
 	e='$EDITOR' \
 	p="sudo pacman" \
 	pac="sudo pacman -S" \
-	z="zathura" \
+	z="zathura-sandbox" \
 	v="nvim" \
 	vi="nvim" \
 	nv="nvim" \
@@ -115,6 +115,7 @@ alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
 alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
+alias zathura='zathura-sandbox'
 alias grep='grep --color=auto -iE'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
