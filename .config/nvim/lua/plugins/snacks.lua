@@ -66,6 +66,10 @@ return {
         win = {
           input = {
             keys = {
+              ["<Esc>"] = { "close", mode = { "n", "i" } },
+              ["<c-f>"] = { "flash", mode = { "n", "i" } },
+              ["f"] = { "flash" },
+              -- ["<Esc>"] = "cancel", -- going to normal mode
               -- ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
               -- ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
               ["<c-x>"] = { "edit_split", mode = { "i", "n" } },
@@ -79,6 +83,24 @@ return {
               },
             },
           },
+        },
+        actions = {
+          flash = function(picker)
+            require("flash").jump {
+              pattern = "^",
+              label = { after = { 0, 0 } },
+              search = {
+                mode = "search",
+                exclude = {
+                  function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "snacks_picker_list" end,
+                },
+              },
+              action = function(match)
+                local idx = picker.list:row2idx(match.pos[1])
+                picker.list:_move(idx, true, true)
+              end,
+            }
+          end,
         },
         sources = {
           explorer = {
