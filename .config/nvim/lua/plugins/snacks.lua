@@ -1,5 +1,5 @@
 ---@type LazySpec
-  return {
+return {
   {
     "folke/snacks.nvim",
     enabled = true,
@@ -11,6 +11,40 @@
         sort_empty = false,
         file_pos = true, -- Support patterns like file:line:col
         cwd_bonus = false, -- Bonus for items in current directory
+      },
+      image = {
+        -- force = true,
+        -- img_dirs = { "assets" },
+        doc = {
+          -- enable image viewer for documents
+          -- a treesitter parser must be available for the enabled languages.
+          enabled = true,
+          -- render the image inline in the buffer
+          -- if your env doesn't support unicode placeholders, this will be disabled
+          -- takes precedence over `opts.float` on supported terminals
+          inline = true,
+          -- render the image in a floating window
+          -- only used if `opts.inline` is disabled
+          float = true,
+          max_width = 80,
+          max_height = 40,
+          -- Set to `true`, to conceal the image text when rendering inline.
+          -- (experimental)
+          ---@param lang string tree-sitter language
+          ---@param type snacks.image.Type image type
+          conceal = function(lang, type)
+            -- only conceal math expressions
+            return type == "math"
+          end,
+        },
+        resolve = function(path, src)
+          if require("obsidian.api").path_is_note(path) then return require("obsidian.api").resolve_image_path(src) end
+        end,
+        debug = {
+          request = false,
+          convert = false,
+          placement = false,
+        },
       },
       picker = {
         ui_select = true,
@@ -358,8 +392,11 @@
 
       { "<leader>r", function() Snacks.picker.resume() end, desc = "Snacks Resume" },
       -- { "<leader>F", function() Snacks.zen.zoom() end, desc = "Zoom Window" },
+      -- { "<C-E>", function() Snacks.image.hover() end, desc = "Zoom Window" },
+      { "<C-E>", function() Snacks.image.health() end, desc = "Zoom Window" },
+
       { "<C-H>", function() Snacks.zen.zen() end, desc = "Zoom Window" },
       --{ "<leader>S", function() Snacks.picker() end, desc = "Snacks Pickers" },
-    }
-  }
-  }
+    },
+  },
+}
