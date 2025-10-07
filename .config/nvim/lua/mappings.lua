@@ -39,7 +39,6 @@ vim.keymap.set('n', ';g', function()
     })
 end, { desc = 'Shortcuts picker' })
 
---vim.keymap.set('n', '<leader>E', '<Cmd>Neotree<CR>', {position=current})
 --vim.keymap.set({ "n" }, "<leader>x", ":NnnExplorer<cr>", { desc = "Toggle nnn" })
 --vim.keymap.set({"n"}, '<C-b>', '<Cmd>Neotree toggle<CR>')
 --vim.keymap.set({ "i" }, "<C-b>", "<ESC><Cmd>Neotree toggle<CR>")
@@ -54,8 +53,9 @@ end, { desc = 'Shortcuts picker' })
 --Move by display lines, not actual lines
 --vim.api.nvim_set_keymap("n", "j", "gj", {})
 --vim.api.nvim_set_keymap("n", "k", "gk", {})
+
 --Move to the first non-blank character of the line
---vim.api.nvim_set_keymap("n", "0", "^", { noremap = true })
+vim.keymap.set("n", "0", "^", { noremap = true })
 
 -- Sudo write
 vim.api.nvim_create_user_command("W", "silent! write !sudo tee % >/dev/null | edit!", {})
