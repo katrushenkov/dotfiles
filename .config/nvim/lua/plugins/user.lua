@@ -48,6 +48,12 @@ return {
       ui = {
         enable = false,
       },
+      attachments = {
+        img_folder = "assets",
+        img_text_func = require("obsidian.builtin").img_text_func,
+        img_name_func = function() return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S") end,
+        confirm_img_paste = true,
+      },
       workspaces = {
         -- {
         -- name = "personal",
@@ -263,5 +269,5 @@ return {
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
-  }
+  },
 }
