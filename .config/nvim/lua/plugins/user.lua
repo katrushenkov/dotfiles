@@ -255,7 +255,7 @@ return {
             enabled = false, -- "/" labels mode
           },
           char = {
-            keys = { "f", "F", "t", "T", "," },
+            keys = { "F", "t", "T", "," }, -- "f" replaced with jump()
             enabled = true,
             jump_labels = true,
           },
@@ -263,7 +263,7 @@ return {
       }
     end,
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "f", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump { search = { mode = function(str) return "\\<" .. str end } } end, desc = "Flash",}, -- match beginnings of the words only
       -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump({ pattern = vim.fn.expand("<cword>") }) end, desc = "Flash"}, -- with the word under the cursor
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
