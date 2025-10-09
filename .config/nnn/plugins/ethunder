@@ -1,0 +1,56 @@
+#!/bin/bash
+# ethunder.sh - Command line to send a single selected attachment
+# in a newly-composed email within Mozilla's Thunderbird app.
+# Checks against directory or empty selection before proceeding
+#
+# Author: ArchieLinux / No rights reserved.
+# Feel free to distribute and use in any form with or without
+# modification provided that no warranty is provided. 
+# Use at your own risk.
+#
+#INSTALL: Copy this file to your '/.config/nnn/plugins' folder and make
+# sure you have changed the script's mode to executable ("*" within nnn)
+#
+# To incorporate into your nnn config file, consider adding
+# a line such as:
+#
+# export NNN_PLUG='e:ethunder;... other plugins...'
+#
+#USE: Within nnn select a single file (SPACE bar or "+" key)
+# and deploy this plugin by accessing your plugins (e.g., ";") 
+# and select "e" (per above example) for this "ethunder" script.
+# 
+#  - - - - - - - - - - - - - 
+
+# First, obtain contents of nnn's '.selection' file, if it exists:
+attach=${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection}
+
+#If '.selection' is empty then no selection has been made, cannot proceed...
+if [ -z "$(cat $attach)" ]  ; then
+	clear
+	echo "Please select a single file within 'nnn' first"
+	echo "using SPACE bar or '+' key"
+	echo -n "Press ENTER to return..."
+	read -r dummy
+	exit
+fi
+
+#If '.selection' is a directory, cannot process...
+if [ -d "$(cat $attach)" ] ; then
+	clear
+	echo 'You have selected a directory: '$(cat $attach)
+	echo "Cannot send a directory as an email attachment."
+	echo "Please select a single file instead."
+	echo -n "Press ENTER to return..."
+	read -r dummy
+	exit
+fi
+
+#If the '.selection' within nnn is neither empty nor a directory,
+# proceed to call Thunderbird email app with the single attachment:
+thunderbird -compose 'attachment='$(cat $attach)
+
+# TO DO: Test for multiple file selections and either halt
+# or create a chain of attachments for Thunderbird in CLI command above
+
+

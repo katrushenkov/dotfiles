@@ -1,0 +1,61 @@
+#!/usr/bin/bash
+#
+# arcdec script ... to reverse the arcenc encryption and compression
+# process on a xxxx.tar.gz.gpg encrypted archive.
+#
+# Author: ArchieLinux / No rights reserved.
+# Feel free to distribute and use in any form with or without
+# modification provided that no warranty is provided. 
+# Use at your own risk.
+#
+# To incorporate into your nnn config file, consider adding
+# a line such as:
+#
+# export NNN_PLUG='1:arcenc;2:arcdec; ... other plugins...
+#
+#... then invoke plugin access (e.g., ";") and select "1" or "2" for
+# "arcenc" (archive & encryption) or "arcdec" (decryption and 
+# unpacking of the archive, respectively.
+#
+clear
+echo "************************************************"
+echo "* Given an encrypted tar.gz.gpg archive, this  *"
+echo "* plugin script will first decrypt then unpack *"
+echo "* the archive, given the proper password.      *"
+echo "************************************************"
+    echo
+    echo "Will decrypt and decompress '________.tar.gz.gpg'"
+    echo "archive into $PWD (the current directory)."
+    echo
+    echo "WARNING: The original directory tree structure will"
+    echo "be preserved and so, if unpacked in its original"
+    echo "location, it will overwrite any identically-named"
+    echo "files currently found in that same location. "
+    echo
+    echo "To avoid overwriting, simply copy the archive to"
+    echo "another location prior to decryption and unpacking."
+    echo 
+    echo "Enter base name of ______.tar.gz.gpg archive"
+    echo "to decrypt and unpack, or press ENTER to exit."
+    echo -n "(without extensions)? -> "
+    read -r ArchiveName
+
+    if [ -e $ArchiveName.tar.gz.gpg ]; then
+
+	gpg -d $ArchiveName.tar.gz.gpg | tar -xvzf -
+
+	echo
+	echo "If correct password was provided, $ArchiveName.tar.gz.gpg"
+	echo "has been decrypted and unpacked into $PWD."
+	echo "Please press enter to continue..."  
+	read -r null
+	exit
+
+    else
+	echo "Cannot find '$ArchiveName.tar.gz.gpg' as an archive"
+        echo "within $PWD. Please check source path." 
+	echo "Press enter to continue..."
+	read -r null
+        exit
+    fi	    
+

@@ -1,0 +1,85 @@
+#!/usr/bin/bash
+# arcenc script ... to encrypt and compress a file or directory
+# creating a xxxx.tar.gz.gpg encrypted archive. Use arcdec script
+# plugin to reverse the process, providing appropriate password used
+# during encryption in this plugin.
+#
+# Author: ArchieLinux / No rights reserved.
+# Feel free to distribute and use in any form with or without
+# modification provided that no warranty is provided. 
+# Use at your own risk.
+#
+# To incorporate into your nnn config file, consider adding
+# a line such as:
+#
+# export NNN_PLUG='1:arcenc;2:arcdec; ... other plugins...
+#
+#... then invoke plugin access (e.g., ";") and select "1" or "2" for
+# "arcenc" (archive & encryption) or "arcdec" (decryption and 
+# unpacking of the archive), respectively.
+#
+clear
+
+echo "************************************************"
+echo "* Given a file or directory name, this script  *"
+echo "* will compress then encrypt (AES-128) files   *"
+echo "* into a secure archive: ________.tar.gz.gpg   *"
+echo "************************************************"
+echo 
+echo "FILE or DIRECTORY to archive (if not in current"
+echo "directory provide path)..."
+echo -n "-> "
+    read -r ArchiveSource
+    echo
+    if [ -d $ArchiveSource ]; then
+	   echo "Will prepare archive of SUBDIRECTORY as source: $PWD/$ArchiveSource"
+   elif [ -f $ArchiveSource ]; then
+           echo "Will prepare archive of FILE as source: $ArchiveSource"
+   else
+           echo "Cannot find '$ArchiveSource' as either directory or file."
+           echo "within $PWD. Please check source path." 
+	   echo "Press enter to continue..."
+	   read -r null
+           exit
+    fi
+    echo
+    echo "Please provide name of archive to be created in $PWD"
+    echo "(provide base name only; extensions 'tar.gz.gpg' will be added)"
+    echo -n "-> "
+    read -r NewArchive
+
+    if [ -e $NewArchive.tar.gz.gpg ]; then
+	echo
+        echo "File '$NewArchive.tar.gz.gpg' already exists." 
+	echo -n "Do you wish to overwrite?"
+	read -p "(Y/n) -> " answer
+	case $answer in
+
+		Y | y)
+		# Permission to overwrite; will proceed below
+		echo
+		;;
+
+		*)
+		# Permission denied; will exit
+		echo "Okay, will now exit instead..."
+		exit
+		;;
+	esac 
+
+	#Apparently these next 2 lines are not needed with tar/gpg
+	#echo "Overwriting $NewArchive.tar.gz.gpg ..."
+	#rm -rf $PWD/$NewArchive.tar.gz.gpg
+	echo 
+    fi
+    echo "Will create encrypted archive $NewArchive.tar.gz.gpg within $PWD"
+    echo  
+    echo "Ready to encrypt with password protection."
+    echo "Files to be included in archive will be listed below."
+    echo 
+  tar -cvzf - $ArchiveSource | gpg -c > $NewArchive.tar.gz.gpg  
+    echo
+    echo "Encrypted file $NewArchive.tar.gz.gpg now available in $PWD"
+    echo "Please press enter to continue..."  
+     read -r null
+
