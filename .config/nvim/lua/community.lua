@@ -11,5 +11,5 @@ return {
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.everforest" },
-  { import = "astrocommunity.note-taking.obsidian-nvim" },
+  { import = "astrocommunity.note-taking.obsidian-nvim" }
 }
