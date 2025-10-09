@@ -12,7 +12,4 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.everforest" },
   { import = "astrocommunity.note-taking.obsidian-nvim" },
-  -- { import = "astrocommunity.editing-support.conform-nvim" },
-  -- { import = "astrocommunity.note-taking.neorg" },
-  -- { import = "astrocommunity.pack.sql" },
 }
