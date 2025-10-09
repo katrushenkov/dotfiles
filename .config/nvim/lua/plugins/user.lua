@@ -28,173 +28,67 @@ return {
       }
     end,
   },
- {
-   "obsidian-nvim/obsidian.nvim",
-   version = "*", -- recommended, use latest release instead of latest commit
-   enabled = false,
-   lazy = false,
-   ft = "markdown",
-   keys = {
-   	{ '<leader>ob', '<cmd>ObsidianBacklinks<cr>', desc = '[O]bisidan [B]acklinks' },
-   	{ '<leader>od', '<cmd>ObsidianDailies<cr>', '[O]sidian [D]ailies' },
-   	{
-   		'<leader>oe',
-   		function()
-   			vim.ui.input({ prompt = 'Enter Note Title: ' }, function(title)
-   				if title == nil or title == '' then
-   					return
-   				end
-
-   				vim.cmd('ObsidianExtractNote ' .. title)
-   			end)
-   		end,
-   		desc = '[O]sidian [E]xtract Note',
-   		mode = { 'v' },
-   	},
-   	{ '<leader>ol', '<cmd>ObsidianLinks<cr>', '[O]sidian [L]inks' },
-   	{ '<leader>on', '<cmd>ObsidianNew<cr>', '[O]sidian [N]ew' },
-   	{ '<leader>oo', '<cmd>ObsidianOpen<cr>', desc = '[O]pen in [O]bsidian' },
-   	{ '<leader>oq', '<cmd>ObsidianQuickSwitch<cr>', '[O]sidian [Q]uick Swith' },
-   	{ '<leader>or', '<cmd>ObsidianRename<cr>', '[O]sidian [R]ename' },
-   	{ '<leader>os', '<cmd>ObsidianSearch<cr>', '[O]sidian [S]earch' },
-   	{ '<leader>ot', '<cmd>ObsidianTags<cr>', '[O]sidian [T]ags' },
-   },
-   -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-   -- event = {
-   --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-   --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-   --   -- refer to `:h file-pattern` for more examples
-   --   "BufReadPre path/to/my-vault/*.md",
-   --   "BufNewFile path/to/my-vault/*.md",
-   -- },
-   ---@module 'obsidian'
-   ---@type obsidian.config
-   opts = {
-     legacy_commands = false,
-     disable_frontmatter = false,
-     note_frontmatter_func = require("obsidian.builtin").frontmatter,
-     ui = {
-       enable = false,
-     },
-     attachments = {
-       img_folder = "assets",
-       img_text_func = require("obsidian.builtin").img_text_func,
-       img_name_func = function() return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S") end,
-       confirm_img_paste = true,
-     },
-     workspaces = {
-       {
-         name = "work",
-         path = "/home/ser/.local/src/datagrip",
-       },
-     },
-   },
- },
   {
-    "nvim-neorg/neorg",
+    "obsidian-nvim/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
     enabled = false,
-    dependencies = {
-      {
-        "vhyrro/luarocks.nvim",
-        priority = 1000, -- We'd like this plugin to load first out of the rest
-        config = true,
-      },
-      { "pysan3/neorg-templates", dependencies = { "L3MON4D3/LuaSnip" } },
-      -- { "nvim-neorg/neorg-telescope" },
-    },
     lazy = false,
-    version = "*",
-    config = function()
-      require("neorg").setup {
-        load = {
-          ["core.defaults"] = {},
-          ["core.itero"] = {},
-          ["core.export"] = {},
-          ["core.export.markdown"] = {
-            config = {
-              extensions = "all",
-            },
-          },
-          ["core.concealer"] = { config = { icon_preset = "diamond" } },
-          ["core.presenter"] = { config = { zen_mode = "zen-mode" } },
-          ["core.summary"] = {},
-          ["core.journal"] = {
-            config = {
-              strategy = "flat", --"nested",
-              workspace = "org",
-              template_name = { "template.norg" }, -- for default ":Neorg journal template", file from journal_folder
-              use_template = true,
-              journal_folder = "journal",
-            }, -- Enables support for the journal module
-          },
-          ["core.completion"] = {
-            config = {
-              engine = "nvim-cmp",
-              name = "[neorg]",
-            },
-          }, -- Enables support for completion plugins
-          ["core.integrations.nvim-cmp"] = {},
-          -- ["core.integrations.telescope"] = {},
-          --["core.mode"] = {}, -- на версии 9.1.1 не работает
-          ["core.integrations.treesitter"] = {},
-          ["core.neorgcmd"] = {},
-          -- ["core.neorgcmd.commands.module.list"] = {},
-          -- ["core.ui.calendar"] = {},
-          ["external.templates"] = {
-            -- templates_dir = "/home/ser/.config/nvim/templates/norg",
-            -- default_subcommand = "add", -- or "fload", "load"
-            -- keywords = { -- Add your own keywords.
-            --   EXAMPLE_KEYWORD = function ()
-            --     return require("luasnip").insert_node(1, "default text blah blah")
-            --   end,
-            -- },
-            -- snippets_overwrite = {},
-          },
-          ["core.keybinds"] = {
-            -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
-            config = {
-              default_keybinds = true,
-              --    neorg_leader = ";", --"<Leader><Leader>",
-              --    --neorg_leader = "<Leader><Leader>",
+    ft = "markdown",
+    keys = {
+    	{ '<leader>ob', '<cmd>ObsidianBacklinks<cr>', desc = '[O]bisidan [B]acklinks' },
+    	{ '<leader>od', '<cmd>ObsidianDailies<cr>', '[O]sidian [D]ailies' },
+    	{
+    		'<leader>oe',
+    		function()
+    			vim.ui.input({ prompt = 'Enter Note Title: ' }, function(title)
+    				if title == nil or title == '' then
+    					return
+    				end
 
-              --    hook = function(keybinds)
-              --      local local_leader = keybinds.leader
-              --      keybinds.map_to_mode("norg", {
-              --        n = {
-              --          { local_leader .. "jj", ":Neorg journal today<CR>", opts = { desc = "Go to Today's Journal" } },
-              --          {
-              --            local_leader .. "jh",
-              --            ":Neorg journal yesterday<CR>",
-              --            opts = { desc = "Go to Yesterday's Journal" },
-              --          },
-              --          {
-              --            local_leader .. "jl",
-              --            ":Neorg journal tomorrow<CR>",
-              --            opts = { desc = "Go to Tomorrow's Journal" },
-              --          },
-              --          { local_leader .. "jc", ":Neorg journal custom ", opts = { desc = "Go to Custom Journal" } },
-              --        },
-              --      })
-              --      keybinds.map_to_mode("all", {
-              --        n = {
-              --          { local_leader .. "a", ":Neorg index<CR>", opts = { desc = "Go to index" } },
-              --          { local_leader .. "b", ":Neorg index<CR>", opts = { desc = "Go to index" } },
-              --        },
-              --      })
-              --    end,
-            },
-          },
-          ["core.dirman"] = {
-            config = {
-              workspaces = {
-                org = "~/.local/src/datagrip",
-              },
-              default_workspace = "org",
-            },
-          },
+    				vim.cmd('ObsidianExtractNote ' .. title)
+    			end)
+    		end,
+    		desc = '[O]sidian [E]xtract Note',
+    		mode = { 'v' },
+    	},
+    	{ '<leader>ol', '<cmd>ObsidianLinks<cr>', '[O]sidian [L]inks' },
+    	{ '<leader>on', '<cmd>ObsidianNew<cr>', '[O]sidian [N]ew' },
+    	{ '<leader>oo', '<cmd>ObsidianOpen<cr>', desc = '[O]pen in [O]bsidian' },
+    	{ '<leader>oq', '<cmd>ObsidianQuickSwitch<cr>', '[O]sidian [Q]uick Swith' },
+    	{ '<leader>or', '<cmd>ObsidianRename<cr>', '[O]sidian [R]ename' },
+    	{ '<leader>os', '<cmd>ObsidianSearch<cr>', '[O]sidian [S]earch' },
+    	{ '<leader>ot', '<cmd>ObsidianTags<cr>', '[O]sidian [T]ags' },
+    },
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+    --   -- refer to `:h file-pattern` for more examples
+    --   "BufReadPre path/to/my-vault/*.md",
+    --   "BufNewFile path/to/my-vault/*.md",
+    -- },
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      legacy_commands = false,
+      disable_frontmatter = false,
+      note_frontmatter_func = require("obsidian.builtin").frontmatter,
+      ui = {
+        enable = false,
+      },
+      attachments = {
+        img_folder = "assets",
+        img_text_func = require("obsidian.builtin").img_text_func,
+        img_name_func = function() return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S") end,
+        confirm_img_paste = true,
+      },
+      workspaces = {
+        {
+          name = "work",
+          path = "/home/ser/.local/src/datagrip",
         },
-      }
-    end,
+      },
+    },
   },
   {
     "Kurren123/mssql.nvim",
@@ -245,6 +139,7 @@ return {
   { "stevearc/resession.nvim", enabled = false },
   {
     "windwp/nvim-autopairs",
+    enabled = false, 
     config = function(plugin, opts)
       require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts)
       -- add more custom autopairs configuration such as custom rules
