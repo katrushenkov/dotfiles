@@ -13,6 +13,18 @@
   # `infocmp xterm-256color`.
   # TERM: xterm-256color-italic
 
+# Scrolling settings
+# [scrolling]
+# history = 10000 # Maximum number of lines in scrollback buffer
+# multiplier = 3 # Number of lines scrolled per increment
+# 
+# # Key bindings
+# [keyboard]
+# bindings = [
+#   { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" }, # Spawn new instance
+#   { key = "Space", mods = "Control|Shift", action = "ToggleViMode" }, # Toggle Vi mode
+# ]
+
 window:
   # Window dimensions (changes require restart)
   #
