@@ -164,7 +164,6 @@ alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME
 alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME status -uno'
 alias last='git log --oneline --graph --decorate --all'
 alias by="systemctl poweroff -i"
-alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
 # get selected files from nnn
 alias N='sudo nnn -dn'
