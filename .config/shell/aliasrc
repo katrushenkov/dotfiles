@@ -98,7 +98,7 @@ alias \
 	:q="exit" \
 	quit="exit" \
 	dusort='du -hs * . | sort -h' \
-	df='df -h' \
+	df='df -ih' \
 	free="free -mht" \
 	da='date "+%Y-%m-%d %A %T %Z"' \
 	xx="exit" \
