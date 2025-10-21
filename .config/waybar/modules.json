@@ -143,9 +143,10 @@
         "on-scroll-down": ""
     },
     "custom/recording": {
-        "format": "🔴 recording",
-        "exec": "ps aux | grep \"[h]yprcap\"",
-        "exec-if": "exit 0",
+        //"format": "🔴 recording",
+        //"exec": "ps aux | grep \"[h]yprcap\"",
+        "exec": "if pgrep -x wf-recorder > /dev/null; then echo ' 🔴 '; else echo ' ⚫ '; fi",
+        //"exec-if": "exit 0",
         "signal": 1,
         "escape": true,
         "on-click": "notify-send test",
