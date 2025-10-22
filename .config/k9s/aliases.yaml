@@ -7,3 +7,4 @@ aliases:
   ro: roles
   rb: rolebindings
   np: networkpolicies
+  dns: pod kube-system k8s-app=kube-dns

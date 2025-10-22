@@ -1,0 +1,9 @@
+hotKeys:
+  shift-0:
+    shortCut:    Shift-0
+    description: Viewing kube-dns pods in kube-system namespace
+    command:     dns
+  x:
+    shortCut:    x
+    description: XRay Deployments
+    command:     xray deploy
