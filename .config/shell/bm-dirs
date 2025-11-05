@@ -15,6 +15,7 @@ cfwd ${XDG_CONFIG_HOME:-$HOME/.config}/waybar
 d   ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
+lc  ${XDG_DATA_HOME:-$HOME/.local}
 files	/mnt/main/files
 gr /home/ser/.local/src/datagrip
 h   $HOME
