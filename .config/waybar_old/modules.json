@@ -162,6 +162,17 @@
         "on-scroll-up": "",
         "on-scroll-down": ""
     },
+    "custom/vpn-status": {
+        "format": "{}",
+        "tooltip": false,
+        "exec": "/home/ser/.local/bin/ksm/vpn-status",
+        "return-type": "json",
+        "interval": 30,
+        "on-click": "nmcli connection up dns",
+        "on-click-right": "nmcli connection down dns",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
+    },
     "custom/vpn": {
         "format": "<span foreground=\"#A7C080\" weight=\"bold\">VPN</span> {}",
         "tooltip": false,
@@ -173,6 +184,10 @@
         "on-scroll-up": "",
         "on-scroll-down": ""
     },
+    "tray": {
+          "icon-size": 18,
+          "spacing": 5
+      }
 }
 // "on-click": "kitty -e yay -Syu"
 
