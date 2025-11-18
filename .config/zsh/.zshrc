@@ -94,8 +94,6 @@ mkcd () {
      cd "$*"
 }
 
-# ex = EXtractor for all kinds of archives
-# usage: ex <file>
 ex ()
 {
   if [ -f $1 ] ; then
