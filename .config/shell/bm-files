@@ -7,9 +7,8 @@ cfx	${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources	# Colors, themes and variab
 cfb	~/.local/src/dwmblocks/config.h				            # dwmblocks: the status bar for dwm
 
 # These do not update automatically, but on the next new instance of a program:
-oi /home/ser/.local/src/datagrip/org/index.md
-cfzp /home/ser/.config/zsh/.zsh-personal
-cfh /home/ser/.config/hypr/hyprland.conf
+cfzp ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal
+cfh ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hyprland.conf
 
 cfv	${XDG_CONFIG_HOME:-$HOME/.config}/nvim/init.lua		# vim/neovim config
 cfz	$ZDOTDIR/.zshrc						                        # zsh (shell) config

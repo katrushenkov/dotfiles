@@ -34,21 +34,19 @@ alias \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
 	ip="ip -color=auto" \
-	la="ls -ahF" \
 	llll="du -sh *" \
 	dus="du -h --max-depth=1 | sort -rh" \
-	lll="stat -c '%A %a %n' *" \
-	ll="ls -lahF" \
   ls="eza -a --icons" \
   la="eza -A" \
-  ll="eza -lAh --icons" \
-  #ll="eza -lAh --icons --tree --level=1" \
+  ll="eza -lAh --icons --tree --level=1" \
+	lll="stat -c '%A %a %n' *" \
 	l="ls -Fh" \
 	lm='ls -m' \
 	lr='ls -R' \
 	c="cd" \
 	lcd="cd" \
-	home="cd ~"
+	home="cd ~" \
+  du='du -ch'
 
 #	c..="cd .." \
 #	..="cd .." \
@@ -57,6 +55,8 @@ alias \
 #	.....="cd ../../../.." \
 #	cd..="cd .." \
 #	l.="ls -AF | egrep '^\.'" \
+alias l.='ls -d .*'
+alias ll='ls -lah --color=auto'
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -80,7 +80,7 @@ alias \
 	magit="nvim -c MagitOnly" \
 	ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
-	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf"
+  tmux="tmux -f <(${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf)"
 
 alias \
 	i2pstart="sudo systemctl start i2prouter.service" \
@@ -90,24 +90,20 @@ alias \
 	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
 	myip2="curl https://ipinfo.io/ip" \
 	rand="head -c 50K < /dev/urandom > $1" \
-	bashrc='nvim ~.bashrc' \
 	s="sudo -s" \
+  cls="clear" \
 	q="exit" \
-	:q="exit" \
-	:q!='exit' \
 	:q="exit" \
 	quit="exit" \
 	dusort='du -hs * . | sort -h' \
-	df='df -ih' \
+	dfall='df -h' \
+  df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h" \
 	free="free -mht" \
 	da='date "+%Y-%m-%d %A %T %Z"' \
-	xx="exit" \
-	now='tty-clock -c' \
 	now2="echo -e $(date +'%H:%M')" \
 	mute="pamixer -m" \
 	unmute="pamixer -u" \
 	netprocs="lsof -P -i -n" \
-	cl="echo -e '\e[3J'" \
 	dd='dd status=progress'$
 
 # Toggle touchpad
@@ -126,8 +122,6 @@ alias zegrep='zegrep --color=auto'
 alias zfgrep='zfgrep --color=auto'
 alias zgrep='zgrep --color=auto'
 alias ipa='ip a|grep -w inet'
-alias l.='ls -d .*'
-alias ll='ls -lah --color=auto'
 alias pa='sudo /opt/puppetlabs/bin/puppet agent -t'
 alias pd='sudo /opt/puppetlabs/bin/puppet agent -td'
 alias pn='sudo /opt/puppetlabs/bin/puppet agent -td --noop'
@@ -150,11 +144,20 @@ alias nsl="nslookup"
 
 alias top='top -c -n 1'
 
-alias cls="clear"
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
-alias doom-update="~/.emacs.d/bin/doom sync"
-alias doom-upgrade="~/.emacs.d/bin/doom upgrade"
+if hash emacs > /dev/null 2>&1; then
+  alias doom-update="~/.emacs.d/bin/doom sync"
+  alias doom-upgrade="~/.emacs.d/bin/doom upgrade"
+  alias em='emacs -nw'$
+  alias em="/usr/bin/emacs -nw"
+  alias et="emacsclient -t"
+  alias em="emacsclient -c -a 'emacs'"
+  alias startemacs="emacs --daemon"
+  alias hardkillemacs="emacsclient -e '(kill-emacs)'"
+  alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
+fi
+
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
@@ -175,29 +178,20 @@ alias search="history|grep"
 alias hgrep="history|grep"
 alias fuck='sudo $(history -p !!)'
 #alias fuck="sudo !!"
-alias pls=please
-alias please='sudo $(fc -ln -1)'
+alias pls='sudo $(fc -ln -1)'
 
-alias upd="sudo pacman -Syu"
 alias ins="sudo pacman -S"
 #alias rem="sudo pacman -R"
 alias za="zathura --fork"
-alias pic="picom -b --experimental-backends"
-alias l.='ls -d .* --color=auto'
+alias l.='eza -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
 alias f="find . | grep "
 
-#alias copy="xclip -sel clipboard"
-#alias copy="xclip -selection clipboard"
-#alias copy='xclip -sel clip'
-#alias copy="xclip -r -selection clipboard"
-#alias paste="xclip -selection clipboard -o"
 alias incognito='unset HISTFILE'
 alias whereami='echo $PWD'
 alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
 alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
-#alias tmux='tmux -f <(~/.tmuxrc)'
 alias tl='tmux list-session'
 alias tk='tmux kill-session'
 alias tn='tmux new'
@@ -212,22 +206,11 @@ alias randvid='mpv --shuffle /mnt/main/vid/'
 alias mpvl='mpv --loop '
 alias ff='firefox'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
-alias x='sxiv -b'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 alias jctl="journalctl -p 3 -xeb" #-p 3
 
-alias np='nano -w PKGBUILD'
 alias more="less -Ri"
-
-# emacs
-#alias em='emacs -nw'$
-#alias em="/usr/bin/emacs -nw"
-#alias et="emacsclient -t"
-#alias em="emacsclient -c -a 'emacs'"
-alias startemacs="emacs --daemon"
-alias hardkillemacs="emacsclient -e '(kill-emacs)'"
-alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 
 # youtube-dl
 alias yta-aac='yt-dlp -c --extract-audio --audio-format aac --output "%(title)s.%(ext)s"'
@@ -290,9 +273,6 @@ alias update-fc='sudo fc-cache -fv'
 alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 
-# hardware info --short
-alias hw="hwinfo --short"
-
 # skip integrity check
 alias yayskip='yay -S --mflags --skipinteg'
 
@@ -332,8 +312,6 @@ alias wg='wget -O /dev/null'
 
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
 alias renew="source ~/.zshrc"
-
-#alias cat='bat --theme="Catppuccin-mocha"'
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
@@ -395,7 +373,7 @@ alias renew="source ~/.zshrc"
 #Man() {
 #	nvim "man://man" "++Man $*"
 #}
-#
+
 # alias md-read="nvim +'set notgc' +'term python3 -m rich.markdown -c % ; sleep infinity'"
 #
 #alias __copy="xclip -selection c"
@@ -428,16 +406,15 @@ alias -g T='|tail'
 alias -g V='| vim -'
 
 #alias C for copy stdin
-#alias X for clead + pwd (to clear screen while changing dir)
+#alias X for clear + pwd (to clear screen while changing dir)
 
 #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
 #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
 #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 
-#Why not have an alias to edit your *rc files and reload the shell immediately. An example using bash:
+#Why not have an alias to edit your *rc files and reload the shell immediately
 #nano ~/.bashrc; source ~/.bashrc
 
-#alias df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h"
 #This only shows disks instead of all filesystems.
 #alias pac='sudo pacman'
 #alias pacu='sudo pacman -Suuy'
@@ -465,20 +442,6 @@ alias -g V='| vim -'
 #   sleep 10; alert
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#alias besterm="export FBTERM_BACKGROUND_IMAGE=1 && cat $HOME/Pictures/desktops/space.fbimg > /dev/fb0; fbterm -s 28 -n "Hack""
-#alias whtfnt="echo -en "\e]P7ffffff" && clear"
-
-#alias feh='feh --scale-down --auto-zoom'
-#alias feh="feh --no-fehbg -B black"
-
-#l='ls -CF'$
-#la='ls -lha'$
-#alias ll='ls -lh'$
-#alias ls='ls --color'
-#alias ls="ls --color=auto -FHh"
-#alias ll='ls -l'
-#alias la='ls -lA'
-#alias du='du -ch'
 #alias doas='doas '
 #alias em='doas emerge -v'
 #alias ipp='curl ipinfo.io/ip'
@@ -587,8 +550,7 @@ alias -g V='| vim -'
 ## Show all logs in /var/log
 #alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 
-## SHA1
-#alias sha1='openssl sha1'
+alias sha1='openssl sha1'
 
 #alias ps='ps auxf'
 #alias ping='ping -c 10'
@@ -760,7 +722,7 @@ alias -g V='| vim -'
 #
 #    alias rosa='ssh -t rosa.prologin.org'
 #fi
-#
+
 #function doublonville_tmux
 #{
 #    if [ $# -ge 1 ]
