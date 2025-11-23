@@ -4,6 +4,7 @@
 D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 aa	/mnt/main/audio
 ani	$HOME/.local/src/anima
+angar /mnt/angar
 bb	/mnt/main/books
 bu	/mnt/main/backup
 cac ${XDG_CACHE_HOME:-$HOME/.cache}
