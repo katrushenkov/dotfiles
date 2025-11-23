@@ -2,9 +2,6 @@
 
 # zsh profile file. Runs on login. Environmental variables are set here.
 
-# Adds `~/.local/bin` to $PATH
-#export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-#PATH=$PATH$( find $HOME/scripts/ -type d -printf ":%p" )
 export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 ! { which werf | grep -qsE "^$HOME/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "2" "stable")
@@ -61,15 +58,3 @@ export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
 [ ! -f "$XDG_CONFIG_HOME/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
-
-# start Hyprland
-#if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-             #if uwsm check may-start && uwsm select; then
-             #  exec systemd-cat -t uwsm_start uwsm start Hyprland
-             #fi
-
-             # Import Hyprland settings unique to this computer
-             # This automatically symlinks the correct file based on hostname
-             # ln -f -s "$HOME/.config/hypr/hyprland-$(uname -n).conf" $HOME/.config/hypr/hyprland-by-hostname.conf &> /dev/null
-             # Hyprland
-#fi
