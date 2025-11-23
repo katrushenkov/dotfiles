@@ -9,8 +9,10 @@ vim.keymap.set(
   { silent = true, desc = "Show journal" }
 )
 
+vim.api.nvim_del_keymap('n', '<leader>qq')
 vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { silent = true, desc = "Quit without save" })
-vim.keymap.set({ "n" }, "<leader>q", "<Cmd>qa<CR>", { desc = "Quit without save" })
+vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
+vim.keymap.set({ "n" }, "<leader>q", "<Cmd>qa<CR>", { desc = "Quit all" })
 
 vim.keymap.set("v", "<leader>yy", function()
   require("yeet").execute_selection("source venv/bin/activate", { clear_before_yeet = true })

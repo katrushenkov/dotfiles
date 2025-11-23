@@ -20,8 +20,7 @@ return {
       -- null_ls.builtins.formatting.stylua,
       -- null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.prettier.with({
-        -- filetypes = { "html", "json", "yaml", "markdown", "vue", "pp" },
-        filetypes = { "html", "json", "yaml", "vue", "pp" },
+        filetypes = { "html", "json", "yaml", "markdown", "vue", "pp" },
       }),
     })
   end,
