@@ -5,11 +5,12 @@
 vim.keymap.set(
   { "n" },
   ";J",
-  ":edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
+  "<Cmd>edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
   { silent = true, desc = "Show journal" }
 )
 
 vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { silent = true, desc = "Quit without save" })
+vim.keymap.set({ "n" }, "<leader>q", "<Cmd>qa<CR>", { desc = "Quit without save" })
 
 vim.keymap.set("v", "<leader>yy", function()
   require("yeet").execute_selection("source venv/bin/activate", { clear_before_yeet = true })
