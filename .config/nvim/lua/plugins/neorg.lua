@@ -1,3 +1,5 @@
+if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+
 return {
   {
     "nvim-neorg/neorg",
@@ -29,7 +31,7 @@ return {
           ["core.summary"] = {},
           ["core.journal"] = {
             config = {
-              strategy = "flat", --"nested",
+              strategy = "flat",                   --"nested",
               workspace = "org",
               template_name = { "template.norg" }, -- for default ":Neorg journal template", file from journal_folder
               use_template = true,
