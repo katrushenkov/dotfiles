@@ -4,7 +4,6 @@
 
 export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
-! { which werf | grep -qsE "^$HOME/.trdl/"; } && [[ -x "$HOME/bin/trdl" ]] && source $("$HOME/bin/trdl" use werf "2" "stable")
 
 unsetopt PROMPT_SP 2>/dev/null
 
@@ -46,15 +45,7 @@ export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export FZF_DEFAULT_OPTS="--layout=reverse --extended --height 40%"
 export LESS=-Ri
-export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
-export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
-export LESS_TERMCAP_me="$(printf '%b' '[0m')"
-export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
-export LESS_TERMCAP_se="$(printf '%b' '[0m')"
-export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
-export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
-export LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
 export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
-[ ! -f "$XDG_CONFIG_HOME/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
+[ ! -f "$HOME/.config/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
