@@ -5,11 +5,11 @@
 vim.keymap.set(
   { "n" },
   ";J",
-  "<Cmd>edit /home/ser/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
+  "<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",
   { silent = true, desc = "Show journal" }
 )
 
-vim.api.nvim_del_keymap('n', '<leader>qq')
+vim.api.nvim_del_keymap("n", "<leader>qq")
 vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { silent = true, desc = "Quit without save" })
 vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
 vim.keymap.set({ "n" }, "<leader>q", "<Cmd>qa<CR>", { desc = "Quit all" })
@@ -28,12 +28,15 @@ vim.keymap.set("n", ";g", function()
 end, { desc = "Shortcuts picker" })
 
 --vim.keymap.set("n", "<leader>sh", ":nohl<CR>")
+--
+--
+--
 
 --Автоматически использовать системный буфер обмена для копирования и вставки
 --vim.keymap.set("n", "y", '"+y') -- Копировать в системный буфер обмена
 --vim.keymap.set("n", "p", '"+p') -- Вставить из системного буфера обмена
 
-vim.keymap.set("n", "<leader>bk", "<Cmd>bd<CR>", { desc = "kill buffer" })
+vim.keymap.set("n", "<leader>bk", "<Cmd>confirm bd<CR>", { desc = "kill buffer" })
 vim.keymap.set("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { noremap = true })
 vim.keymap.set("n", "<C-c>", ":Gitsigns blame_line<cr>", { silent = true })
@@ -74,7 +77,7 @@ function JOURNAL_ADD()
   local date_month = tostring(os.date("%m"))
   local date_day = tostring(os.date("%d"))
   -- vim.notify("input ksm:" .. tostring(date_str))
-  local file_path = "/home/ser/.local/src/datagrip/journal/journal.md"
+  local file_path = vim.fn.expand("$HOME") .. "/.local/src/datagrip/journal/journal.md"
   local file = io.open(file_path, "r")
   date_found = false
 
