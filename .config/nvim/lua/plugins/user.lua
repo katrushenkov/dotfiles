@@ -30,6 +30,7 @@ return {
   --  },
   {
     "obsidian-nvim/obsidian.nvim",
+    enabled = false,
     version = "*", -- recommended, use latest release instead of latest commit
     -- enabled = false,
     -- lazy = false,
