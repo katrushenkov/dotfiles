@@ -160,13 +160,13 @@ export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 #export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO='/tmp/nnn.fifo'
 export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
-export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
 #export NNN_FCOLORS='c1e2272e006033f7c6d6abc4'
 #export NNN_FCOLORS=0B0405020006060009060B01 # purple
 #export NNN_COLORS='2555'
 #export NNN_COLORS=5632
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
+[[ $(uname) == "Darwin" ]] && export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
 
 bindkey -s '^o' '^ulfcd\n'
 
@@ -198,6 +198,7 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 eval "$(starship init zsh)"
+export STARSHIP_CONFIG=~/.config/zsh/starship.toml
 
 # source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
