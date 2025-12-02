@@ -154,7 +154,7 @@ export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
 #export NNN_COLORS=5632
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
-[[ $(uname) == "Darwin" ]] && export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
+[[ $(uname) == "Darwin" ]] || export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
 
 bindkey -s '^a' '^ubc -lq\n'
 
