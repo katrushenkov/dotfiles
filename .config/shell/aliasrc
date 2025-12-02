@@ -46,7 +46,8 @@ alias \
 	c="cd" \
 	lcd="cd" \
 	home="cd ~" \
-  du='du -ch'
+  du='du -ch' \
+  cat='bat'
 
 #	c..="cd .." \
 #	..="cd .." \
