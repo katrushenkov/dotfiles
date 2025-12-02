@@ -77,18 +77,6 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp -uq)"
-    trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp" >/dev/null
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-
 mkcd () {
      mkdir -p "$*"
      cd "$*"
@@ -167,8 +155,6 @@ export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 [[ $(uname) == "Darwin" ]] && export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
-
-bindkey -s '^o' '^ulfcd\n'
 
 bindkey -s '^a' '^ubc -lq\n'
 
