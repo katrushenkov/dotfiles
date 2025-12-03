@@ -1,16 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
-POWERLEVEL9K_INSTANT_PROMPT=on
-
-# Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
-# uncomment when no powerline10k
-#PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-#PS1='[\u@\h \W]\$ '
 
 setopt +o nomatch	# fix for youtube-dl aliases
 setopt autocd		  # Automatically cd into typed directory.
@@ -33,7 +20,7 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal"
 
 # Basic auto/tab complete:
-autoload -U compinit
+autoload -Uz compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
@@ -60,7 +47,6 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
      case $KEYMAP in
@@ -80,30 +66,6 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 mkcd () {
      mkdir -p "$*"
      cd "$*"
-}
-
-ex ()
-{
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1   ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *.deb)       ar x $1      ;;
-      *.tar.xz)    tar xf $1    ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
 }
 
 n ()
@@ -130,8 +92,8 @@ n ()
     nnn "$@"
 
     if [ -f "$NNN_TMPFILE" ]; then
-            . "$NNN_TMPFILE"
-            rm -f "$NNN_TMPFILE" > /dev/null
+        . "$NNN_TMPFILE"
+        rm -f "$NNN_TMPFILE" > /dev/null
     fi
 }
 
@@ -164,9 +126,6 @@ bindkey -s '^a' 'bc -lq\n'
 
 bindkey -s '^p' 'nvim -c "lua Snacks.picker.projects()"\n'
 
-# Use fzf-key-bindings.zsh instead of this
-#bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
-
 bindkey '^[[P' delete-char
 
 #bindkey '^T' transpose-chars
@@ -183,17 +142,11 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
-eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/zsh/starship.toml
-
-# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-# [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+eval "$(starship init zsh)"
 
 # source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-# bindkey '^ ' autosuggest-capture-completion
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-
