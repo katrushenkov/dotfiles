@@ -159,6 +159,8 @@ if hash emacs > /dev/null 2>&1; then
   alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 fi
 
+# work around with kitty terminfo
+alias ssh="kitty +kitten ssh"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
@@ -312,7 +314,7 @@ alias yl="yay -Q | grep"
 alias wg='wget -O /dev/null'
 
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
-alias renew="source ~/.zshrc"
+alias renew="source ~/.zprofile"
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
