@@ -49,3 +49,5 @@ export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
 [ ! -f "$HOME/.config/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal"
