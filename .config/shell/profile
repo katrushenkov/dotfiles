@@ -5,7 +5,7 @@
 export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 
-unsetopt PROMPT_SP 2>/dev/null
+#unsetopt PROMPT_SP 2>/dev/null
 
 export EDITOR="nvim"
 export TERMINAL="footclient"
@@ -21,7 +21,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CACHE_DIR="$HOME/.cache" # for Hyprcap
-export ZCOMPINIT="${XDG_DATA_HOME:-$HOME/.local/share}/.zcompinit"
+#export ZCOMPINIT="${XDG_DATA_HOME:-$HOME/.local/share}/.zcompinit"
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export LESSHISTFILE="-"
@@ -48,6 +48,6 @@ export LESS=-Ri
 export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
-[ ! -f "$HOME/.config/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal"
