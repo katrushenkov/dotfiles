@@ -1,3 +1,9 @@
+
+[plugin]
+prepend_previewers = [
+  { name = "*.md", run = "mdcat" },
+]
+
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
 rev = "63f9650"
