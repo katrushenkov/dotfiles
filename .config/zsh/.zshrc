@@ -134,6 +134,20 @@ bindkey '^X' fzf-file-widget
 bindkey -s '^n' 'n\n'
 
 source <(fzf --zsh)
+# FZF stuff
+export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+# export FZF_DEFAULT_OPTS="--height 50% --layout=default --border --color=hl:#2dd4bf"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+export FZF_CTRL_C_OPTS="--preview 'lsd --tree --color=always {} | head -200'"
+export FZF_CTRL_R_OPTS="
+   --preview 'echo {}' --preview-window up:3:hidden:wrap
+   --bind 'ctrl-/:toggle-preview'
+   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+   --color header:italic
+    --header 'Press CTRL-Y to copy command into clipboard'"
+# export FZF_TMUX_OPTS=" -p90%,70%"
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
