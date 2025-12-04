@@ -7,45 +7,46 @@
 [ -f '$XINITRC' ] && alias startx='startx $XINITRC'
 
 # sudo not required for some system commands
-for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
-	alias $command="sudo $command"
-done; unset command
+for command in mount umount sv pacman updatedb su shutdown poweroff reboot; do
+  alias $command="sudo $command"
+done
+unset command
 
 se() {
-	choice="$(find ~/.local/bin/ -mindepth 1 -printf '%P\n' | fzf)"
-	[ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
-	}
+  choice="$(find ~/.local/bin/ -mindepth 1 -printf '%P\n' | fzf)"
+  [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
+}
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-	cp="cp -Priv" \ # no symblink, recursive
-	mv="mv -iv" \
-	ln='ln -i' \
-	rm="rm -vI --preserve-root" \
-	bc="bc -ql" \
-	mkd="mkdir -pv" \
-	ffmpeg="ffmpeg -hide_banner"
-	#Do not accidentally delete root, and also,
-	#prompt if deleting more than 3 files at a time
-	#(this has saved my ass more times than you would think)
+  cp="cp -Priv" \ # no symblink, recursive
+mv="mv -iv" \
+  ln='ln -i' \
+  rm="rm -vI --preserve-root" \
+  bc="bc -ql" \
+  mkd="mkdir -pv" \
+  ffmpeg="ffmpeg -hide_banner"
+#Do not accidentally delete root, and also,
+#prompt if deleting more than 3 files at a time
+#(this has saved my ass more times than you would think)
 
 alias \
-	ls="ls -hNF --color=auto --group-directories-first" \
-	diff="diff --color=auto" \
-	ccat="highlight --out-format=ansi" \
-	ip="ip -color=auto" \
-	llll="du -sh *" \
-	dus="du -h --max-depth=1 | sort -rh" \
+  ls="ls -hNF --color=auto --group-directories-first" \
+  diff="diff --color=auto" \
+  ccat="highlight --out-format=ansi" \
+  ip="ip -color=auto" \
+  llll="du -sh *" \
+  dus="du -h --max-depth=1 | sort -rh" \
   ls="eza -a --icons" \
   la="eza -A" \
   ll="eza -lAh --icons --tree --level=1" \
-	lll="stat -c '%A %a %n' *" \
-	l="ls -Fh" \
-	lm='ls -m' \
-	lr='ls -R' \
-	c="cd" \
-	lcd="cd" \
-	home="cd ~" \
+  lll="stat -c '%A %a %n' *" \
+  l="ls -Fh" \
+  lm='ls -m' \
+  lr='ls -R' \
+  c="cd" \
+  lcd="cd" \
+  home="cd ~" \
   du='du -ch' \
   cat='bat'
 
@@ -61,51 +62,52 @@ alias ll='ls -lah --color=auto'
 
 # These common commands are just too long! Abbreviate them.
 alias \
-	ka="killall" \
-	g="git" \
-	trem="transmission-remote" \
-	sdn="shutdown -h now" \
-	e='$EDITOR' \
-	p="sudo pacman" \
-	pac="sudo pacman -S" \
-	z="zathura-sandbox" \
-	v="nvim" \
-	vi="nvim" \
-	nv="nvim" \
-	lg="lazygit" \
-	kx="kubectx && k9s" \
-	k="k9s"
+  ka="killall" \
+  g="git" \
+  trem="transmission-remote" \
+  sdn="shutdown -h now" \
+  e='$EDITOR' \
+  p="sudo pacman" \
+  pac="sudo pacman -S" \
+  z="zathura-sandbox" \
+  v="nvim" \
+  vi="nvim" \
+  nv="nvim" \
+  lg="lazygit" \
+  kx="kubectx && k9s" \
+  k="k9s"
 
 alias \
-	lf="lfub" \
-	magit="nvim -c MagitOnly" \
-	ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
-	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+  lf="lfub" \
+  magit="nvim -c MagitOnly" \
+  ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
+  weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
   tmux="tmux -f <(${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf)"
 
 alias \
-	i2pstart="sudo systemctl start i2prouter.service" \
-	i2pstart="sudo systemctl stop i2prouter.service" \
-	dirsize="du -sh" \
-	lsblk="lsblk -f -o +SIZE,MODEL" \
-	myip="dig +short myip.opendns.com @resolver1.opendns.com" \
-	myip2="curl https://ipinfo.io/ip" \
-	rand="head -c 50K < /dev/urandom > $1" \
-	s="sudo -s" \
+  i2pstart="sudo systemctl start i2prouter.service" \
+  i2pstart="sudo systemctl stop i2prouter.service" \
+  dirsize="du -sh" \
+  lsblk="lsblk -f -o +SIZE,MODEL" \
+  myip="dig +short myip.opendns.com @resolver1.opendns.com" \
+  myip2="curl https://ipinfo.io/ip" \
+  myip3="curl -s ifconfig.me" \
+  rand="head -c 50K < /dev/urandom > $1" \
+  s="sudo -s" \
   cls="clear" \
-	q="exit" \
-	:q="exit" \
-	quit="exit" \
-	dusort='du -hs * . | sort -h' \
-	dfall='df -h' \
+  q="exit" \
+  :q="exit" \
+  quit="exit" \
+  dusort='du -hs * . | sort -h' \
+  dfall='df -h' \
   df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h" \
-	free="free -mht" \
-	da='date "+%Y-%m-%d %A %T %Z"' \
-	now2="echo -e $(date +'%H:%M')" \
-	mute="pamixer -m" \
-	unmute="pamixer -u" \
-	netprocs="lsof -P -i -n" \
-	dd='dd status=progress'$
+  free="free -mht" \
+  da='date "+%Y-%m-%d %A %T %Z"' \
+  now2="echo -e $(date +'%H:%M')" \
+  mute="pamixer -m" \
+  unmute="pamixer -u" \
+  netprocs="lsof -P -i -n" \
+  dd='dd status=progress'$
 
 # Toggle touchpad
 alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
@@ -147,7 +149,13 @@ alias top='top -c -n 1'
 
 alias pkg_size="expac -H M '%m\t%n' | sort -h"
 
-if hash emacs > /dev/null 2>&1; then
+alias heic_to_png="magick mogrify -monitor -format png *.HEIC"
+alias lazydocker="upscope lazydocker"
+alias path="echo $PATH | tr -s ':' '\n'"
+alias brew_update="brew update && brew upgrade && brew cleanup"
+alias genpass="openssl rand -base64 20"
+
+if hash emacs >/dev/null 2>&1; then
   alias doom-update="~/.emacs.d/bin/doom sync"
   alias doom-upgrade="~/.emacs.d/bin/doom upgrade"
   alias em='emacs -nw'$
@@ -298,13 +306,13 @@ alias openports='netstat -nape --inet'
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
-alias yi="yay -S" 		# установка.
-alias yn="yay -S --noconfirm"	# установка без подтверждения.
-alias ys="yay" 			# поиск с дальнейшим выбором по цифре.
-alias ysn="yay --noconfirm" 	# поиск с дальнейшим выбором по цифре, без подтверждения.
-alias yc="yay -Sc" 		# частичная очистка кэша.
-alias yy="yay -Syy" 		# синхронизация баз зеркал.
-alias yu="yay -Syu" 		# обновление
+alias yi="yay -S"             # установка.
+alias yn="yay -S --noconfirm" # установка без подтверждения.
+alias ys="yay"                # поиск с дальнейшим выбором по цифре.
+alias ysn="yay --noconfirm"   # поиск с дальнейшим выбором по цифре, без подтверждения.
+alias yc="yay -Sc"            # частичная очистка кэша.
+alias yy="yay -Syy"           # синхронизация баз зеркал.
+alias yu="yay -Syu"           # обновление
 alias yun="yay -Syu --noconfirm"
 alias yr="yay -R"
 alias yrn="yay -R --noconfirm"
@@ -948,11 +956,11 @@ alias yr='yum remove'
 alias rpml='rpm -qa| grep -e'
 
 grib() {
-    if [[ -n "$1" ]]; then
-        git rebase -i HEAD~"$1"
-    else
-        git rebase -i --root
-    fi
+  if [[ -n "$1" ]]; then
+    git rebase -i HEAD~"$1"
+  else
+    git rebase -i --root
+  fi
 }
 #gll() {
 #    git log -L"$2",+1:"$1"
