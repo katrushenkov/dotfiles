@@ -16,7 +16,7 @@
 	<name>Open Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1703572977408169-1</unique-id>
-	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<command>/usr/bin/kitty %f</command>
 	<description>Launch TerminalEmulator</description>
 	<range></range>
 	<patterns>*</patterns>
