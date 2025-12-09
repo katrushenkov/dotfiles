@@ -180,11 +180,6 @@ alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME ad
 alias last='git log --oneline --graph --decorate --all'
 alias by="systemctl poweroff -i"
 
-# get selected files from nnn
-alias N='sudo nnn -dn'
-alias nnn="nnn"
-alias r="nnn"
-
 alias search="history|grep"
 alias hgrep="history|grep"
 alias fuck='sudo $(history -p !!)'
