@@ -5,3 +5,4 @@ vim.opt.relativenumber = false
 vim.opt.spell = false
 vim.opt.spelllang = {}
 vim.opt.number = true
+vim.opt.wrap = true
