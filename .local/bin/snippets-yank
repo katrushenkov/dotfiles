@@ -1,9 +1,19 @@
 #!/bin/bash
 
-if pgrep -x "tofi"; then
-  wtype -k ESCAPE
-  exit 0
-else
-  hypr-switch-en
-  rg -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' | wl-copy -n
+OS="$(uname -s)"
+
+if [[ "${OS}" == "Linux"* ]]; then
+
+  if pgrep -x "tofi"; then
+    wtype -k ESCAPE
+    exit 0
+  else
+    hypr-switch-en
+    rg -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' | wl-copy -n
+  fi
+
+elif [[ "${OS}" == "Darwin"* ]]; then
+  /opt/homebrew/bin/rg -v '^#' ~/.local/src/datagrip/snippets | /opt/homebrew/bin/choose -w 80% -n 20 -u -z -b fabd2f -c 427b58 -s 17 <&0 | pbcopy -
+  #/opt/homebrew/bin/rg -v '^#' ~/.local/src/datagrip/snippets | ~/.local/bin/dmenu_raycast | awk -F ' #' '{print $1}' | pbcopy -
+
 fi
