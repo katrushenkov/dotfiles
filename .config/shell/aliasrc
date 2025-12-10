@@ -75,7 +75,7 @@ alias \
   nv="nvim" \
   lg="lazygit" \
   kx="kubectx && k9s" \
-  k="k9s"
+  k="kubectl"
 
 alias \
   lf="lfub" \
@@ -179,11 +179,6 @@ alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME st
 alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME add'
 alias last='git log --oneline --graph --decorate --all'
 alias by="systemctl poweroff -i"
-
-# get selected files from nnn
-alias N='sudo nnn -dn'
-alias nnn="nnn"
-alias r="nnn"
 
 alias search="history|grep"
 alias hgrep="history|grep"
