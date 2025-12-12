@@ -30,7 +30,7 @@ return {
   --  },
   {
     "obsidian-nvim/obsidian.nvim",
-    enabled = false,
+    enabled = true,
     version = "*", -- recommended, use latest release instead of latest commit
     -- enabled = false,
     -- lazy = false,
@@ -84,7 +84,7 @@ return {
       workspaces = {
         {
           name = "work",
-          path = "/home/ser/.local/src/datagrip",
+          path = "$HOME/.local/src/datagrip",
         },
       },
     },
