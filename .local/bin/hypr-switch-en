@@ -1,6 +1,15 @@
 #!/usr/bin/sh
 
-kbd="$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | .name')"
+OS="$(uname -s)"
 
-hyprctl switchxkblayout $kbd 0 > /dev/null
+if [[ "${OS}" == "Linux"* ]]; then
 
+  kbd="$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | .name')"
+
+  hyprctl switchxkblayout $kbd 0 > /dev/null
+
+elif [[ "${OS}" == "Darwin"* ]]; then
+  #/opt/homebrew/bin/rg -v '^#' ~/.local/src/datagrip/snippets | /opt/homebrew/bin/choose -w 80% -n 20 -u -z -b fabd2f -c 427b58 -s 17 <&0 | pbcopy -
+  /opt/homebrew/bin/rg -v '^#' ~/.local/src/datagrip/snippets | grep -v "^$" | $HOME/.local/bin/dmenu_raycast | awk -F ' #' '{printf "%s", $1}' | pbcopy -
+  #awk -F ' #' '{print $1}'
+fi
