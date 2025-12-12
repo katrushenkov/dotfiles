@@ -10,5 +10,5 @@
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
   desc = "test",
-  command = "silent !/home/ser/.local/bin/hypr-switch-en",
+  command = "silent !${HOME}/.local/bin/hypr-switch-en",
 })
