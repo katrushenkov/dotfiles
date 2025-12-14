@@ -5,8 +5,6 @@
 export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 
-#unsetopt PROMPT_SP 2>/dev/null
-
 export EDITOR="nvim"
 export TERMINAL="footclient"
 export BROWSER="vivaldi"
