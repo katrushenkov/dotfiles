@@ -7,3 +7,4 @@ vim.opt.spelllang = {}
 vim.opt.number = true
 vim.opt.wrap = true
 vim.opt.timeoutlen = 0
+vim.g.autoformat = false
