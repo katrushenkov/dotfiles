@@ -101,7 +101,6 @@ nsel () {
     tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
 }
 
-#[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1" # Indicate depth level within nnn shells
 export NNN_USE_EDITOR=1
 export NNN_OPTS='acdAHU'
 #export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;t:-!|tree -ps;e:-_ewrap $nnn*'
