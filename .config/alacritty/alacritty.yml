@@ -34,7 +34,6 @@ window:
     columns: 100
     lines: 85
 
-
   # Background opacity
   opacity: 0.8
 
