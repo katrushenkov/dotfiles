@@ -9,6 +9,10 @@
 
 vim.keymap.set({"n"},";J","<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
 
+
+vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "Save window" })
+
+
 vim.api.nvim_del_keymap("n", "<leader>qq")
 vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { silent = true, desc = "Quit without save" })
 vim.keymap.set({ "n" }, "<leader>q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
@@ -32,8 +36,6 @@ vim.keymap.set("n", ";g", function()
     respect_gitignore = true,
   })
 end, { desc = "Shortcuts picker" })
-
---vim.keymap.set("n", "<leader>sh", ":nohl<CR>")
 
 --Автоматически использовать системный буфер обмена для копирования и вставки
 --vim.keymap.set("n", "y", '"+y') -- Копировать в системный буфер обмена
