@@ -20,7 +20,7 @@ se() {
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
   cp="cp -Priv" \ # no symblink, recursive
-mv="mv -iv" \
+  mv="mv -iv" \
   ln='ln -i' \
   rm="rm -vI --preserve-root" \
   bc="bc -ql" \
@@ -44,7 +44,6 @@ alias \
   l="ls -Fh" \
   lm='ls -m' \
   lr='ls -R' \
-  c="cd" \
   lcd="cd" \
   home="cd ~" \
   du='du -ch' \
@@ -94,6 +93,7 @@ alias \
   myip3="curl -s ifconfig.me" \
   rand="head -c 50K < /dev/urandom > $1" \
   s="sudo -s" \
+  c="clear" \
   cls="clear" \
   q="exit" \
   :q="exit" \
