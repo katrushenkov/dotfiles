@@ -11,32 +11,23 @@ Personal configuration files based on Luke Smith's voidrice.
 
 [KARBS](https://github.com/katrushenkov/KARBS)
 
-
 ## Preferred software
 
 -    Operating system: [Arch Linux](https://www.archlinux.org/)
--    Window manager: my fork of [dwm](https://github.com/katrushenkov/dwm)
--    Terminal: [st](https://github.com/katrushenkov/st)
--    Shell: zsh+[Powerlevel10k](https://github.com/romkatv/powerlevel10k)
--    Launcher: [dmenu](https://tools.suckless.org/dmenu/)
+-    Window manager: hyprland
+-    Terminal: kitty/foot
+-    Shell: zsh+starship
+-    Launcher: tofi
 -    File manager: [nnn](https://github.com/jarun/nnn)
--    Music: [mpd](https://github.com/MusicPlayerDaemon/MPD)+[ncmpcpp](https://github.com/ncmpcpp/ncmpcpp)
--    Image viewer: [sxiv](https://github.com/muennich/sxiv)
--    Compositor: [xcompmgr](https://github.com/freedesktop/xcompmgr)
--    Fetch: [pfetch](https://github.com/dylanaraps/pfetch)
--    GTK theme: [Arc-Gruvbox](https://github.com/stevensonmt/Arc-Gruvbox)
--    Icon theme: []
--    Cursor theme: []
+-    Music: kew
+-    Image viewer: imv
 -    Text editor: [neovim](https://github.com/neovim/neovim)
 -    Visualization: [cava](https://github.com/karlstav/cava)
 -    Torrents: [transmission](https://github.com/transmission/transmission)
 -    PDF reader: [zathura](https://github.com/pwmt/zathura)
 -    Fuzzy search: [fzf](https://github.com/junegunn/fzf)
--    Notifications: [dunst](https://github.com/dunst-project/dunst)
--    Screenshots: [flameshot](https://github.com/flameshot-org/flameshot) (forgive me, [scrot](https://github.com/resurrecting-open-source-projects/scrot))
--    Notes: [Obsidian](https://github.com/obsidianmd)
--    Password manager: [keepassxc](https://github.com/keepassxreboot/keepassxc)
--    Fonts: [Hack](https://github.com/source-foundry/Hack)
+-    Notifications: mako
+-    Screenshots:
 -    Wallpaper: [link](.local/share/wall.jpg)
 
-Check other configs in `~/.config/`
+> Check other configs in `~/.config/`
