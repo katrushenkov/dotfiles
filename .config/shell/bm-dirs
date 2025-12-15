@@ -19,6 +19,7 @@ dt	${XDG_DATA_HOME:-$HOME/.local/share}
 lc  ${XDG_DATA_HOME:-$HOME/.local}
 files	/mnt/main/files
 gr  $HOME/.local/src/datagrip
+fl  $HOME/.local/src/datagrip/flant
 h   $HOME
 m   ${XDG_MUSIC_DIR:-$HOME/Music}
 mm	/mnt/main/mus
