@@ -115,13 +115,6 @@ return {
               --preset = "list",
               preview = false,
             },
-            win = {
-              list = {
-                keys = {
-                  ["."] = "explorer_focus",
-                },
-              },
-            },
             actions = {
               copy_file_path = {
                 action = function(_, item)
@@ -210,6 +203,7 @@ return {
                   ["y"] = "copy_file_path",
                   ["s"] = "search_in_directory",
                   ["D"] = "diff",
+                  ["."] = "explorer_focus",
                 },
               },
             },
