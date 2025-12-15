@@ -311,7 +311,6 @@ alias yu="yay -Syu"           # обновление
 alias yun="yay -Syu --noconfirm"
 alias yr="yay -R"
 alias yrn="yay -R --noconfirm"
-alias yq="yay -Q | grep"
 alias yl="yay -Q | grep"
 
 alias wg='wget -O /dev/null'
