@@ -7,6 +7,8 @@
 --#vim.keymap.set('i', '<F13>', '<Esc>')
 --#vim.keymap.set('v', '<F13>', '<Esc>')
 
+local opts = { noremap = true, silent = true }
+
 vim.keymap.set({"n"},";J","<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
 
 
@@ -27,6 +29,12 @@ vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without 
 vim.keymap.set("v", "<leader>yy", function()
   require("yeet").execute_selection("source venv/bin/activate", { clear_before_yeet = true })
 end)
+
+-- Tab navigation
+vim.keymap.set({"n"}, "<s-tab>", "<cmd>tabnew %<cr>", opts)
+vim.keymap.set({ "n" }, "<s-h>", "<cmd>tabp<cr>", opts)
+vim.keymap.set({ "n" }, "<s-l>", "<cmd>tabn<cr>", opts)
+
 
 vim.keymap.set("n", ";g", function()
   require("snacks").picker.files({
@@ -52,6 +60,7 @@ vim.keymap.set("n", ";h", ":chdir ~/.local/src/datagrip<cr>", { silent = true })
 vim.keymap.set("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
 vim.keymap.set("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
 vim.keymap.set("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Yank the whole buffer" })
+--  keymap.set("n", "<leader>y", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
 
 --vim.keymap.set({ "n" }, "<leader>x", ":NnnExplorer<cr>", { desc = "Toggle nnn" })
 --vim.keymap.set({"n"}, '<C-b>', '<Cmd>Neotree toggle<CR>')
