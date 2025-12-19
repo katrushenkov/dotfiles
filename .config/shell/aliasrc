@@ -66,8 +66,6 @@ alias \
   trem="transmission-remote" \
   sdn="shutdown -h now" \
   e='$EDITOR' \
-  p="sudo pacman" \
-  pac="sudo pacman -S" \
   z="zathura-sandbox" \
   v="nvim" \
   vi="nvim" \
@@ -95,6 +93,7 @@ alias \
   s="sudo -s" \
   c="clear" \
   cls="clear" \
+  clr="tput reset" \
   q="exit" \
   :q="exit" \
   quit="exit" \
@@ -172,7 +171,7 @@ alias ssh="kitty +kitten ssh"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
-# alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME'
+#alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME'
 alias dots='lg -w $HOME -g $HOME/.local/src/dotfiles/'
 alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME diff'
 alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME status -uno'
@@ -271,8 +270,6 @@ alias all="yay -Syu --noconfirm"
 alias psa="ps auxf"
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 
-alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-
 # add new fonts
 alias update-fc='sudo fc-cache -fv'
 
@@ -325,8 +322,6 @@ alias renew="source ~/.zprofile"
 
 #alias zathura="zathura -c ~/.config/zathura "
 
-#alias bw="wal -i ~/.config/wall.png" # Rerun pywal
-
 # vi-mode
 #bindkey -v
 # difference?
@@ -339,6 +334,11 @@ alias renew="source ~/.zprofile"
 
 #mkcd() {
 #	mkdir -vp "$@" && cd "$@";
+#}
+
+#mkcd () {
+#     mkdir -p "$*"
+#     cd "$*"
 #}
 
 #ftext () {
@@ -441,14 +441,11 @@ alias -g V='| vim -'
 #alias ccat="hightlight --out-format=ansi" # Color cat - print file with syntax highlighting.
 
 #alias editff="sudo nvim /usr/lib/firefox/distribution/distribution.ini"
-#alias clr="tput reset"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#alias doas='doas '
-#alias em='doas emerge -v'
 #alias ipp='curl ipinfo.io/ip'
 
 #alias d='ssh dietpi@192.168.0.10'
@@ -469,9 +466,8 @@ alias -g V='| vim -'
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
-
-## translate-shell: brief
-#alias t='trans -brief'
+## alias doas='doas '
+#alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 
 #alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 #alias grub='sudo nvim /etc/default/grub'
@@ -491,17 +487,10 @@ alias -g V='| vim -'
 ## BATTERY
 #alias bat="echo -e $(cat /sys/class/power_supply/BAT0/capacity)%"
 
-## UPLOAD TO STREAMABLE
-#alias stream="anypaste -x -s -p streamable"
-
-#alias p="sudo pacman"
 #alias SS="sudo systemctl"
 #alias sv="sudo nvim"
 #alias sdn="sudo shutdown -h now"
 
-#alias ls='ls -hN --color=auto --group-directories-first'
-#alias la='ls -hNa --color=auto --group-directories-first'
-#alias ll='ls -hNl --color=auto --group-directories-first'
 #alias netcon='sudo lsof -n -P -i +c 15'
 #alias clr='clear;echo "Currently logged in on $(tty), as $USER in directory $PWD."'
 #alias ref="shortcuts && source ~/.bashrc"
@@ -516,13 +505,11 @@ alias -g V='| vim -'
 
 #alias crun="g++ ./$0 -o ./$0 && ./%0"
 
-#alias compstrt="pkill compton && nohup compton & "
-
 #alias dros="docker run -v /home/kanishkarj/work/workspace:/home/workspace  -it --env=\"DISPLAY\" --env=\"QT_X11_NO_MITSHM=1\" --volume=\"/tmp/.X11-unix:/tmp/.X11-unix:rw\"  ros"
 
 ## Search running processes
-#alias p="ps aux | grep "
-#alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
+alias p="ps aux | grep "
+alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
 ## Count all files (recursively) in the current folder
 #alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
@@ -621,18 +608,6 @@ alias sha1='openssl sha1'
 #alias ipr='ip -4 route show scope global'
 #alias ip6r='ip -6 route show scope global'
 
-#alias l='ls -C'
-#alias t='lt'
-#alias lt='ls -t'
-#alias lx='ls -X'
-#alias la='ls -A'
-#alias ll='ls -l'
-#alias lg='ls --group-directories-first'
-#alias lD='ls -d'
-#alias lu='ls -U'
-#alias l1='command ls -1'
-#alias llt='ls -lt'
-
 #if command -v nvim >/dev/null 2>&1; then
 #  alias vim=nvim
 #  alias vimdiff=nvim -d'
@@ -652,7 +627,6 @@ alias sha1='openssl sha1'
 #alias vim='deprecated vim nvim'
 #alias wget='deprecated wget curl -LO'
 
-#alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 
 ## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
@@ -685,119 +659,6 @@ alias sha1='openssl sha1'
 #gc="grep -c"
 #gi="grep -i"
 #gw="grep -w"
-
-#alias ocaml='rlwrap ocaml'
-#
-#alias ls='ls --color -hF'
-#alias emacs='TERM=alacritty-24bit emacs -nw'
-
-#alias epimeros='ssh -t dettorer@epimeros.org tmux attach -t main'
-#alias epimeros-weechat='ssh -t dettorer@epimeros.org tmux attach -t weechat'
-
-#if hash mosh > /dev/null 2>&1; then
-#    alias doublonville="mosh doublonville.dettorer.net --"
-#    alias doublonvilles="ssh -t doublonville.dettorer.net"
-#    alias pentapoulpe='mosh -p 222 --ssh="ssh -p 222" root@pentapoulpe.dettorer.net -- su dettorer'
-#    alias pentapoulpes='ssh -p 222 -t pentapoulpe.dettorer.net'
-#    alias toundra='mosh toundra.dettorer.net --'
-#    alias toundras='ssh -t toundra.dettorer.net'
-#
-#    alias rosa='mosh rosa.prologin.org --'
-#    alias rosas='ssh -t rosa.prologin.org'
-#else
-#    alias pentapoulpe='ssh -p 222 -t pentapoulpe.dettorer.net'
-#    alias toundra='ssh -t pentapoulpe.dettorer.net'
-#
-#    alias rosa='ssh -t rosa.prologin.org'
-#fi
-
-#function doublonville_tmux
-#{
-#    if [ $# -ge 1 ]
-#    then
-#        if [[ "$1" == "new" ]]
-#        then
-#            doublonville tmux -u new-session -s $2
-#        else
-#            doublonville tmux -u attach -t $1
-#        fi
-#    else
-#        doublonville_tmux stuff
-#    fi
-#}
-
-#function upload # This should be cleaned, but later... TODO
-#{
-#    # Main variables
-#    SSH_USER="dettorer"
-#    SSH_HOST="dettorer.net"
-#    SSH="$SSH_USER@$SSH_HOST"
-#    HTTP_SERVER_PATH="/srv/http/dettorer.net"
-#    BASE_URL="https://dettorer.net"
-#
-#    # Parse arguments
-#    if [ $# -lt 2 ]; then
-#        echo "At least two arguments are needed"
-#        return -1
-#    fi
-#    FILES=$*[0,-2]
-#    ADD_PATH=$*[-1]
-#
-#    # Upload files
-#    echo "Uploading $FILES..."
-#    rscp $FILES $SSH:$HTTP_SERVER_PATH/$ADD_PATH
-#    err=$?
-#    if [ $err -ne 0 ]; then
-#        echo "Error while uploading, aborting!"
-#        return $err
-#    fi
-#    unset err
-#
-#    # Correct file permission on the server
-#    echo "Fixing permissions..."
-#    for file in $FILES; do
-#        ssh -q -t $SSH chmod -R +r "$HTTP_SERVER_PATH/$ADD_PATH/`basename $file`"
-#    done
-#
-#    # Prompt links to uploaded files
-#    for file in $FILES; do
-#        echo $BASE_URL/$ADD_PATH/`basename $file`
-#    done
-#}
-#
-#function quicksave
-#{
-#    rscp $* dettorer@dettorer.net:~/quicksave
-#}
-#function quickfetch
-#{
-#    [ $# -gt 0 ] && dest=$1 || dest=.
-#    rscp --remove-source-files dettorer@dettorer.net:~/quickfetch/ "$dest"
-#}
-#function quickfetchi
-#{
-#    [ $# -gt 0 ] && dest=$1 || dest=.
-#    rscp --remove-source-files --inplace dettorer@dettorer.net:~/quickfetch/ "$dest"
-#}
-#function quickfetchpeek
-#{
-#    [ $# -gt 0 ] && dest=$1 || dest=.
-#    rscp dettorer@dettorer.net:~/quickfetch/ "$dest"
-#}
-#function quickfetchpeeki
-#{
-#    [ $# -gt 0 ] && dest=$1 || dest=.
-#    rscp --inplace dettorer@dettorer.net:~/quickfetch/ "$dest"
-#}
-
-# узнать че это за comptinstall
-# The following lines were added by compinstall
-#zstyle :compinstall filename '/home/colew/.zshrc'
-#
-#autoload -Uz promptinit
-#promptinit
-
-# prompt fire
 
 #killport(){
 #    kill -9 $(lsof -t -i:$1)
@@ -940,14 +801,6 @@ grib() {
   fi
 }
 
-# got add, commit, push
-function acp() {
-git add .
-git commit -m "$1"
-git push
-}
-
-
 alias randpass="openssl rand -base64 20"
 
 # macos
@@ -998,12 +851,8 @@ alias d:last="docker ps -lq" # get last docker container id
 #alias ag='deprecated ag rg --pretty -i'
 #alias rgg='rg --files --glob'
 
-#alias resolution-2k-hdmi="xrandr --output HDMI2 --mode 1920x1080"
-#alias resolution-4k-hdmi="xrandr --output HDMI2 --mode 3840x2160"
-
 #alias mpa="mpv --no-audio-display --script=$HOME/bin/mpa.lua"
 #alias plaza="exec mpv --no-video -- https://radio.plaza.one/ogg"
-#alias n='newsboat -q'
 #alias sshcode=" ssh -R 52698:localhost:52698 "
 #alias startpage='$BROWSER "https://startpage.com"'
 #alias uni="plasmapkg2 --type=kwinscript -r ."
