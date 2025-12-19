@@ -544,14 +544,6 @@ alias -g V='| vim -'
 #alias tree='tree -CAhF --dirsfirst'
 #alias treed='tree -CAFd'
 
-## Alias's for archives
-#alias mktar='tar -cvf'
-#alias mkbz2='tar -cvjf'
-#alias mkgz='tar -cvzf'
-#alias untar='tar -xvf'
-#alias unbz2='tar -xvjf'
-#alias ungz='tar -xvzf'
-
 ## Show all logs in /var/log
 #alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 
@@ -609,20 +601,11 @@ alias sha1='openssl sha1'
 #alias pdb='ipython --pdb'
 #alias pytrace="python -m trace --ignore-dir /usr/lib/python3.* --trace"
 
-#alias info='info --vi-keys'
-
 #alias pscgroups='ps xawf -eo pid,user,cgroup,args'
 
 #alias sshfs='sshfs -o idmap=user -o uid=1000 -o gid=100'
 
-#alias steam='STEAM_FRAME_FORCE_CLOSE=1 steam'
-## --on-top
-## --on-all-workspaces?
-## --autosync=1 or 30?
-## --heartbeat to work around --stop-screensaver not working?
-## --wid=0 to draw to root window
-
-##alias MPV.app='mpv --no-border --force-window --idle --keep-open'
+#alias MPV.app='mpv --no-border --force-window --idle --keep-open'
 #alias tct='mpv --quiet --vo=tct'
 #alias mpved='mpv --wid=$(NetActiveWindow)'
 #alias clisp='clisp --quiet'
