@@ -1,11 +1,7 @@
 
 setopt +o nomatch	# fix for youtube-dl aliases
 setopt autocd		  # Automatically cd into typed directory.
-stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
-
-# Handle CTRL-S lock
-stty -ixon
 
 # History in cache directory:
 HISTSIZE=10000
@@ -122,7 +118,7 @@ bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
 bindkey -s '^p' 'nvim -c "lua Snacks.picker.projects()"\n'
 
-bindkey '^[[P' delete-char
+#bindkey '^[[P' delete-char
 
 #bindkey '^T' transpose-chars
 bindkey '^X' fzf-file-widget
