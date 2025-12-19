@@ -118,11 +118,7 @@ export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 [[ $(uname) == "Darwin" ]] || export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
 
-bindkey -s '^a' '^ubc -lq\n'
-
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
-
-bindkey -s '^a' 'bc -lq\n'
 
 bindkey -s '^p' 'nvim -c "lua Snacks.picker.projects()"\n'
 
