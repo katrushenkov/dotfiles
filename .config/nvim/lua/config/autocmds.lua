@@ -7,6 +7,6 @@
 
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
-  desc = "test",
+  desc = "SetEnglishLayout",
   command = "silent !${HOME}/.local/bin/hypr-switch-en",
 })
