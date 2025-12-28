@@ -1,4 +1,3 @@
-
 setopt +o nomatch	# fix for youtube-dl aliases
 setopt autocd		  # Automatically cd into typed directory.
 setopt interactive_comments
@@ -79,7 +78,6 @@ nsel () {
     tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
 }
 
-export NNN_USE_EDITOR=1
 export NNN_OPTS='acdAHU'
 #export NNN_PLUG='n:-_vim ~/Dropbox/Public/Docs/Notes/note*;o:fzopen;p:mocplay;d:diffs;t:nmount;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;c:fzcd;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;t:-!|tree -ps;e:-_ewrap $nnn*'
 export NNN_PLUG='o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;e:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug'
@@ -90,7 +88,8 @@ export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
 export SPLIT='v' # to split Kitty vertically
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
-[[ $(uname) == "Darwin" ]] || export NNN_TRASH=2 # use trash-cli [1] and gio trash [2] instead of deleting
+
+[[ $(uname) == "Linux" ]] && export NNN_TRASH=2 || export NNN_TRASH="trash" # use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
 
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
@@ -104,11 +103,9 @@ bindkey '^X' fzf-file-widget
 bindkey -s '^n' 'n\n'
 
 source <(fzf --zsh)
-# FZF stuff
 export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
-# export FZF_DEFAULT_OPTS="--height 50% --layout=default --border --color=hl:#2dd4bf"
-FZF_DEFAULT_OPTS="--bind=ctrl-j:down,ctrl-k:up"
+export FZF_DEFAULT_OPTS="--height 50% --layout=default --border --color=hl:#2dd4bf"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_CTRL_C_OPTS="--preview 'lsd --tree --color=always {} | head -200'"
@@ -117,8 +114,7 @@ export FZF_CTRL_R_OPTS="
    --bind 'ctrl-/:toggle-preview'
    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
    --color header:italic
-    --header 'Press CTRL-Y to copy command into clipboard'"
-# export FZF_TMUX_OPTS=" -p90%,70%"
+   --header 'Press CTRL-Y to copy command into clipboard'"
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
@@ -129,9 +125,6 @@ bindkey -M visual '^[[P' vi-delete
 
 export STARSHIP_CONFIG=~/.config/zsh/starship.toml
 eval "$(starship init zsh)"
-
-# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
 # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
