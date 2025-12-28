@@ -40,12 +40,13 @@ export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 
 # Other program settings:
-export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+# export SUDO_ASKPASS="$HOME/.local/bin/dmenupass" # has troubles on macos
 export FZF_DEFAULT_OPTS="--layout=reverse --extended --height 40%"
 export LESS=-Ri
 export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
-[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && setsid -f shortcuts >/dev/null 2>&1
+[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && setsid -f $HOME/.local/bin/shortcuts >/dev/null 2>&1
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal"
+
