@@ -184,8 +184,6 @@ alias fuck='sudo $(history -p !!)'
 #alias fuck="sudo !!"
 alias pls='sudo $(fc -ln -1)'
 
-alias ins="sudo pacman -S"
-#alias rem="sudo pacman -R"
 alias za="zathura --fork"
 alias l.='eza -d .* --color=auto'
 alias ports='sudo netstat -tulanp'
@@ -379,7 +377,7 @@ alias renew="source ~/.zprofile"
 #}
 
 # alias md-read="nvim +'set notgc' +'term python3 -m rich.markdown -c % ; sleep infinity'"
-#
+
 #alias __copy="xclip -selection c"
 #alias __paste="xclip -selection c -o"
 #__copyfile() {
@@ -415,9 +413,6 @@ alias -g V='| vim -'
 #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
 #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
 #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
-
-#Why not have an alias to edit your *rc files and reload the shell immediately
-#nano ~/.bashrc; source ~/.bashrc
 
 #This only shows disks instead of all filesystems.
 #alias pac='sudo pacman'
@@ -481,8 +476,6 @@ alias -g V='| vim -'
 #alias ec="emacsclient -n -a emacs"
 ## RELOAD XRESOURCES
 #alias xr="xrdb -merge ~/.Xresources"
-## WIFI
-#alias wifi="sudo wifi-menu"
 ## BATTERY
 #alias bat="echo -e $(cat /sys/class/power_supply/BAT0/capacity)%"
 
@@ -625,7 +618,6 @@ alias sha1='openssl sha1'
 #alias pkgfile='deprecated pkgfile pacman -F'
 #alias vim='deprecated vim nvim'
 #alias wget='deprecated wget curl -LO'
-
 
 ## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
@@ -804,7 +796,7 @@ alias randpass="openssl rand -base64 20"
 
 # macos
 alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
-alias brewupdate='brew update && brew upgrade && brew cask update && brew cleanup && brew cask cleanup'
+alias brew-update='brew update && brew upgrade && brew cask update && brew cleanup'
 alias sleep="pmset sleep now"
 
 # kubectl
