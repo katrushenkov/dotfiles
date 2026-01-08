@@ -796,7 +796,7 @@ alias randpass="openssl rand -base64 20"
 
 # macos
 alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
-alias brew-update='brew update && brew upgrade && brew cask update && brew cleanup'
+alias brew-update='brew update && brew upgrade && brew cleanup'
 alias sleep="pmset sleep now"
 
 # kubectl
