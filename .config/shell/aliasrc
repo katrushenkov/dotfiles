@@ -794,6 +794,8 @@ grib() {
 
 alias randpass="openssl rand -base64 20"
 
+alias known_hosts="$EDITOR ~/.ssh/known_hosts"
+
 # macos
 alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
 alias brew-update='brew update && brew upgrade && brew cleanup'
