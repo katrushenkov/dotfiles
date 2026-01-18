@@ -1,14 +1,5 @@
 return {
   --  {
-  --    "samharju/yeet.nvim",
-  --    dependencies = {
-  --      "stevearc/dressing.nvim", -- optional, provides sane UX
-  --    },
-  --    version = "*",
-  --    cmd = "Yeet",
-  --    opts = {},
-  --  },
-  --  {
   --    "luukvbaal/nnn.nvim",
   --    config = function()
   --      require("nnn").setup {
@@ -31,7 +22,7 @@ return {
   {
     "obsidian-nvim/obsidian.nvim",
     enabled = true,
-    version = "*", -- recommended, use latest release instead of latest commit
+    version = "*",
     -- enabled = false,
     -- lazy = false,
     ft = "markdown",
@@ -104,31 +95,7 @@ return {
   --   end,
   --   dependencies = { "folke/which-key.nvim" },
   -- },
-  {
-    "folke/snacks.nvim",
-    opts = {
-      dashboard = {
-        enabled = false,
-        preset = {
-          header = table.concat({}, "\n"),
-        },
-      },
-    },
-    --  keys = {
-    --  	{
-    --  		"<leader>e",
-    --  		function()
-    --  			local snacks = Snacks.picker.current
-    --  			if snacks then
-    --  				snacks.input.win:focus()
-    --  			else
-    --  				Snacks.explorer({ focus = "input" })
-    --  			end
-    --  		end,
-    --  		desc = "Find files",
-    --  	},
-    -- },
-  },
+
   -- You can disable default plugins as follows:
   --  { "max397574/better-escape.nvim", enabled = false },
   --  { "kevinhwang91/nvim-ufo",        enabled = false },
