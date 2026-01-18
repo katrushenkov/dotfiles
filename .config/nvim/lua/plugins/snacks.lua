@@ -4,6 +4,12 @@ return {
     "folke/snacks.nvim",
     enabled = true,
     opts = {
+      dashboard = {
+        enabled = false,
+        preset = {
+          header = table.concat({}, "\n"),
+        },
+      },
       matcher = {
         fuzzy = true,
         ignorecase = true,
@@ -303,6 +309,19 @@ return {
       { "<leader>f/",      function() Snacks.picker.lines() end,           desc = "Buffer lines" },
       { "<leader>:",       function() Snacks.picker.command_history() end, desc = "Command History" },
       { "<leader>n",       function() Snacks.picker.notifications() end,   desc = "Notification History" },
+      { ";r",
+        function()
+          local pickers = Snacks.picker.get { source = "explorer" }
+          local picker = pickers[1]
+
+          if picker then
+            picker:focus("input")
+          else
+            Snacks.explorer({ focus = "input" })
+          end
+        end,
+        desc = "Explorer / Focus input",
+      },
       {
         "<leader>e",
         function()
@@ -335,16 +354,12 @@ return {
       { ";s",         function() Snacks.scratch() end,         desc = "Toggle Scratch Buffer" },
       { ";l",         function() Snacks.scratch.select() end,  desc = "Select Scratch Buffer" },
       { ";d",         function() Snacks.dim() end,             desc = "dim active scope" },
-      { ";D",         function() Snacks.dim.disable() end,     desc = "dim active scope" },
+      { ";D",         function() Snacks.dim.disable() end,     desc = "dim disable" },
       { ";e",         function() Snacks.explorer.reveal() end, desc = "dim active scope" },
 
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end,  desc = "Buffers" },
-      {
-        "<leader>fc",
-        function() Snacks.picker.files { cwd = vim.fn.stdpath "config" } end,
-        desc = "Find Config File",
-      },
+      { "<leader>fc", function() Snacks.picker.files { cwd = vim.fn.stdpath "config" } end, desc = "Find Config File" },
       { "<leader>ff", function() Snacks.picker.files() end,        desc = "Find Files" },
       { "<leader>fg", function() Snacks.picker.git_files() end,    desc = "Find Git Files" },
       { "<leader>fp", function() Snacks.picker.projects() end,     desc = "Projects" },
@@ -362,20 +377,7 @@ return {
       { "<leader>sb", function() Snacks.picker.lines() end,        desc = "Buffer Lines" },
       { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
       { "<leader>sg", function() Snacks.picker.grep() end,         desc = "Grep" },
-      {
-        "<leader>sw", -- <leader>*
-        function() Snacks.picker.grep_word() end,
-        desc = "Visual selection or word",
-        mode = { "n", "x" },
-      },
-      --{ "<leader>e", function()
-      --    Snacks.explorer()
-      --    vim.schedule(function()
-      --      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('.', true, false, true), 'n', false)
-      --      end)
-      --  end,
-      --    desc = "Focus File Explorer"
-      --  },
+      { "<leader>sw", function() Snacks.picker.grep_word() end,    desc = "Visual selection or word", mode = { "n", "x" } },
       -- search
       { '<leader>s"', function() Snacks.picker.registers() end,             desc = "Registers" },
       { "<leader>s/", function() Snacks.picker.search_history() end,        desc = "Search History" },
