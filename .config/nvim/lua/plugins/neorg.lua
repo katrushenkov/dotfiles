@@ -100,7 +100,9 @@ return {
               workspaces = {
                 org = "~/.local/src/datagrip",
               },
+              index = "index.norg",
               default_workspace = "org",
+              use_popup = true,
             },
           },
         },
