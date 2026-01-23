@@ -1,30 +1,9 @@
 return {
-  --  {
-  --    "luukvbaal/nnn.nvim",
-  --    config = function()
-  --      require("nnn").setup {
-  --        picker = {
-  --          cmd = "nnn",          -- command override (-p flag is implied)
-  --          style = {
-  --            width = 0.9,        -- percentage relative to terminal size when < 1, absolute otherwise
-  --            height = 0.8,       -- ^
-  --            xoffset = 0.5,      -- ^
-  --            yoffset = 0.5,      -- ^
-  --            border = "rounded", -- border decoration for example "rounded"(:h nvim_open_win)
-  --          },
-  --          session = "",         -- or "global" / "local" / "shared"
-  --          tabs = true,          -- separate nnn instance per tab
-  --          fullscreen = false,   -- whether to fullscreen picker window when current tab is empty
-  --        },
-  --      }
-  --    end,
-  --  },
   {
     "obsidian-nvim/obsidian.nvim",
     enabled = true,
-    version = "*",
-    -- enabled = false,
-    -- lazy = false,
+    version = false,
+    lazy = false,
     ft = "markdown",
     -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
     -- event = {
@@ -35,7 +14,6 @@ return {
     --   "BufNewFile path/to/my-vault/*.md",
     -- },
     opts = {
-      legacy_commands = false,
       -- disable_frontmatter = true,
       -- note_frontmatter_func = require("obsidian.builtin").frontmatter,
       ui = {
