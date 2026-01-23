@@ -33,7 +33,6 @@ vim.keymap.set({"n"}, "<s-tab>", "<cmd>tabnew %<cr>", opts)
 vim.keymap.set({ "n" }, "<s-h>", "<cmd>tabp<cr>", opts)
 vim.keymap.set({ "n" }, "<s-l>", "<cmd>tabn<cr>", opts)
 
-
 vim.keymap.set("n", ";g", function()
   require("snacks").picker.files({
     cwd = vim.fn.expand("~/.config/nnn/bookmarks"),
@@ -55,8 +54,6 @@ vim.keymap.set("n", ";f", "<leader>f", { silent = true })
 vim.keymap.set("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
 vim.keymap.set("n", "J", ":bnext<cr>", { silent = true })
 vim.keymap.set("n", ";h", ":chdir ~/.local/src/datagrip<cr>", { silent = true })
-vim.keymap.set("n", ";n", ":NnnPicker<cr>", { silent = true, desc = "Toggle nnn" })
-vim.keymap.set("n", ";N", ":NnnExplorer<cr>", { silent = true, desc = "Toggle nnn" })
 vim.keymap.set("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Yank the whole buffer" })
 --  keymap.set("n", "<leader>y", "<cmd>%yank<cr>", { desc = "yank entire buffer" })
 

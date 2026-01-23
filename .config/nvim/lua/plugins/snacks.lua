@@ -3,6 +3,7 @@ return {
   {
     "folke/snacks.nvim",
     enabled = true,
+    version = false,
     opts = {
       dashboard = {
         enabled = false,
@@ -336,21 +337,21 @@ return {
           if #explorer_pickers == 0 then Snacks.picker.explorer() end
         end,
       },
-      {
-        "<leader>o",
-        function()
-          local explorer_pickers = Snacks.picker.get { source = "explorer" }
-          for _, v in pairs(explorer_pickers) do
-            if v:is_focused() then
-              v:close()
-            else
-              v:focus()
-            end
-          end
-          if #explorer_pickers == 0 then Snacks.picker.explorer() end
-        end,
-        desc = "Toggle Snacks Explorer"
-      },
+      --{
+      --  "<leader>o",
+      --  function()
+      --    local explorer_pickers = Snacks.picker.get { source = "explorer" }
+      --    for _, v in pairs(explorer_pickers) do
+      --      if v:is_focused() then
+      --        v:close()
+      --      else
+      --        v:focus()
+      --      end
+      --    end
+      --    if #explorer_pickers == 0 then Snacks.picker.explorer() end
+      --  end,
+      --  desc = "Toggle Snacks Explorer"
+      --},
       { ";s",         function() Snacks.scratch() end,         desc = "Toggle Scratch Buffer" },
       { ";l",         function() Snacks.scratch.select() end,  desc = "Select Scratch Buffer" },
       { ";d",         function() Snacks.dim() end,             desc = "dim active scope" },
