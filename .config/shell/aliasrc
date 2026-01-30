@@ -71,7 +71,7 @@ alias \
   vi="nvim" \
   nv="nvim" \
   lg="lazygit" \
-  kx="kubectx && k9s" \
+  kx="kubectx" \
   k="kubectl"
 
 alias \
