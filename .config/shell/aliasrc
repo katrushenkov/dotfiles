@@ -19,17 +19,17 @@ se() {
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-  cp="cp -Priv" \ # no symblink, recursive
+  cp="cp -Priv" \ # no symlink, recursive
   mv="mv -iv" \
   ln='ln -i' \
-  rm="rm -vI --preserve-root" \
   bc="bc -ql" \
   mkd="mkdir -pv" \
-  ffmpeg="ffmpeg -hide_banner"
-#Do not accidentally delete root, and also,
-#prompt if deleting more than 3 files at a time
-#(this has saved my ass more times than you would think)
-
+  ffmpeg="ffmpeg -hide_banner" \
+  ffprobe='ffprobe -hide_banner'
+  rm="rm -vI --preserve-root"
+  #Do not accidentally delete root, and also,
+  #prompt if deleting more than 3 files at a time
+  #(this has saved my ass more times than you would think)
 alias \
   ls="ls -hNF --color=auto --group-directories-first" \
   diff="diff --color=auto" \
@@ -69,7 +69,6 @@ alias \
   z="zathura-sandbox" \
   v="nvim" \
   vi="nvim" \
-  nv="nvim" \
   lg="lazygit" \
   kx="kubectx" \
   k="kubectl"
@@ -89,6 +88,7 @@ alias \
   myip="dig +short myip.opendns.com @resolver1.opendns.com" \
   myip2="curl https://ipinfo.io/ip" \
   myip3="curl -s ifconfig.me" \
+  myip4='curl ipinfo.io/ip'   \
   rand="head -c 50K < /dev/urandom > $1" \
   s="sudo -s" \
   c="clear" \
@@ -210,7 +210,6 @@ alias ff='firefox'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
-alias jctl="journalctl -p 3 -xeb" #-p 3
 
 alias more="less -Ri"
 
@@ -239,10 +238,13 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 
 alias clean="sudo pacman -Scc"
 
-#get the error messages from journalctl
-alias jctl="journalctl -p 3 -xb"
+alias unlock="sudo rm /var/lib/pacman/db.lck"
 
-#gpg
+# get the error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+alias jctl2="journalctl -p 3 -xeb"
+alias journal='sudo journalctl -b -p 3'
+
 #verify signature for isos
 alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 #receive the key of a developer
@@ -253,14 +255,10 @@ alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 alias sn="shutdown now"
 
-alias unlock="sudo rm /var/lib/pacman/db.lck"
-
 alias userlist="cut -d: -f1 /etc/passwd"
 
 alias pacman='sudo pacman --color auto'
-#alias up='sudo pacman -Syyu'
 alias up='yay -Syyu --devel'
-# yay as aur helper - updates everything
 alias pksyua="yay -Syu --noconfirm"
 alias all="yay -Syu --noconfirm"
 
@@ -276,7 +274,7 @@ alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 # skip integrity check
 alias yayskip='yay -S --mflags --skipinteg'
 
-#check vulnerabilities microcode
+# check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
 #get fastest mirrors in your neighborhood
@@ -316,8 +314,6 @@ alias renew="source ~/.zprofile"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
 #alias rsync-update="rsync -avzu --progress -h"
 #alias rsync-synchronize="rsync -avzu --delete --progress -h"
-
-#alias zathura="zathura -c ~/.config/zathura "
 
 # vi-mode
 #bindkey -v
@@ -365,8 +361,6 @@ alias renew="source ~/.zprofile"
 #printf "$@" | curl -F-=\<- qrenco.de
 #}
 
-#alias lla="ls -la"
-#alias llt="ls -lt"
 #(which exa > /dev/null) && alias lg="exa -lTa --git"
 #lth() {
 #	ls -t $@ | head
@@ -375,8 +369,6 @@ alias renew="source ~/.zprofile"
 #Man() {
 #	nvim "man://man" "++Man $*"
 #}
-
-# alias md-read="nvim +'set notgc' +'term python3 -m rich.markdown -c % ; sleep infinity'"
 
 #alias __copy="xclip -selection c"
 #alias __paste="xclip -selection c -o"
@@ -387,7 +379,7 @@ alias renew="source ~/.zprofile"
 #	done | xclip -selection clipboard -i -t text/uri-list
 #}
 
-#alias -g nu='2>/dev/null'
+alias -g nu='2>/dev/null'
 alias -g le='|less'
 alias -g '...'='../..'
 alias -g '....'='../../..'
@@ -414,7 +406,6 @@ alias -g V='| vim -'
 #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
 #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 
-#This only shows disks instead of all filesystems.
 #alias pac='sudo pacman'
 #alias pacu='sudo pacman -Suuy'
 #alias pacs='sudo pacman -S'
@@ -428,10 +419,7 @@ alias -g V='| vim -'
 #alias alttime="sudo timedatectl set-timezone America/New_Yourk && i3 restart"
 #serversend() { rsync -avr --rsh='ssh -p 2222' $1 luke@lusk.zzz:/home/luke/public_html ;}
 # bl()  {convert $@ -resize 1440x1080\> bl_$0 ;}
-#alias pingme="ping lukesmith.xyz"
-#alias sdn="sudo shutdown now"
 #alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
-#alias ls='ls -hN --color=auto --group-directories-first'
 #alias ccat="hightlight --out-format=ansi" # Color cat - print file with syntax highlighting.
 
 #alias editff="sudo nvim /usr/lib/firefox/distribution/distribution.ini"
@@ -440,32 +428,11 @@ alias -g V='| vim -'
 #   sleep 10; alert
 #alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#alias ipp='curl ipinfo.io/ip'
-
-#alias d='ssh dietpi@192.168.0.10'
-#alias randomvpn='sudo protonvpn-cli -r connect'
-#alias fastvpn='sudo protonvpn-cli -f connect'
-#alias fastp2pvpn='sudo protonvpn-cli -p2p connect'
-#alias stopvpn='sudo protonvpn-cli -d'
-#alias vpn='sudo pvpn'
-
-#alias hc='herbstclient'
-# Force tmux to use 256 colors
-# Either set this or TERM=xterm (or both if tmux keeps messing up?)
-#alias tmux="tmux -2"
-# clock
-#alias c="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &; clear"
-
-#alias feh="feh --no-fehbg -B black"
-
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
 ## alias doas='doas '
 #alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 
-#alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-#alias grub='sudo nvim /etc/default/grub'
-#alias journal='sudo journalctl -b -p 3'
 #alias prime='DRI_PRIME=1'
 #alias neofetch-bong='neofetch --ascii "$(fortune|cowthink -f bong -W 30)"'
 
@@ -517,7 +484,7 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 #alias rebootforce='sudo shutdown -r -n now'
 
 ## Alias's to show disk space and space used in a folder
-#alias diskspace="du -S | sort -n -r |more"
+#alias diskspace="du -S | sort -n -r | less"
 #alias folders='du -h --max-depth=1'
 #alias folderssort='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
 #alias tree='tree -CAhF --dirsfirst'
@@ -529,8 +496,6 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 alias sha1='openssl sha1'
 
 #alias ps='ps auxf'
-#alias ping='ping -c 10'
-#alias apt-get='sudo apt-get'
 #alias multitail='multitail --no-repeat -c'
 #alias freshclam='sudo freshclam'
 #alias vis='vim "+set si"'
@@ -544,7 +509,7 @@ alias sha1='openssl sha1'
 #alias lu='ls -lurh' # sort by access time
 #alias lr='ls -lRh' # recursive ls
 #alias lt='ls -ltrh' # sort by date
-#alias lm='ls -alh |more' # pipe through 'more'
+#alias lm='ls -alh |less' # pipe through 'less'
 #alias lw='ls -xAh' # wide listing format
 #alias ll='ls -Fls' # long listing format
 #alias labc='ls -lap' #alphabetical sort
@@ -584,15 +549,14 @@ alias sha1='openssl sha1'
 
 #alias sshfs='sshfs -o idmap=user -o uid=1000 -o gid=100'
 
-#alias MPV.app='mpv --no-border --force-window --idle --keep-open'
 #alias tct='mpv --quiet --vo=tct'
 #alias mpved='mpv --wid=$(NetActiveWindow)'
-#alias clisp='clisp --quiet'
 #alias javadebug='java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y'
 
 #alias ping='ping -OD'
 #alias ping4='ping -4'
 #alias ping6='ping -6'
+#alias ping='ping -c 10'
 
 #alias ipa='ip address show scope global up'
 #alias ip4='ip -4 address show scope global up'
@@ -609,14 +573,13 @@ alias sha1='openssl sha1'
 
 #alias mpy='mpv "$(xclip -o -selection clipboard)"'
 
-## TODO: pax format by default.
+## pax format by default.
 #alias tar='bsdtar'
 #alias cpio='bsdcpio'
 #alias zip='deprecated zip bsdtar --format zip -cf'
 #alias unzip='deprecated unzip bsdtar -xf'
 #alias virtualenv='deprecated virtualenv pyvenv'
 #alias pkgfile='deprecated pkgfile pacman -F'
-#alias vim='deprecated vim nvim'
 #alias wget='deprecated wget curl -LO'
 
 ## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
@@ -628,9 +591,6 @@ alias sha1='openssl sha1'
 #alias hex='hexdump -C'
 
 #alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
-
-#alias ffmpeg='ffmpeg -hide_banner'
-#alias ffprobe='ffprobe -hide_banner'
 
 #alias dirsize="du -hd 0"    #Измеряет размер директории, в которой находитесь
 #alias contsize="du -hd 1"    #Измеряет размер всех директорий в директории, в которой находитесь
@@ -841,13 +801,11 @@ alias d:last="docker ps -lq" # get last docker container id
 
 #alias r='rg --pretty'
 #alias g='rg --pretty'
-#alias ag='deprecated ag rg --pretty -i'
 #alias rgg='rg --files --glob'
 
 #alias mpa="mpv --no-audio-display --script=$HOME/bin/mpa.lua"
 #alias plaza="exec mpv --no-video -- https://radio.plaza.one/ogg"
 #alias sshcode=" ssh -R 52698:localhost:52698 "
-#alias startpage='$BROWSER "https://startpage.com"'
 #alias uni="plasmapkg2 --type=kwinscript -r ."
 #alias p="mocp -G &> /dev/null"
 #alias next="mocp -f &> /dev/null"
@@ -857,11 +815,6 @@ alias d:last="docker ps -lq" # get last docker container id
 #alias thttpd='thttpd -D -l /dev/stdout'
 #alias mutt='MAIL_ACCOUNT=$(mail_account) neomutt'
 #alias timekill="rtv --enable-media -s '/random/top-all'"
-#alias fuck="nordvpn d && nordvpn c AU"
-#alias sourceme="source ~/.bashrc"
-#alias ref="shortcuts.sh && source ~/.bashrc" # Refresh shortcuts manually and reload bashrc
-#alias vd="pamixer -d 10"
-#alias vu="pamixer -i 10"
 
 #alias fix-key='[ -d ~/.gnupg ] || mkdir ~/.gnupg ; cp /etc/pacman.d/gnupg/gpg.conf ~/.gnupg/ ; echo '\''done'\'''
 #alias iso='cat /etc/dev-rel | awk -F '\''='\'' '\''/ISO/ {print }'\'''
