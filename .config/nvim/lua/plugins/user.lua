@@ -16,11 +16,12 @@ return {
     opts = {
       -- disable_frontmatter = true,
       -- note_frontmatter_func = require("obsidian.builtin").frontmatter,
+      legacy_commands = false,
       ui = {
         enable = false,
       },
       keys = {
-        { '<leader>ob', '<cmd>ObsidianBacklinks<cr>', desc = '[O]bisidan [B]acklinks' },
+        { '<leader>ob', '<cmd>Obsidian backlinks<cr>', desc = '[O]bisidan [B]acklinks' },
         { '<leader>od', '<cmd>ObsidianDailies<cr>',   '[O]sidian [D]ailies' },
         {
           '<leader>oe',
