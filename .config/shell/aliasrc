@@ -31,8 +31,6 @@ alias \
   #prompt if deleting more than 3 files at a time
   #(this has saved my ass more times than you would think)
 alias \
-  ls="ls -hNF --color=auto --group-directories-first" \
-  diff="diff --color=auto" \
   ccat="highlight --out-format=ansi" \
   ip="ip -color=auto" \
   llll="du -sh *" \
@@ -44,20 +42,13 @@ alias \
   l="ls -Fh" \
   lm='ls -m' \
   lr='ls -R' \
+  l.='ls -AF -d .*' \
+  ll='ls -lah --color=auto' \
   lcd="cd" \
   home="cd ~" \
   du='du -ch' \
   cat='bat'
 
-#	c..="cd .." \
-#	..="cd .." \
-#	...="cd ../.." \
-#	....="cd ../../.." \
-#	.....="cd ../../../.." \
-#	cd..="cd .." \
-#	l.="ls -AF | egrep '^\.'" \
-alias l.='ls -d .*'
-alias ll='ls -lah --color=auto'
 
 # These common commands are just too long! Abbreviate them.
 alias \
