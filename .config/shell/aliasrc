@@ -224,13 +224,6 @@ alias ytt="yt-dlp --no-download --write-thumbnail "
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
 
-#Cleanup orphaned packages
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
-
-alias clean="sudo pacman -Scc"
-
-alias unlock="sudo rm /var/lib/pacman/db.lck"
-
 # get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 alias jctl2="journalctl -p 3 -xeb"
@@ -248,11 +241,6 @@ alias sn="shutdown now"
 
 alias userlist="cut -d: -f1 /etc/passwd"
 
-alias pacman='sudo pacman --color auto'
-alias up='yay -Syyu --devel'
-alias pksyua="yay -Syu --noconfirm"
-alias all="yay -Syu --noconfirm"
-
 alias psa="ps auxf"
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 
@@ -261,9 +249,6 @@ alias update-fc='sudo fc-cache -fv'
 
 alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-
-# skip integrity check
-alias yayskip='yay -S --mflags --skipinteg'
 
 # check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
@@ -284,17 +269,27 @@ alias openports='netstat -nape --inet'
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
-alias yi="yay -S"             # установка.
-alias yn="yay -S --noconfirm" # установка без подтверждения.
-alias ys="yay"                # поиск с дальнейшим выбором по цифре.
-alias ysn="yay --noconfirm"   # поиск с дальнейшим выбором по цифре, без подтверждения.
-alias yc="yay -Sc"            # частичная очистка кэша.
-alias yy="yay -Syy"           # синхронизация баз зеркал.
-alias yu="yay -Syu"           # обновление
-alias yun="yay -Syu --noconfirm"
-alias yr="yay -R"
-alias yrn="yay -R --noconfirm"
-alias yl="yay -Q | grep"
+if [[ $(uname) == "Linux" ]] ; then
+  alias yi="yay -S"
+  alias yn="yay -S --noconfirm" # установка без подтверждения.
+  alias ys="yay"                # поиск с дальнейшим выбором по цифре.
+  alias ysn="yay --noconfirm"   # поиск с дальнейшим выбором по цифре, без подтверждения.
+  alias yc="yay -Sc"            # частичная очистка кэша.
+  alias yy="yay -Syy"           # синхронизация баз зеркал.
+  alias yu="yay -Syu"           # обновление
+  alias yun="yay -Syu --noconfirm"
+  alias yr="yay -R"
+  alias yrn="yay -R --noconfirm"
+  alias yl="yay -Q | grep"
+  alias yayskip='yay -S --mflags --skipinteg' # skip integrity check
+  alias pacman='sudo pacman --color auto'
+  alias up='yay -Syyu --devel'
+  alias pksyua="yay -Syu --noconfirm"
+  alias all="yay -Syu --noconfirm"
+  alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # cleanup orphaned packages
+  alias clean="sudo pacman -Scc"
+  alias unlock="sudo rm /var/lib/pacman/db.lck"
+fi
 
 alias wg='wget -O /dev/null'
 
@@ -397,11 +392,6 @@ alias -g V='| vim -'
 #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
 #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 
-#alias pac='sudo pacman'
-#alias pacu='sudo pacman -Suuy'
-#alias pacs='sudo pacman -S'
-#alias pacr='sudo pacman -Rsn'
-
 #alias _='sudo'$
 #alias _i='sudo -i'$
 #alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
@@ -449,9 +439,6 @@ alias -g V='| vim -'
 #alias yy="sudo pacman -Syy"
 #alias yref="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
 #alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
-
-#alias cintel="sudo prime-select intel"
-#alias cnvidia="sudo prime-select nvidia"
 
 #alias crun="g++ ./$0 -o ./$0 && ./%0"
 
@@ -727,13 +714,6 @@ alias gh='cd "$(git rev-parse --show-toplevel)"'
 #alias gh='git hist'
 # Show untracked files
 alias gu='git ls-files . --exclude-standard --others'
-#################################################################
-alias ys='yum search'
-alias yuli='yum list --installed'
-alias yi='yum install'
-alias yu='yum update'
-alias yr='yum remove'
-alias rpml='rpm -qa| grep -e'
 
 grib() {
   if [[ -n "$1" ]]; then
