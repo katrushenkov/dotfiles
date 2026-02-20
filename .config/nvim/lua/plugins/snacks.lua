@@ -273,6 +273,15 @@ return {
               },
             },
           },
+          grep = {
+            finder = "grep",
+            hidden = true,
+            regex = true,
+            format = "file",
+            show_empty = true,
+            live = true,
+            supports_live = true,
+          }
         },
       },
       explorer = {},
