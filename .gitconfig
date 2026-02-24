@@ -7,3 +7,22 @@
 	directory = * 
 [status]
 	showUntrackedFiles = no
+[alias]
+  b   = browse
+  d   = diff
+  ds  = diff --staged
+  dw  = diff --color-words
+  s   = status -s -b
+  c   = commit -v
+  co  = checkout
+  cp  = cherry-pick
+  w   = whatchanged --decorate
+  wp  = whatchanged --decorate -p
+  a   = add -u
+  aa  = add --all :/
+  td  = merge --no-ff
+  sm  = submodule
+  smu = submodule foreach git pull origin master
+  ap  = add -u -p
+  pr  = "!f() { git fetch origin refs/pull/$1/head:pr/$1 && git co pr/$1; } ; f"
+  up  = "!git fetch upstream && git rebase upstream/master"
