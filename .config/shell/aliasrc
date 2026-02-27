@@ -155,8 +155,7 @@ if hash emacs >/dev/null 2>&1; then
   alias killemacs="emacsclient -e '(save-buffers-kill-emacs)'"
 fi
 
-# work around with kitty terminfo
-alias ssh="kitty +kitten ssh"
+[[ $TERM == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
 #alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
 #alias for dotfiles bare repo
