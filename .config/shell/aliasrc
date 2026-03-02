@@ -69,7 +69,6 @@ alias \
   magit="nvim -c MagitOnly" \
   ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
   weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
-  tmux="tmux -f <(${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf)"
 
 alias \
   i2pstart="sudo systemctl start i2prouter.service" \
@@ -179,23 +178,14 @@ alias ports='sudo netstat -tulanp'
 alias f="find . | grep "
 
 alias incognito='unset HISTFILE'
-alias whereami='echo $PWD'
-alias whatami='cat /etc/hostname'
 alias temps='watch -n .1 sensors'
 alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
-alias tl='tmux list-session'
-alias tk='tmux kill-session'
-alias tn='tmux new'
-alias ta='tmux attach'
-#alias tn='tmux new -s'
-#alias tna='tmux new -As'
 alias weather='curl wttr.in/cmb?0'
 alias weatherfull='curl wttr.in/cmb'
 #alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 #alias up='uptime -p'
 alias randvid='mpv --shuffle /mnt/main/vid/'
 alias mpvl='mpv --loop '
-alias ff='firefox'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
