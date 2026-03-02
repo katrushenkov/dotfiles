@@ -17,7 +17,6 @@ cfhd ${XDG_CONFIG_HOME:-$HOME/.config}/hypr
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 lc  ${XDG_DATA_HOME:-$HOME/.local}
-files	/mnt/main/files
 gr  $HOME/.local/src/datagrip
 fl  $HOME/.local/src/datagrip/flant
 h   $HOME
