@@ -158,7 +158,6 @@ alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME ad
 alias last='git log --oneline --graph --decorate --all'
 alias by="systemctl poweroff -i"
 
-alias search="history|grep"
 alias hgrep="history|grep"
 alias fuck='sudo $(history -p !!)'
 #alias fuck="sudo !!"
@@ -176,7 +175,6 @@ alias weather='curl wttr.in/cmb?0'
 alias weatherfull='curl wttr.in/cmb'
 #alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 #alias up='uptime -p'
-alias randvid='mpv --shuffle /mnt/main/vid/'
 alias mpvl='mpv --loop '
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias pscpu='ps auxf | sort -nr -k 3'
@@ -269,6 +267,9 @@ if [[ $(uname) == "Linux" ]] ; then
   alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # cleanup orphaned packages
   alias clean="sudo pacman -Scc"
   alias unlock="sudo rm /var/lib/pacman/db.lck"
+  #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
+  #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
+  #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 fi
 
 alias wg='wget -O /dev/null'
@@ -280,6 +281,7 @@ alias renew="source ~/.zprofile"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
 #alias rsync-update="rsync -avzu --progress -h"
 #alias rsync-synchronize="rsync -avzu --delete --progress -h"
+#alias rscp="rsync --partial --progress --archive"
 
 # vi-mode
 #bindkey -v
@@ -336,15 +338,6 @@ alias renew="source ~/.zprofile"
 #	nvim "man://man" "++Man $*"
 #}
 
-#alias __copy="xclip -selection c"
-#alias __paste="xclip -selection c -o"
-#__copyfile() {
-#	# Like in file managers
-#	for i in "$@"; do \
-#		echo file://$(realpath "$i")
-#	done | xclip -selection clipboard -i -t text/uri-list
-#}
-
 alias -g nu='2>/dev/null'
 alias -g le='|less'
 alias -g '...'='../..'
@@ -368,9 +361,6 @@ alias -g V='| vim -'
 #alias C for copy stdin
 #alias X for clear + pwd (to clear screen while changing dir)
 
-#alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
-#alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
-#alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 
 #alias _='sudo'$
 #alias _i='sudo -i'$
@@ -387,40 +377,16 @@ alias -g V='| vim -'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'nvim "man://man" "++Man $*"nvim "man://man" "++Man $*"
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
 ## alias doas='doas '
 #alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 
-#alias prime='DRI_PRIME=1'
-#alias neofetch-bong='neofetch --ascii "$(fortune|cowthink -f bong -W 30)"'
-
-## SPACED DIR
-#alias le="echo ''; ls; echo ''"
-## EMACS CLIENT
-#alias ec="emacsclient -t"
-#alias ec="emacsclient -n -a emacs"
-## RELOAD XRESOURCES
-#alias xr="xrdb -merge ~/.Xresources"
-## BATTERY
-#alias bat="echo -e $(cat /sys/class/power_supply/BAT0/capacity)%"
-
-#alias SS="sudo systemctl"
-#alias sv="sudo nvim"
-#alias sdn="sudo shutdown -h now"
-
 #alias netcon='sudo lsof -n -P -i +c 15'
 #alias clr='clear;echo "Currently logged in on $(tty), as $USER in directory $PWD."'
-#alias ref="shortcuts && source ~/.bashrc"
 #alias psref="gpg-connect-agent RELOADAGENT /bye"
-
-#alias yy="sudo pacman -Syy"
-#alias yref="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
-#alias pacman-backup='sudo pacman -Qe > ~/.backup/pacman_packages'
-
-#alias crun="g++ ./$0 -o ./$0 && ./%0"
 
 #alias dros="docker run -v /home/kanishkarj/work/workspace:/home/workspace  -it --env=\"DISPLAY\" --env=\"QT_X11_NO_MITSHM=1\" --volume=\"/tmp/.X11-unix:/tmp/.X11-unix:rw\"  ros"
 
@@ -454,9 +420,6 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 alias sha1='openssl sha1'
 
 #alias ps='ps auxf'
-#alias multitail='multitail --no-repeat -c'
-#alias freshclam='sudo freshclam'
-#alias vis='vim "+set si"'
 
 ## Alias's for multiple directory listing commands
 #alias la='ls -Alh' # show hidden files
@@ -483,25 +446,10 @@ alias sha1='openssl sha1'
 #alias 777='chmod -R 777'
 #alias chx="chmod +x"
 
-#alias rscp="rsync --partial --progress --archive"
-
-## Remove a directory and all files
-#alias rmd='/bin/rm  --recursive --force --verbose '
-
 #Parenting changes perms on root
 #alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
 
 #alias DumpID3Tags='id3 -q "title=\"%t\",\nartist=\"%a\",\nalbum=\"%l\",\ntrack=\"%n\",\nyear=\"%y\",\ngenre=\"%g\",\ncomment=\"%c\""'
-
-#alias gcc='gcc -fdiagnostics-color=auto -std=gnu11'
-#alias gdb='gdb -silent'
-
-#alias ghci='ghci -v0'
-
-#alias bc='bc -q -l'
-
-#alias pdb='ipython --pdb'
-#alias pytrace="python -m trace --ignore-dir /usr/lib/python3.* --trace"
 
 #alias pscgroups='ps xawf -eo pid,user,cgroup,args'
 
@@ -526,19 +474,6 @@ alias sha1='openssl sha1'
 #  alias vim=nvim
 #  alias vimdiff=nvim -d'
 #fi
-#alias bsdtar='bsdtar -S -f -'
-#alias bsdcpio='bsdcpio -m'
-
-#alias mpy='mpv "$(xclip -o -selection clipboard)"'
-
-## pax format by default.
-#alias tar='bsdtar'
-#alias cpio='bsdcpio'
-#alias zip='deprecated zip bsdtar --format zip -cf'
-#alias unzip='deprecated unzip bsdtar -xf'
-#alias virtualenv='deprecated virtualenv pyvenv'
-#alias pkgfile='deprecated pkgfile pacman -F'
-#alias wget='deprecated wget curl -LO'
 
 ## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
@@ -552,15 +487,7 @@ alias sha1='openssl sha1'
 
 #alias dirsize="du -hd 0"    #Измеряет размер директории, в которой находитесь
 #alias contsize="du -hd 1"    #Измеряет размер всех директорий в директории, в которой находитесь
-#alias cd..="cd .."    #Не могу искоренить эту привычку, постоянно набираю cd.. =)
 #alias man="man -a"  #Показывает ВСЕ мануалы по названию, попробуйте, к примеру, man -a signal, узнаете, что в Линуксе есть документация по сигналам, которые можно посылать программам
-#alias dhclient="dhclient -v"  #Делает вывод dhclient намного информативнее - показывает запросы и ответы сервера, если есть. Короче, ждать получения IP-адреса уже не так скучно =)
-#alias toinstall="aptitude --schedule-only install"   #Маркирует указанный пакет как помеченный к установке, удобно, когда система обновляется, а ты внезапно нашёл клёвую программу и хочешь не забыть её установить.
-#alias remove="aptitude --schedule-only remove"   #То же самое, только скорее к случаю, когда ты внезапно нашёл в своей системе клёвую программу и хочешь её удалить
-##Использование - toinstall sysvinit / toremove systemd, ну или наоборот =)
-##Применяется, когда в следующий раз запустите aptitude install без указания пакета - просто "aptitude install".
-#alias watch="watch -n 1" #Обновление watch раз в 1 секунду, а не 2.
-#alias wpc="watch usr/local/bin/watch.sh" # Скриптик, в котором выводится acpi, date, ifconfig... короче, всё, что бы хотелось держать в отдельной консоли, постоянно обновлять и иметь возможность в любую минуту посмотреть =)
 
 #socks="ssh -D 8008 emerald -fN"
 #o="xdg-open"
@@ -639,7 +566,7 @@ alias dps="docker ps -a"
 alias di="docker images"
 alias drmi="docker rmi"
 alias drm="docker rm"
-alias d:last="docker ps -lq" # get last docker container id
+alias dlast="docker ps -lq" # get last docker container id
 
 #gll() {
 #    git log -L"$2",+1:"$1"
@@ -670,3 +597,4 @@ alias d:last="docker ps -lq" # get last docker container id
 #alias fix-key='[ -d ~/.gnupg ] || mkdir ~/.gnupg ; cp /etc/pacman.d/gnupg/gpg.conf ~/.gnupg/ ; echo '\''done'\'''
 #alias iso='cat /etc/dev-rel | awk -F '\''='\'' '\''/ISO/ {print }'\'''
 #alias l.='ls -A | egrep '\''^\.'\'''
+
