@@ -3,7 +3,7 @@ k9s:
     apply-dev: sh kubectl apply -f deployments/dev/
     apply-prod: sh kubectl apply -f deployments/prod/
   liveViewAutoRefresh: false
-  screenDumpDir: /home/ser/.local/state/k9s/screen-dumps
+  screenDumpDir: $HOME/.local/state/k9s/screen-dumps
   refreshRate: 2
   apiServerTimeout: 15s
   maxConnRetry: 5
@@ -38,7 +38,7 @@ k9s:
     tail: 100
     buffer: 5000
     sinceSeconds: -1
-    textWrap: false
+    textWrap: true
     disableAutoscroll: false
     showTime: true
   thresholds:
