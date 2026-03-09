@@ -39,6 +39,7 @@ alias \
   lm='ls -m' \
   lr='ls -R' \
   l.='ls -AF -d .*' \
+  l..='eza -d .* --color=auto'
   ll='ls -lah --color=auto' \
   lcd="cd" \
   home="cd ~" \
@@ -117,6 +118,7 @@ alias s-sp='systemctl stop'
 alias s-st='systemctl start'
 
 alias passgen="pwgen -Ccsn 32 1"
+alias randpass="openssl rand -base64 20"
 alias nsl="nslookup"
 
 alias top='top -c -n 1'
@@ -130,8 +132,6 @@ alias genpass="openssl rand -base64 20"
 
 [[ $TERM == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
-#alias config='git --git-dir=$HOME/dotfiles/ --work-tree=$PWD'
-#alias for dotfiles bare repo
 #alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME'
 alias dots='lg -w $HOME -g $HOME/.local/src/dotfiles/'
 alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME diff'
@@ -146,8 +146,6 @@ alias fuck='sudo $(history -p !!)'
 alias pls='sudo $(fc -ln -1)'
 
 alias za="zathura --fork"
-alias l.='eza -d .* --color=auto'
-alias ports='sudo netstat -tulanp'
 alias f="find . | grep "
 
 alias incognito='unset HISTFILE'
@@ -180,21 +178,21 @@ alias ytt="yt-dlp --no-download --write-thumbnail "
 #alias youtube-audio='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0'
 #alias ytmp3='youtube-dl --add-metadata -x --audio-format mp3 --output "%(title)s.%(ext)s" --audio-quality 0 --add-metadata --exec "mv {} /home/adri/Music/" $(xclip -o) && notify-send "youtube-dl" "download complete !"'
 
-#Recent Installed Packages
+# recent installed packages
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
 
 # get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
-alias jctl2="journalctl -p 3 -xeb"
+alias jctlerr="journalctl -p 3 -xeb"
 alias journal='sudo journalctl -b -p 3'
 
-#verify signature for isos
+# verify signature for isos
 alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
-#receive the key of a developer
+# receive the key of a developer
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
-#shutdown or reboot
+# shutdown or reboot
 alias ssn="sudo shutdown now"
 alias sr="sudo reboot"
 alias sn="shutdown now"
@@ -215,7 +213,7 @@ alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 # check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
-#get fastest mirrors in your neighborhood
+# get fastest mirrors in your neighborhood
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
@@ -223,10 +221,11 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 alias mirrorx="sudo reflector --age 6 --latest 20 --fastest 20 --threads 5 --sort rate --protocol https --save /etc/pacman.d/mirrorlist"
 alias mirrorxx="sudo reflector --age 6 --latest 20 --fastest 20 --threads 20 --sort rate --protocol https --save /etc/pacman.d/mirrorlist"
 
-#mounting the folder Public for exchange between host and guest on virtualbox
+# mounting the folder Public for exchange between host and guest on virtualbox
 alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Public"
 
 alias openports='netstat -nape --inet'
+alias ports='sudo netstat -tulanp'
 
 # reduce 50%
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
@@ -260,6 +259,7 @@ alias wg='wget -O /dev/null'
 
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
 alias renew="source ~/.zprofile"
+alias known_hosts="$EDITOR ~/.ssh/known_hosts"
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
@@ -328,15 +328,6 @@ alias -g V='| vim -'
 
 #alias _='sudo'$
 #alias _i='sudo -i'$
-#alias rcsync="rsync -avr --rsh='ssh -p2222' .bashrc .vimrc .Xdefaults .tmux.conf .muttrc .bash_profile .vim .w3m .moc luke@luke.xyz:/home/luke/config"
-
-#alias newnet="sudo systemctl restart NetworkManager"
-#alias alttime="sudo timedatectl set-timezone America/New_Yourk && i3 restart"
-#serversend() { rsync -avr --rsh='ssh -p 2222' $1 luke@lusk.zzz:/home/luke/public_html ;}
-# bl()  {convert $@ -resize 1440x1080\> bl_$0 ;}
-#alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
-#alias ccat="hightlight --out-format=ansi" # Color cat - print file with syntax highlighting.
-
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '
@@ -369,7 +360,7 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 #alias treed='tree -CAFd'
 
 ## Show all logs in /var/log
-#alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 
 ## alias chmod commands
 #alias mx='chmod a+x'
@@ -380,7 +371,7 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 #alias 777='chmod -R 777'
 #alias chx="chmod +x"
 
-#Parenting changes perms on root
+# Parenting changes perms on root
 #alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
 
 #alias pscgroups='ps xawf -eo pid,user,cgroup,args'
@@ -398,7 +389,7 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 #alias ipr='ip -4 route show scope global'
 #alias ip6r='ip -6 route show scope global'
 
-## Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
+# Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
 
 #alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
@@ -432,14 +423,12 @@ grib() {
   fi
 }
 
-alias randpass="openssl rand -base64 20"
-
-alias known_hosts="$EDITOR ~/.ssh/known_hosts"
-
 # macos
-alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
-alias brew-update='brew update && brew upgrade && brew cleanup'
-alias sleep="pmset sleep now"
+if [[ $(uname) == "Darwin" ]] ; then
+  alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
+  alias brew-update='brew update && brew upgrade && brew cleanup'
+  alias sleep="pmset sleep now"
+fi
 
 # kubectl
 alias k="kubectl"

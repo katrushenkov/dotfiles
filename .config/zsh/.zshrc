@@ -1,13 +1,13 @@
-setopt +o nomatch	# fix for youtube-dl aliases
-setopt autocd		  # Automatically cd into typed directory.
+setopt +o nomatch # fix for youtube-dl aliases
+setopt autocd     # Automatically cd into typed directory.
 setopt interactive_comments
 
-# History in cache directory:
+# History in cache directory
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
-# Load aliases and shortcuts if existent.
+# Load aliases and shortcuts if existent
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
@@ -22,13 +22,13 @@ if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.config/zsh/.zcompdump 2>/dev
 else
     compinit -C;
 fi;
-_comp_options+=(globdots)		# Include hidden files.
+_comp_options+=(globdots) # include hidden files
 
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
 
-# Use vim keys in tab complete menu:
+# Use vim keys in tab complete menu
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
@@ -83,7 +83,7 @@ nsel () {
 
 export NNN_OPTS='acdAHU'
 #export NNN_PLUG='p:mocplay;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;t:-!|tree -ps;e:-_ewrap $nnn*'
-export NNN_PLUG='o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug;r:lazygit;s:-!/opt/homebrew/bin/nvim ~/anima/draw.md'
+export NNN_PLUG='o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug;r:!eval $(which lazygit)*;s:-!/opt/homebrew/bin/nvim ~/anima/draw.md'
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 #export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO='/tmp/nnn.fifo' # temporary buffer for previews
