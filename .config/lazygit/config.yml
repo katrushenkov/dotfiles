@@ -1,0 +1,50 @@
+customCommands:
+  - key: O
+    context: commits
+    description: open files in commit
+    command: git diff -z --name-only {{.SelectedLocalCommit.ParentRefName}} {{.SelectedLocalCommit.Sha}} | xargs -0 nvim --
+    output: terminal
+#customCommands:
+#  - key: 'F'
+#    command: 'git pull --rebase --autostash {{ SelectedLocalBranch.Name }}'
+#    context: 'localBranches'
+#    stream: true
+#
+#os:
+#  editCommand: 'floaterm'
+#
+#keybinding:
+#  universal:
+#    return: '<c-\>'
+#
+#gui:
+#  theme:
+#    selectedLineBgColor:
+#      - underline
+#    selectedRangeBgColor:
+#      - underline
+#
+#git:
+#  paging:
+#    colorArg: never
+#    pager: delta --dark --paging=never
+#
+# customCommands:
+#   - key: 'F'
+#       command: 'git push `git for-each-ref --format="%(upstream:remotename)" "$(git symbolic-ref -q HEAD)"` {{.SelectedCommit.Hash}}:`git for-each-ref --format="%(upstream:remoteref)" "$(git symbolic-ref -q HEAD)"`'
+#       context: "commits"
+#       description: "Push selected commit"
+#       stream: true
+
+#gui:
+#  commitSummaryPosition: right
+#  showStatusGraph: true
+#
+#customCommands:
+#  - key: 'f'
+#    func: 'shell'
+#    args: ['fmt']
+#  - key: 't'
+#    func: 'shell'
+#    args: ['test']
+
