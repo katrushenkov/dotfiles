@@ -2,9 +2,6 @@
 
 # : Manager {{{
 
-[mgr]
-cwd = { fg = "#a7c080" } # Soft Green
-
 # Hovered
 hovered = { fg = "#2c313a", bg = "#d3c6aa" } # Dark background, Soft beige foreground
 preview_hovered = { underline = true }
