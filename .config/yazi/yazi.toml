@@ -1,0 +1,31 @@
+[mgr]
+cwd = { fg = "#a7c080" } # Soft Green
+show_hidden = true
+sort_by = "natural"
+sort_dir_first = true
+
+[opener]
+play = [
+	{ run = "mpv %s", orphan = true, for = "unix" },
+]
+edit = [
+	{ run = "$EDITOR %s", block = true, for = "unix" },
+	{ run = "$EDITOR %s", block = true, for = "macos" },
+]
+open = [
+	{ run = "xdg-open %s", desc = "Open" },
+]
+
+[open]
+#	{ run = "xdg-open %s", desc = "Open" },
+rules = [
+	{ mime = "text/*", use = "edit" },
+	{ mime = "video/*", use = "play" },
+	{ mime = "audio/*", use = "play" },
+
+	# { mime = "application/json", use = "edit" },
+	{ url = "*.json", use = "edit" },
+
+	# Multiple openers for a single rule
+	{ url = "*.html", use = [ "open", "edit" ] },
+]
