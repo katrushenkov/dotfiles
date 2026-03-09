@@ -12,13 +12,13 @@ return {
         },
       },
       matcher = {
-        fuzzy = false,
+        fuzzy = true,
         ignorecase = true,
-        smartcase  = false,
-        sort_empty = false,
-        file_pos   = false, -- Support patterns like file:line:col
-        cwd_bonus  = false, -- Bonus for items in current directory
-        frecency   = false, -- frecency bonus
+        smartcase  = true,
+        sort_empty = true,
+        file_pos   = true,
+        cwd_bonus  = true,
+        frecency   = true,
 
       },
       image = {
