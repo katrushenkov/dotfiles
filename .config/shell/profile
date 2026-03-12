@@ -10,10 +10,6 @@ export TERMINAL="footclient"
 export BROWSER="vivaldi"
 export KUBE_EDITOR="nvim"
 
-export HYPRCAP_DIR="$HOME"
-export XDG_VIDEOS_DIR="$HOME"
-export XDG_PICTURES_DIR="$HOME/Pictures"
-
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
