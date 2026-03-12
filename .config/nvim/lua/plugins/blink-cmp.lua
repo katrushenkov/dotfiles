@@ -88,8 +88,8 @@ return {
     keymap = {
       preset = "super-tab",
       ["<C-y>"] = { "select_and_accept" },
-      ["<C-j>"] = { "select_prev", "fallback" },
-      ["<C-k>"] = { "select_next", "fallback" },
+      ["<C-j>"] = { "select_next", "fallback" },
+      ["<C-k>"] = { "select_prev", "fallback" },
 
       ['<C-e>'] = false, -- or {} -- disable map from preset
       -- show list of providers
