@@ -97,3 +97,10 @@ function JOURNAL_ADD()
 end
 
 vim.keymap.set("n", ";j", "<cmd>lua JOURNAL_ADD()<CR>", opts)
+
+vim.keymap.set('c', '<C-j>', function()
+  return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true))
+end, { expr = true, desc = 'cmdline: Next completion item' })
+vim.keymap.set('c', '<C-k>', function()
+  return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true))
+end, { expr = true, desc = 'cmdline: Previous completion item' })
