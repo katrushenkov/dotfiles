@@ -5,8 +5,11 @@ sort_by = "natural"
 sort_dir_first = true
 
 [opener]
+extract = []
 play = [
-	{ run = "mpv %s", orphan = true, for = "unix" },
+	{ run = "mpv %s", orphan = true, for = "unix", desc = "Open with MPV"},
+  { run = 'mpv "$@"', orphan = true, for = "unix", desc = "Open with MPV" },
+  { run = 'vlc "file://$0"', orphan = true, for = "unix", desc = "Open with VLC" }
 ]
 edit = [
 	{ run = "$EDITOR %s", block = true, for = "unix" },
