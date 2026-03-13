@@ -21,6 +21,8 @@ vim.keymap.set({ "n" }, "<leader>q", ":qa!<cr>", { silent = true, desc = "Quit w
 
 vim.keymap.set("n", "zn", "zR") -- open all
 vim.keymap.set("n", "zm", "zM") -- close all
+vim.keymap.set("n", "zo", "zR") -- open all
+vim.keymap.set("n", "zc", "zM") -- close all
 vim.keymap.set("n", ";z", "za")
 
 vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
