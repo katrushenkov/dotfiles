@@ -47,5 +47,5 @@ if [[ -n "$SELECTED_FILE" && -f "$SELECTED_FILE" ]] && [ "$TERM" == "foot" ]; th
     ${EDITOR:-nvim} "$SELECTED_FILE"
 else
     #kitty -e ${EDITOR:-vi} ${SELECTED_FILE}
-    $TERMINAL -e ${EDITOR:-nvim} ${SELECTED_FILE}
+    sudo -A $TERMINAL -e ${EDITOR:-nvim} ${SELECTED_FILE}
 fi
