@@ -21,6 +21,8 @@ vim.keymap.set({ "n" }, "<leader>q", ":qa!<cr>", { silent = true, desc = "Quit w
 
 vim.keymap.set("n", "zn", "zR") -- open all
 vim.keymap.set("n", "zm", "zM") -- close all
+vim.keymap.set("n", "zo", "zR") -- open all
+vim.keymap.set("n", "zc", "zM") -- close all
 vim.keymap.set("n", ";z", "za")
 
 vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
@@ -97,3 +99,10 @@ function JOURNAL_ADD()
 end
 
 vim.keymap.set("n", ";j", "<cmd>lua JOURNAL_ADD()<CR>", opts)
+
+vim.keymap.set('c', '<C-j>', function()
+  return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true))
+end, { expr = true, desc = 'cmdline: Next completion item' })
+vim.keymap.set('c', '<C-k>', function()
+  return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true))
+end, { expr = true, desc = 'cmdline: Previous completion item' })

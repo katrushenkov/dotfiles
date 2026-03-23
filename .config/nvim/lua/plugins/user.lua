@@ -2,14 +2,43 @@ return {
   {
       'MeanderingProgrammer/render-markdown.nvim',
       version = false,
+      enabled = true,
       dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },
       ---@module 'render-markdown'
       ---@type render.md.UserConfig
       opts = {
+        anti_conceal = {
+             enabled = true,
+             disabled_modes = true,
+             ignore = {
+              code_background = true,
+              code_language = true,
+              code_border = false,
+              indent = true,
+              sign = true,
+              virtual_lines = true,
+          },
+      },
+        code = {
+          border = 'none',
+          render_modes = true,
+          style = 'full',
+          sign = false,
+          conceal_delimiters = true,
+
+      },
         heading = {
                width = 'block',
-               left_pad = 2,
+               left_pad = 0,
                right_pad = 4,
+               backgrounds = {
+                          '',
+                          '',
+                          '',
+                          '',
+                          '',
+                          'RenderMarkdownH6Bg',
+                      },
            },
       },
   },
@@ -27,14 +56,6 @@ return {
     version = false,
     lazy = true,
     ft = "markdown",
-    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-    -- event = {
-    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-    --   -- refer to `:h file-pattern` for more examples
-    --   "BufReadPre path/to/my-vault/*.md",
-    --   "BufNewFile path/to/my-vault/*.md",
-    -- },
     opts = {
       legacy_commands = false,
       ui = {
@@ -73,7 +94,11 @@ return {
       -- },
       workspaces = {
         {
-          name = "work",
+          name = "anima",
+          path = "$HOME/.local/src/anima",
+        },
+        {
+          name = "datagrip",
           path = "$HOME/.local/src/datagrip",
         },
       },
@@ -97,12 +122,6 @@ return {
 
   -- You can disable default plugins as follows:
       { "nvim-mini/mini.pairs", enabled = false },
-  --  { "max397574/better-escape.nvim", enabled = false },
-  --  { "kevinhwang91/nvim-ufo",        enabled = false },
-  --  { "MunifTanjim/nui.nvim",         enabled = false },
-  --  { "nvim-neo-tree/neo-tree.nvim",  enabled = false },
-  --  { "s1n7ax/nvim-window-picker",    enabled = false },
-  --  { "stevearc/resession.nvim",      enabled = false },
   --  {
   --    "windwp/nvim-autopairs",
   --    enabled = false,
@@ -132,32 +151,4 @@ return {
   --    end,
   --  },
   { "folke/persistence.nvim", enabled = false },
-  {
-    "folke/flash.nvim",
-    config = function()
-      require("flash").setup {
-        modes = {
-          search = {
-            enabled = false, -- "/" labels mode
-          },
-          char = {
-            keys = { "F", "t", "T", "," }, -- "f" replaced with jump()
-            enabled = true,
-            jump_labels = true,
-          },
-        },
-      }
-    end,
-    keys = {
-      { "f",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      -- { "s", mode = { "n", "x", "o" },
-      --   function() require("flash").jump { search = { mode = function(str) return "\\<" .. str end } } end, desc = "Flash",}, -- match beginnings of the words only
-      -- { "s", mode = { "n", "x", "o" },
-      --   function() require("flash").jump({ pattern = vim.fn.expand("<cword>") }) end, desc = "Flash"}, -- with the word under the cursor
-      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = { "o" },           function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-    },
-  },
 }

@@ -369,7 +369,51 @@ keymap = [
 	{ on = "f", run = "filter", desc = "Filter help items" },
 ]
 
-[[mgr.prepend_keymap]]
-on   = "l"
-run  = "plugin smart-enter"
-desc = "Enter the child directory, or open the file"
+#[[mgr.prepend_keymap]]
+#on   = "l"
+#run  = "plugin smart-enter"
+#desc = "Enter the child directory, or open the file"
+
+[mgr]
+prepend_keymap = [
+  { on = [ "l" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file"},
+  { on = [ "<Space>", "m" ], run = "plugin mount", desc = "Displays mount dialog"},
+  { on = [ "<Space>", 's'], run  = "plugin what-size", desc = "Calc size of selection or cwd" },
+  { on = [ "<Space>", '<S-s>'], run  = "plugin what-size --args='--clipboard'", desc = "Calc size of selection or cwd" },
+  { on = ["<Space>", "<Space>"], desc = "Jump with zoxide", run = "plugin zoxide" },
+
+  { on = "b", run = [ "toggle", "arrow next" ], desc = "Toggle the current selection state" },
+
+  { on = "<S-l>", desc = "Move to the tab on the left", run = "tab_switch 1 --relative" },
+  { on = "<S-h>", desc = "Move to the tab on the right", run = "tab_switch -1 --relative" },
+  { on = ["c", 'm'], desc = "Change file mod", run = "plugin chmod"},
+  { on = ["<Space>", 'c'], desc = "Compress file", run = "plugin ouch" },
+
+  #  # gvfs plugin
+  #  { on = [ "M", "m" ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },
+  #  # This will remount device under cwd (e.g. cwd = /run/user/1000/gvfs/DEVICE_1/FOLDER_A, device mountpoint = /run/user/1000/gvfs/DEVICE_1)
+  #  { on = [ "M", "R" ], run = "plugin gvfs -- remount-current-cwd-device", desc = "Remount device under cwd" },
+  #  { on = [ "M", "u" ], run = "plugin gvfs -- select-then-unmount", desc = "Select device then unmount" },
+  #
+  #  # Add|Edit|Remove mountpoint: smb, sftp, ftp, nfs, dns-sd, dav, davs, dav+sd, davs+sd, afp, afc, sshfs
+  #  # Read more about the schemes here: https://wiki.gnome.org/Projects(2f)gvfs(2f)schemes.html
+  #  # For example: smb://user@192.168.1.2/share, sftp://user@192.168.1.2/, ftp://192.168.1.2/
+  #  # - Scheme/Mount URIs shouldn't contain password.
+  #  # - Google Drive, One drive are mounted automatically via GNOME Online Accounts (GOA). Avoid adding them. Use GOA instead: ./GNOME_ONLINE_ACCOUNTS_GOA.md
+  #  # - MTP, GPhoto2, AFC, Hard disk/drive are listed automatically. Avoid adding them
+  #  { on = [ "M", "a" ], run = "plugin gvfs -- add-mount", desc = "Add a GVFS mount URI" },
+  #  # Edit or remove a GVFS mount URI will clear saved passwords for that mount URI.
+  #  { on = [ "M", "e" ], run = "plugin gvfs -- edit-mount", desc = "Edit a GVFS mount URI" },
+  #  { on = [ "M", "r" ], run = "plugin gvfs -- remove-mount", desc = "Remove a GVFS mount URI" },
+  #
+  #  # Jump
+  #  { on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device", desc = "Select device then jump to its mount point" },
+  #  { on = [ "g", "p" ], run = "plugin gvfs -- jump-back-prev-cwd", desc = "Jump back to the position before jumped to device" },
+  #
+  #  { on = [ "`" ], run = "plugin command-palette", desc = "Command palette (fzf)"}
+
+]
+append_keymap = [
+  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'blobdrop -b \"$@\"'" },
+  { on = ["c", 'k'], desc = "Send using KDE Connect", run = "plugin kdeconnect-send"}
+]
