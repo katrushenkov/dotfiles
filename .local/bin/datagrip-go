@@ -1,3 +1,30 @@
 #!/bin/bash
 
-find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | grep -v "^.git/" | grep -v "^.zettel-notes/" | tofi | xargs -I {} kitty nvim '/home/ser/.local/src/datagrip/{}'
+#find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | grep -v "^.git/" | grep -v "^.zettel-notes/" | tofi | xargs -I {} kitty nvim '/home/ser/.local/src/datagrip/{}'
+
+find ~/.local/src/datagrip ~/.local/src/anima -follow -not -path '\.*' | \
+sed -En 's/\/home\/ser\/\.local\/src\/(datagrip|anima)\///p' | \
+grep -v "^.git/" | grep -v "^.zettel-notes/" | \
+while read -r item; do
+    # Проверяем, является ли элемент директорией
+    if [ -d "$HOME/.local/src/datagrip/$item" ] || [ -d "$HOME/.local/src/anima/$item" ]; then
+        echo "📁 $item/"
+    else
+        echo "📄 $item"
+    fi
+done | \
+tofi | \
+sed -E 's/^[^ ]* //; s/\/$//' | \
+xargs -I {} sh -c '
+    if [ -d "$HOME/.local/src/datagrip/{}" ]; then
+        kitty nnn "$HOME/.local/src/datagrip/{}"
+    elif [ -d "$HOME/.local/src/anima/{}" ]; then
+        kitty nnn "$HOME/.local/src/anima/{}"
+    else
+        if [ -f "$HOME/.local/src/datagrip/{}" ]; then
+            kitty nvim "$HOME/.local/src/datagrip/{}"
+        else
+            kitty nvim "$HOME/.local/src/anima/{}"
+        fi
+    fi
+'
