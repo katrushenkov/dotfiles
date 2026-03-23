@@ -8,5 +8,16 @@
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
   desc = "SetEnglishLayout",
-  command = "silent !${HOME}/.local/bin/hypr-switch-en",
+  callback = function()
+    vim.fn.system(vim.fn.expand("$HOME/.local/bin/hypr-switch-en"))
+  end,
 })
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  pattern = "*",
+  desc = "SetEnglishLayout",
+  callback = function()
+    vim.fn.system(vim.fn.expand("$HOME/.local/bin/hypr-switch-en"))
+  end,
+})
+
+-- command = "silent !${HOME}/.local/bin/hypr-switch-en",
