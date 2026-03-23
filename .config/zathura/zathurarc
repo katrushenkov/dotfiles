@@ -1,3 +1,6 @@
+set font jetbrainsmono normal 9
+set guioptions sv
+
 set statusbar-h-padding 0
 set statusbar-v-padding 0
 set selection-clipboard clipboard
@@ -12,3 +15,11 @@ map i recolor
 map p print
 map g goto top
 map й quit
+
+map bg feedkeys :bjump<Space>
+map ba feedkeys :bmark<Space>
+map bl feedkeys :blist<Return>
+map bd feedkeys :bdelete<Space>
+
+map gj jumplist forward
+map gk jumplist backwards
