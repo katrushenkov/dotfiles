@@ -1,5 +1,5 @@
-setopt +o nomatch # fix for youtube-dl aliases
-setopt autocd     # Automatically cd into typed directory.
+setopt +o nomatch # fix for yt-dlp aliases
+setopt autocd     # automatically cd into typed directory.
 setopt interactive_comments
 
 # History in cache directory
@@ -92,16 +92,15 @@ export SPLIT='v' # to split Kitty vertically
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 
-[[ $(uname) == "Linux" ]] && export NNN_TRASH=2 || export NNN_TRASH="trash" # use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
+# use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
+[[ $(uname) == "Linux" ]] && export NNN_TRASH=2 || export NNN_TRASH="trash" 
 
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
 bindkey -s '^p' 'nvim -c "lua Snacks.picker.projects()"\n'
 
-#bindkey '^[[P' delete-char
-
-#bindkey '^T' transpose-chars
 bindkey '^X' fzf-file-widget
+bindkey '^G' fzf-cd-widget
 
 bindkey -s '^n' 'n\n'
 
