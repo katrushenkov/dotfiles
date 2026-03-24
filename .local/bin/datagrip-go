@@ -6,7 +6,7 @@ find ~/.local/src/datagrip ~/.local/src/anima -follow -not -path '\.*' | \
 sed -En 's/\/home\/ser\/\.local\/src\/(datagrip|anima)\///p' | \
 grep -v "^.git/" | grep -v "^.zettel-notes/" | \
 while read -r item; do
-    # Проверяем, является ли элемент директорией
+
     if [ -d "$HOME/.local/src/datagrip/$item" ] || [ -d "$HOME/.local/src/anima/$item" ]; then
         echo "📁 $item/"
     else
