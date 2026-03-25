@@ -1,17 +1,7 @@
 [[plugin.deps]]
-use = "yazi-rs/plugins:smart-enter"
-rev = "63f9650"
-hash = "a7ab702e1ef0c097defbc976ed34c186"
-
-[[plugin.deps]]
-use = "yazi-rs/plugins:mount"
-rev = "e95c7b3"
-hash = "e1de3054c0d1a2d8dc6f007eadc0fa31"
-
-[[plugin.deps]]
-use = "imsi32/yatline"
-rev = "c5d4b48"
-hash = "e6e98d12b1648d1894c2b560d85eeaa7"
+use = "boydaihungst/gvfs"
+rev = "a908b62"
+hash = "5b6bd533139461c620968c1d860b4dce"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
@@ -19,9 +9,14 @@ rev = "1962818"
 hash = "26db011a778f261d730d4f5f8bf24b3f"
 
 [[plugin.deps]]
-use = "boydaihungst/gvfs"
-rev = "9d64595"
-hash = "b6f691f01a2122bd94866800d4d12a22"
+use = "imsi32/yatline"
+rev = "c5d4b48"
+hash = "e6e98d12b1648d1894c2b560d85eeaa7"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "1962818"
+hash = "187cc58ba7ac3befd49c342129e6f1b6"
 
 [flavor]
 deps = []
