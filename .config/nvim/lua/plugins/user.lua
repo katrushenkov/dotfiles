@@ -86,12 +86,13 @@ return {
         { '<leader>os', '<cmd>ObsidianSearch<cr>',      '[O]sidian [S]earch' },
         { '<leader>ot', '<cmd>ObsidianTags<cr>',        '[O]sidian [T]ags' },
       },
-      -- attachments = {
-      --   img_folder = "assets",
-      --   img_text_func = require("obsidian.builtin").img_text_func,
-      --   img_name_func = function() return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S") end,
-      --   confirm_img_paste = true,
-      -- },
+      attachments = {
+        folder = "obsidian/_resources",
+        --img_text_func = require("obsidian.builtin").img_text_func,
+        --img_name_func = function() return string.format("%s", os.date "%Y%m%d%H%M%S", vim.fn.rand() % 10000) end,
+        img_name_func = function() return string.format("%s", os.date "%Y%m%d%H%M%S") end,
+        confirm_img_paste = false,
+      },
       workspaces = {
         {
           name = "anima",
