@@ -5,12 +5,12 @@ return {
     enabled = true,
     version = false,
     opts = {
-      dashboard = {
-        enabled = false,
-        preset = {
-          header = table.concat({}, "\n"),
-        },
-      },
+--      dashboard = {
+--        enabled = false,
+--        preset = {
+--          header = table.concat({}, "\n"),
+--        },
+--      },
       matcher = {
         fuzzy = true,
         ignorecase = true,
@@ -274,6 +274,7 @@ return {
             },
           },
           grep = {
+            cmd = "rg",
             finder = "grep",
             hidden = true,
             regex = true,
