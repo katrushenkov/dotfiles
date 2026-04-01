@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Use neovim for vim if present.
-[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
 
 # sudo not required for some system commands
 for command in mount umount sv pacman updatedb su shutdown poweroff reboot; do
@@ -54,9 +54,6 @@ alias \
   trem="transmission-remote" \
   sdn="shutdown -h now" \
   e='$EDITOR' \
-  z="zathura-sandbox" \
-  v="nvim" \
-  vi="nvim" \
   lg="lazygit" \
   kx="kubectx" \
   k="kubectl"
@@ -98,7 +95,6 @@ alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
 alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
 alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
 
-alias zathura='zathura-sandbox'
 alias grep='grep --color=auto -iE'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -231,6 +227,7 @@ alias ports='sudo netstat -tulanp'
 alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
 
 if [[ $(uname) == "Linux" ]] ; then
+  alias zathura='zathura-sandbox'
   alias yi="yay -S"
   alias yn="yay -S --noconfirm" # установка без подтверждения.
   alias ys="yay"                # поиск с дальнейшим выбором по цифре.
