@@ -83,7 +83,7 @@ nsel () {
 
 export NNN_OPTS='acdAHU'
 #export NNN_PLUG='p:mocplay;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;t:-!|tree -ps;e:-_ewrap $nnn*'
-export NNN_PLUG='o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug;r:!eval $(which lazygit)*;s:-!/opt/homebrew/bin/nvim ~/anima/draw.md'
+export NNN_PLUG='e:-!nvim*;o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug;r:!eval $(which lazygit)*;s:-!/opt/homebrew/bin/nvim ~/anima/draw.md'
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 #export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO='/tmp/nnn.fifo' # temporary buffer for previews
