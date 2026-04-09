@@ -105,51 +105,6 @@ return {
       },
     },
   },
-  -- {
-  --   "Kurren123/mssql.nvim",
-  --   opts = {},
-  --   config = function()
-  --     require("mssql").setup {
-  --       keymap_prefix = "<leader>m",
-  --       max_rows = 50,
-  --       max_column_width = 50,
-  --       open_results_in = "current_window",
-  --       --connections_file = nil,
-  --     }
-  --     require("mssql").set_keymaps ";m"
-  --   end,
-  --   dependencies = { "folke/which-key.nvim" },
-  -- },
-
-  -- You can disable default plugins as follows:
-      { "nvim-mini/mini.pairs", enabled = false },
-  --  {
-  --    "windwp/nvim-autopairs",
-  --    enabled = false,
-  --    config = function(plugin, opts)
-  --      require "astronvim.plugins.configs.nvim-autopairs" (plugin, opts)
-  --      -- add more custom autopairs configuration such as custom rules
-  --      local npairs = require "nvim-autopairs"
-  --      local Rule = require "nvim-autopairs.rule"
-  --      local cond = require "nvim-autopairs.conds"
-  --      npairs.add_rules(
-  --        {
-  --          Rule("$", "$", { "tex", "latex" })
-  --          -- don't add a pair if the next character is %
-  --              :with_pair(cond.not_after_regex "%%")
-  --          -- don't add a pair if the previous character is xxx
-  --              :with_pair(cond.not_before_regex("xxx", 3))
-  --          -- don't move right when repeat character
-  --              :with_move(cond.none())
-  --          -- don't delete if the next character is xx
-  --              :with_del(cond.not_after_regex "xx")
-  --          -- disable adding a newline when you press <cr>
-  --              :with_cr(cond.none()),
-  --        },
-  --        -- disable for .vim files, but it work for another filetypes
-  --        Rule("a", "a", "-vim")
-  --      )
-  --    end,
-  --  },
+  { "nvim-mini/mini.pairs", enabled = false },
   { "folke/persistence.nvim", enabled = false },
 }
