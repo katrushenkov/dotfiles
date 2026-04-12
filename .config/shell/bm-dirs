@@ -1,19 +1,17 @@
 # You can add comments to these files with #
-#pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
-#vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
 D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 aa	/mnt/main/audio
 ani	$HOME/.local/src/anima
-an /mnt/angar
+an  /mnt/angar
 bb	/mnt/main/books
 bu	/mnt/main/backup
 cac ${XDG_CACHE_HOME:-$HOME/.cache}
 cf  ${XDG_CONFIG_HOME:-$HOME/.config}
 cfs	${XDG_CONFIG_HOME:-$HOME/.config}/shell
 cfzd ${XDG_CONFIG_HOME:-$HOME/.config}/zsh
-cfvd ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
-cfwd ${XDG_CONFIG_HOME:-$HOME/.config}/waybar
-cfhd ${XDG_CONFIG_HOME:-$HOME/.config}/hypr
+cfv ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
+cfw ${XDG_CONFIG_HOME:-$HOME/.config}/waybar
+cfh ${XDG_CONFIG_HOME:-$HOME/.config}/hypr
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 lc  ${XDG_DATA_HOME:-$HOME/.local}
