@@ -52,6 +52,9 @@ vim.keymap.set("n", "J", ":bnext<cr>", { silent = true })
 vim.keymap.set("n", ";h", ":chdir ~/.local/src/datagrip<cr>", { silent = true })
 vim.keymap.set("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Yank the whole buffer" })
 
+
+vim.keymap.set("n",';t', '<cmd>Obsidian tags<cr>', { silent = true, desc = 'Obsidian tags'})
+
 -- Move to the first non-blank character of the line
 vim.keymap.set("n", "0", "^", { noremap = true })
 
