@@ -1,9 +1,17 @@
 set font jetbrainsmono normal 9
+#set font "monospace normal 16"
+
 set guioptions sv
+
+set show-scrollbars True
+set adjust-open width
+#set window-title-basename "true"
+#set recolor true
+
 
 set statusbar-h-padding 0
 set statusbar-v-padding 0
-set selection-clipboard clipboard
+set selection-clipboard "clipboard"
 map u scroll half-up
 map d scroll half-down
 map D toggle_page_mode
@@ -15,6 +23,8 @@ map i recolor
 map p print
 map g goto top
 map й quit
+
+map <Space> toggle_statusbar
 
 map bg feedkeys :bjump<Space>
 map ba feedkeys :bmark<Space>
