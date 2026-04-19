@@ -8,7 +8,7 @@ vim.keymap.set(
   "n",
   "<leader>k",
   '<cmd>lua require("kubectl").toggle({ tab = true })<cr>',
-  { noremap = true, silent = true }
+  opts
 )
 
 vim.keymap.set({"n"},";J","<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
@@ -43,26 +43,25 @@ vim.keymap.set("n", ";g", function()
 end, { desc = "Shortcuts picker" })
 
 vim.keymap.set("n", "<leader>bk", "<Cmd>confirm bd<CR>", { desc = "kill buffer" })
-vim.keymap.set("n", "<S-Tab>", ":bprev<CR>", { noremap = true })
-vim.keymap.set("n", "<Tab>", ":bnext<CR>", { noremap = true })
-vim.keymap.set("n", "<C-c>", ":Gitsigns blame_line<cr>", { silent = true })
-vim.keymap.set("n", ";f", "<leader>f", { silent = true })
-vim.keymap.set("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", { silent = true })
-vim.keymap.set("n", "J", ":bnext<cr>", { silent = true })
-vim.keymap.set("n", ";h", ":chdir ~/.local/src/datagrip<cr>", { silent = true })
+vim.keymap.set("n", "<S-Tab>", ":bprev<CR>", opts)
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", opts)
+vim.keymap.set("n", "<C-c>", ":Gitsigns blame_line<cr>", opts)
+vim.keymap.set("n", ";a", ":edit ~/.local/src/datagrip/index.md<cr>", opts)
+vim.keymap.set("n", "J", ":bnext<cr>", opts)
+vim.keymap.set("n", ";h", ":chdir ~/.local/src/datagrip<cr>", opts)
 vim.keymap.set("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Yank the whole buffer" })
 
 
 vim.keymap.set("n",';t', '<cmd>Obsidian tags<cr>', { silent = true, desc = 'Obsidian tags'})
 
 -- Move to the first non-blank character of the line
-vim.keymap.set("n", "0", "^", { noremap = true })
+vim.keymap.set("n", "0", "^", opts)
 
 -- Sudo write
 vim.api.nvim_create_user_command("W", "silent! write !sudo tee % >/dev/null | edit!", {})
 
 -- Replace ex mode with gq
-vim.keymap.set("n", "Q", "gq", { noremap = true })
+vim.keymap.set("n", "Q", "gq", opts)
 
 function JOURNAL_ADD()
   local date_year = tostring(os.date("%Y"))
@@ -71,7 +70,7 @@ function JOURNAL_ADD()
   -- vim.notify("input ksm:" .. tostring(date_str))
   local file_path = vim.fn.expand("$HOME") .. "/.local/src/datagrip/journal/journal.md"
   local file = io.open(file_path, "r")
-  date_found = false
+  local date_found = false
 
   if file then
     for line in file:lines() do
@@ -97,11 +96,11 @@ function JOURNAL_ADD()
   vim.cmd("normal $")
   vim.cmd("startinsert")
   -- else
-  -- vim.cmd "normal o" -- Если дата добавлена, курсор на строку с датой
+  -- vim.cmd "normal o"
   -- end
 end
 
-vim.keymap.set("n", ";j", "<cmd>lua JOURNAL_ADD()<CR>", opts)
+vim.keymap.set("n", ";j", "<cmd>lua JOURNAL_ADD()<CR>", vim.tbl_extend("force", opts, { desc = "Add journal entry" }))
 
 vim.keymap.set('c', '<C-j>', function()
   return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true))
