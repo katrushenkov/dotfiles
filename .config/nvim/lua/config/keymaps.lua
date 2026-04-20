@@ -13,11 +13,9 @@ vim.keymap.set(
 
 vim.keymap.set({"n"},";J","<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
 
-vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "Save window" })
-
 vim.api.nvim_del_keymap("n", "<leader>qq")
-vim.keymap.set({ "n" }, ";z", ":qa!<cr>", { silent = true, desc = "Quit without save" })
-vim.keymap.set({ "n" }, "<leader>q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
+vim.keymap.set({ "n" }, ";z", "<cmd>qa!<cr>", { silent = true, desc = "Quit without save" })
+vim.keymap.set({ "n" }, "<leader>q", "<cmd>qa<cr>", { silent = true, desc = "Quit without save" })
 
 vim.keymap.set("n", "zn", "zR") -- open all
 vim.keymap.set("n", "zm", "zM") -- close all
@@ -63,7 +61,7 @@ vim.api.nvim_create_user_command("W", "silent! write !sudo tee % >/dev/null | ed
 -- Replace ex mode with gq
 vim.keymap.set("n", "Q", "gq", opts)
 
-function JOURNAL_ADD()
+function journal_add()
   local date_year = tostring(os.date("%Y"))
   local date_month = tostring(os.date("%m"))
   local date_day = tostring(os.date("%d"))
@@ -100,11 +98,8 @@ function JOURNAL_ADD()
   -- end
 end
 
-vim.keymap.set("n", ";j", "<cmd>lua JOURNAL_ADD()<CR>", vim.tbl_extend("force", opts, { desc = "Add journal entry" }))
+vim.keymap.set("n", ";j", "<cmd>lua journal_add()<CR>", vim.tbl_extend("force", opts, { desc = "Add journal entry" }))
 
-vim.keymap.set('c', '<C-j>', function()
-  return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true))
-end, { expr = true, desc = 'cmdline: Next completion item' })
-vim.keymap.set('c', '<C-k>', function()
-  return vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true))
-end, { expr = true, desc = 'cmdline: Previous completion item' })
+vim.keymap.del("n", "<leader>wd")
+vim.keymap.del("n", "<leader>wm")
+vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "Save buffer" })
