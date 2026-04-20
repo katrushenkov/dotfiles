@@ -19,5 +19,3 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
     vim.fn.system(vim.fn.expand("$HOME/.local/bin/hypr-switch-en"))
   end,
 })
-
--- command = "silent !${HOME}/.local/bin/hypr-switch-en",
