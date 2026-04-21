@@ -45,4 +45,3 @@ export SUDO_ASKPASS=~/.local/bin/tofi-askpass
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && setsid -f $HOME/.local/bin/shortcuts >/dev/null 2>&1
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal"
-
