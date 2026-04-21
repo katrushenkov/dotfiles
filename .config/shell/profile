@@ -33,6 +33,7 @@ export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 export ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 export VIMINFO="${XDG_CACHE_HOME:-$HOME/.cache}/nvim/viminfo"
+export GIT_CONFIG_GLOBAL="${XDG_CONFIG_HOME:-$HOME/.config}/.gitconfig"
 
 # Other program settings:
 # export SUDO_ASKPASS="$HOME/.local/bin/dmenupass" # has troubles on macos
