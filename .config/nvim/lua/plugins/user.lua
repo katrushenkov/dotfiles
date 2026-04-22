@@ -7,6 +7,10 @@ return {
       ---@module 'render-markdown'
       ---@type render.md.UserConfig
       opts = {
+        bullet = {
+          enabled = true,
+          icons = { "-", "•", "◦", "▪", "▫" },
+          },
         anti_conceal = {
              enabled = true,
              disabled_modes = true,
