@@ -1,7 +1,8 @@
 #!/bin/bash
 
-
 OS="$(uname -s)"
+
+LAUNCHER="walker --dmenu --height 600 --minheight 600 --maxheight 600 --width 1200"
 
 if [[ "${OS}" == "Linux"* ]]; then
 
@@ -10,7 +11,7 @@ if [[ "${OS}" == "Linux"* ]]; then
     exit 0
   else
     hypr-switch-en
-    wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' )"
+    wtype "$(grep -v "^$" ~/.local/src/datagrip/snippets | $LAUNCHER | awk -F ' #' '{print $1}' )"
     #ydotool type -d 0 -D 0 -H 0 "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' )"
     #ydotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
     #wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | wofi --dmenu -i -W 1900 -M fuzzy)"
