@@ -32,7 +32,11 @@ return {
 
       },
         heading = {
-               width = 'block',
+               sign = true,
+               position = 'overlay', -- 'inline'
+               icons = { '', '', '', '', '', '' },
+               signs = { '󰫎 ' },
+               width = 'full', -- 'block'
                left_pad = 0,
                right_pad = 4,
                backgrounds = {
