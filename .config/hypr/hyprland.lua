@@ -9,6 +9,7 @@ package.path = home .. "/.config/?.lua;" .. (os.getenv("OMARCHY_PATH") or (home 
 local paths = require("default.hypr.paths")
 
 -- Use Omarchy defaults, but don't edit these directly.
+require("default.hypr.helpers")
 require("default.hypr.autostart")
 require("default.hypr.bindings.media")
 require("default.hypr.bindings.clipboard")
@@ -21,6 +22,7 @@ require("default.hypr.windows")
 
 -- Current theme overrides.
 do
+  local paths = require("default.hypr.paths")
   local theme = io.open(paths.config_home .. "/omarchy/current/theme/hyprland.lua", "r")
   if theme then
     theme:close()
