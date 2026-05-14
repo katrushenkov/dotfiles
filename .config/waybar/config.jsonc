@@ -68,7 +68,7 @@
     "on-click": "omarchy-launch-or-focus-tui btop",
     "on-click-right": "alacritty"
   },
-  "clock": {
+  "clock#horizontal": {
     "format": "{:L%d %B - %A %H:%M}",
     //"format-alt": "{:L%d %B W%V %Y}",
     "tooltip": false,
