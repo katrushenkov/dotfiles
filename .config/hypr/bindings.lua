@@ -37,6 +37,8 @@ hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar ; waybar &"), { descrip
 hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "toggle waybar" })
 hl.bind("SUPER + grave", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "toggle waybar" })
 
+hl.bind("SUPER + P", hl.dsp.exec_cmd("tessen -d tofi -a autotype"), { description = "" })
+hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("tessen -d tofi -a copy"), { description = "" })
 hl.bind("SUPER + Y", hl.dsp.exec_cmd("~/.local/bin/snippets-yank"), { description = "" })
 hl.bind("ALT + Y", hl.dsp.exec_cmd("~/.local/bin/snippets-yank"), { description = "" })
 hl.bind("SUPER + I", hl.dsp.exec_cmd("~/.local/bin/snippets-type"), { description = "" })
@@ -47,6 +49,16 @@ hl.bind("SUPER + B", hl.dsp.exec_cmd("~/.local/bin/hypr-switch-en ; ~/.local/bin
 hl.bind("SUPER + D", hl.dsp.exec_cmd("~/.local/bin/tofi_run"), { description = "tofi_run" })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
+
+hl.unbind("SUPER + G")
+hl.bind("SUPER + G", hl.dsp.exec_cmd("~/.local/bin/datagrip-go"), { description = "" })
+-- hl.bind("SUPER + C", hl.dsp.exec_cmd("~/.local/bin/go-ssh"), { description = "" })
+-- hl.bind("SUPER + E", hl.dsp.exec_cmd("~/.local/bin/tofi-edit"), { description = "" })
+-- hl.bind("SUPER + M", hl.dsp.exec_cmd("mousepad"), { description = "" })
+-- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal nnn"), { description = "" })
+hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "" })
+
+hl.unbind("SUPER + T")
 
 hl.unbind("SUPER + W")
 hl.bind("SUPER + W", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser" })
