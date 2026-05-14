@@ -33,7 +33,7 @@ hl.bind("SUPER + SHIFT + ALT + X", hl.dsp.exec_cmd([[omarchy-launch-webapp "http
 -- hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("alacritty -e ssh your-server"), { description = "SSH" })
 hl.bind("SUPER + F10", hl.dsp.exec_cmd("gopass show -o ssh-passphrase | wl-copy | wl-paste"), { description = "copy ssh pass" })
 
-hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar & hyprctl dispatch exec waybar"), { description = "restart waybar" })
+hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar ; waybar &"), { description = "restart waybar" })
 hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "toggle waybar" })
 hl.bind("SUPER + grave", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "toggle waybar" })
 
