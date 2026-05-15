@@ -59,6 +59,7 @@ hl.bind("SUPER + G", hl.dsp.exec_cmd("~/.local/bin/datagrip-go"), { description 
 hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "" })
 
 hl.unbind("SUPER + T")
+hl.unbind("SUPER + P")
 
 hl.unbind("SUPER + W")
 hl.bind("SUPER + W", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser" })
@@ -68,6 +69,7 @@ hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
 
 hl.bind("ALT + W", hl.dsp.exec_cmd("pypr toggle term"), { description = "pypr toggle term" })
 hl.bind("ALT + E", hl.dsp.exec_cmd("~/.local/bin/emoji-paste"), { description = "Emoji paste" })
+
 
 -- Move focus with mainMod + [H, L, K, J]
 hl.unbind("SUPER + L")
