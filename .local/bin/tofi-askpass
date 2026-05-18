@@ -1,0 +1,3 @@
+#!/bin/bash
+# ~/.local/bin/tofi-askpass
+echo -n "🔒 Пароль: " | tofi --prompt-text "" --require-match=false | { read -r password; echo "$password"; }
