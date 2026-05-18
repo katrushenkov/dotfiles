@@ -1,7 +1,7 @@
 # You can add comments to these files with #
 D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 aa	/mnt/main/audio
-ani	$HOME/.local/src/anima
+ani	${GIT_PROJECTS_DIR:-$HOME/.local/src}/anima
 an  /mnt/angar
 bb	/mnt/main/books
 bu	/mnt/main/backup
@@ -15,19 +15,17 @@ cfh ${XDG_CONFIG_HOME:-$HOME/.config}/hypr
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 lc  ${XDG_DATA_HOME:-$HOME/.local}
-gr  $HOME/.local/src/datagrip
-fl  $HOME/.local/src/datagrip/flant
+gr  ${GIT_PROJECTS_DIR:-$HOME/.local/src}/datagrip
+fl  ${GIT_PROJECTS_DIR:-$HOME/.local/src}/datagrip/flant
 h   $HOME
 m   ${XDG_MUSIC_DIR:-$HOME/Music}
 mm	/mnt/main/mus
 mn	/mnt/main
-org $HOME/.local/src/datagrip
 pp	/mnt/main/pic
 #pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
-src $HOME/.local/src
-rr	$HOME/.local/src
-sb	$HOME/.local/bin/statusbar
-sc  $HOME/.local/bin
+rr	${GIT_PROJECTS_DIR:-$HOME/.local/src}
+sb	${XDG_DATA_HOME:-$HOME/.local}/bin/statusbar
+sc  ${XDG_DATA_HOME:-$HOME/.local}/bin
 sca	/mnt/main/scan
 vv	/mnt/main/vid
 #vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
