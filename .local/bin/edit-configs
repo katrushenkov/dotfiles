@@ -12,6 +12,7 @@ CONFIG_FILES=(
     "~/.tmux.conf"
     "~/.gitconfig"
     "/etc/shadow"
+    "/etc/hosts"
     "/etc/default/grub"
     "/boot/grub/grub.cfg"
     "/etc/pacman.conf"
