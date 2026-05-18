@@ -1,0 +1,3 @@
+#!/bin/bash
+
+osascript -e 'Tell application "System Events" to display dialog "Enter your password:" default answer "" with hidden answer' -e 'text returned of result' 2>/dev/null
