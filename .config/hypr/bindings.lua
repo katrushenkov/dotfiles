@@ -53,10 +53,10 @@ hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description
 hl.unbind("SUPER + G")
 hl.bind("SUPER + G", hl.dsp.exec_cmd("~/.local/bin/datagrip-go"), { description = "" })
 -- hl.bind("SUPER + C", hl.dsp.exec_cmd("~/.local/bin/go-ssh"), { description = "" })
--- hl.bind("SUPER + E", hl.dsp.exec_cmd("~/.local/bin/tofi-edit"), { description = "" })
+hl.bind("SUPER + E", hl.dsp.exec_cmd("~/.local/bin/edit-configs"), { description = "Edit confgs" })
 -- hl.bind("SUPER + M", hl.dsp.exec_cmd("mousepad"), { description = "" })
 -- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal nnn"), { description = "" })
-hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "" })
+hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
 
 hl.unbind("SUPER + T")
 hl.unbind("SUPER + P")
