@@ -301,6 +301,7 @@ alias known_hosts="$EDITOR ~/.ssh/known_hosts"
 
 alias -g nu='2>/dev/null'
 alias -g le='|less'
+alias -g L='|less +G'
 alias -g '...'='../..'
 alias -g '....'='../../..'
 alias -g BG='& exit'
@@ -308,16 +309,13 @@ alias -g C='|wc -l'
 alias -g G='|grep -i'
 alias -g H='|head'
 alias -g H1=' --help |& less -r +G'
-alias -g K='|keep'
-alias -g L='|less +G'
 alias -g LL='|& less -r'
-alias -g M='|most'
 alias -g N='&>/dev/null'
 alias -g R='| tr A-z N-za-m'
 alias -g SL='| sort | less'
 alias -g S='| sort'
 alias -g T='|tail'
-alias -g V='| vim -'
+alias -g V='| nvim -'
 
 #alias C for copy stdin
 #alias X for clear + pwd (to clear screen while changing dir)
