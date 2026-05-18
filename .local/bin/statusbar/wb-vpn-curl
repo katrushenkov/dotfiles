@@ -3,7 +3,7 @@
 
 # Variables 
 # Check the public ip which outputs to a file 
-IPExternal=$(curl -s --connect-timeout 60 http://ifconfig.me > ~/.ipCurl.log)
+IPExternal=$(curl -s --connect-timeout 60 http://ifconfig.me > /tmp/.ipCurl.log)
 
 # Functions
 #Check VPN status; see if tun0 existings as a connection
@@ -18,13 +18,13 @@ fi
 
 # Display the VPN IP in the Status bar
 DisplayVPNIP () {
- $IPExternal &&  echo  `cat ~/.ipCurl.log`
+ $IPExternal &&  echo  `cat /tmp/.ipCurl.log`
 }
 
 #Check External IP exisits or if the network is locked
 getIP () {
 if grep -q [0-9] ~/.ipCurl.log; then
- $IPExternal && echo  `cat ~/.ipCurl.log`
+ $IPExternal && echo  `cat /tmp/.ipCurl.log`
 else
   echo   LOCKED 
 fi
