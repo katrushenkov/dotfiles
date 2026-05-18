@@ -44,7 +44,7 @@ export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
 case "$(uname -s)" in
     Darwin*)
-        export SUDO_ASKPASS="$HOME/bin/askpass-mac.sh"
+        export SUDO_ASKPASS="$HOME/.local/bin/askpass-mac"
         ;;
     Linux*)
         export SUDO_ASKPASS="$HOME/.local/bin/tofi-askpass"
