@@ -6,7 +6,7 @@ export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 
 export EDITOR="nvim"
-export TERMINAL="footclient"
+export TERMINAL="ghostty"
 export BROWSER="vivaldi"
 export KUBE_EDITOR="nvim"
 
@@ -41,13 +41,15 @@ export GIT_PROJECTS_DIR="${XDG_DATA_HOME:-$HOME/.local/src}"
 export LESS=-Ri
 export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/.ripgreprc"
 
 case "$(uname -s)" in
     Darwin*)
         export SUDO_ASKPASS="$HOME/.local/bin/askpass-mac"
         ;;
     Linux*)
-        export SUDO_ASKPASS="$HOME/.local/bin/tofi-askpass"
+        export SUDO_ASKPASS="$HOME/.local/bin/walker-askpass"
+        #export SUDO_ASKPASS="$HOME/.local/bin/tofi-askpass"
         ;;
 esac
 
