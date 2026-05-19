@@ -1,0 +1,6 @@
+--hyperlink-format
+default
+--smart-case
+--hidden
+--glob
+!.git
