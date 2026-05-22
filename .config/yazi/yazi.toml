@@ -1,8 +1,10 @@
 [mgr]
-cwd = { fg = "#a7c080" } # Soft Green
 show_hidden = true
+show_symlink = true
 sort_by = "natural"
 sort_dir_first = true
+sort_sensitive = false
+linemode = "size_and_mtime"
 
 [opener]
 extract = []
@@ -32,3 +34,7 @@ rules = [
 	# Multiple openers for a single rule
 	{ url = "*.html", use = [ "open", "edit" ] },
 ]
+
+[preview]
+wrap = "yes"
+image_quality = 50
