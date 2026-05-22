@@ -29,7 +29,6 @@ hl.bind("SUPER + SHIFT + ALT + X", hl.dsp.exec_cmd([[omarchy-launch-webapp "http
 
 -- $sc = ~/.local/bin/
 
--- Add extra bindings below.
 -- hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("alacritty -e ssh your-server"), { description = "SSH" })
 hl.bind("SUPER + F10", hl.dsp.exec_cmd("gopass show -o ssh-passphrase | wl-copy | wl-paste"), { description = "copy ssh pass" })
 
@@ -37,6 +36,7 @@ hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar ; waybar &"), { descrip
 hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "toggle waybar" })
 hl.bind("SUPER + grave", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "toggle waybar" })
 
+hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd("tessen -d tofi -a autotype"), { description = "" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("tessen -d tofi -a copy"), { description = "" })
 hl.bind("SUPER + Y", hl.dsp.exec_cmd("~/.local/bin/snippets-yank"), { description = "" })
@@ -48,6 +48,9 @@ hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd("~/.local/bin/snippets-files"), { d
 hl.bind("SUPER + B", hl.dsp.exec_cmd("~/.local/bin/hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
 hl.bind("SUPER + D", hl.dsp.exec_cmd("~/.local/bin/tofi_run"), { description = "tofi_run" })
 
+hl.unbind("SUPER + N")
+hl.bind("SUPER + N", hl.dsp.exec_cmd("~/.local/bin/ksm/flat-menu"), { description = "new" })
+
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
 
 hl.unbind("SUPER + G")
@@ -56,20 +59,16 @@ hl.bind("SUPER + G", hl.dsp.exec_cmd("~/.local/bin/datagrip-go"), { description 
 hl.bind("SUPER + E", hl.dsp.exec_cmd("~/.local/bin/edit-configs"), { description = "Edit confgs" })
 -- hl.bind("SUPER + M", hl.dsp.exec_cmd("mousepad"), { description = "" })
 -- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal nnn"), { description = "" })
-hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
-
 hl.unbind("SUPER + T")
-hl.unbind("SUPER + P")
+hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
 
 hl.unbind("SUPER + W")
 hl.bind("SUPER + W", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser" })
 
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
 
-
 hl.bind("ALT + W", hl.dsp.exec_cmd("pypr toggle term"), { description = "pypr toggle term" })
 hl.bind("ALT + E", hl.dsp.exec_cmd("~/.local/bin/emoji-paste"), { description = "Emoji paste" })
-
 
 -- Move focus with mainMod + [H, L, K, J]
 hl.unbind("SUPER + L")
@@ -84,7 +83,6 @@ hl.bind("SUPER + SHIFT + H", hl.dsp.window.swap({ direction = "l" }), { descript
 hl.bind("SUPER + SHIFT + L", hl.dsp.window.swap({ direction = "r" }), { description = "Swap window to the right" })
 hl.bind("SUPER + SHIFT + K", hl.dsp.window.swap({ direction = "u" }), { description = "Swap window up" })
 hl.bind("SUPER + SHIFT + J", hl.dsp.window.swap({ direction = "d" }), { description = "Swap window down" })
-
 
 hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
 hl.bind("ALT + J", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
