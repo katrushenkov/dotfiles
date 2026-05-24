@@ -78,6 +78,17 @@ n () {
     }
 }
 
+## TODO: ВОЗМОЖНО ЭТО УЖЕ НЕ НАДО ТАК КАК РАБОТАЕТ НАТИВНО - ПРОВЕРИТЬ
+## The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
+## If NNN_TMPFILE is set to a custom path, it must be exported for nnn to
+## see. To cd on quit only on ^G, remove the "-x" from both lines below,
+## without changing the paths.
+#if test -n "$XDG_CONFIG_HOME"
+#    set -x NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
+#elseif
+#    set -x NNN_TMPFILE "$HOME/.config/nnn/.lastd"
+#fi
+
 nsel () {
     tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
 }
@@ -85,6 +96,11 @@ nsel () {
 export NNN_OPTS='acdAHU'
 #export NNN_PLUG='p:mocplay;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;t:-!|tree -ps;e:-_ewrap $nnn*'
 export NNN_PLUG='e:-!nvim*;o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug;r:!eval $(which lazygit)*;s:-!/opt/homebrew/bin/nvim ~/anima/draw.md'
+export NNN_PAGER='less -Ri'
+#export NNN_PLUG_09='1:a;2:b'
+#export NNN_A2F='a:x;b:y'
+#export NNN_PLUG={$NNN_PLUG_09}';'{$NNN_PLUG_A2F}';'...
+#export NNN_PTERMINAL=kitty
 export NNN_OPENER=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins/nuke
 #export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
 export NNN_FIFO='/tmp/nnn.fifo' # temporary buffer for previews
@@ -92,6 +108,9 @@ export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
 export SPLIT='v' # to split Kitty vertically
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
+# export NNN_FCOLORS="AAAAE631BBBBCCCCDDDD9999"
+#
+
 
 # use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
 [[ $(uname) == "Linux" ]] && export NNN_TRASH=2 || export NNN_TRASH="trash" 
