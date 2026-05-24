@@ -1,3 +1,4 @@
+# include catppuccin-mocha
 set font "jetbrainsmono normal 9"
 #set font "monospace normal 16"
 
