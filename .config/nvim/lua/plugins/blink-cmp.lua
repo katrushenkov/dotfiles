@@ -94,6 +94,7 @@ return {
       ['<C-e>'] = false, -- or {} -- disable map from preset
       -- show list of providers
       ['<C-space>'] = { function(cmp) cmp.show({ providers = { 'snippets' } }) end },
+-- 			['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation', 'fallback' },
     },
   },
   ---@param opts blink.cmp.Config | { sources: { compat: string[] } }
