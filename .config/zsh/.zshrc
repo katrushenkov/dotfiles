@@ -18,12 +18,15 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 autoload -Uz compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
-if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.config/zsh/.zcompdump 2>/dev/null)" ]; then
-    compinit;
-else
-    compinit -C;
-fi;
 _comp_options+=(globdots) # include hidden files
+
+# Cache compinit once per day
+zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+if [[ -f "$zcompdump" && "$(date +'%j')" == "$(stat -f '%Sm' -t '%j' "$zcompdump" 2>/dev/null)" ]]; then
+    compinit -C
+else
+    compinit -d "$zcompdump"
+fi
 
 # vi mode
 bindkey -v
@@ -109,8 +112,6 @@ export SPLIT='v' # to split Kitty vertically
 export NNN_IDLE_TIMEOUT=900
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 # export NNN_FCOLORS="AAAAE631BBBBCCCCDDDD9999"
-#
-
 
 # use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
 [[ $(uname) == "Linux" ]] && export NNN_TRASH=2 || export NNN_TRASH="trash" 
@@ -133,7 +134,7 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
-export STARSHIP_CONFIG=~/.config/zsh/starship.toml
+export STARSHIP_CONFIG="${ZDOTDIR}/starship.toml"
 eval "$(starship init zsh)"
 
 # Load syntax highlighting; should be last.
