@@ -39,7 +39,7 @@ export GIT_PROJECTS_DIR="${XDG_DATA_HOME:-$HOME/.local/src}"
 export LESS=-Ri
 export PYTHON_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/python/history"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
-export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/.ripgreprc"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ripgreprc"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
 case "$(uname -s)" in
