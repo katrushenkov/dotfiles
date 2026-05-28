@@ -1,12 +1,19 @@
 #!/bin/bash
 
 function go-ssh () {
-local selected_host=$(cat ~/.local/src/datagrip/hosts | tofi)
+local selected_line=$(cat ~/.local/src/datagrip/hosts | walker -d --theme=theme-wide -p "Host:")
 
-  if [ -n "$selected_host" ]; then
-    #footclient "ssh -t katrushenkov@${selected_host} 'sudo -i'"
-    echo ${selected_host}
-    footclient ssh -t katrushenkov@${selected_host} 'sudo -i'
+  if [ -n "$selected_line" ]; then
+        if [[ "$selected_line" == *">"* ]]; then
+            selected_host="${selected_line#*>}"
+            # Убираем возможные пробелы в начале
+            selected_host="${selected_host## }"
+        else
+            # Если разделитель не найден, используем всю строку
+            selected_host="$selected_line"
+        fi
+
+    omarchy-launch-terminal bash -c "${selected_host}"
   fi
 }
 
