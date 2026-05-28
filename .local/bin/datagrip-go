@@ -2,6 +2,8 @@
 
 #find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | grep -v "^.git/" | grep -v "^.zettel-notes/" | tofi | xargs -I {} kitty nvim '/home/ser/.local/src/datagrip/{}'
 
+LAUNCHER="walker --dmenu --height 600 --minheight 600 --maxheight 600 --width 1200"
+
 find ~/.local/src/datagrip ~/.local/src/anima -follow -not -path '\.*' | \
 sed -En 's/\/home\/ser\/\.local\/src\/(datagrip|anima)\///p' | \
 grep -v "^.git/" | grep -v "^.zettel-notes/" | \
@@ -13,7 +15,7 @@ while read -r item; do
         echo "📄 $item"
     fi
 done | \
-tofi | \
+$LAUNCHER | \
 sed -E 's/^[^ ]* //; s/\/$//' | \
 xargs -I {} sh -c '
     if [ -d "$HOME/.local/src/datagrip/{}" ]; then
