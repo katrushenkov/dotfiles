@@ -133,6 +133,8 @@
     "format": "{icon}",
     "on-click": "omarchy-launch-audio",
     "on-click-right": "pamixer -t",
+    "on-scroll-up": "omarchy-swayosd-client --output-volume raise",
+    "on-scroll-down": "omarchy-swayosd-client --output-volume lower",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
     "format-muted": "",
