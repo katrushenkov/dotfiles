@@ -16,7 +16,8 @@ customCommands:
 #keybinding:
 #  universal:
 #    return: '<c-\>'
-#
+#    confirmInEditor: [<calt+enter>, <ctrl+s>'
+
 #gui:
 #  theme:
 #    selectedLineBgColor:
