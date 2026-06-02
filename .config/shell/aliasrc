@@ -418,7 +418,7 @@ grib() {
 # macos
 if [[ $(uname) == "Darwin" ]] ; then
   alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
-  alias brew-update='brew update && brew upgrade && brew cleanup'
+  alias brew-update='brew update; brew upgrade; brew autoremove; brew cleanup --prune=1'
   alias sleep="pmset sleep now"
 fi
 
