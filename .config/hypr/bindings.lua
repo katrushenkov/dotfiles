@@ -14,7 +14,10 @@ hl.bind("SUPER + A", hl.dsp.exec_cmd(sc .. "/linkhandler"), { description = "Lin
 hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar ; waybar &"), { description = "Restart waybar" })
 hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "Toggle waybar" })
 
-hl.bind("SUPER + grave", hl.dsp.exec_cmd(sc .. "/ksm/flat-menu"), { description = "Omarchy flat menu" })
+-- hl.unbind("SUPER + grave")
+
+hl.unbind("SUPER + SPACE")
+hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(sc .. "/ksm/flat-menu"), { description = "Omarchy flat menu" })
 
 hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd("tessen -d tofi -a autotype"), { description = "" })
@@ -67,9 +70,27 @@ hl.bind("SUPER + SHIFT + L", hl.dsp.window.swap({ direction = "r" }), { descript
 hl.bind("SUPER + SHIFT + K", hl.dsp.window.swap({ direction = "u" }), { description = "Swap window up" })
 hl.bind("SUPER + SHIFT + J", hl.dsp.window.swap({ direction = "d" }), { description = "Swap window down" })
 
-hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
-hl.bind("ALT + J", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
-hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
+-- hl.bind("ALT + J", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
+-- hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
+
+o.bind("SUPER + BACKSLASH", "Toggle window split", hl.dsp.layout("togglesplit"))
+o.bind("SUPER + T", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
+
+o.bind("SUPER + Z", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
+o.bind("SUPER + N", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
+
+o.bind("SUPER + ALT + h", "Move window to group on left", hl.dsp.window.move({ into_group = "l" }))
+o.bind("SUPER + ALT + l", "Move window to group on right", hl.dsp.window.move({ into_group = "r" }))
+o.bind("SUPER + ALT + k", "Move window to group on top", hl.dsp.window.move({ into_group = "u" }))
+o.bind("SUPER + ALT + j", "Move window to group on bottom", hl.dsp.window.move({ into_group = "d" }))
+
+hl.unbind("SUPER + CTRL + h")
+hl.unbind("SUPER + CTRL + l")
+o.bind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
+o.bind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
+
+o.bind("ALT + h", "Move grouped window focus left", hl.dsp.group.prev())
+o.bind("ALT + l", "Move grouped window focus right", hl.dsp.group.next())
 
 -- hl.bind("ALT + F", hl.dsp.workspace.toggle_special("firefox"), { description = "Toggle scratchpad" })
 -- hl.bind("ALT + SHIFT + F", hl.dsp.window.move({ workspace = "special:firefox", follow = false }), { description = "Move window to scratchpad" })
