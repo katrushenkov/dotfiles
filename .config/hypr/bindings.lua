@@ -82,3 +82,5 @@ hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previou
 
 o.bind("ALT + Right", "Volume up", "omarchy-swayosd-client --output-volume raise", { locked = true, repeating = true })
 o.bind("ALT + Left", "Volume down", "omarchy-swayosd-client --output-volume lower", { locked = true, repeating = true })
+
+o.bind("SUPER + RETURN", "Terminal", { omarchy = "terminal" })
