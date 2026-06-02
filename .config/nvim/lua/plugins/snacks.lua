@@ -5,22 +5,6 @@ return {
     enabled = true,
     version = false,
     opts = {
---      dashboard = {
---        enabled = false,
---        preset = {
---          header = table.concat({}, "\n"),
---        },
---      },
-      matcher = {
-        fuzzy = true,
-        ignorecase = true,
-        smartcase  = true,
-        sort_empty = true,
-        file_pos   = true,
-        cwd_bonus  = true,
-        frecency   = true,
-
-      },
       image = {
         -- force = true,
         -- img_dirs = { "assets" },
@@ -57,11 +41,25 @@ return {
       },
       picker = {
         ui_select = true,
-        prompt = " ",
+        prompt = " ",
+        matcher = {
+          fuzzy = true,
+          ignorecase = true,
+          smartcase  = true,
+          sort_empty = false,
+          file_pos   = true,
+          filename_bonus   = true,
+          cwd_bonus  = true,
+          frecency   = true,
+        },
         formatters = {
+          text = {
+            ft = nil,
+          },
           file = {
             filename_first = false, -- display filename before the file path
-            truncate = 100,         -- truncate the file path to (roughly) this length
+            truncate = "center", -- 100,         -- truncate the file path to (roughly) this length
+            min_width = 40,
             filename_only = false,  -- only show the filename
             icon_width = 2,         -- width of the icon (in characters)
             git_status_hl = true,   -- use the git status highlight group for the filename
@@ -165,6 +163,7 @@ return {
                     cwd = dir,
                     cmd = "rg",
                     args = {
+                      "-i",
                       "-g",
                       "!.git",
                       "-g",
@@ -272,6 +271,18 @@ return {
                 },
               },
             },
+          },
+          files = {
+            cmd = "fd",
+            finder = "files",
+            format = "file",
+            args = { "-i" },
+            hidden = true,
+            show_empty = true,
+            ignored = true,
+            follow = true,
+            --ft = { "md", "txt" },
+            supports_live = true,
           },
           grep = {
             cmd = "rg",
