@@ -80,5 +80,5 @@ hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previou
 
 -- hl.bind("SUPER + H", hl.dsp.exec_cmd("voxtype record toggle"))
 
-o.bind("SUPER + Right", "Volume up", "omarchy-swayosd-client --output-volume raise", { locked = true, repeating = true })
-o.bind("SUPER + Left", "Volume down", "omarchy-swayosd-client --output-volume lower", { locked = true, repeating = true })
+o.bind("ALT + Right", "Volume up", "omarchy-swayosd-client --output-volume raise", { locked = true, repeating = true })
+o.bind("ALT + Left", "Volume down", "omarchy-swayosd-client --output-volume lower", { locked = true, repeating = true })
