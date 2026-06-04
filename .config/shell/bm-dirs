@@ -24,8 +24,8 @@ mn	/mnt/main
 pp	/mnt/main/pic
 #pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
 rr	${GIT_PROJECTS_DIR:-$HOME/.local/src}
-sb	${XDG_DATA_HOME:-$HOME/.local}/bin/statusbar
-sc  ${XDG_DATA_HOME:-$HOME/.local}/bin
+sb	$HOME/.local/bin/statusbar
+sc  $HOME/.local/bin
 sca	/mnt/main/scan
 vv	/mnt/main/vid
 #vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
