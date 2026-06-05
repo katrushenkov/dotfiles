@@ -38,13 +38,11 @@ alias \
   lm='ls -m' \
   lr='ls -R' \
   l.='ls -AF -d .*' \
-  l..='eza -d .* --color=auto'
+  l..='eza -d .* --color=auto' \
   ll='ls -lah --color=auto' \
   lcd="cd" \
-  home="cd ~" \
-  du='du -ch' \
   rgg='rg --files --glob' \
-  cat='bat'
+  cat='bat --paging=never --style=plain'
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -64,7 +62,6 @@ alias \
 alias \
   i2pstart="sudo systemctl start i2prouter.service" \
   i2pstart="sudo systemctl stop i2prouter.service" \
-  dirsize="du -sh" \
   lsblk="lsblk -f -o +SIZE,MODEL" \
   myip="dig +short myip.opendns.com @resolver1.opendns.com" \
   myip2="curl https://ipinfo.io/ip" \
@@ -77,7 +74,6 @@ alias \
   clr="tput reset" \
   q="exit" \
   :q="exit" \
-  quit="exit" \
   dusort='du -hs * . | sort -h' \
   df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h" \
   free="free -mht" \
@@ -87,12 +83,10 @@ alias \
   unmute="pamixer -u" \
   netprocs="lsof -P -i -n" \
   dd='dd status=progress' \
-  sha1='openssl sha1'
-
-# Toggle touchpad
-alias touchoff="xinput set-int-prop 14 'Device Enabled' 8 0"
-alias touchon="xinput set-int-prop 13 'Device Enabled' 8 1"
-alias touchon2="xinput set-int-prop 14 'Device Enabled' 8 1"
+  sha1='openssl sha1' \
+  dirsize="du -sh"
+  #alias dirsize="du -hd 0"   #Измеряет размер директории, в которой находитесь
+  #alias contsize="du -hd 1"  #Измеряет размер всех директорий в директории, в которой находитесь
 
 alias grep='grep --color=auto -iE'
 alias egrep='egrep --color=auto'
@@ -103,6 +97,7 @@ alias xzgrep='xzgrep --color=auto'
 alias zegrep='zegrep --color=auto'
 alias zfgrep='zfgrep --color=auto'
 alias zgrep='zgrep --color=auto'
+alias hgrep="history|grep"
 alias ipa='ip a|grep -w inet'
 alias s='sudo -i'
 alias s-d='systemctl daemon-reload'
@@ -116,14 +111,10 @@ alias passgen="pwgen -Ccsn 32 1"
 alias randpass="openssl rand -base64 20"
 alias nsl="nslookup"
 
-alias top='top -c -n 1'
-
-alias pkg_size="expac -H M '%m\t%n' | sort -h"
-
+alias picresize='convert pic.png -resize 50%%%% pic_resized.png' # reduce 50%
 alias heic_to_png="magick mogrify -monitor -format png *.HEIC"
 alias lazydocker="upscope lazydocker"
 alias path="echo $PATH | tr -s ':' '\n'"
-alias genpass="openssl rand -base64 20"
 
 [[ $TERM == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
@@ -134,9 +125,6 @@ alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME st
 alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME add'
 alias last='git log --oneline --graph --decorate --all'
 
-alias hgrep="history|grep"
-alias fuck='sudo $(history -p !!)'
-#alias fuck="sudo !!"
 alias pls='sudo $(fc -ln -1)'
 
 alias za="zathura --fork"
@@ -152,28 +140,23 @@ alias mpvl='mpv --loop'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+#alias pscgroups='ps xawf -eo pid,user,cgroup,args'
 
 alias more="less -Ri"
 
 # youtube-dl
-alias yta-aac='yt-dlp -c --extract-audio --audio-format aac --output "%(title)s.%(ext)s"'
-alias yta-best='yt-dlp -c --extract-audio --audio-format best --output "%(title)s.%(ext)s"'
-alias yta-flac='yt-dlp -c --extract-audio --audio-format flac --output "%(title)s.%(ext)s"'
-alias yta-m4a='yt-dlp -c --extract-audio --audio-format m4a --output "%(title)s.%(ext)s"'
-alias yta-mp3='yt-dlp -c --extract-audio --audio-format mp3 --output "%(title)s.%(ext)s"'
-alias yta-opus='yt-dlp -c --extract-audio --audio-format opus --output "%(title)s.%(ext)s" '
-alias yta-vorbis='yt-dlp -c --extract-audio --audio-format vorbis --output "%(title)s.%(ext)s"'
-alias yta-wav='yt-dlp -c --extract-audio --audio-format wav --output "%(title)s.%(ext)s"'
+alias yta-aac='yt-dlp -c -x --audio-format aac --output "%(title)s.%(ext)s"'
+alias yta-best='yt-dlp -c -x --audio-format best --output "%(title)s.%(ext)s"'
+alias yta-flac='yt-dlp -c -x --audio-format flac --output "%(title)s.%(ext)s"'
+alias yta-m4a='yt-dlp -c -x --audio-format m4a --output "%(title)s.%(ext)s"'
+alias yta-mp3='yt-dlp -c -x --audio-format mp3 --output "%(title)s.%(ext)s"'
+alias yta-opus='yt-dlp -c -x --audio-format opus --output "%(title)s.%(ext)s" '
+alias yta-vorbis='yt-dlp -c -x --audio-format vorbis --output "%(title)s.%(ext)s"'
+alias yta-wav='yt-dlp -c -x --audio-format wav --output "%(title)s.%(ext)s"'
 alias ytv-best='yt-dlp -c -f bestvideo+bestaudio --output "%(title)s.%(ext)s" '
 alias ytv-360='yt-dlp -c -f 18 --output "%(title)s.%(ext)s"'
 alias yta='yt-dlp -c -x -f ba --audio-format opus --output "%(title)s.%(ext)s"'
 alias ytt="yt-dlp --no-download --write-thumbnail "
-#alias youtube-audio='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0'
-#alias ytmp3='youtube-dl --add-metadata -x --audio-format mp3 --output "%(title)s.%(ext)s" --audio-quality 0 --add-metadata --exec "mv {} /home/adri/Music/" $(xclip -o) && notify-send "youtube-dl" "download complete !"'
-
-# recent installed packages
-alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
-alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
 
 # get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
@@ -200,9 +183,6 @@ alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 # add new fonts
 alias update-fc='sudo fc-cache -fv'
 
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-
 # check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
@@ -219,19 +199,19 @@ alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Publi
 
 alias openports='netstat -nape --inet'
 alias ports='sudo netstat -tulanp'
-
-# reduce 50%
-alias picresize='convert pic.png -resize 50%%%% pic_resized.png'
+#killport(){
+#    kill -9 $(lsof -t -i:$1)
+#}
 
 if [[ $(uname) == "Linux" ]] ; then
   alias zathura='zathura-sandbox'
   alias yi="yay -S"
-  alias yn="yay -S --noconfirm" # установка без подтверждения.
-  alias ys="yay"                # поиск с дальнейшим выбором по цифре.
-  alias ysn="yay --noconfirm"   # поиск с дальнейшим выбором по цифре, без подтверждения.
-  alias yc="yay -Sc"            # частичная очистка кэша.
-  alias yy="yay -Syy"           # синхронизация баз зеркал.
-  alias yu="yay -Syu"           # обновление
+  alias yn="yay -S --noconfirm"
+  alias ys="yay"                # search with number selection
+  alias ysn="yay --noconfirm"
+  alias yc="yay -Sc"            # partially clear cache
+  alias yy="yay -Syy"           # mirrors sync
+  alias yu="yay -Syu"
   alias yun="yay -Syu --noconfirm"
   alias yr="yay -R"
   alias yrn="yay -R --noconfirm"
@@ -244,16 +224,23 @@ if [[ $(uname) == "Linux" ]] ; then
   alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # cleanup orphaned packages
   alias clean="sudo pacman -Scc"
   alias unlock="sudo rm /var/lib/pacman/db.lck"
+  alias pkg_size="expac -H M '%m\t%n' | sort -h"
+  # recent installed packages
+  alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+  alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
+
   #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
   #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
   #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
+
+  ## To see if a command is aliased, a file, or a built-in command
+  alias checkcommand="type -t"
 fi
 
 alias wg='wget -O /dev/null'
 
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
 alias renew="source ~/.zprofile"
-alias known_hosts="$EDITOR ~/.ssh/known_hosts"
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
@@ -261,9 +248,9 @@ alias known_hosts="$EDITOR ~/.ssh/known_hosts"
 #alias rsync-synchronize="rsync -avzu --delete --progress -h"
 #alias rscp="rsync --partial --progress --archive"
 
-#ftext () {
-#grep -iIHrn --color=always "$1" . | less -R -r
-#}
+ftext () {
+    rg -i --color=always --line-number --with-filename --no-heading "$1" . | less -R -r
+}
 
 #duplicatefind ()
 #{
@@ -283,19 +270,13 @@ alias known_hosts="$EDITOR ~/.ssh/known_hosts"
 #} '
 #}
 
-#generateqr ()
-#{
-#printf "$@" | curl -F-=\<- qrenco.de
-#}
+generateqr () {
+  printf "$@" | curl -F-=\<- qrenco.de
+}
 
-#(which exa > /dev/null) && alias lg="exa -lTa --git"
-#lth() {
-#	ls -t $@ | head
-#}
-
-#Man() {
-#	nvim "man://man" "++Man $*"
-#}
+man() {
+    nvim -c "Man $*" -c "only"
+}
 
 alias -g nu='2>/dev/null'
 alias -g le='|less'
@@ -338,9 +319,6 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 ## Count all files (recursively) in the current folder
 #alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
 
-## To see if a command is aliased, a file, or a built-in command
-#alias checkcommand="type -t"
-
 ## Show current network connections to the server
 #alias ipview="netstat -anpl | grep :80 | awk {'print \$5'} | cut -d\":\" -f1 | sort | uniq -c | sort -n | sed -e 's/^ *//' -e 's/ *\$//'"
 
@@ -366,8 +344,6 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 # Parenting changes perms on root
 #alias chown='chown --preserve-root' alias chmod='chmod --preserve-root' alias chgrp='chgrp --preserve-root'
 
-#alias pscgroups='ps xawf -eo pid,user,cgroup,args'
-
 #alias sshfs='sshfs -o idmap=user -o uid=1000 -o gid=100'
 
 #alias ping='ping -OD'
@@ -386,26 +362,12 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 
 #alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
 
-#alias dirsize="du -hd 0"   #Измеряет размер директории, в которой находитесь
-#alias contsize="du -hd 1"  #Измеряет размер всех директорий в директории, в которой находитесь
-
 #socks="ssh -D 8008 emerald -fN"
 
 #gc="grep -c"
 #gi="grep -i"
 #gw="grep -w"
 
-#killport(){
-#    kill -9 $(lsof -t -i:$1)
-#}
-
-#dsh(){
-#    docker exec -ti $1 /bin/bash
-#}
-
-#dip(){
-#   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
-#}
 
 grib() {
   if [[ -n "$1" ]]; then
@@ -450,3 +412,9 @@ alias di="docker images"
 alias drmi="docker rmi"
 alias drm="docker rm"
 alias dlast="docker ps -lq" # get last docker container id
+dsh(){
+    docker exec -ti $1 /bin/bash
+}
+dip(){
+   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+}
