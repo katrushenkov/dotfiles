@@ -9,7 +9,7 @@ for command in mount umount sv pacman updatedb su shutdown poweroff reboot; do
 done; unset command
 
 se() {
-  choice="$(find ~/.local/bin/ -mindepth 1 -printf '%P\n' | fzf)"
+  choice="$(find ~/.local/bin/ -mindepth 1 -exec basename {} \; | fzf)"
   [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
