@@ -1,0 +1,71 @@
+#!/bin/bash
+
+INPUT_FILE="${1:-bookmarks}"
+OUTPUT_FILE="${2:-yazi-bookmarks}"
+
+if [ ! -f "$INPUT_FILE" ]; then
+    echo "Ошибка: Файл $INPUT_FILE не найден!"
+    exit 1
+fi
+
+expand_vars() {
+    local str="$1"
+    local var_name var_value
+
+    while IFS='=' read -r var_name var_value; do
+        if [[ -n "$var_name" && -n "$var_value" ]]; then
+            var_value_escaped=$(printf '%s\n' "$var_value" | sed 's/[\/&]/\\&/g')
+            str=$(echo "$str" | sed "s/\${$var_name}/$var_value_escaped/g")
+            str=$(echo "$str" | sed "s/\${$var_name:-[^}]*}/$var_value_escaped/g")
+            str=$(echo "$str" | sed "s/$$var_name\b/$var_value_escaped/g")
+        fi
+    done < <(env | grep -E '^(HOME|USER|XDG_|GIT_)')
+
+    echo "$str"
+}
+
+cat > "$OUTPUT_FILE" << 'EOF'
+require("bunny"):setup({
+  hops = {
+EOF
+
+while IFS= read -r line; do
+    [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+
+    line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+    if [[ "$line" =~ ^([^[:space:]]+)[[:space:]]+(.*)$ ]]; then
+        key="${BASH_REMATCH[1]}"
+        path_raw="${BASH_REMATCH[2]}"
+
+        path_expanded=$(eval echo "\"$path_raw\"")
+
+        if [[ ${#key} -eq 1 ]]; then
+            key_lua="\"$key\""
+        else
+            key_lua="{"
+            for ((i=0; i<${#key}; i++)); do
+                [[ $i -gt 0 ]] && key_lua="$key_lua,"
+                key_lua="$key_lua \"${key:$i:1}\""
+            done
+            key_lua="$key_lua }"
+        fi
+
+        path_escaped=$(printf '%s\n' "$path_expanded" | sed 's/"/\\"/g')
+
+        printf '    { key = %-12s, path = "%s", desc = "%s" },\n' \
+               "$key_lua" "$path_escaped" "$key" >> "$OUTPUT_FILE"
+
+        # echo "  ✓ $key → $path_expanded" >&2
+    fi
+done < "$INPUT_FILE"
+
+cat >> "$OUTPUT_FILE" << 'EOF'
+  },
+  desc_strategy = "path",
+  ephemeral = true,
+  tabs = true,
+  notify = false,
+  fuzzy_cmd = "fzf",
+})
+EOF
