@@ -7,9 +7,11 @@
 	showUntrackedFiles = no
 [alias]
   b   = browse
+  br  = branch -vv
   d   = diff
   ds  = diff --staged
   dw  = diff --color-words
+	ff  = merge --ff-only
   s   = status -s -b
   c   = commit -v
   co  = checkout
@@ -21,6 +23,40 @@
   td  = merge --no-ff
   sm  = submodule
   smu = submodule foreach git pull origin master
+  st  = status
+  todo = grep -E '(FIXME|TODO) '
+  diffs = diff --patch-with-stat
+	mrproper = clean -xdff
+	format-patch = -M -C
+	br-format-patch = format-patch -M -n -s
+  logs = log --stat --decorate
+	logl = log --abbrev-commit --pretty=oneline --decorate
+	logp = log --abbrev-commit --patch-with-stat --decorate
+	logg = log --abbrev-commit --pretty=oneline --all --decorate --graph
   ap  = add -u -p
   pr  = "!f() { git fetch origin refs/pull/$1/head:pr/$1 && git co pr/$1; } ; f"
   up  = "!git fetch upstream && git rebase upstream/master"
+	rup = "!git remote update && git --no-pager branch -vv"
+ 
+	 # apple-pick taken from http://joeshaw.org/2010/06/22/667
+	 apple-pick = !sh -c 'git rev-list --reverse "$@" | xargs -n1 git cherry-pick' -
+	 apple-pickx = !sh -c 'git rev-list --reverse "$@" | xargs -n1 git cherry-pick -x' -
+
+   # snapshot/assume/unassume/assumed taken from
+   # http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+   assume   = update-index --assume-unchanged
+   unassume = update-index --no-assume-unchanged
+   assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+
+   # From https://davidwalsh.name/awesome-git-aliases
+	 force-push = push --force-with-lease
+[fetch]
+	fsckObjects = true
+[transfer]
+	fsckObjects = true
+[receive]
+	fsckObjects = true
+[fetch "fsck"]
+	zeroPaddedFilemode = ignore
+	badTimezone = ignore
