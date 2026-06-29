@@ -4,8 +4,8 @@ k9s:
     apply-prod: sh kubectl apply -f deployments/prod/
   liveViewAutoRefresh: false
   refreshRate: 2
-  apiServerTimeout: 15s
-  maxConnRetry: 5
+  apiServerTimeout: 120s
+  maxConnRetry: 10
   readOnly: false
   noExitOnCtrlC: false
   portForwardAddress: localhost
