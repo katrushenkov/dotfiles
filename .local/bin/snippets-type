@@ -12,9 +12,6 @@ if [[ "${OS}" == "Linux"* ]]; then
   else
     hypr-switch-en
     wtype "$(grep -v "^$" ~/.local/src/datagrip/snippets | $LAUNCHER | awk -F ' #' '{print $1}' )"
-    #ydotool type -d 0 -D 0 -H 0 "$(grep -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' )"
-    #ydotool type "$(grep -v '^#' ~/.local/src/datagrip/snippets | dmenu -i -l 50)"
-    #wtype "$(grep -v '^#' ~/.local/src/datagrip/snippets | wofi --dmenu -i -W 1900 -M fuzzy)"
   fi
 
 elif [[ "${OS}" == "Darwin"* ]]; then
@@ -25,7 +22,6 @@ elif [[ "${OS}" == "Darwin"* ]]; then
 
   #/opt/homebrew/bin/rg -v '^#' ~/.local/src/datagrip/snippets | /opt/homebrew/bin/choose -w 80% -n 20 -u -z -b fabd2f -c 427b58 -s 17 <&0 | pbcopy -
 
-# Возвращаем фокус к предыдущему приложению
 osascript <<EOF
 tell application "$previous_app"
     activate

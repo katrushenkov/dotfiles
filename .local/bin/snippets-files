@@ -1,10 +1,12 @@
 #!/bin/bash
 
-if pgrep -x "tofi"; then
-  wtype -k ESCAPE
-  exit 0
-else
-  find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
-fi
+OS="$(uname -s)"
 
-#find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | tofi | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
+LAUNCHER="walker --dmenu --height 600 --minheight 600 --maxheight 600 --width 1200"
+
+#if pgrep -x "tofi"; then
+#  wtype -k ESCAPE
+#  exit 0
+#else
+  fd . --type f --follow ~/.local/src/datagrip | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | $LAUNCHER | xargs -I {} cat '/home/ser/.local/src/datagrip/{}' | wl-copy
+#fi
