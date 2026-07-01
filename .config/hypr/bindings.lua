@@ -70,8 +70,8 @@ hl.bind("SUPER + SHIFT + L", hl.dsp.window.swap({ direction = "r" }), { descript
 hl.bind("SUPER + SHIFT + K", hl.dsp.window.swap({ direction = "u" }), { description = "Swap window up" })
 hl.bind("SUPER + SHIFT + J", hl.dsp.window.swap({ direction = "d" }), { description = "Swap window down" })
 
--- hl.bind("ALT + J", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
--- hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
+hl.bind("ALT + J", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
+hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
 
 o.bind("SUPER + BACKSLASH", "Toggle window split", hl.dsp.layout("togglesplit"))
 o.bind("SUPER + T", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
@@ -105,3 +105,4 @@ o.bind("ALT + Right", "Volume up", "omarchy-swayosd-client --output-volume raise
 o.bind("ALT + Left", "Volume down", "omarchy-swayosd-client --output-volume lower", { locked = true, repeating = true })
 
 o.bind("SUPER + RETURN", "Terminal", { omarchy = "terminal" })
+
