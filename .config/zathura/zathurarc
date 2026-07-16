@@ -4,7 +4,7 @@ set font "jetbrainsmono normal 9"
 
 set guioptions sv
 
-set adjust-open width
+set adjust-open best-fit
 #set window-title-basename "true"
 #set recolor true
 
@@ -24,6 +24,7 @@ map g goto top
 map й quit
 
 map <Space> toggle_statusbar
+map f toggle_fullscreen
 
 map bg feedkeys :bjump<Space>
 map ba feedkeys :bmark<Space>
