@@ -1,4 +1,3 @@
 -- Extra autostart processes.
-hl.on("hyprland.start", function()
-  hl.exec_cmd("uwsm-app -- pypr")
-end)
+-- o.launch_on_start("my-service")
+o.launch_on_start("uwsm-app -- pypr")
