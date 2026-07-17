@@ -6,7 +6,7 @@
   "height": 26,
   "width": 0,
   "modules-left": ["custom/omarchy", "hyprland/workspaces"],
-  "modules-center": ["clock#horizontal", "clock#vertical", "custom/weather", "custom/wb-vpn-curl", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
+  "modules-center": ["clock#horizontal", "custom/weather", "custom/wb-vpn-curl", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"], // "clock#vertical" near horizontal commented
   "modules-right": [
     "tray", //"group/tray-expander",
     "bluetooth",
