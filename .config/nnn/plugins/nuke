@@ -94,7 +94,7 @@ handle_pdf() {
     #if [ "$GUI" -ne 0 ] && type zathura >/dev/null 2>&1; then
     if type zathura >/dev/null 2>&1; then
         #nohup zathura "${FPATH}" >/dev/null 2>&1 &
-        zathura "${FPATH}" # swallow the nnn
+        zathura --fork "${FPATH}"
         exit 0
     elif type pdftotext >/dev/null 2>&1; then
         ## Preview as text conversion

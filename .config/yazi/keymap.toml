@@ -7,6 +7,10 @@ prepend_keymap = [
   { on = [ "<Space>", 's'], run  = "plugin what-size", desc = "Calc size of selection or cwd" },
   { on = [ "<Space>", '<S-s>'], run  = "plugin what-size --args='--clipboard'", desc = "Calc size of selection or cwd" },
 
+  { on = [";","g"], run = "plugin bunny fuzzy", desc = "Start bunny.yazi fuzzy search"},
+  { on = ["'"], run = "plugin bunny fuzzy", desc = "Start bunny.yazi fuzzy search"},
+  #{ on = [";","g"], run = "plugin bunny", desc = "Start bunny.yazi"},
+
   { on = ["n", "d"], desc = "Create dir", run = "create --dir" },
 
   { on = "b", run = [ "toggle", "arrow next" ], desc = "Toggle the current selection state" },

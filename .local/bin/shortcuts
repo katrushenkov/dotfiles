@@ -34,6 +34,9 @@ chmod +x $nnn_shortcuts
 sh $nnn_shortcuts
 rm $nnn_shortcuts
 
+# create bookmarks for yazi
+shortcuts-yazi "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs" "${XDG_CONFIG_HOME:-$HOME/.config}/yazi/bookmarks.toml" 
+
 # Format the `files` file in the correct syntax and sent it to both configs.
 eval "echo \"$(cat "$bmfiles")\"" | \
 awk "!/^\s*#/ && !/^\s*\$/ {gsub(\"\\\s*#.*$\",\"\");
