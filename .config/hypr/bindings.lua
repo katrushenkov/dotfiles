@@ -47,8 +47,14 @@ hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "To
 
 -- hl.unbind("SUPER + grave")
 
+-- hl.unbind("SUPER + SPACE")
+-- hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(sc .. "/ksm/flat-menu"), { description = "Omarchy flat menu" })
+
+hl.unbind("SUPER + D")
+o.bind("SUPER + D", "Launch apps", "omarchy-shell shell toggle omarchy.launcher \"{}\"")
+
 hl.unbind("SUPER + SPACE")
-hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(sc .. "/ksm/flat-menu"), { description = "Omarchy flat menu" })
+o.bind("SUPER + SPACE", "Omarchy menu", "omarchy-menu toggle root")
 
 hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd("tessen -d tofi -a autotype"), { description = "" })
@@ -61,7 +67,7 @@ hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."/snippets-type"), { description 
 hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "/snippets-files"), { description = "" })
 
 hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .."/hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
-hl.bind("SUPER + D", hl.dsp.exec_cmd(sc .. "/tofi_run"), { description = "tofi_run" })
+-- hl.bind("SUPER + D", hl.dsp.exec_cmd(sc .. "/tofi_run"), { description = "tofi_run" })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
 
