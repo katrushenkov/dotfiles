@@ -74,7 +74,7 @@ hl.bind("SUPER + SHIFT + J", hl.dsp.window.swap({ direction = "d" }), { descript
 -- hl.bind("ALT + K", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
 
 o.bind("SUPER + BACKSLASH", "Toggle window split", hl.dsp.layout("togglesplit"))
-o.bind("SUPER + T", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
+o.bind("SUPER + grave", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 
 o.bind("SUPER + Z", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 o.bind("SUPER + N", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
