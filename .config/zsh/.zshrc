@@ -2,6 +2,8 @@ setopt +o nomatch # fix for yt-dlp aliases
 setopt autocd     # automatically cd into typed directory.
 setopt interactive_comments
 setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_DUPS
+setopt HIST_SAVE_NO_DUPS
 setopt no_flow_control
 
 # History in cache directory
