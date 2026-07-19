@@ -258,7 +258,7 @@ keymap = [
 
 [pick]
 prepend_keymap = [
-  { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" # open file & close yazi
+  { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" }, # open file & close yazi
 ]
 
 keymap = [
