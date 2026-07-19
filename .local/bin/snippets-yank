@@ -4,13 +4,21 @@ OS="$(uname -s)"
 
 if [[ "${OS}" == "Linux"* ]]; then
 
-  if pgrep -x "tofi"; then
-    wtype -k ESCAPE
+  lock_file="${XDG_RUNTIME_DIR:-/tmp}/snippets-yank.lock"
+
+  if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+    omarchy-menu close
     exit 0
-  else
-    hypr-switch-en
-    rg -v '^#' ~/.local/src/datagrip/snippets | tofi | awk -F ' #' '{print $1}' | wl-copy -n
   fi
+
+  echo $$ > "${lock_file}"
+  trap 'rm -f "${lock_file}"' EXIT
+
+  hypr-switch-en
+
+  rg -v '^#|^$' ~/.local/src/datagrip/snippets \
+    | omarchy-menu-select "Snippet" -- --width 1792 --height 720 \
+    | awk -F ' #' '{print $1}' | wl-copy -n
 
 elif [[ "${OS}" == "Darwin"* ]]; then
 
