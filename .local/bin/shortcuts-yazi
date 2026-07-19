@@ -4,8 +4,11 @@ INPUT_FILE="${1:-bookmarks}"
 OUTPUT_FILE="${2:-yazi-bookmarks}"
 
 if [ ! -f "$INPUT_FILE" ]; then
-    echo "Ошибка: Файл $INPUT_FILE не найден!"
-    exit 1
+    echo "File $INPUT_FILE not found, creating an empty file..."
+    touch "$INPUT_FILE" || {
+        echo "Error: Failed to create $INPUT_FILE!"
+        exit 1
+    }
 fi
 
 expand_vars() {

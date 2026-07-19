@@ -1,12 +1,5 @@
 #!/bin/bash
 
-#if pgrep -x "walker"; then
-#  wtype -k ESCAPE
-#  exit 0
-#fi
-
-LAUNCHER="omarchy-launch-walker --dmenu --height 600 --minheight 600 --maxheight 600 --width 1200"
-
 bookmark="$(wl-paste )"
 file="$HOME/bookmarks.txt"
 fileother="$HOME/bookmarks_other.txt"
@@ -60,14 +53,11 @@ case $1 in
 	;;
 	-so)
 		# search other and open
-		#selection=$(cat ~/bookmarks_other.txt | bemenu -i -l 30 -p '>' --no-exec --scrollbar autohide | cut -d'|' -f 1)
-    selection=$(cat ~/.local/src/datagrip/bookmarks-web.txt | grep -v "^$" | $LAUNCHER | cut -d '|' -f 1)
+    selection=$(grep -v "^$" ~/.local/src/datagrip/bookmarks-web.txt | omarchy-menu-select "Bookmark" -- --width 1792 --height 720 | cut -d '|' -f 1)
     if [ -n "$selection" ]; then
     		vivaldi "$selection";
 		    ~/.local/bin/focus-or-start "vivaldi-stable" "vivaldi-stable" "2";
 		fi
-		#wtype "$selection"
-		#vivaldi "$selection"
 	;;
 	-am)	
 		# add manually
