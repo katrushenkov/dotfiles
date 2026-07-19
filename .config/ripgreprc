@@ -1,6 +1,29 @@
---hyperlink-format
-default
+# ripgrep configuration
+
+# Display options
+--hyperlink-format=default
+--color=always
+--trim
+
+# Search behavior
 --smart-case
 --hidden
---glob
-!.git
+--max-columns=200
+
+# Exclude common directories and files
+--glob=!.git
+--glob=!node_modules
+--glob=!.venv
+--glob=!__pycache__
+--glob=!.pytest_cache
+--glob=!.mypy_cache
+--glob=!.ruff_cache
+--glob=!dist
+--glob=!build
+--glob=!*.egg-info
+--glob=!.next
+--glob=!.svelte-kit
+--glob=!coverage
+
+# Uncomment to see search statistics
+# --stats
