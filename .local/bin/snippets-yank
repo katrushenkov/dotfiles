@@ -16,9 +16,16 @@ if [[ "${OS}" == "Linux"* ]]; then
 
   hypr-switch-en
 
-  rg -v '^#|^$' ~/.local/src/datagrip/snippets \
+  selection="$(rg -v '^#|^$' ~/.local/src/datagrip/snippets \
     | omarchy-menu-select "Snippet" -- --width 1792 --height 720 \
-    | awk -F ' #' '{print $1}' | wl-copy -n
+    | awk -F ' #' '{print $1}')"
+
+  [[ -n "${selection}" ]] || exit 0
+
+  printf '%s' "${selection}" | wl-copy -n
+
+  sleep 0.15
+  wtype -M shift -k Insert -m shift 2>/dev/null || true
 
 elif [[ "${OS}" == "Darwin"* ]]; then
 
