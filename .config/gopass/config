@@ -1,0 +1,2 @@
+[mounts]
+	path = /home/ser/.local/share/password-store
