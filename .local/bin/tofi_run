@@ -1,4 +1,0 @@
-#!/bin/bash
-
-hypr-switch-en > /dev/null
-walker -m runner
