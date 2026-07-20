@@ -1,32 +1,62 @@
 #!/bin/bash
 
-#find ~/.local/src/datagrip -type f -follow -not -path '\.*' | sed -En 's/\/home\/ser\/\.local\/src\/datagrip\///p' | grep -v "^.git/" | grep -v "^.zettel-notes/" | tofi | xargs -I {} kitty nvim '/home/ser/.local/src/datagrip/{}'
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/datagrip-go.lock"
 
-LAUNCHER="walker --dmenu --height 600 --minheight 600 --maxheight 600 --width 1200"
+if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+  omarchy-menu close
+  exit 0
+fi
 
-find ~/.local/src/datagrip ~/.local/src/anima -follow -not -path '\.*' | \
-sed -En 's/\/home\/ser\/\.local\/src\/(datagrip|anima)\///p' | \
-grep -v "^.git/" | grep -v "^.zettel-notes/" | \
-while read -r item; do
+echo $$ > "${lock_file}"
+trap 'rm -f "${lock_file}"' EXIT
 
-    if [ -d "$HOME/.local/src/datagrip/$item" ] || [ -d "$HOME/.local/src/anima/$item" ]; then
-        echo "📁 $item/"
-    else
-        echo "📄 $item"
-    fi
-done | \
-$LAUNCHER | \
-sed -E 's/^[^ ]* //; s/\/$//' | \
-xargs -I {} sh -c '
-    if [ -d "$HOME/.local/src/datagrip/{}" ]; then
-        kitty nnn "$HOME/.local/src/datagrip/{}"
-    elif [ -d "$HOME/.local/src/anima/{}" ]; then
-        kitty nnn "$HOME/.local/src/anima/{}"
-    else
-        if [ -f "$HOME/.local/src/datagrip/{}" ]; then
-            kitty nvim "$HOME/.local/src/datagrip/{}"
+hypr-switch-en
+
+datagrip_dir="$HOME/.local/src/datagrip"
+anima_dir="$HOME/.local/src/anima"
+
+# omarchy-menu-select passes the whole option list as a single exec argument,
+# which hits Linux's per-argument size limit (128K) once the tree gets large.
+# These directories are too big to flatten recursively; keep them as a single
+# entry each and let nnn handle browsing inside them.
+skip_dirs=(2ch-scripts unnecessary sc tips flant)
+
+fd_exclude_args=()
+for d in "${skip_dirs[@]}"; do
+  fd_exclude_args+=(--exclude "${d}")
+done
+
+list_entries() {
+  local base="$1"
+  fd . --follow "${fd_exclude_args[@]}" "${base}" | sed -En "s#^${base}/##p"
+  for d in "${skip_dirs[@]}"; do
+    [[ -d "${base}/${d}" ]] && echo "${d}"
+  done
+}
+
+selection="$(
+  { list_entries "${datagrip_dir}"; list_entries "${anima_dir}"; } \
+    | sort -u \
+    | while read -r item; do
+        if [[ -d "${datagrip_dir}/${item}" || -d "${anima_dir}/${item}" ]]; then
+          echo "📁 ${item}/"
         else
-            kitty nvim "$HOME/.local/src/anima/{}"
+          echo "📄 ${item}"
         fi
-    fi
-'
+      done \
+    | omarchy-menu-select "Go" -- --width 1792 --height 720
+)"
+
+[[ -n "${selection}" ]] || exit 0
+
+item="$(sed -E 's/^[^ ]* //; s/\/$//' <<< "${selection}")"
+
+if [[ -d "${datagrip_dir}/${item}" ]]; then
+  omarchy launch terminal nnn "${datagrip_dir}/${item}"
+elif [[ -d "${anima_dir}/${item}" ]]; then
+  omarchy launch terminal nnn "${anima_dir}/${item}"
+elif [[ -f "${datagrip_dir}/${item}" ]]; then
+  omarchy launch terminal nvim "${datagrip_dir}/${item}"
+else
+  omarchy launch terminal nvim "${anima_dir}/${item}"
+fi
