@@ -464,7 +464,9 @@ handle_mime() {
 
         ## Text
         text/* | */xml)
-            $EDITOR "${FPATH}"
+            nvim "${FPATH}"
+            # $EDITOR "${FPATH}"
+
             exit 0;;
             ## Syntax highlight
             # if [[ "$( stat --printf='%s' -- "${FPATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
