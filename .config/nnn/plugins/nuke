@@ -202,7 +202,7 @@ handle_extension() {
 
         ## Log files
         log)
-            "$EDITOR" "${FPATH}"
+            $EDITOR "${FPATH}"
             exit 0;;
 
         ## BitTorrent
@@ -464,7 +464,7 @@ handle_mime() {
 
         ## Text
         text/* | */xml)
-            "$EDITOR" "${FPATH}"
+            $EDITOR "${FPATH}"
             exit 0;;
             ## Syntax highlight
             # if [[ "$( stat --printf='%s' -- "${FPATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
