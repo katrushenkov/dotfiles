@@ -29,7 +29,7 @@
 -- o.bind("SUPER + PERIOD", nil, { omarchy = "walker -m symbols" })
 
 
-local sc = os.getenv("HOME") .. "/.local/bin"
+local sc = os.getenv("HOME") .. "/.local/bin/"
 
 -- Application bindings.
 hl.bind("SUPER + ALT + RETURN", hl.dsp.exec_cmd([[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" bash -c "tmux attach || tmux new -s Work"]]), { description = "Tmux" })
@@ -39,16 +39,18 @@ hl.bind("SUPER + SHIFT + D", hl.dsp.exec_cmd("omarchy-launch-tui lazydocker"), {
 hl.bind("SUPER + SHIFT + G", hl.dsp.exec_cmd([[omarchy-launch-or-focus ^signal$ "uwsm-app -- signal-desktop"]]), { description = "Signal" })
 hl.bind("SUPER + SHIFT + O", hl.dsp.exec_cmd([[omarchy-launch-or-focus ^obsidian$ "uwsm-app -- obsidian"]]), { description = "Obsidian" })
 
+hl.unbind("SUPER + G")
+hl.bind("SUPER + G", hl.dsp.exec_cmd(sc .. "datagrip-go"), { description = "" })
+
+hl.unbind("SUPER + SHIFT + G")
+o.bind("SUPER + SHIFT + G", "Toggle window grouping", hl.dsp.group.toggle())
+
+
 hl.unbind("SUPER + A")
-hl.bind("SUPER + A", hl.dsp.exec_cmd(sc .. "/linkhandler"), { description = "Linkhandler" })
+hl.bind("SUPER + A", hl.dsp.exec_cmd(sc .. "linkhandler"), { description = "Linkhandler" })
 
 hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar ; waybar &"), { description = "Restart waybar" })
 hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "Toggle waybar" })
-
--- hl.unbind("SUPER + grave")
-
--- hl.unbind("SUPER + SPACE")
--- hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(sc .. "/ksm/flat-menu"), { description = "Omarchy flat menu" })
 
 hl.unbind("SUPER + D")
 o.bind("SUPER + D", "Launch apps", "omarchy-shell shell toggle omarchy.launcher \"{}\"")
@@ -60,27 +62,23 @@ hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd("tessen -d tofi -a autotype"), { description = "" })
 -- hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("tessen -d tofi -a copy"), { description = "" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("walker -m menus:gopass"), { description = "" })
-hl.bind("SUPER + Y", hl.dsp.exec_cmd(sc .. "/snippets-yank"), { description = "" })
-hl.bind("ALT + Y", hl.dsp.exec_cmd(sc .. "/snippets-yank"), { description = "" })
-hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "/snippets-type"), { description = "" })
-hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."/snippets-type"), { description = "" })
-hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "/snippets-files"), { description = "" })
+hl.bind("SUPER + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "" })
+hl.bind("ALT + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "" })
+hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "" })
+hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."snippets-type"), { description = "" })
+hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "" })
 
-hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .."/hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
--- hl.bind("SUPER + D", hl.dsp.exec_cmd(sc .. "/tofi_run"), { description = "tofi_run" })
+hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .."hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
-
--- hl.unbind("SUPER + G")
--- hl.bind("SUPER + G", hl.dsp.exec_cmd(sc .. "/datagrip-go"), { description = "" })
 
 hl.unbind("SUPER + S")
 hl.unbind("SUPER + ALT + S")
 hl.bind("SUPER + S", hl.dsp.exec_cmd("~/.local/bin/go-ssh"), { description = "Connect via ssh" })
 
-hl.bind("SUPER + E", hl.dsp.exec_cmd(sc .. "/edit-configs"), { description = "Edit confgs" })
+hl.bind("SUPER + E", hl.dsp.exec_cmd(sc .. "edit-configs"), { description = "Edit confgs" })
 -- hl.bind("SUPER + M", hl.dsp.exec_cmd("mousepad"), { description = "" })
--- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal nnn"), { description = "" })
+-- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal n"), { description = "" })
 
 hl.unbind("SUPER + T")
 hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
@@ -129,17 +127,9 @@ o.bind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor =
 o.bind("ALT + h", "Move grouped window focus left", hl.dsp.group.prev())
 o.bind("ALT + l", "Move grouped window focus right", hl.dsp.group.next())
 
--- hl.bind("ALT + F", hl.dsp.workspace.toggle_special("firefox"), { description = "Toggle scratchpad" })
--- hl.bind("ALT + SHIFT + F", hl.dsp.window.move({ workspace = "special:firefox", follow = false }), { description = "Move window to scratchpad" })
+hl.bind("ALT + F", hl.dsp.workspace.toggle_special("firefox"), { description = "Toggle firefox workspace" })
+hl.bind("ALT + SHIFT + F", hl.dsp.window.move({ workspace = "special:firefox", follow = false }), { description = "Move window to firefox workspace" })
 
--- Overwrite existing bindings with hl.unbind() first if needed.
--- hl.unbind("SUPER + SPACE")
--- hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("omarchy-menu"), { description = "Omarchy menu" })
-
--- hl.bind("SUPER + H", hl.dsp.exec_cmd("voxtype record toggle"))
-
-o.bind("ALT + Right", "Volume up", "omarchy-swayosd-client --output-volume raise", { locked = true, repeating = true })
-o.bind("ALT + Left", "Volume down", "omarchy-swayosd-client --output-volume lower", { locked = true, repeating = true })
-
--- o.bind("SUPER + RETURN", "Terminal", { omarchy = "terminal" })
+o.bind("ALT + Right", "Volume up", "omarchy-audio-output-volume raise", { locked = true, repeating = true })
+o.bind("ALT + Left", "Volume down", "omarchy-audio-output-volume lower", { locked = true, repeating = true })
 
