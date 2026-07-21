@@ -28,29 +28,16 @@
 -- o.bind("SUPER + H", nil, "voxtype record toggle")
 -- o.bind("SUPER + PERIOD", nil, { omarchy = "walker -m symbols" })
 
-
 local sc = os.getenv("HOME") .. "/.local/bin/"
 
--- Application bindings.
-hl.bind("SUPER + ALT + RETURN", hl.dsp.exec_cmd([[uwsm-app -- xdg-terminal-exec --dir="$(omarchy-cmd-terminal-cwd)" bash -c "tmux attach || tmux new -s Work"]]), { description = "Tmux" })
-hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("omarchy-launch-browser --private"), { description = "Browser (private)" })
-hl.bind("SUPER + SHIFT + ALT + M", hl.dsp.exec_cmd("omarchy-launch-or-focus-tui cliamp"), { description = "Music TUI" })
-hl.bind("SUPER + SHIFT + D", hl.dsp.exec_cmd("omarchy-launch-tui lazydocker"), { description = "Docker" })
-hl.bind("SUPER + SHIFT + G", hl.dsp.exec_cmd([[omarchy-launch-or-focus ^signal$ "uwsm-app -- signal-desktop"]]), { description = "Signal" })
-hl.bind("SUPER + SHIFT + O", hl.dsp.exec_cmd([[omarchy-launch-or-focus ^obsidian$ "uwsm-app -- obsidian"]]), { description = "Obsidian" })
-
 hl.unbind("SUPER + G")
-hl.bind("SUPER + G", hl.dsp.exec_cmd(sc .. "datagrip-go"), { description = "" })
+hl.bind("SUPER + G", hl.dsp.exec_cmd(sc .. "go-datagrip"), { description = "Search digital brain" })
 
 hl.unbind("SUPER + SHIFT + G")
 o.bind("SUPER + SHIFT + G", "Toggle window grouping", hl.dsp.group.toggle())
 
-
 hl.unbind("SUPER + A")
 hl.bind("SUPER + A", hl.dsp.exec_cmd(sc .. "linkhandler"), { description = "Linkhandler" })
-
-hl.bind("ALT + SHIFT + B", hl.dsp.exec_cmd("pkill waybar ; waybar &"), { description = "Restart waybar" })
-hl.bind("ALT + B", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"), { description = "Toggle waybar" })
 
 hl.unbind("SUPER + D")
 o.bind("SUPER + D", "Launch apps", "omarchy-shell shell toggle omarchy.launcher \"{}\"")
@@ -59,9 +46,7 @@ hl.unbind("SUPER + SPACE")
 o.bind("SUPER + SPACE", "Omarchy menu", "omarchy-menu toggle root")
 
 hl.unbind("SUPER + P")
-hl.bind("SUPER + P", hl.dsp.exec_cmd("tessen -d tofi -a autotype"), { description = "" })
--- hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("tessen -d tofi -a copy"), { description = "" })
-hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("walker -m menus:gopass"), { description = "" })
+hl.bind("SUPER + P", hl.dsp.exec_cmd(sc .. "gopass-autotype"), { description = "" })
 hl.bind("SUPER + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "" })
 hl.bind("ALT + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "" })
 hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "" })
