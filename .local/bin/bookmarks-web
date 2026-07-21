@@ -55,7 +55,7 @@ case $1 in
 		# search other and open
     selection=$(grep -v "^$" ~/.local/src/datagrip/bookmarks-web.txt | omarchy-menu-select "Bookmark" -- --width 1792 --height 720 | cut -d '|' -f 1)
     if [ -n "$selection" ]; then
-    		vivaldi "$selection";
+    		#vivaldi "$selection";
 		    ~/.local/bin/focus-or-start "vivaldi-stable" "vivaldi-stable" "2";
 		fi
 	;;
