@@ -4,8 +4,6 @@
 
 OS="$(uname -s)"
 
-LAUNCHER="walker --dmenu --height 600 --minheight 600 --maxheight 600 --width 1200"
-
 if [[ "${OS}" == "Linux"* ]]; then
 
   hypr-switch-en
@@ -18,16 +16,33 @@ if [[ "${OS}" == "Linux"* ]]; then
  
   case "$url" in
   	*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtube.com/shorts*|*youtu.be*|*hooktube.com*|*bitchute.com*|*videos.lukesmith.xyz*|*odysee.com*)
-      [ -f "$XDG_DATA_HOME/cookies.txt" ] || ( notify-send "You need to extract cookies for yt-dlp" "File cookies.txt not found \n Use Get cookies.txt LOCALLY for browser" && exit 0 )
-      selection=$(echo -e "\
-      yta-opus
-      ytv-360
-      mpv" | omarchy-launch-walker --dmenu --width 1195 --minheight 1 --maxheight 600 -p "Action…" 2>/dev/null)
-     [[ -z "$selection" ]] && exit 0
+      selection=$(omarchy-menu-select "Action…" "yta-opus" "ytv-360" "mpv") || exit 0
 
      case "$selection" in
-      "yta-opus") omarchy-launch-terminal yt-dlp -c --extract-audio --audio-format opus --output "%(title)s.%(ext)s" --cookies $XDG_DATA_HOME/cookies.txt -P $HOME "$url" ;;
-      "ytv-360") omarchy-launch-terminal yt-dlp -c -f 18 --output "%(title)s.%(ext)s" --cookies $XDG_DATA_HOME/cookies.txt -P $HOME "$url" ;;
+      "yta-opus"|"ytv-360")
+        bmdirs="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs"
+        dir_options=$(eval "echo \"$(cat "$bmdirs" 2>/dev/null)\"" | awk '
+          !/^[[:space:]]*#/ && !/^[[:space:]]*$/ {
+            line=$0
+            sub(/[[:space:]]*#.*$/,"",line)
+            match(line, /^[^[:space:]]+/)
+            key=substr(line,RSTART,RLENGTH)
+            path=substr(line,RLENGTH+1)
+            gsub(/^[[:space:]]+/,"",path)
+            if (path != "") print key" -> "path
+          }')
+
+        if [ -n "$dir_options" ]; then
+          dir_selection=$(printf '%s\n' "$dir_options" | omarchy-menu-select "Download to…") || exit 0
+          download_dir="${dir_selection#* -> }"
+        else
+          download_dir="$HOME"
+        fi
+
+        case "$selection" in
+         "yta-opus") omarchy-launch-terminal yt-dlp -c --extract-audio --audio-format opus --output "%(title)s.%(ext)s" -P "$download_dir" "$url" ;;
+         "ytv-360") omarchy-launch-terminal yt-dlp -c -f 18 --output "%(title)s.%(ext)s" -P "$download_dir" "$url" ;;
+        esac ;;
       "mpv") setsid -f mpv -quiet "$url" >/dev/null 2>&1 ;;
      esac ;;
   	*png|*jpg|*jpe|*jpeg|*gif|*webp)
@@ -39,7 +54,6 @@ if [[ "${OS}" == "Linux"* ]]; then
   	*)
   		[ -f "$url" ] && setsid -f "$TERMINAL" -e "$EDITOR" "$url" >/dev/null 2>&1 || setsid -f "$BROWSER" "$url" >/dev/null 2>&1
   esac
-      #wtype "$(grep -v "^$" ~/.local/src/datagrip/snippets | $LAUNCHER | awk -F ' #' '{print $1}' )"
 
 elif [[ "${OS}" == "Darwin"* ]]; then
 
