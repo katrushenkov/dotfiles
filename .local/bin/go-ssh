@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function go-ssh () {
-local selected_line=$(cat ~/.local/src/datagrip/hosts | walker -d --theme=theme-wide -p "Host:")
+local selected_line=$(grep -v '^\s*$' ~/.local/src/datagrip/hosts | omarchy-menu-select "Host:" -- --width 1100 --height 720)
 
   if [ -n "$selected_line" ]; then
         if [[ "$selected_line" == *">"* ]]; then
