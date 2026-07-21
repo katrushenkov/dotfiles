@@ -89,7 +89,7 @@ hl.bind("SUPER + W", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = 
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
 
 hl.bind("ALT + RETURN", hl.dsp.exec_cmd("pypr toggle term"), { description = "Pypr toggle term" })
-hl.bind("ALT + E",      hl.dsp.exec_cmd("omarchy-launch-walker -m symbols"), { description = "Emoji yank" })
+hl.bind("ALT + E",      hl.dsp.exec_cmd("omarchy-shell shell toggle local.emojis"), { description = "Emojis" })
 
 -- Move focus with mainMod + [H, L, K, J]
 hl.unbind("SUPER + L")

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "local.emojis",
+  "name": "Emojis",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Search, copy, and type emojis",
+  "kinds": [
+    "overlay"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "overlay": "Emojis.qml"
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.emojis",
+    "clonedFromPath": "/usr/share/omarchy/shell/plugins/emojis"
+  }
+}
