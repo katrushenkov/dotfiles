@@ -295,9 +295,7 @@ alias -g SL='| sort | less'
 alias -g S='| sort'
 alias -g T='|tail'
 alias -g V='| nvim -'
-
-#alias C for copy stdin
-#alias X for clear + pwd (to clear screen while changing dir)
+alias -g CP='|wl-copy'
 
 #alias _='sudo'$
 #alias _i='sudo -i'$
@@ -306,10 +304,6 @@ alias -g V='| nvim -'
 ## alias sudo='sudo '
 ## alias doas='doas '
 #alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
-
-#alias netcon='sudo lsof -n -P -i +c 15'
-#alias clr='clear;echo "Currently logged in on $(tty), as $USER in directory $PWD."'
-#alias psref="gpg-connect-agent RELOADAGENT /bye"
 
 ## Search running processes
 alias p="ps aux | grep "
@@ -363,11 +357,6 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 #alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
 
 #socks="ssh -D 8008 emerald -fN"
-
-#gc="grep -c"
-#gi="grep -i"
-#gw="grep -w"
-
 
 grib() {
   if [[ -n "$1" ]]; then
