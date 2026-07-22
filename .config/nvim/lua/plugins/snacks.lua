@@ -6,8 +6,6 @@ return {
     version = false,
     opts = {
       image = {
-        -- force = true,
-        -- img_dirs = { "assets" },
         doc = {
           -- enable image viewer for documents
           -- a treesitter parser must be available for the enabled languages.
@@ -76,9 +74,6 @@ return {
               ["<Esc>"] = { "close", mode = { "n", "i" } },
               ["<c-f>"] = { "flash", mode = { "n", "i" } },
               ["f"] = { "flash" },
-              -- ["<Esc>"] = "cancel", -- going to normal mode
-              -- ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
-              -- ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
               ["<c-x>"] = { "edit_split", mode = { "i", "n" } },
               ["<c-u>"] = {
                 "preview_scroll_up",
@@ -223,30 +218,11 @@ return {
             dev = { "~/.local/src" },
             patterns = { "=src", ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "Makefile", "config" },
             confirm = "load_session",
-            --confirm = function(picker, item)
-            --  picker:close()
-            --  if item then
-            --    vim.schedule(function()
-            --      Snacks.picker.recent {
-            --        filter = {
-            --          cwd = Snacks.git.get_root(item.text),
-            --        },
-            --        finder = "recent_files",
-            --        format = "file",
-            --      }
-            --    end)
-            --  end
-            --end,
-            -- patterns = {},
             recent = true,
             matcher = {
               frecency = false,
               sort_empty = false,
               cwd_bonus = false,
-            },
-            -- sort = { fields = { "score:desc", "idx" } },
-            projects = {
-              -- "~/.local/src/datagrip",
             },
             win = {
               preview = { minimal = true },
@@ -370,27 +346,12 @@ return {
           end
           if #explorer_pickers == 0 then Snacks.picker.explorer() end
         end,
+        desc = "Toggle Snacks Explorer",
       },
-      --{
-      --  "<leader>o",
-      --  function()
-      --    local explorer_pickers = Snacks.picker.get { source = "explorer" }
-      --    for _, v in pairs(explorer_pickers) do
-      --      if v:is_focused() then
-      --        v:close()
-      --      else
-      --        v:focus()
-      --      end
-      --    end
-      --    if #explorer_pickers == 0 then Snacks.picker.explorer() end
-      --  end,
-      --  desc = "Toggle Snacks Explorer"
-      --},
       { ";s",         function() Snacks.scratch() end,         desc = "Toggle Scratch Buffer" },
       { ";l",         function() Snacks.scratch.select() end,  desc = "Select Scratch Buffer" },
       { ";d",         function() Snacks.dim() end,             desc = "dim active scope" },
       { ";D",         function() Snacks.dim.disable() end,     desc = "dim disable" },
-      --{ ";e",         function() Snacks.explorer.reveal() end, desc = "dim active scope" },
 
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end,  desc = "Buffers" },
@@ -409,7 +370,6 @@ return {
       { "<leader>gd", function() Snacks.picker.git_diff() end,     desc = "Git Diff (Hunks)" },
       { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
       -- Grep
-      { "<leader>sb", function() Snacks.picker.lines() end,        desc = "Buffer Lines" },
       { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
       { "<leader>sg", function() Snacks.picker.grep() end,         desc = "Grep" },
       { "<leader>sw", function() Snacks.picker.grep_word() end,    desc = "Visual selection or word", mode = { "n", "x" } },
@@ -445,12 +405,8 @@ return {
       { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 
       { "<leader>r",  function() Snacks.picker.resume() end,                desc = "Snacks Resume" },
-      -- { "<leader>F", function() Snacks.zen.zoom() end, desc = "Zoom Window" },
-      -- { "<C-E>", function() Snacks.image.hover() end, desc = "Zoom Window" },
-      { "<C-E>",      function() Snacks.image.health() end,                 desc = "Zoom Window" },
-
+      { "<C-E>",      function() Snacks.image.health() end,                 desc = "Image Health" },
       { "<C-H>",      function() Snacks.zen.zen() end,                      desc = "Toggle Zen Mode" },
-      --{ "<leader>S", function() Snacks.picker() end, desc = "Snacks Pickers" },
     },
   },
 }
