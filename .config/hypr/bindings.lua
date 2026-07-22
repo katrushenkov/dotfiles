@@ -71,6 +71,20 @@ hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file man
 hl.unbind("SUPER + W")
 hl.bind("SUPER + W", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser" })
 
+-- Physical CapsLock+G (remapped via keyd, see /etc/keyd/default.conf: hold
+-- CapsLock + G sends the KEY_F13 evdev code, since tapping CapsLock alone
+-- still sends Escape). The default xkb keymap maps that keycode to the
+-- keysym XF86Tools rather than F13, so we bind on that instead.
+hl.bind("XF86Tools", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser (CapsLock+G)" })
+
+-- More CapsLock+<key> chords, same mechanism (see /etc/keyd/default.conf
+-- [capsmode] layer). Each keyd layer key sends a distinct evdev F-key code,
+-- which the default xkb keymap turns into an XF86 keysym instead of the
+-- literal Fxx name. Just replace the TODO command with whatever you want:
+hl.bind("XF86Launch5", hl.dsp.exec_cmd("TODO: command for CapsLock+V"), { description = "TODO (CapsLock+V)" })
+hl.bind("XF86Launch6", hl.dsp.exec_cmd("TODO: command for CapsLock+T"), { description = "TODO (CapsLock+T)" })
+hl.bind("XF86Launch7", hl.dsp.exec_cmd("TODO: command for CapsLock+M"), { description = "TODO (CapsLock+M)" })
+
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
 
 hl.bind("ALT + RETURN", hl.dsp.exec_cmd("pypr toggle term"), { description = "Pypr toggle term" })

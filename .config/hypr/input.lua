@@ -8,7 +8,9 @@ hl.config({
 --     -- Use multiple keyboard layouts and switch between them with Left Alt + Right Alt.
        kb_layout = "us,ru",
 --     kb_options = "compose:caps,grp:alts_toggle",
-       kb_options = "caps:escape,grp:ctrl_shift_toggle",
+       -- caps:escape removed: CapsLock remapping is now handled by keyd
+       -- (tap = Escape, hold+G = F13 -> browser), see /etc/keyd/default.conf
+       kb_options = "grp:ctrl_shift_toggle",
 --
 --     -- Use a specific keyboard variant if needed (e.g. intl for international keyboards).
 --     kb_variant = "intl",
