@@ -297,6 +297,17 @@ return {
         },
       },
       explorer = {},
+      zen = {
+        toggles = {
+          dim = true,
+          line_number = false,
+          git_signs = false,
+          mini_diff_signs = false,
+          diagnostics = false,
+          inlay_hints = false,
+        },
+        show = { statusline = false, tabline = false },
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
@@ -379,7 +390,7 @@ return {
       { ";l",         function() Snacks.scratch.select() end,  desc = "Select Scratch Buffer" },
       { ";d",         function() Snacks.dim() end,             desc = "dim active scope" },
       { ";D",         function() Snacks.dim.disable() end,     desc = "dim disable" },
-      { ";e",         function() Snacks.explorer.reveal() end, desc = "dim active scope" },
+      --{ ";e",         function() Snacks.explorer.reveal() end, desc = "dim active scope" },
 
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end,  desc = "Buffers" },
@@ -438,7 +449,7 @@ return {
       -- { "<C-E>", function() Snacks.image.hover() end, desc = "Zoom Window" },
       { "<C-E>",      function() Snacks.image.health() end,                 desc = "Zoom Window" },
 
-      { "<C-H>",      function() Snacks.zen.zen() end,                      desc = "Zoom Window" },
+      { "<C-H>",      function() Snacks.zen.zen() end,                      desc = "Toggle Zen Mode" },
       --{ "<leader>S", function() Snacks.picker() end, desc = "Snacks Pickers" },
     },
   },
