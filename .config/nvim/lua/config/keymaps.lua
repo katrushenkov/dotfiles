@@ -62,24 +62,27 @@ local function journal_add()
   local date_year = tostring(os.date("%Y"))
   local date_month = tostring(os.date("%m"))
   local date_day = tostring(os.date("%d"))
+  local date_str = date_year .. "-" .. date_month .. "-" .. date_day
   local file_path = vim.fn.expand("$HOME") .. "/.local/src/datagrip/journal/journal.md"
   local read_file = io.open(file_path, "r")
   local date_found = false
+  local needs_newline = false
 
   if read_file then
-    for line in read_file:lines() do
-      if line:match(date_year .. "%-" .. date_month .. "%-" .. date_day) then
-        date_found = true
-      end
-    end
+    local content = read_file:read("*a")
     read_file:close()
+    needs_newline = content ~= "" and content:sub(-1) ~= "\n"
+    date_found = content:find(date_str, 1, true) ~= nil
   else
     print("Не удалось открыть файл: " .. file_path)
   end
 
   local file = io.open(file_path, "a")
+  if needs_newline then
+    file:write("\n")
+  end
   if not date_found then
-    file:write("\n" .. "[" .. date_year .. "-" .. date_month .. "-" .. date_day .. "]")
+    file:write("[" .. date_str .. "]")
     file:write("\n -  ")
   else
     file:write(" -  ")
