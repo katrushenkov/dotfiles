@@ -13,21 +13,18 @@ vim.keymap.set(
 
 vim.keymap.set({"n"},";J","<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
 
-vim.api.nvim_del_keymap("n", "<leader>qq")
-vim.keymap.set({ "n" }, ";z", "<cmd>qa!<cr>", { silent = true, desc = "Quit without save" })
-vim.keymap.set({ "n" }, "<leader>q", "<cmd>qa<cr>", { silent = true, desc = "Quit without save" })
+vim.keymap.del("n", "<leader>qq")
+vim.keymap.set({ "n" }, "<leader>q", "<cmd>qa<cr>", { silent = true, desc = "Quit all" })
 
 vim.keymap.set("n", "zn", "zR") -- open all
-vim.keymap.set("n", "zm", "zM") -- close all
 vim.keymap.set("n", "zo", "zR") -- open all
+vim.keymap.set("n", "zm", "zM") -- close all
 vim.keymap.set("n", "zc", "zM") -- close all
 vim.keymap.set("n", ";z", "za")
 
 vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
---vim.keymap.set({ "n" }, "<leader>q", "<Cmd>qa<CR>", { desc = "Quit all" })
 
 -- Tab navigation
-vim.keymap.set({"n"}, "<s-tab>", "<cmd>tabnew %<cr>", opts)
 vim.keymap.set({"n"}, "<s-h>", "<cmd>tabp<cr>", opts)
 vim.keymap.set({"n"}, "<s-l>", "<cmd>tabn<cr>", opts)
 
@@ -61,25 +58,24 @@ vim.api.nvim_create_user_command("W", "silent! write !sudo tee % >/dev/null | ed
 -- Replace ex mode with gq
 vim.keymap.set("n", "Q", "gq", opts)
 
-function journal_add()
+local function journal_add()
   local date_year = tostring(os.date("%Y"))
   local date_month = tostring(os.date("%m"))
   local date_day = tostring(os.date("%d"))
-  -- vim.notify("input ksm:" .. tostring(date_str))
   local file_path = vim.fn.expand("$HOME") .. "/.local/src/datagrip/journal/journal.md"
-  local file = io.open(file_path, "r")
+  local read_file = io.open(file_path, "r")
   local date_found = false
 
-  if file then
-    for line in file:lines() do
+  if read_file then
+    for line in read_file:lines() do
       if line:match(date_year .. "%-" .. date_month .. "%-" .. date_day) then
         date_found = true
       end
     end
+    read_file:close()
   else
     print("Не удалось открыть файл: " .. file_path)
   end
-  file:close()
 
   local file = io.open(file_path, "a")
   if not date_found then
@@ -93,12 +89,9 @@ function journal_add()
   vim.cmd("normal G")
   vim.cmd("normal $")
   vim.cmd("startinsert")
-  -- else
-  -- vim.cmd "normal o"
-  -- end
 end
 
-vim.keymap.set("n", ";j", "<cmd>lua journal_add()<CR>", vim.tbl_extend("force", opts, { desc = "Add journal entry" }))
+vim.keymap.set("n", ";j", journal_add, vim.tbl_extend("force", opts, { desc = "Add journal entry" }))
 
 vim.keymap.del("n", "<leader>wd")
 vim.keymap.del("n", "<leader>wm")
