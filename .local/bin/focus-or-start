@@ -19,9 +19,9 @@ running=$(hyprctl -j clients | jq -r ".[] | select(.class | ascii_downcase == \"
 if [ "$running" != "" ]
 then
 	# echo "focus"
-	hyprctl dispatch workspace $running    
-else 
+	hyprctl dispatch "hl.dsp.focus({ workspace = $running })"
+else
 	# echo "start"
-	hyprctl dispatch workspace $workspaceOnStart 
-	${execCommand} & 
+	hyprctl dispatch "hl.dsp.focus({ workspace = $workspaceOnStart })"
+	eval "$execCommand" &
 fi
