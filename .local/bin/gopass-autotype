@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+# gopass-autotype - autotype gopass entries on Wayland using omarchy-menu-select
+#
+# Reimplements `tessen -d tofi -a autotype` (see https://github.com/ayushnix/tessen)
+# but replaces the dmenu backend with omarchy's own picker (omarchy-menu-select),
+# and pass backend with gopass.
+
+set -euo pipefail
+
+declare _AUTOKEY="autotype" _USERKEY="user" _URLKEY="url"
+declare -i _DELAY=100
+declare _PASSFILE _USERNAME="" _PASSWORD _URL="" _AUTOTYPE="" _OTP=false
+declare -A _PASSDATA
+
+_die() {
+  [[ -n ${1:-} ]] && printf "%s\n" "$1" >&2
+  exit 1
+}
+
+menu() {
+  # $1: prompt, stdin: newline-separated options, stdout: chosen option
+  omarchy-menu-select "$1"
+}
+
+auto_type() {
+  printf "%s" "$1" | wtype -s "$_DELAY" -
+}
+
+key_open_url() {
+  if command -v xdg-open > /dev/null 2>&1; then
+    xdg-open "$_URL" 2> /dev/null || _die "unable to open '$_URL'"
+  else
+    _die "xdg-open is not installed, unable to open '$_URL'"
+  fi
+}
+
+key_otp() {
+  local otp
+  otp="$(gopass otp -o "$_PASSFILE" 2> /dev/null || true)"
+  [[ $otp =~ ^[[:digit:]]+$ ]] || _die "invalid OTP detected"
+  auto_type "$otp"
+}
+
+# default autotype: either the custom ':autotype' field, or username <Tab> password
+auto_type_def() {
+  local word
+
+  if [[ -z $_AUTOTYPE ]]; then
+    auto_type "$_USERNAME"
+    wtype -s "$_DELAY" -k Tab --
+    auto_type "$_PASSWORD"
+    return
+  fi
+
+  for word in $_AUTOTYPE; do
+    case "$word" in
+      ":delay") sleep 1 ;;
+      ":tab") wtype -s "$_DELAY" -k Tab -- ;;
+      ":space") wtype -s "$_DELAY" -k space -- ;;
+      ":enter") wtype -s "$_DELAY" -k Return -- ;;
+      ":otp") key_otp ;;
+      path | basename | filename) auto_type "${_PASSFILE##*/}" ;;
+      "$_USERKEY") auto_type "$_USERNAME" ;;
+      pass | password) auto_type "$_PASSWORD" ;;
+      *)
+        if [[ -n ${_PASSDATA["$word"]:-} ]]; then
+          auto_type "${_PASSDATA["$word"]}"
+        else
+          wtype -s "$_DELAY" -k space --
+        fi
+        ;;
+    esac
+  done
+}
+
+get_gopass_file() {
+  local -a files
+  mapfile -t files < <(gopass ls -f)
+  (( ${#files[@]} > 0 )) || _die "gopass store is empty"
+
+  _PASSFILE="$(printf "%s\n" "${files[@]}" | menu "Pass" || true)"
+  [[ -n $_PASSFILE ]] || _die
+
+  local f found=false
+  for f in "${files[@]}"; do
+    [[ $_PASSFILE == "$f" ]] && { found=true; break; }
+  done
+  $found || _die "the selected entry was not found"
+}
+
+get_pass_data() {
+  local -a data
+  local keyval_regex otp_regex idx key val
+  mapfile -t data < <(gopass show -n -f "$_PASSFILE" 2> /dev/null)
+  (( ${#data[@]} > 0 )) || _die "the selected entry is empty"
+
+  keyval_regex='^[[:alnum:][:blank:]+#@_-]+:[[:blank:]].+$'
+  otp_regex='^otpauth:\/\/(totp|hotp)(\/(([^:?]+)?(:([^:?]*))?)(:([0-9]+))?)?\?(.+)$'
+  _PASSWORD="${data[0]}"
+
+  for idx in "${data[@]:1}"; do
+    key="${idx%%:*}"
+    val="${idx#*: }"
+    if [[ ${key,,} == "password" ]]; then
+      continue
+    elif [[ ${key,,} == "$_USERKEY" ]] && [[ -z $_USERNAME ]]; then
+      _USERNAME="$val"
+    elif [[ ${key,,} == "$_AUTOKEY" ]] && [[ -z $_AUTOTYPE ]]; then
+      _AUTOTYPE="$val"
+    elif [[ ${key,,} == "$_URLKEY" ]] && [[ -z $_URL ]]; then
+      _URL="$val"
+    elif [[ $idx =~ $otp_regex ]] && [[ $_OTP == false ]]; then
+      _OTP=true
+    elif [[ $idx =~ $keyval_regex ]] && [[ -z ${_PASSDATA["$key"]:-} ]]; then
+      _PASSDATA["$key"]="$val"
+    fi
+  done
+
+  if [[ -z $_USERNAME ]]; then
+    _USERNAME="${_PASSFILE##*/}"
+  fi
+}
+
+key_menu() {
+  local -a key_arr=("$_AUTOKEY" "$_USERKEY" "password")
+  $_OTP && key_arr+=("otp")
+  [[ -n $_URL ]] && key_arr+=("$_URLKEY")
+  key_arr+=("${!_PASSDATA[@]}")
+
+  local chosen
+  chosen="$(printf "%s\n" "${key_arr[@]}" | menu "Autotype" || true)"
+
+  local k found=false
+  for k in "${key_arr[@]}"; do
+    [[ $chosen == "$k" ]] && { found=true; break; }
+  done
+  $found || _die
+
+  case "$chosen" in
+    "$_AUTOKEY") auto_type_def ;;
+    "$_USERKEY") auto_type "$_USERNAME" ;;
+    password) auto_type "$_PASSWORD" ;;
+    otp) key_otp ;;
+    "$_URLKEY") key_open_url ;;
+    *) auto_type "${_PASSDATA["$chosen"]}" ;;
+  esac
+}
+
+main() {
+  command -v gopass > /dev/null 2>&1 || _die "gopass is not installed"
+  command -v wtype > /dev/null 2>&1 || _die "wtype is not installed"
+  command -v omarchy-menu-select > /dev/null 2>&1 || _die "omarchy-menu-select is not found"
+
+  get_gopass_file
+  get_pass_data
+  key_menu
+}
+
+main "$@"
