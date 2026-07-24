@@ -55,6 +55,10 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [],
+  "plugins": [
+    {
+      "id": "local.emojis"
+    }
+  ],
   "version": 1
 }
