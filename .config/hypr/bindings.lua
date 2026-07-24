@@ -43,12 +43,12 @@ hl.unbind("SUPER + D")
 o.bind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
 
 hl.unbind("SUPER + P")
-hl.bind("SUPER + P", hl.dsp.exec_cmd(sc .. "gopass-autotype"), { description = "" })
-hl.bind("SUPER + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "" })
-hl.bind("ALT + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "" })
-hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "" })
-hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."snippets-type"), { description = "" })
-hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "" })
+hl.bind("SUPER + P", hl.dsp.exec_cmd(sc .. "gopass-autotype"), { description = "Gopass autotype" })
+hl.bind("SUPER + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "Snippets yank" })
+hl.bind("ALT + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "Snippets yank" })
+hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "Snippets type" })
+hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."snippets-type"), { description = "Snippets type" })
+hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "Snippets files" })
 
 hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
 
