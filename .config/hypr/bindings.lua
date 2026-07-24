@@ -40,10 +40,7 @@ hl.unbind("SUPER + A")
 hl.bind("SUPER + A", hl.dsp.exec_cmd(sc .. "linkhandler"), { description = "Linkhandler" })
 
 hl.unbind("SUPER + D")
-o.bind("SUPER + D", "Launch apps", "omarchy-shell shell toggle omarchy.launcher \"{}\"")
-
-hl.unbind("SUPER + SPACE")
-o.bind("SUPER + SPACE", "Omarchy menu", "omarchy-menu toggle root")
+o.bind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
 
 hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd(sc .. "gopass-autotype"), { description = "" })
@@ -53,14 +50,14 @@ hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "" 
 hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."snippets-type"), { description = "" })
 hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "" })
 
-hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .."hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
+hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Command palette" })
 
 hl.unbind("SUPER + S")
 hl.unbind("SUPER + ALT + S")
-hl.bind("SUPER + S", hl.dsp.exec_cmd("~/.local/bin/go-ssh"), { description = "Connect via ssh" })
+hl.bind("SUPER + S", hl.dsp.exec_cmd(sc .. "go-ssh"), { description = "Connect via ssh" })
 
 --hl.bind("SUPER + E", hl.dsp.exec_cmd(sc .. "edit-configs"), { description = "Edit confgs" })
 
@@ -90,6 +87,7 @@ hl.bind("XF86Launch7", hl.dsp.exec_cmd("TODO: command for CapsLock+M"), { descri
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
 
 hl.bind("ALT + RETURN", hl.dsp.exec_cmd("pypr toggle term"), { description = "Pypr toggle term" })
+
 hl.bind("ALT + E",      hl.dsp.exec_cmd("omarchy-shell shell toggle local.emojis"), { description = "Emojis" })
 
 -- Move focus with mainMod + [H, L, K, J]
