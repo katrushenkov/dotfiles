@@ -1,5 +1,3 @@
-# These files automatically update when edited/saved in vim:
-
 # keys	filename				description
 bf	${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files	# This file, a list of bookmarked files
 bd	${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs		# A list of bookmarked directories similar to this file
