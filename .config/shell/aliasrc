@@ -13,14 +13,19 @@ se() {
   [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
 }
 
+rand() {
+  head -c 50K < /dev/urandom > "$1"
+}
+
 # Verbosity and settings that you pretty much just always are going to want.
+# cp: no symlink, recursive
 alias \
-  cp="cp -Priv" \ # no symlink, recursive
+  cp="cp -Priv" \
   mv="mv -iv" \
   ln='ln -i' \
   mkd="mkdir -pv" \
   ffmpeg="ffmpeg -hide_banner" \
-  ffprobe='ffprobe -hide_banner'
+  ffprobe='ffprobe -hide_banner' \
   rm="rm -vI --preserve-root"
   #Do not accidentally delete root, and also,
   #prompt if deleting more than 3 files at a time
@@ -39,14 +44,12 @@ alias \
   lr='ls -R' \
   l.='ls -AF -d .*' \
   l..='eza -d .* --color=auto' \
-  ll='ls -lah --color=auto' \
   lcd="cd" \
   rgg='rg --files --glob' \
   cat='bat --paging=never --style=plain'
 
 # These common commands are just too long! Abbreviate them.
 alias \
-  ka="killall" \
   g="git" \
   trem="transmission-remote" \
   sdn="shutdown -h now" \
@@ -60,14 +63,11 @@ alias \
   weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 
 alias \
-  i2pstart="sudo systemctl start i2prouter.service" \
-  i2pstart="sudo systemctl stop i2prouter.service" \
   lsblk="lsblk -f -o +SIZE,MODEL" \
   myip="dig +short myip.opendns.com @resolver1.opendns.com" \
   myip2="curl https://ipinfo.io/ip" \
   myip3="curl -s ifconfig.me" \
   myip4='curl ipinfo.io/ip'   \
-  rand="head -c 50K < /dev/urandom > $1" \
   s="sudo -s" \
   c="clear" \
   cls="clear" \
@@ -77,8 +77,8 @@ alias \
   dusort='du -hs * . | sort -h' \
   df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h" \
   free="free -mht" \
-  da='date "+%Y-%m-%d %A %T %Z"' \
-  now2="echo -e $(date +'%H:%M')" \
+  dtfmt='date "+%Y-%m-%d %A %T %Z"' \
+  shell-logged-in-time="echo -e $(date +'%H:%M')" \
   mute="pamixer -m" \
   unmute="pamixer -u" \
   netprocs="lsof -P -i -n" \
@@ -99,7 +99,6 @@ alias zfgrep='zfgrep --color=auto'
 alias zgrep='zgrep --color=auto'
 alias hgrep="history|grep"
 alias ipa='ip a|grep -w inet'
-alias s='sudo -i'
 alias s-d='systemctl daemon-reload'
 alias s-l='systemctl list-units --no-pager'
 alias s-re='systemctl restart'
@@ -111,7 +110,9 @@ alias passgen="pwgen -Ccsn 32 1"
 alias randpass="openssl rand -base64 20"
 alias nsl="nslookup"
 
-alias picresize='convert pic.png -resize 50%%%% pic_resized.png' # reduce 50%
+picresize() {
+  convert "$1" -resize 50% "${1%.*}_resized.${1##*.}"
+}
 alias heic_to_png="magick mogrify -monitor -format png *.HEIC"
 alias lazydocker="upscope lazydocker"
 alias path="echo $PATH | tr -s ':' '\n'"
@@ -217,7 +218,7 @@ if [[ $(uname) == "Linux" ]] ; then
   alias yrn="yay -R --noconfirm"
   alias yl="yay -Q | grep"
   alias yayskip='yay -S --mflags --skipinteg' # skip integrity check
-  alias pacman='sudo pacman --color auto'
+  #alias pacman='sudo pacman --color auto'
   alias up='yay -Syyu --devel'
   alias pksyua="yay -Syu --noconfirm"
   alias all="yay -Syu --noconfirm"
@@ -271,12 +272,14 @@ ftext () {
 #}
 
 generateqr () {
-  printf "$@" | curl -F-=\<- qrenco.de
+  printf '%s' "$@" | curl -F-=\<- qrenco.de
 }
 
-man() {
-    nvim -c "Man $*" -c "only"
-}
+if [ -x "$(command -v nvim)" ]; then
+  man() {
+      nvim -c "Man $*" -c "only"
+  }
+fi
 
 alias -g nu='2>/dev/null'
 alias -g le='|less'
