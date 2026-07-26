@@ -4,6 +4,9 @@
     "layout": {
       "center": [
         {
+          "id": "omarchy.indicators"
+        },
+        {
           "format": "dddd HH:mm, d MMMM yyyy",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "id": "omarchy.clock",
@@ -14,9 +17,6 @@
         },
         {
           "id": "omarchy.system-update"
-        },
-        {
-          "id": "omarchy.indicators"
         }
       ],
       "left": [
