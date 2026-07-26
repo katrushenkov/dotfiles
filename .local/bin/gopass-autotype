@@ -19,7 +19,7 @@ _die() {
 
 menu() {
   # $1: prompt, stdin: newline-separated options, stdout: chosen option
-  omarchy-menu-select "$1"
+  omarchy-menu-select "$1" -- --width 900 
 }
 
 auto_type() {
