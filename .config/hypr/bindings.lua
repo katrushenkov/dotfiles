@@ -50,7 +50,9 @@ hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "Sn
 hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."snippets-type"), { description = "Snippets type" })
 hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "Snippets files" })
 
-hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -so"), { description = "bookmarks" })
+hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -s"), { description = "Search bookmarks" })
+hl.unbind("SUPER + SHIFT + B")
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -st"), { description = "Search bookmarks by tag" })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Command palette" })
