@@ -1,3 +1,0 @@
-#!/bin/bash
-
-walker -I -x -d --maxheight=1 --placeholder="sudo:" | { read -r password; echo "$password"; }
