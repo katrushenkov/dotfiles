@@ -1,82 +1,95 @@
 #!/bin/bash
 
-bookmark="$(wl-paste )"
-file="$HOME/bookmarks.txt"
-fileother="$HOME/bookmarks_other.txt"
+main_file="$HOME/.local/src/datagrip/bookmarks-web.txt"
+
+get_existing_tags() {
+	local file="$1"
+	[ -f "$file" ] && cut -d'|' -f 3- "$file" | tr ' ' '\n' | grep -E '^#\w+$|^\w+$' | sort -u || true
+}
+
+text_input() {
+	echo "" | tofi
+}
+
+add_bookmark() {
+	local file="$1" url="$2" name="$3"
+
+	if grep -q "^${url// /\\ } " "$file" 2>/dev/null; then
+		notify-send "Oops" "Bookmark already exists"
+		return 1
+	fi
+
+	local bookmarkline="$url | $name |"
+	local tags="dummy"
+
+	while [ -n "$tags" ]; do
+		tags=$(get_existing_tags "$file" | omarchy-menu-select "add tags" -- --width 1400 --height 500 2>/dev/null || true)
+		[ -z "$tags" ] && break
+		bookmarkline+=" $tags"
+	done
+
+	echo "$bookmarkline" >> "$file"
+	notify-send "✓ Bookmark Added" "$url"
+}
+
+search_and_open() {
+	local file="$1" browser="${2:-vivaldi}"
+	local selection
+
+	selection=$(grep -v "^$" "$file" 2>/dev/null | \
+		awk -F'|' '{printf "%-50s\t%-30s\t%s\n", $1, $2, $3}' | \
+		omarchy-menu-select "Bookmark" -- --width 1792 --height 720 2>/dev/null | \
+		cut -f 1 | xargs || true)
+
+	[ -n "$selection" ] && "$browser" "$selection"
+}
+
+search_by_tag() {
+	local file="$1" browser="${2:-vivaldi}"
+	local tag
+
+	# Get all unique tags in #tag format
+	tag=$(grep -oh '#\w\+' "$file" | sort -u | sed 's/^#//' | \
+		omarchy-menu-select "select tag" -- --width 1400 --height 600 2>/dev/null || true)
+
+	if [ -z "$tag" ]; then
+		return
+	fi
+
+	local result
+	result=$(grep "#$tag" "$file" | \
+		awk -F'|' '{printf "%-50s\t%-30s\t%s\n", $1, $2, $3}' | \
+		omarchy-menu-select "tag: $tag" -- --width 1792 --height 720 2>/dev/null | \
+		cut -f 1 | xargs || true)
+
+	[ -n "$result" ] && "$browser" "$result"
+}
+
 case $1 in
-	-a)
-	if grep "^$bookmark " "$file"; then 
-		notify-send "Oops" "Bookmark already present."
-	else 
-		name="$(bemenu -l 40 -p 'add name >' --no-exec --scrollbar autohide -i < /dev/null)"
-		bookmarkline="$bookmark | $name |"
-		tags="some_initial_value_lol"
-		while [ -n "$tags" ] ; do
-			tags="$(cut -d'|' -f 3- ~/bookmarks.txt | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'add tags >' --no-exec --scrollbar autohide)"
-			bookmarkline+=" $tags"
-		done
-		echo "$bookmarkline" >> "$file" 
-		notify-send "Bookmark Added" "$bookmark"
-	fi
-	;;
-	-ao)
-	if grep "^$bookmark " "$fileother"; then 
-		notify-send "Oops" "Bookmark already present."
-	else 
-		name="$(bemenu -i -l 40 -p 'add name >' --no-exec --scrollbar autohide < /dev/null)"
-		bookmarkline="$bookmark | $name |"
-		tags="some_initial_value_lol"
-		while [ -n "$tags" ] ; do
-			tags="$(cut -d'|' -f 3- ~/bookmarks_other.txt | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'add tags >' --no-exec --scrollbar autohide)"
-			bookmarkline+=" $tags"
-		done
-		echo "$bookmarkline" >> "$fileother" 
-		notify-send "Bookmark Added" "$bookmark"
-	fi
-	;;
-	-s)
-		# search and open
-		selection=$(cat ~/bookmarks.txt | bemenu -i -l 30 -p '>' --no-exec --scrollbar autohide | cut -d'|' -f 1)
-		#wtype "$selection"
-		vivaldi "$selection"
-	;;
-	-st)
-		# search tags and open
-		#tagsel="$(cat ~/bookmarks.txt ~/bookmarks_other.txt | cut -d'|' -f 3- - | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'select tag>' --no-exec --scrollbar autohide)"
-		
-    tagsel="$(grep -o '#\w\+' ~/.local/src/datagrip/bookmarks-web.txt | sort | uniq | tofi)"
-    
-    wtype $(cat ~/.local/src/datagrip/bookmarks-web.txt | grep "$tagsel")
-
-		#wtype $(cat ~/bookmarks.txt ~/bookmarks_other.txt | grep "$tagsel" | awk -F '|' '{print $2 "(" $1 ")" "[" $3 "]"}' | bemenu -i -l 40 -p '>' --no-exec --scrollbar autohide --fn iosevka 17 | cut -d'(' -f 2 | cut -d')' -f 1 )
-
-	;;
-	-so)
-		# search other and open
-    selection=$(grep -v "^$" ~/.local/src/datagrip/bookmarks-web.txt | omarchy-menu-select "Bookmark" -- --width 1792 --height 720 | cut -d '|' -f 1)
-    if [ -n "$selection" ]; then
-    		running=$(hyprctl -j clients | jq -r '.[] | select(.class | ascii_downcase == "vivaldi-stable") | .workspace.id' | grep -v "-" | head -1)
-		    ~/.local/bin/focus-or-start "vivaldi-stable \"$selection\"" "vivaldi-stable" "2";
-		    if [ -n "$running" ]; then
-		    	vivaldi-stable "$selection" &
-		    fi
-		fi
-	;;
-	-am)	
-		# add manually
-		bookmark="$(bemenu -i -l 40 -p 'add bookmark >' --no-exec --scrollbar autohide < /dev/null)"
-		name="$(bemenu -i -l 40 -p 'add name >' --no-exec --scrollbar autohide < /dev/null)"
-		bookmarkline="$bookmark | $name |"
-		tags="some_initial_value_lol"
-		while [ -n "$tags" ] ; do
-			tags="$(cut -d'|' -f 3- ~/bookmarks_other.txt | tr ' ' '\n' | awk '$1' | sort -u | bemenu -i -l 40 -p 'add tags >' --no-exec --scrollbar autohide)"
-			bookmarkline+=" $tags"
-		done
-		echo "$bookmarkline" >> "$fileother" 
-		notify-send "Bookmark Added" "$bookmark"
-		
-	;;
+	-a|--add)
+		url=$(wl-paste)
+		name=$(text_input "add name")
+		[ -n "$name" ] && add_bookmark "$main_file" "$url" "$name"
+		;;
+	-s|--search)
+		search_and_open "$main_file" "vivaldi"
+		;;
+	-st|--search-tag)
+		search_by_tag "$main_file" "vivaldi"
+		;;
+	-am|--add-manual)
+		url=$(text_input "add bookmark")
+		[ -n "$url" ] && name=$(text_input "add name") && add_bookmark "$main_file" "$url" "$name"
+		;;
 	*)
-		echo "invalid option"
-	;;
+		cat << EOF
+Usage: bookmarks-web [option]
+
+Options:
+  -a, --add         Add from clipboard
+  -s, --search      Search and open
+  -st, --search-tag Search by tag and open
+  -am, --add-manual Manually add bookmark
+EOF
+		;;
 esac
