@@ -19,7 +19,7 @@ anima_dir="$HOME/.local/src/anima"
 # which hits Linux's per-argument size limit (128K) once the tree gets large.
 # These directories are too big to flatten recursively; keep them as a single
 # entry each and let nnn handle browsing inside them.
-skip_dirs=(2ch-scripts unnecessary sc tips flant)
+skip_dirs=(2ch-scripts unnecessary sc tips)
 
 fd_exclude_args=()
 for d in "${skip_dirs[@]}"; do
