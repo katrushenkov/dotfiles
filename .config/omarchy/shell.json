@@ -32,6 +32,9 @@
           "id": "omarchy.tray"
         },
         {
+          "id": "local.keyboard-layout"
+        },
+        {
           "id": "omarchy.bluetooth"
         },
         {
