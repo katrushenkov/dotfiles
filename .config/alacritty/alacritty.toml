@@ -2,6 +2,8 @@
 
 [general]
 import = ["~/.local/state/omarchy/current/theme/alacritty.toml"]
+live_config_reload = true
+
 
 [bell]
 animation = "EaseOutExpo"
@@ -23,7 +25,7 @@ print_events = false
 render_timer = false
 
 [font]
-size = 17.0
+size = 13.0
 
 #[font.bold]
 #family = "Hack"
@@ -347,9 +349,6 @@ mods = "Command"
 chars = "\u0002/"
 key = "F"
 mods = "Command"
-
-[general]
-live_config_reload = true
 
 [mouse]
 hide_when_typing = true
