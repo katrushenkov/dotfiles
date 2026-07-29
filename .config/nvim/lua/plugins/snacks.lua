@@ -5,6 +5,7 @@ return {
     enabled = true,
     version = false,
     opts = {
+      dashboard = { enabled = false },
       image = {
         doc = {
           -- enable image viewer for documents
@@ -267,7 +268,6 @@ return {
             regex = true,
             format = "file",
             show_empty = true,
-            live = true,
             supports_live = true,
           }
         },
