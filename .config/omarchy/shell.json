@@ -25,6 +25,10 @@
         },
         {
           "id": "omarchy.workspaces"
+        },
+        {
+          "id": "local.external-ip",
+          "type": "qml"
         }
       ],
       "right": [
