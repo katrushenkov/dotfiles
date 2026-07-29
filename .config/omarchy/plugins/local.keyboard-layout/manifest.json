@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "local.keyboard-layout",
+  "name": "Keyboard layout",
+  "version": "1.0.0",
+  "author": "Local",
+  "description": "Cloned from omarchy.keyboard-layout",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Widget.qml"
+  },
+  "barWidget": {
+    "displayName": "Keyboard layout",
+    "description": "Cloned from omarchy.keyboard-layout",
+    "category": "Compositor",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.keyboard-layout",
+    "clonedFromPath": "/usr/share/omarchy/shell/plugins/bar/widgets/KeyboardLayout.qml"
+  }
+}
