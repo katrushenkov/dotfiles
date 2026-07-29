@@ -2,6 +2,9 @@ return {
     "folke/flash.nvim",
     config = function()
       require("flash").setup {
+        label = {
+          uppercase = false, -- only lowercase letters in jump labels
+        },
         modes = {
           search = {
             enabled = false, -- "/" labels mode
