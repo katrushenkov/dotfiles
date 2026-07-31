@@ -34,7 +34,8 @@ hl.bind("SUPER + S", hl.dsp.exec_cmd(sc .. "go-ssh"), { description = "Connect v
 -- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal n"), { description = "" })
 
 hl.unbind("SUPER + T")
-hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
+-- hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
+o.bind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
 
 hl.unbind("SUPER + W")
 o.bind("SUPER + W", "Browser", { focus = "vivaldi", launch = "omarchy-launch-browser" })
