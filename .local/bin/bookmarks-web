@@ -37,9 +37,9 @@ search_and_open() {
 	local selection
 
 	selection=$(grep -v "^$" "$file" 2>/dev/null | \
-		awk -F'|' '{printf "%-50s\t%-30s\t%s\n", $1, $2, $3}' | \
+		awk -F'|' '{printf "%-50s| %-30s| %s\n", $1, $2, $3}' | \
 		omarchy-menu-select "Bookmark" -- --width 1792 --height 720 2>/dev/null | \
-		cut -f 1 | xargs || true)
+		cut -d'|' -f1 | xargs || true)
 
 	[ -n "$selection" ] && "$browser" "$selection"
 }
@@ -58,9 +58,9 @@ search_by_tag() {
 
 	local result
 	result=$(grep "#$tag" "$file" | \
-		awk -F'|' '{printf "%-50s\t%-30s\t%s\n", $1, $2, $3}' | \
+		awk -F'|' '{printf "%-50s| %-30s| %s\n", $1, $2, $3}' | \
 		omarchy-menu-select "tag: $tag" -- --width 1792 --height 720 2>/dev/null | \
-		cut -f 1 | xargs || true)
+		cut -d'|' -f1 | xargs || true)
 
 	[ -n "$result" ] && "$browser" "$result"
 }
