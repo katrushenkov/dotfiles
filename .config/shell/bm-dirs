@@ -27,6 +27,7 @@ pp	/mnt/main/pic
 rr	${GIT_PROJECTS_DIR:-$HOME/.local/src}
 sb	$HOME/.local/bin/statusbar
 sc  $HOME/.local/bin
+sh  $HOME/.ssh
 sca	/mnt/main/scan
 vv	/mnt/main/vid
 #vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
