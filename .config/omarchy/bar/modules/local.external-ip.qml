@@ -10,14 +10,26 @@ Item {
 
   property string ipText: "…"
   property bool fetching: false
+  property bool notifyOnResult: false
 
   implicitWidth: label.implicitWidth + 16
   implicitHeight: bar ? bar.barSize : 26
 
-  function refresh() {
+  function refresh(notify) {
     if (fetching) return
     fetching = true
+    notifyOnResult = !!notify
+    ipText = "updating…"
     ipProcess.running = true
+  }
+
+  function notifyResult(ru, com) {
+    if (!bar) return
+    if (ru === "N/A" && com === "N/A") {
+      bar.run("notify-send 'External IP' 'Не удалось обновить: нет сети или таймаут'")
+    } else {
+      bar.run("notify-send 'External IP' 'Обновлено — ru: " + ru + "  com: " + com + "'")
+    }
   }
 
   Process {
@@ -34,12 +46,20 @@ Item {
         })
         root.ipText = "ru: " + ru + " com: " + com
         root.fetching = false
+        if (root.notifyOnResult) {
+          root.notifyOnResult = false
+          root.notifyResult(ru, com)
+        }
       }
     }
     onExited: function(exitCode) {
       if (exitCode !== 0 && root.fetching) {
         root.ipText = "N/A"
         root.fetching = false
+        if (root.notifyOnResult) {
+          root.notifyOnResult = false
+          root.notifyResult("N/A", "N/A")
+        }
       }
     }
   }
@@ -65,10 +85,7 @@ Item {
     anchors.fill: parent
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
-    onClicked: {
-      root.refresh()
-      if (bar) bar.run("notify-send 'Updated IP status'")
-    }
+    onClicked: root.refresh(true)
     onEntered: if (bar) bar.showTooltip(root, "ip.flant.ru / ip.flant.com — click to refresh")
     onExited: if (bar) bar.hideTooltip(root)
   }
