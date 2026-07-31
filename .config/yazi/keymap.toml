@@ -11,6 +11,9 @@ prepend_keymap = [
   { on = ["'"], run = "plugin bunny fuzzy", desc = "Start bunny.yazi fuzzy search"},
   #{ on = [";","g"], run = "plugin bunny", desc = "Start bunny.yazi"},
 
+  # ";" leader
+  { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
+
   { on = ["n", "d"], desc = "Create dir", run = "create --dir" },
 
   { on = "b", run = [ "toggle", "arrow next" ], desc = "Toggle the current selection state" },
@@ -127,7 +130,6 @@ keymap = [
 	{ on = "a",         run = "create",                      desc = "Create a file (ends with / for directories)" },
 	{ on = "r",         run = "rename --cursor=before_ext",  desc = "Rename selected file(s)" },
 
-	{ on = ";",         run = "shell --interactive",         desc = "Run a shell command" },
 	{ on = ":",         run = "shell --block --interactive", desc = "Run a shell command (block until finishes)" },
 	{ on = ".",         run = "hidden toggle",               desc = "Toggle the visibility of hidden files" },
 	{ on = "s",         run = "search --via=fd",             desc = "Search files by name via fd" },
