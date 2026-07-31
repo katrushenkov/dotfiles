@@ -17,6 +17,7 @@ if [[ "${OS}" == "Linux"* ]]; then
   hypr-switch-en
 
   selection="$(rg -v '^#|^$' ~/.local/src/datagrip/snippets \
+    | expand -t 4 \
     | omarchy-menu-select "Snippet" -- --width 1792 --height 720 \
     | awk -F ' #' '{print $1}')"
 
