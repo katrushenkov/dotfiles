@@ -14,15 +14,12 @@ o.bind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
 
 hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd(sc .. "gopass-autotype"), { description = "Gopass autotype" })
-hl.bind("SUPER + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "Snippets yank" })
-hl.bind("ALT + Y", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "Snippets yank" })
-hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-type"), { description = "Snippets type" })
-hl.bind("SUPER + INSERT", hl.dsp.exec_cmd(sc .."snippets-type"), { description = "Snippets type" })
+hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "Snippets yank" })
 hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "Snippets files" })
 
-hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -s"), { description = "Search bookmarks" })
+hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "bookmarks-web -s"), { description = "Search bookmarks" })
 hl.unbind("SUPER + SHIFT + B")
-hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(sc .. "hypr-switch-en ; ~/.local/bin/bookmarks-web -st"), { description = "Search bookmarks by tag" })
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(sc .. "bookmarks-web -st"), { description = "Search bookmarks by tag" })
 
 hl.bind("SUPER + F1", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Keybindings" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("omarchy-menu-keybindings"), { description = "Command palette" })
@@ -37,24 +34,31 @@ hl.bind("SUPER + S", hl.dsp.exec_cmd(sc .. "go-ssh"), { description = "Connect v
 -- hl.bind("SUPER + N", hl.dsp.exec_cmd("$terminal n"), { description = "" })
 
 hl.unbind("SUPER + T")
-hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
+-- hl.bind("SUPER + T", hl.dsp.exec_cmd("thunar"), { description = "Thunar file manager" })
+o.bind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
 
 hl.unbind("SUPER + W")
-hl.bind("SUPER + W", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser" })
+o.bind("SUPER + W", "Browser", { focus = "vivaldi", launch = "omarchy-launch-browser" })
 
 -- Physical CapsLock+G (remapped via keyd, see /etc/keyd/default.conf: hold
 -- CapsLock + G sends the KEY_F13 evdev code, since tapping CapsLock alone
 -- still sends Escape). The default xkb keymap maps that keycode to the
 -- keysym XF86Tools rather than F13, so we bind on that instead.
-hl.bind("XF86Tools", hl.dsp.exec_cmd("omarchy-launch-browser"), { description = "Browser (CapsLock+G)" })
+o.bind("XF86Tools", "Browser (CapsLock+G)", { focus = "vivaldi", launch = "omarchy-launch-browser" })
+o.bind("XF86Launch5", "TODO (CapsLock+V)", { focus = "vivaldi", launch = "omarchy-launch-browser" })
 
 -- More CapsLock+<key> chords, same mechanism (see /etc/keyd/default.conf
 -- [capsmode] layer). Each keyd layer key sends a distinct evdev F-key code,
 -- which the default xkb keymap turns into an XF86 keysym instead of the
 -- literal Fxx name. Just replace the TODO command with whatever you want:
-hl.bind("XF86Launch5", hl.dsp.exec_cmd("TODO: command for CapsLock+V"), { description = "TODO (CapsLock+V)" })
-hl.bind("XF86Launch6", hl.dsp.exec_cmd("TODO: command for CapsLock+T"), { description = "TODO (CapsLock+T)" })
+o.bind("XF86Launch6", "Telegram (CapsLock+T)", { focus = "telegram", launch = "Telegram" })
 hl.bind("XF86Launch7", hl.dsp.exec_cmd("TODO: command for CapsLock+M"), { description = "TODO (CapsLock+M)" })
+
+-- keyd [capsmode]: e = f17, f = f18, k = f19 (F19 keeps its literal keysym,
+-- unlike F13-F18 which xkb remaps to XF86Tools/XF86LaunchN):
+hl.bind("XF86Launch8", hl.dsp.exec_cmd("TODO: command for CapsLock+E"), { description = "TODO (CapsLock+E)" })
+hl.bind("XF86Launch9", hl.dsp.exec_cmd("TODO: command for CapsLock+F"), { description = "TODO (CapsLock+F)" })
+hl.bind("F19", hl.dsp.exec_cmd("TODO: command for CapsLock+K"), { description = "TODO (CapsLock+K)" })
 
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
 

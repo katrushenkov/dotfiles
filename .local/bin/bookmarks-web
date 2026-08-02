@@ -2,6 +2,8 @@
 
 main_file="$HOME/.local/src/datagrip/bookmarks-web.txt"
 
+hypr-switch-en
+
 get_existing_tags() {
 	local file="$1"
 	[ -f "$file" ] && cut -d'|' -f 3- "$file" | tr ' ' '\n' | grep -E '^#\w+$|^\w+$' | sort -u || true
