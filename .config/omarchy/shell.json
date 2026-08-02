@@ -33,10 +33,10 @@
       ],
       "right": [
         {
-          "id": "omarchy.tray"
+          "id": "omarchy.model-usage"
         },
         {
-          "id": "omarchy.model-usage"
+          "id": "omarchy.tray"
         },
         {
           "id": "local.keyboard-layout"

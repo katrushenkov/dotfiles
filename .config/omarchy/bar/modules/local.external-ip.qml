@@ -26,9 +26,9 @@ Item {
   function notifyResult(ru, com) {
     if (!bar) return
     if (ru === "N/A" && com === "N/A") {
-      bar.run("notify-send 'External IP' 'Не удалось обновить: нет сети или таймаут'")
+      bar.run("notify-send 'External IP' 'Update failed: no network or timeout'")
     } else {
-      bar.run("notify-send 'External IP' 'Обновлено — ru: " + ru + "  com: " + com + "'")
+      bar.run("notify-send 'External IP' 'Updated — ru: " + ru + "  com: " + com + "'")
     }
   }
 
