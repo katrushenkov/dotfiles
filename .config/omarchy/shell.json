@@ -13,10 +13,13 @@
           "verticalFormat": "HH\n—\nmm"
         },
         {
-          "id": "omarchy.weather"
+          "id": "omarchy.keyboard-layout"
         },
         {
           "id": "omarchy.system-update"
+        },
+        {
+          "id": "omarchy.weather"
         }
       ],
       "left": [
@@ -33,13 +36,10 @@
       ],
       "right": [
         {
-          "id": "omarchy.model-usage"
+          "id": "omarchy.agents"
         },
         {
           "id": "omarchy.tray"
-        },
-        {
-          "id": "local.keyboard-layout"
         },
         {
           "id": "omarchy.bluetooth"
