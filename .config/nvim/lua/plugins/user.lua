@@ -3,6 +3,7 @@ return {
       'MeanderingProgrammer/render-markdown.nvim',
       version = false,
       enabled = true,
+      ft = 'markdown',
       dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },
       ---@module 'render-markdown'
       ---@type render.md.UserConfig
@@ -54,6 +55,9 @@ return {
     "ramilito/kubectl.nvim",
     version = "2.*",
     dependencies = "saghen/blink.download",
+    keys = {
+      { "<leader>k", function() require("kubectl").toggle({ tab = true }) end, desc = "Kubectl" },
+    },
     config = function()
       require("kubectl").setup()
     end,
@@ -62,7 +66,6 @@ return {
     "obsidian-nvim/obsidian.nvim",
     enabled = true,
     version = false,
-    lazy = false,
     ft = "markdown",
     opts = {
       legacy_commands = false,
