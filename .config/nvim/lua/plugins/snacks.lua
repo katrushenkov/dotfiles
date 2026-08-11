@@ -5,7 +5,19 @@ return {
     enabled = true,
     version = false,
     opts = {
-      dashboard = { enabled = false },
+      dashboard = { enabled = true, sections = { { text = "" } } },
+      styles = {
+        dashboard = {
+          wo = {
+            -- snacks' own dashboard style remaps Normal/NormalFloat but leaves
+            -- StatusLine/StatusLineNC pointing at the colorscheme's accent color,
+            -- which shows through as a stray bar on themes where that differs
+            -- from the dashboard background
+            winhighlight = "Normal:SnacksDashboardNormal,NormalFloat:SnacksDashboardNormal,"
+              .. "StatusLine:SnacksDashboardNormal,StatusLineNC:SnacksDashboardNormal",
+          },
+        },
+      },
       image = {
         doc = {
           -- enable image viewer for documents
@@ -181,7 +193,7 @@ return {
                     hidden = true,
                     ignored = true,
                     follow = false,
-                    supports_live = true,
+                    supports_live = false,
                   }
                 end,
               },
@@ -259,7 +271,7 @@ return {
             ignored = true,
             follow = true,
             --ft = { "md", "txt" },
-            supports_live = true,
+            supports_live = false,
           },
           grep = {
             cmd = "rg",
@@ -268,7 +280,7 @@ return {
             regex = true,
             format = "file",
             show_empty = true,
-            supports_live = true,
+            supports_live = false,
           }
         },
       },
@@ -315,7 +327,8 @@ return {
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end,           desc = "Smart Find Files" },
       { ";x",              function() Snacks.picker.smart() end,           desc = "Smart Find Files" },
-      { ";w",              function() Snacks.picker.grep() end,            desc = "Grep" },
+      { ";w",              LazyVim.pick("live_grep"),                      desc = "Grep (Root Dir)" },
+      { "<leader>fw",      LazyVim.pick("live_grep"),                      desc = "Grep (Root Dir)" },
       { "<leader>,",       function() Snacks.picker.buffers() end,         desc = "Buffers" },
       { "<leader>f/",      function() Snacks.picker.lines() end,           desc = "Buffer lines" },
       { "<leader>:",       function() Snacks.picker.command_history() end, desc = "Command History" },
@@ -356,11 +369,11 @@ return {
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end,  desc = "Buffers" },
       { "<leader>fc", function() Snacks.picker.files { cwd = vim.fn.stdpath "config" } end, desc = "Find Config File" },
-      { "<leader>ff", function() Snacks.picker.files() end,        desc = "Find Files" },
+      { "<leader>ff", LazyVim.pick("files"),                       desc = "Find Files (Root Dir)" },
       { "<leader>fg", function() Snacks.picker.git_files() end,    desc = "Find Git Files" },
       { "<leader>fp", function() Snacks.picker.projects() end,     desc = "Projects" },
       { "<C-p>",      function() Snacks.picker.projects() end,     desc = "Projects" },
-      { "<leader>fr", function() Snacks.picker.recent() end,       desc = "Recent" },
+      { "<leader>fr", LazyVim.pick("oldfiles"),                    desc = "Recent (Root Dir)" },
       -- git
       { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
       { "<leader>gl", function() Snacks.picker.git_log() end,      desc = "Git Log" },
@@ -371,8 +384,9 @@ return {
       { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
       -- Grep
       { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
-      { "<leader>sg", function() Snacks.picker.grep() end,         desc = "Grep" },
-      { "<leader>sw", function() Snacks.picker.grep_word() end,    desc = "Visual selection or word", mode = { "n", "x" } },
+      { "<leader>sg", LazyVim.pick("live_grep"),                   desc = "Grep (Root Dir)" },
+      { "<leader>sw", LazyVim.pick("grep_word"),                   desc = "Visual selection or word (Root Dir)", mode = { "n", "x" } },
+      { "<leader>sW", LazyVim.pick("grep_word", { root = false }), desc = "Visual selection or word (cwd)", mode = { "n", "x" } },
       -- search
       { '<leader>s"', function() Snacks.picker.registers() end,             desc = "Registers" },
       { "<leader>s/", function() Snacks.picker.search_history() end,        desc = "Search History" },
