@@ -4,9 +4,9 @@ OS="$(uname -s)"
 
 if [[ "${OS}" == "Linux"* ]]; then
 
-  kbd="$(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | .name' | head -n1)"
+  read -r kbd idx < <(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | "\(.name) \(.active_layout_index)"' | head -n1)
 
-  hyprctl -q switchxkblayout "$kbd" 0
+  [[ "$idx" != "0" ]] && hyprctl -q switchxkblayout "$kbd" 0
 
 elif [[ "${OS}" == "Darwin"* ]]; then
 
