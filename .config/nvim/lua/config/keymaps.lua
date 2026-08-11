@@ -4,13 +4,6 @@
 
 local opts = { noremap = true, silent = true }
 
-vim.keymap.set(
-  "n",
-  "<leader>k",
-  '<cmd>lua require("kubectl").toggle({ tab = true })<cr>',
-  opts
-)
-
 vim.keymap.set({"n"},";J","<Cmd>edit $HOME/.local/src/datagrip/journal/journal.md<cr>G<ESC>",{ silent = true, desc = "Show journal" })
 
 vim.keymap.del("n", "<leader>qq")
