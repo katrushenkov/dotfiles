@@ -374,7 +374,7 @@ semantic_escape_chars = """,│`|:"' ()[]{}<>"""
 [window]
 decorations = "none"
 dynamic_padding = false
-opacity = 0.8
+opacity = 1
 startup_mode = "Windowed"
 
 [window.dimensions]
