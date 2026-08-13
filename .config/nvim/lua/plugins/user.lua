@@ -1,5 +1,18 @@
 return {
   {
+    "folke/which-key.nvim",
+    opts = {
+      -- LazyVim registers <leader>w as a "windows" proxy group (see
+      -- lazyvim/plugins/editor.lua) which races with our own <leader>w
+      -- save mapping (config/keymaps.lua). Re-declaring it here as a plain
+      -- leaf overrides that group entry, since which-key concatenates
+      -- opts.spec (opts_extend) and the later entry wins for the same path.
+      spec = {
+        --{ "<leader>w", desc = "Save buffer" },
+      },
+    },
+  },
+  {
       'MeanderingProgrammer/render-markdown.nvim',
       version = false,
       enabled = true,
@@ -66,7 +79,7 @@ return {
     "obsidian-nvim/obsidian.nvim",
     enabled = true,
     version = false,
-    ft = "markdown",
+    lazy = false,
     opts = {
       legacy_commands = false,
       ui = {
@@ -89,13 +102,14 @@ return {
           path = "$HOME/.local/src/datagrip",
         },
       },
-      keys = {
-	  	{
-	  		'<leader>ot',
-	  		desc = 'Obsidian today',
-	  		'<cmd>Obsidian today<cr>',
-	  		silent = true,
-	  	},
+    },
+    keys = {
+      {
+        '<leader>ot',
+        desc = 'Obsidian today',
+        '<cmd>Obsidian today<cr>',
+        silent = true,
+      },
       {
         '<leader>oy',
         desc = 'Obsidian yesterday',
@@ -114,8 +128,7 @@ return {
         '<cmd>Obsidian paste image<cr>',
         silent = true,
       },
-	  },
-   },
+    },
   },
   { "nvim-mini/mini.pairs", enabled = false },
   { "nvim-neo-tree/neo-tree.nvim", enabled = false },
