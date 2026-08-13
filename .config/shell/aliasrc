@@ -35,13 +35,13 @@ alias \
   ip="ip -color=auto" \
   llll="du -sh *" \
   dus="du -h --max-depth=1 | sort -rh" \
-  ls="eza -a --icons" \
-  la="eza -A" \
+  ls="eza -a --icons --group-directories-first" \
+  la="eza -A --group-directories-first" \
   ll="eza -lAh --icons --tree --level=1" \
   lll="stat -c '%A %a %n' *" \
   l="ls -Fh" \
   lm='ls -m' \
-  lr='ls -R' \
+  lr='ls -lRh' \
   l.='ls -AF -d .*' \
   l..='eza -d .* --color=auto' \
   lcd="cd" \
@@ -70,7 +70,6 @@ alias \
   myip4='curl ipinfo.io/ip'   \
   s="sudo -s" \
   c="clear" \
-  cls="clear" \
   clr="tput reset" \
   q="exit" \
   :q="exit" \
@@ -98,6 +97,9 @@ alias zegrep='zegrep --color=auto'
 alias zfgrep='zfgrep --color=auto'
 alias zgrep='zgrep --color=auto'
 alias hgrep="history|grep"
+alias gc="grep -c"
+alias gw="grep -w"
+
 alias ipa='ip a|grep -w inet'
 alias s-d='systemctl daemon-reload'
 alias s-l='systemctl list-units --no-pager'
@@ -105,6 +107,7 @@ alias s-re='systemctl restart'
 alias s-s='systemctl status'
 alias s-sp='systemctl stop'
 alias s-st='systemctl start'
+alias bc="bc -ql"
 
 alias passgen="pwgen -Ccsn 32 1"
 alias randpass="openssl rand -base64 20"
@@ -241,7 +244,7 @@ fi
 alias wg='wget -O /dev/null'
 
 alias clearjournal="sudo journalctl --flush --rotate --vacuum-time=1s;sudo journalctl --user --flush --rotate --vacuum-time=1s"
-alias renew="source ~/.zprofile"
+alias renew='exec -l $SHELL'
 
 #alias rsync-copy="rsync -avz --progress -h"
 #alias rsync-move="rsync -avz --progress -h --remove-source-files"
