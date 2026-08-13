@@ -42,6 +42,13 @@ vim.keymap.set("n", ";y", ":silent %y+<cr>", { silent = true, desc = "Yank the w
 
 vim.keymap.set("n",';t', '<cmd>Obsidian tags<cr>', { silent = true, desc = 'Obsidian tags'})
 
+-- rename LazyVim's default terminal keymaps, free up <leader>ft for Obsidian tags
+vim.keymap.del("n", "<leader>ft")
+vim.keymap.del("n", "<leader>fT")
+vim.keymap.set("n", "<leader>t", function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
+vim.keymap.set("n", "<leader>T", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
+vim.keymap.set("n", "<leader>ft", "<cmd>Obsidian tags<cr>", { silent = true, desc = "Obsidian tags" })
+
 -- Move to the first non-blank character of the line
 vim.keymap.set("n", "0", "^", opts)
 
