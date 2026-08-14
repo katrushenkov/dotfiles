@@ -119,6 +119,7 @@ picresize() {
 alias heic_to_png="magick mogrify -monitor -format png *.HEIC"
 alias lazydocker="upscope lazydocker"
 alias path="echo $PATH | tr -s ':' '\n'"
+alias path2='echo -e ${PATH//:/\\n}'
 
 [[ $TERM == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
