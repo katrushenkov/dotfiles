@@ -70,9 +70,44 @@ return {
     dependencies = "saghen/blink.download",
     keys = {
       { "<leader>k", function() require("kubectl").toggle({ tab = true }) end, desc = "Kubectl" },
+      { "<leader>ka", "<cmd>Kubectl apply<cr>", desc = "Kubectl Apply (buffer)" },
+      {
+        "<leader>kd",
+        function()
+          local content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+          local tmpfile = vim.fn.tempname() .. ".yaml"
+          local file = assert(io.open(tmpfile, "w"))
+          file:write(content)
+          file:close()
+
+          local diff_output = vim.fn.systemlist({ "kubectl", "diff", "-f", tmpfile })
+          os.remove(tmpfile)
+
+          if #diff_output == 0 then
+            vim.notify("Kubectl diff: no changes", vim.log.levels.INFO)
+            return
+          end
+
+          vim.cmd("botright new")
+          local buf = vim.api.nvim_get_current_buf()
+          vim.api.nvim_buf_set_lines(buf, 0, -1, false, diff_output)
+          vim.bo[buf].filetype = "diff"
+          vim.bo[buf].buftype = "nofile"
+          vim.bo[buf].bufhidden = "wipe"
+          vim.bo[buf].swapfile = false
+        end,
+        desc = "Kubectl Diff (buffer)",
+      },
+      { "<leader>kt", "<cmd>Kubectl top<cr>", desc = "Kubectl Top" },
     },
     config = function()
-      require("kubectl").setup()
+      require("kubectl").setup({
+        auto_refresh = { enabled = true, interval = 300 },
+        namespace = "All",
+        logs = { prefix = true, timestamps = true, since = "5m" },
+        float_size = { width = 0.9, height = 0.8 },
+        terminal_cmd = "footclient -e",
+      })
     end,
   },
   {
