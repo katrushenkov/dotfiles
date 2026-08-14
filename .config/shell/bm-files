@@ -12,3 +12,5 @@ cfm	${XDG_CONFIG_HOME:-$HOME/.config}/mutt/muttrc		  # mutt (email client) confi
 cfn	${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/config	# newsboat (RSS reader)
 cfu	${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/urls		# RSS urls for newsboat
 cfX	${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler	# nsxiv (image viewer) key/script handler
+
+sl	${GIT_PROJECTS_DIR:-$HOME/.local/src}/anima/slang.txt
