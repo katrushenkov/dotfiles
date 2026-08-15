@@ -17,9 +17,9 @@ vim.keymap.set("n", ";z", "za")
 
 vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
 
--- Tab navigation
-vim.keymap.set({"n"}, "<s-h>", "<cmd>tabp<cr>", opts)
-vim.keymap.set({"n"}, "<s-l>", "<cmd>tabn<cr>", opts)
+-- Buffer navigation
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", vim.tbl_extend("force", opts, { desc = "Prev Buffer" }))
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", vim.tbl_extend("force", opts, { desc = "Next Buffer" }))
 
 vim.keymap.set("n", ";g", function()
   require("snacks").picker.files({
