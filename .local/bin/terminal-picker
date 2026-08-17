@@ -73,13 +73,32 @@ WEZTERM_BIN="$(readlink -f -- "${WEZTERM_BIN:-$(command -v wezterm)}")" \
 result_file="$(mktemp "${TMPDIR:-/tmp}/terminal-picker.XXXXXX")"
 trap 'rm -f "$result_file"' EXIT
 
-read -r prev_pid prev_bundle <<<"$(osascript <<'EOF'
+read -r prev_pid prev_bundle prev_win_x prev_win_y <<<"$(osascript <<'EOF'
 tell application "System Events"
     set p to first application process whose frontmost is true
-    return ((unix id of p) as text) & " " & (bundle identifier of p)
+    set winPos to {-1, -1}
+    -- System Events windows have no stable id, so pin down *which* window of
+    -- the process was frontmost by position -- restoring by pid/app alone
+    -- lets macOS pick any window of that app (wrong one when e.g. several
+    -- Kitty/WezTerm windows are open across spaces).
+    try
+        set winPos to position of front window of p
+    end try
+    return ((unix id of p) as text) & " " & (bundle identifier of p) & " " & (item 1 of winPos) & " " & (item 2 of winPos)
 end tell
 EOF
 )"
+
+# OmniWM (this box's tiling WM) can stack several windows of the same app in
+# one tabbed column -- they all report the same pid/position to System Events,
+# so AppleScript can't tell them apart and restores whichever one happened to
+# be first. Ask the WM itself which window is really focused when its IPC
+# (omniwmctl, ~/.config/omniwm/settings.toml ipcEnabled) is reachable.
+prev_omni_id=""
+if command -v omniwmctl >/dev/null 2>&1; then
+    prev_omni_id="$(omniwmctl query focused-window --format json 2>/dev/null \
+        | jq -r '.result.payload.window.id // empty' 2>/dev/null)"
+fi
 
 # POSIX single-quoting, so the command is parsed the same by bash and zsh.
 quote() { printf "'%s'" "${1//\'/\'\\\'\'}"; }
@@ -101,12 +120,26 @@ result="$(< "$result_file")"
 
 restore_focus() {
     (( do_restore )) || return 0
+    if [[ -n "$prev_omni_id" ]] && omniwmctl window focus "$prev_omni_id" >/dev/null 2>&1; then
+        return 0
+    fi
     [[ -n "${prev_pid:-}" ]] || return 0
-    osascript - "$prev_pid" >/dev/null 2>&1 <<'EOF'
+    osascript - "$prev_pid" "${prev_win_x:--1}" "${prev_win_y:--1}" >/dev/null 2>&1 <<'EOF'
 on run argv
+    set targetPid to (item 1 of argv) as integer
+    set targetX to (item 2 of argv) as integer
+    set targetY to (item 3 of argv) as integer
     tell application "System Events"
-        set procs to (every application process whose unix id is ((item 1 of argv) as integer))
-        if (count of procs) > 0 then set frontmost of (item 1 of procs) to true
+        set procs to (every application process whose unix id is targetPid)
+        if (count of procs) > 0 then
+            set proc to item 1 of procs
+            set frontmost of proc to true
+            if targetX is not -1 then
+                try
+                    set focused of (first window of proc whose position is {targetX, targetY}) to true
+                end try
+            end if
+        end if
     end tell
 end run
 EOF
