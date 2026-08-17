@@ -31,6 +31,11 @@ else
     compinit -d "$zcompdump"
 fi
 
+# Auto-quote URLs (&, ?, ~ etc.) when typed or pasted
+autoload -Uz url-quote-magic bracketed-paste-magic
+zle -N self-insert url-quote-magic
+zle -N bracketed-paste bracketed-paste-magic
+
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
