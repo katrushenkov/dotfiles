@@ -1,4 +1,6 @@
-require("config.remote_clipboard").setup()
+if vim.fn.has("linux") == 1 then
+  require("config.remote_clipboard").setup()
+end
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 vim.opt.relativenumber = false
