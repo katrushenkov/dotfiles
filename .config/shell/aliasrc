@@ -25,11 +25,16 @@ alias \
   ln='ln -i' \
   mkd="mkdir -pv" \
   ffmpeg="ffmpeg -hide_banner" \
-  ffprobe='ffprobe -hide_banner' \
-  rm="rm -vI --preserve-root"
+  ffprobe='ffprobe -hide_banner'
   #Do not accidentally delete root, and also,
   #prompt if deleting more than 3 files at a time
   #(this has saved my ass more times than you would think)
+  # BSD rm (macOS) understands -v/-I but not --preserve-root
+if rm --version >/dev/null 2>&1; then
+  alias rm="rm -vI --preserve-root"
+else
+  alias rm="rm -vI"
+fi
 alias \
   ccat="highlight --out-format=ansi" \
   ip="ip -color=auto" \
