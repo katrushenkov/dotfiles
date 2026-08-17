@@ -254,17 +254,3 @@ super { ,+ shift }+ z
 super + u
 	cat /tmp/dropdown | xargs -I win bspc node win --flag hidden;bspc node -f win
 
-# Make a windoww sticky/non-sticky
-super + o
-	bspc node -g sticky={on,off}
-
-# remove and restore polybar
-#super + b
-#\{ pgrep polybar && \{ killall polybar ; bspc config top_padding 0 \} \} || \{ launch_polybar ; bspc config top_padding 24 \}
-
-super + {i,o}
-	bspc node -f {prev,next}.local
-super + shift + n
-	bspc node focused -t \~floating ; hover right
-super + shift + b
-	bspc node focused -t \~floating ; hover left
