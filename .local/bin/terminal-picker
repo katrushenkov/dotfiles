@@ -1,0 +1,182 @@
+#!/usr/bin/env bash
+#
+# Run an interactive picker (fzf, etc.) in a floating WezTerm popup, then copy
+# its stdout to the clipboard and paste it into the window that was focused
+# before the popup opened.
+#
+#   terminal-picker.sh ~/.local/bin/snippets-fzf
+#   terminal-picker.sh --no-paste kubectl-ctx
+#   terminal-picker.sh --no-restore bookmarks-web-mac -s
+#
+# The target must print its result to stdout; its TUI must draw on /dev/tty
+# (fzf, gum, fzy and friends all do this by default).
+
+set -uo pipefail
+
+# GUI launchers (Hammerspoon's `do shell script`, LaunchAgents) run us with
+# launchd's bare PATH -- no path_helper, so no /opt/homebrew/bin.
+PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
+
+POPUP_CONFIG="${POPUP_CONFIG:-$HOME/.config/wezterm/popup.lua}"
+PASTE_DELAY="${PASTE_DELAY:-0.15}"
+do_paste=1
+do_restore=1
+clear_after=0
+last_clip=""
+
+# stderr is discarded when launched from a GUI app, so also surface failures
+# as a notification -- otherwise the popup just silently never appears.
+die() {
+    printf '%s: %s\n' "${0##*/}" "$1" >&2
+    osascript - "$1" >/dev/null 2>&1 <<'EOF'
+on run argv
+    display notification (item 1 of argv) with title "terminal-picker"
+end run
+EOF
+    exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --no-paste) do_paste=0; shift ;;
+        # For targets that act on the selection themselves (open a browser,
+        # focus a window). Yanking focus back would steal it from whatever the
+        # target just brought up.
+        --no-restore) do_restore=0; do_paste=0; shift ;;
+        # Put the old clipboard back after N seconds, so secrets don't linger.
+        --clear-after)
+            [[ "${2:-}" =~ ^[0-9]+$ ]] || die "--clear-after needs seconds"
+            clear_after="$2"; shift 2 ;;
+        --) shift; break ;;
+        -*) die "unknown option: $1" ;;
+        *) break ;;
+    esac
+done
+
+[[ $# -gt 0 ]] || die "usage: ${0##*/} [--no-paste] <script> [args...]"
+
+target="$1"; shift
+if [[ "$target" != */* ]]; then
+    target="$(command -v -- "$target")" || die "not found in PATH: $1"
+fi
+[[ -x "$target" ]] || die "not executable: $target"
+[[ -r "$POPUP_CONFIG" ]] || die "popup config not found: $POPUP_CONFIG"
+
+# Resolve to the binary inside WezTerm.app. Launched through the Homebrew
+# symlink, NSBundle can't find Info.plist, macOS reports no bundle identifier,
+# and OmniWM's appRule for com.github.wez.wezterm never matches -- the popup
+# gets tiled instead of floated.
+WEZTERM_BIN="$(readlink -f -- "${WEZTERM_BIN:-$(command -v wezterm)}")" \
+    || die "wezterm not found in PATH"
+[[ -x "$WEZTERM_BIN" ]] || die "wezterm not executable: $WEZTERM_BIN"
+
+result_file="$(mktemp "${TMPDIR:-/tmp}/terminal-picker.XXXXXX")"
+trap 'rm -f "$result_file"' EXIT
+
+read -r prev_pid prev_bundle <<<"$(osascript <<'EOF'
+tell application "System Events"
+    set p to first application process whose frontmost is true
+    return ((unix id of p) as text) & " " & (bundle identifier of p)
+end tell
+EOF
+)"
+
+# POSIX single-quoting, so the command is parsed the same by bash and zsh.
+quote() { printf "'%s'" "${1//\'/\'\\\'\'}"; }
+
+# Run through the login shell, not a hardcoded bash: exports live in the user's
+# own startup files (~/.zprofile here) and scripts expect the same environment
+# they get in a terminal. GUI launchers give us none of it.
+inner=""
+for arg in "$target" "$@"; do
+    inner+="$(quote "$arg") "
+done
+inner+="> $(quote "$result_file")"
+
+# fzf writes its UI to /dev/tty, so redirecting stdout keeps the popup usable.
+"$WEZTERM_BIN" --config-file "$POPUP_CONFIG" start --always-new-process \
+    -- "${SHELL:-/bin/bash}" -lc "$inner" >/dev/null 2>&1
+
+result="$(< "$result_file")"
+
+restore_focus() {
+    (( do_restore )) || return 0
+    [[ -n "${prev_pid:-}" ]] || return 0
+    osascript - "$prev_pid" >/dev/null 2>&1 <<'EOF'
+on run argv
+    tell application "System Events"
+        set procs to (every application process whose unix id is ((item 1 of argv) as integer))
+        if (count of procs) > 0 then set frontmost of (item 1 of procs) to true
+    end tell
+end run
+EOF
+}
+
+[[ -n "$result" ]] || { restore_focus; exit 0; }
+
+send_paste() {
+    sleep "$PASTE_DELAY"
+    osascript -e 'tell application "System Events" to keystroke "v" using command down' \
+        >/dev/null 2>&1
+}
+
+# Key codes rather than AppleScript key constants -- they don't depend on the
+# active keyboard layout.
+send_key() {
+    local code
+    case "$1" in
+        tab)          code=48 ;;
+        return|enter) code=36 ;;
+        space)        code=49 ;;
+        *)            return 0 ;;
+    esac
+    osascript -e "tell application \"System Events\" to key code $code" >/dev/null 2>&1
+}
+
+# A target that needs more than one paste (username <Tab> password) emits an
+# action script instead of a bare value: "#!autotype" followed by one command
+# per line. Values are base64 so they survive newlines and quoting untouched.
+#
+#   paste <base64>   put it on the clipboard and press cmd+V
+#   key tab|return|space
+#   delay <seconds>
+play_autotype() {
+    local line cmd arg
+    while IFS= read -r line; do
+        cmd="${line%% *}"
+        arg="${line#* }"
+        [[ "$arg" == "$line" ]] && arg=""
+        case "$cmd" in
+            paste)
+                last_clip="$(printf '%s' "$arg" | base64 -d)"
+                printf '%s' "$last_clip" | pbcopy
+                send_paste
+                ;;
+            key)   send_key "$arg" ;;
+            delay) sleep "$arg" ;;
+        esac
+    done < <(printf '%s\n' "$result" | tail -n +2)
+}
+
+(( clear_after )) && previous_clip="$(pbpaste)"
+
+if [[ "${result%%$'\n'*}" == "#!autotype" ]]; then
+    restore_focus
+    play_autotype
+else
+    last_clip="$result"
+    printf '%s' "$result" | pbcopy
+    restore_focus
+    (( do_paste )) && send_paste
+fi
+
+# Held in the subshell's memory, never on disk, and it outlives us. Only put the
+# old clipboard back if ours is still there -- otherwise we'd clobber whatever
+# the user copied in the meantime.
+if (( clear_after )); then
+    (
+        trap '' HUP
+        sleep "$clear_after"
+        [[ "$(pbpaste)" == "$last_clip" ]] && printf '%s' "$previous_clip" | pbcopy
+    ) >/dev/null 2>&1 &
+fi
