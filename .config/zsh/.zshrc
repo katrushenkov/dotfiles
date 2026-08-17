@@ -81,7 +81,7 @@ add-zsh-hook preexec foot_cmd_start
 add-zsh-hook precmd foot_cmd_end
 
 n () {
-    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+    if [ -n "$NNNLVL" ] && [ "${NNNLVL:-0}" -ge 1 ]; then
 	      exit
         #return
     fi
@@ -92,7 +92,7 @@ n () {
 
     [ ! -f "$NNN_TMPFILE" ] || {
         . "$NNN_TMPFILE"
-        rm -f -- "$NNN_TMPFILE" > /dev/null
+        command rm -f -- "$NNN_TMPFILE" > /dev/null
     }
 }
 
