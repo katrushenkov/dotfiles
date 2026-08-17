@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+#
+# Pick a gopass entry and one of its fields with fzf, print the value to stdout.
+# macOS port of gopass-autotype: no wtype, the wrapper does the pasting.
+#
+#   terminal-picker.sh --clear-after 45 gopass-fzf
+#
+# Entry layout is pass(1)'s: first line is the password, the rest are
+# "key: value" pairs.
+#
+# The "autotype" choice needs more than one paste, so it emits terminal-picker's
+# action script (see play_autotype there) instead of a bare value.
+#
+# Kept to bash 3.2 -- that is the only bash macOS ships, so no mapfile,
+# no associative arrays, no ${var,,}.
+
+set -uo pipefail
+
+AUTOKEY="autotype"
+USERKEY="user"
+
+die() { printf '%s: %s\n' "${0##*/}" "$1" >&2; exit 1; }
+
+pick() { fzf --reverse --no-sort --prompt="$1> "; }
+
+# First "key: value" line for the given key, value only.
+field_value() {
+    printf '%s\n' "$body" | awk -v k="$1" '
+        substr($0, 1, length(k) + 1) == k ":" {
+            v = substr($0, length(k) + 2)
+            sub(/^[[:blank:]]+/, "", v)
+            print v
+            exit
+        }'
+}
+
+otp_value() {
+    local otp
+    otp="$(gopass otp -o -- "$name")" || die "cannot read OTP"
+    [[ "$otp" =~ ^[[:digit:]]+$ ]] || die "invalid OTP"
+    printf '%s' "$otp"
+}
+
+emit_paste() { printf 'paste %s\n' "$(printf '%s' "$1" | base64 | tr -d '\n')"; }
+
+# Default: username <Tab> password, the same pair tessen types.
+emit_default_autotype() {
+    printf '#!autotype\n'
+    emit_paste "$username"
+    printf 'key tab\n'
+    emit_paste "$password"
+}
+
+# Custom ':autotype' field: a word sequence, same vocabulary as the original.
+emit_custom_autotype() {
+    local word value
+    printf '#!autotype\n'
+    for word in $autotype_spec; do  # unquoted on purpose: split into words
+        case "$word" in
+            :delay) printf 'delay 1\n' ;;
+            :tab)   printf 'key tab\n' ;;
+            :space) printf 'key space\n' ;;
+            :enter) printf 'key return\n' ;;
+            :otp)   emit_paste "$(otp_value)" ;;
+            path|basename|filename) emit_paste "${name##*/}" ;;
+            "$USERKEY")    emit_paste "$username" ;;
+            pass|password) emit_paste "$password" ;;
+            *)
+                value="$(field_value "$word")"
+                if [[ -n "$value" ]]; then
+                    emit_paste "$value"
+                else
+                    printf 'key space\n'
+                fi
+                ;;
+        esac
+    done
+}
+
+command -v gopass >/dev/null || die "gopass is not installed"
+command -v fzf >/dev/null || die "fzf is not installed"
+
+entries="$(gopass ls -f)" || die "cannot list the gopass store"
+[[ -n "$entries" ]] || die "gopass store is empty"
+
+name="$(printf '%s\n' "$entries" | pick Pass)" || exit 0
+[[ -n "$name" ]] || exit 0
+printf '%s\n' "$entries" | grep -qxF -- "$name" || die "no such entry: $name"
+
+# --nosync: an autosync round trip would stall the popup on the network.
+secret="$(gopass show -n -f --nosync -- "$name")" || die "cannot decrypt: $name"
+[[ -n "$secret" ]] || die "entry is empty: $name"
+
+password="$(printf '%s\n' "$secret" | sed -n '1p')"
+body="$(printf '%s\n' "$secret" | sed -n '2,$p')"
+
+# The autotype field drives the sequence, so keep it out of the field list.
+keys="$(printf '%s\n' "$body" \
+    | sed -n 's/^\([[:alnum:] +#@_-]\{1,\}\):[[:blank:]].*/\1/p' \
+    | grep -vix "$AUTOKEY" || true)"
+
+autotype_spec="$(field_value "$AUTOKEY")"
+username="$(field_value "$USERKEY")"
+[[ -n "$username" ]] || username="${name##*/}"
+
+options="$AUTOKEY
+password"
+[[ -n "$keys" ]] && options="$options$(printf '\n%s' "$keys")"
+# No user field? The entry name is the usual login, offer it as one.
+printf '%s\n' "$keys" | grep -qix "$USERKEY" || options="$options
+$USERKEY"
+case "$secret" in
+    *otpauth://*) options="$options
+otp" ;;
+esac
+
+field="$(printf '%s\n' "$options" | pick Field)" || exit 0
+[[ -n "$field" ]] || exit 0
+
+case "$field" in
+    "$AUTOKEY")
+        if [[ -n "$autotype_spec" ]]; then
+            emit_custom_autotype
+        else
+            emit_default_autotype
+        fi
+        exit 0
+        ;;
+    password) value="$password" ;;
+    otp)      value="$(otp_value)" ;;
+    "$USERKEY") value="$username" ;;
+    *)        value="$(field_value "$field")" ;;
+esac
+
+[[ -n "$value" ]] || die "field is empty: $field"
+printf '%s' "$value"

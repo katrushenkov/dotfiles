@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+#
+# Pick a bookmark with fzf and open it in the browser. macOS port of
+# bookmarks-web (search modes only).
+#
+# Prints nothing to stdout, so run it with --no-restore -- the browser has to
+# keep focus once the popup closes:
+#
+#   terminal-picker.sh --no-restore bookmarks-web-mac -s
+#
+# Bookmark file, one per line; name and tags are optional:
+#   https://example.com | some name | #tag #tag
+
+set -uo pipefail
+
+bookmarks="${BOOKMARKS_FILE:-$HOME/.local/src/datagrip/bookmarks-web.txt}"
+browser="${BOOKMARKS_BROWSER:-Vivaldi}"
+
+die() { printf '%s: %s\n' "${0##*/}" "$1" >&2; exit 1; }
+
+usage() {
+    cat >&2 <<EOF
+Usage: ${0##*/} <option>
+
+Options:
+  -s,  --search      Pick a bookmark and open it
+  -st, --search-tag  Pick a tag, then a bookmark, and open it
+
+Environment:
+  BOOKMARKS_FILE     Bookmark file (default: ~/.local/src/datagrip/bookmarks-web.txt)
+  BOOKMARKS_BROWSER  Browser app name, or unset to use the system default
+EOF
+}
+
+# Lay the fields out in columns, skipping blanks and the "# section" header
+# lines. The url stays field 1 and never contains spaces, so it survives the
+# round trip through fzf. Note the doubled backslash: awk expands escapes in
+# -F before compiling it as a regex.
+columns() {
+    awk -F' *\\| *' '/[^[:space:]]/ && !/^[[:space:]]*#/ {
+        printf "%-52s %-30s %s\n", $1, $2, $3
+    }' "$@"
+}
+
+pick() { fzf --reverse --no-sort --prompt="$1> "; }
+
+open_url() {
+    if [[ -n "$browser" && -d "/Applications/$browser.app" ]]; then
+        open -a "$browser" "$1" >/dev/null
+    else
+        open "$1" >/dev/null
+    fi
+}
+
+[[ -r "$bookmarks" ]] || die "bookmark file not readable: $bookmarks"
+
+case "${1:-}" in
+    -s|--search)
+        selection="$(columns "$bookmarks" | pick Bookmark)" || exit 0
+        ;;
+    -st|--search-tag)
+        tag="$(grep -oh '#[[:alnum:]_]\+' "$bookmarks" | sort -u | pick tag)" || exit 0
+        [[ -n "$tag" ]] || exit 0
+        selection="$(grep -F -- "$tag" "$bookmarks" | columns - | pick "$tag")" || exit 0
+        ;;
+    -h|--help|'')
+        usage; exit 0
+        ;;
+    *)
+        die "unknown option: $1"
+        ;;
+esac
+
+url="${selection%%[[:space:]]*}"
+[[ -n "$url" ]] || exit 0
+open_url "$url"
