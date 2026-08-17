@@ -1,2 +1,2 @@
 [mounts]
-	path = /home/ser/.local/share/password-store
+	path = "$HOME/.local/share/password-store"
