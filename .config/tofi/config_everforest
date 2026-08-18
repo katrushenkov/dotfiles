@@ -1,0 +1,36 @@
+# Everforest Dark (medium contrast) theme for tofi.
+# Use with: tofi --config ~/.config/tofi/config_everforest ...
+
+font = /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf
+font-size = 14
+
+fuzzy-match = true
+
+width = 1792
+height = 720
+corner-radius = 12
+border-width = 2
+outline-width = 1
+result-spacing = 4
+num-results = 0
+
+padding-top = 16
+padding-left = 20
+
+background-color = #2d353bf2
+outline-color = #232a2e
+border-color = #a7c080
+
+text-color = #d3c6aa
+prompt-color = #a7c080
+prompt-text = "> "
+placeholder-color = #7a8478
+
+input-color = #d3c6aa
+
+default-result-color = #d3c6aa
+selection-color = #2d353b
+selection-background = #a7c080
+selection-background-corner-radius = 6
+selection-background-padding = 4
+selection-match-color = #e69875

@@ -1,0 +1,36 @@
+# Nord theme for tofi.
+# Use with: tofi --config ~/.config/tofi/config_nordic ...
+
+font = /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf
+font-size = 14
+
+fuzzy-match = true
+
+width = 1792
+height = 720
+corner-radius = 12
+border-width = 2
+outline-width = 1
+result-spacing = 4
+num-results = 0
+
+padding-top = 16
+padding-left = 20
+
+background-color = #2e3440f2
+outline-color = #3b4252
+border-color = #88c0d0
+
+text-color = #d8dee9
+prompt-color = #81a1c1
+prompt-text = "> "
+placeholder-color = #4c566a
+
+input-color = #d8dee9
+
+default-result-color = #d8dee9
+selection-color = #2e3440
+selection-background = #88c0d0
+selection-background-corner-radius = 6
+selection-background-padding = 4
+selection-match-color = #ebcb8b
