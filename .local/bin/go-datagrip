@@ -14,49 +14,66 @@ hypr-switch-en
 
 datagrip_dir="$HOME/.local/src/datagrip"
 anima_dir="$HOME/.local/src/anima"
+cache_file="$HOME/.cache/go-datagrip"
 
-# omarchy-menu-select passes the whole option list as a single exec argument,
-# which hits Linux's per-argument size limit (128K) once the tree gets large.
-# These directories are too big to flatten recursively; keep them as a single
-# entry each and let nnn handle browsing inside them.
-skip_dirs=(2ch-scripts unnecessary sc tips)
+if [[ -s "${cache_file}" ]]; then
+  # Cache built by go-datagrip-cache: skip the fd walk and the per-item -d
+  # check, just strip the base dir prefix back off (full paths for both
+  # trees combined push the JSON payload past the kernel's 128K single-arg
+  # limit that omarchy-menu-select's IPC call hits) and hand the rest
+  # straight to the menu.
+  selection="$(sed -E "s#^${datagrip_dir}/##; s#^${anima_dir}/##" "${cache_file}" \
+    | omarchy-menu-select "Go" -- --width 1792 --height 720)"
+else
+  # omarchy-menu-select passes the whole option list as a single exec argument,
+  # which hits Linux's per-argument size limit (128K) once the tree gets large.
+  # These directories are too big to flatten recursively; keep them as a single
+  # entry each and let nnn handle browsing inside them.
+  skip_dirs=(2ch-scripts unnecessary sc tips)
 
-fd_exclude_args=()
-for d in "${skip_dirs[@]}"; do
-  fd_exclude_args+=(--exclude "${d}")
-done
-
-list_entries() {
-  local base="$1"
-  fd . --follow "${fd_exclude_args[@]}" "${base}" | sed -En "s#^${base}/##p"
+  fd_exclude_args=()
   for d in "${skip_dirs[@]}"; do
-    [[ -d "${base}/${d}" ]] && echo "${d}"
+    fd_exclude_args+=(--exclude "${d}")
   done
-}
 
-selection="$(
-  { list_entries "${datagrip_dir}"; list_entries "${anima_dir}"; } \
-    | sort -u \
-    | while read -r item; do
-        if [[ -d "${datagrip_dir}/${item}" || -d "${anima_dir}/${item}" ]]; then
-          echo "📁 ${item}/"
-        else
-          echo "📄 ${item}"
-        fi
-      done \
-    | omarchy-menu-select "Go" -- --width 1792 --height 720
-)"
+  list_entries() {
+    local base="$1"
+    fd . --follow "${fd_exclude_args[@]}" "${base}" | sed -En "s#^${base}/##p"
+    for d in "${skip_dirs[@]}"; do
+      [[ -d "${base}/${d}" ]] && echo "${d}"
+    done
+  }
+
+  selection="$(
+    { list_entries "${datagrip_dir}"; list_entries "${anima_dir}"; } \
+      | sort -u \
+      | while read -r item; do
+          if [[ -d "${datagrip_dir}/${item}" || -d "${anima_dir}/${item}" ]]; then
+            echo "📁 ${item}/"
+          else
+            echo "📄 ${item}"
+          fi
+        done \
+      | omarchy-menu-select "Go" -- --width 1792 --height 720
+  )"
+fi
 
 [[ -n "${selection}" ]] || exit 0
 
-item="$(sed -E 's/^[^ ]* //; s/\/$//' <<< "${selection}")"
-
-if [[ -d "${datagrip_dir}/${item}" ]]; then
-  omarchy launch terminal nnn "${datagrip_dir}/${item}"
-elif [[ -d "${anima_dir}/${item}" ]]; then
-  omarchy launch terminal nnn "${anima_dir}/${item}"
-elif [[ -f "${datagrip_dir}/${item}" ]]; then
-  omarchy launch terminal nvim "${datagrip_dir}/${item}"
+if [[ -s "${cache_file}" ]]; then
+  item="$(sed -E 's/\/$//' <<< "${selection}")"
 else
-  omarchy launch terminal nvim "${anima_dir}/${item}"
+  item="$(sed -E 's/^[^ ]* //; s/\/$//' <<< "${selection}")"
+fi
+
+if [[ -e "${datagrip_dir}/${item}" ]]; then
+  item="${datagrip_dir}/${item}"
+else
+  item="${anima_dir}/${item}"
+fi
+
+if [[ -d "${item}" ]]; then
+  omarchy launch terminal nnn "${item}"
+else
+  omarchy launch terminal nvim "${item}"
 fi

@@ -1,0 +1,121 @@
+#!/bin/bash
+
+main_file="$HOME/.local/src/datagrip/bookmarks-web.txt"
+
+get_existing_tags() {
+	local file="$1"
+	[ -f "$file" ] && grep -oh '#\w\+' "$file" | sort -u || true
+}
+
+text_input() {
+	local prompt="$1"
+	omarchy-menu-select-beta --input "$prompt" -- --width 1400 --height 100
+}
+
+add_bookmark() {
+	local file="$1" url="$2" name="$3"
+
+	if grep -q "^${url// /\\ } " "$file" 2>/dev/null; then
+		notify-send "Oops" "Bookmark already exists"
+		return 1
+	fi
+
+	local bookmarkline="$url | $name |"
+	local selected_tags=""
+	local add_more=1
+
+	while [ $add_more -eq 1 ]; do
+		# Get existing tags and add option to create new
+		local tag_options
+		tag_options=$(get_existing_tags "$file" && echo "+ Create new tag")
+
+		local tag
+		tag=$(echo "$tag_options" | omarchy-menu-select-beta "add tag" -- --width 1400 --height 500 2>/dev/null || true)
+
+		[ -z "$tag" ] && break
+
+		# Handle new tag creation
+		if [ "$tag" = "+ Create new tag" ]; then
+			tag=$(text_input "new tag name (with # prefix):")
+			[ -z "$tag" ] && continue
+			# Ensure tag starts with #
+			[[ $tag != \#* ]] && tag="#$tag"
+		fi
+
+		# Check if tag already in selection, add if not
+		if [[ ! " $selected_tags " =~ " $tag " ]]; then
+			selected_tags+=" $tag"
+			bookmarkline+=" $tag"
+		fi
+
+		# Ask if user wants to add more tags
+		local more
+		more=$(echo -e "Yes\nNo" | omarchy-menu-select-beta "Add more tags?" -- --width 400 --height 150 2>/dev/null || true)
+		[ "$more" != "Yes" ] && add_more=0
+	done
+
+	echo "$bookmarkline" >> "$file"
+	notify-send "✓ Bookmark Added" "$url"
+}
+
+search_and_open() {
+	local file="$1" browser="${2:-vivaldi}"
+	local selection
+
+	selection=$(grep -v "^$" "$file" 2>/dev/null | \
+		awk -F'|' '{printf "%-50s\t%-30s\t%s\n", $1, $2, $3}' | \
+		omarchy-menu-select-beta "Bookmark" -- --width 1792 --height 720 2>/dev/null | \
+		cut -f 1 | xargs || true)
+
+	[ -n "$selection" ] && "$browser" "$selection"
+}
+
+search_by_tag() {
+	local file="$1" browser="${2:-vivaldi}"
+	local tag
+
+	# Get all unique tags in #tag format, remove # for display
+	tag=$(grep -oh '#\w\+' "$file" | sed 's/^#//' | sort -u | \
+		omarchy-menu-select-beta "select tag" -- --width 1400 --height 600 2>/dev/null || true)
+
+	if [ -z "$tag" ]; then
+		return
+	fi
+
+	local result
+	result=$(grep "#$tag" "$file" | \
+		awk -F'|' '{printf "%-50s\t%-30s\t%s\n", $1, $2, $3}' | \
+		omarchy-menu-select-beta "tag: $tag" -- --width 1792 --height 720 2>/dev/null | \
+		cut -f 1 | xargs || true)
+
+	[ -n "$result" ] && "$browser" "$result"
+}
+
+case $1 in
+	-a|--add)
+		url=$(wl-paste)
+		name=$(text_input "add name")
+		[ -n "$name" ] && add_bookmark "$main_file" "$url" "$name"
+		;;
+	-s|--search)
+		search_and_open "$main_file" "vivaldi"
+		;;
+	-st|--search-tag)
+		search_by_tag "$main_file" "vivaldi"
+		;;
+	-am|--add-manual)
+		url=$(text_input "add bookmark")
+		[ -n "$url" ] && name=$(text_input "add name") && add_bookmark "$main_file" "$url" "$name"
+		;;
+	*)
+		cat << EOF
+Usage: bookmarks-web-beta [option]
+
+Options:
+  -a, --add         Add from clipboard
+  -s, --search      Search and open
+  -st, --search-tag Search by tag and open
+  -am, --add-manual Manually add bookmark
+EOF
+		;;
+esac

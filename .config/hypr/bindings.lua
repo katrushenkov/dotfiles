@@ -1,7 +1,7 @@
 local sc = os.getenv("HOME") .. "/.local/bin/"
 
 hl.unbind("SUPER + G")
-hl.bind("SUPER + G", hl.dsp.exec_cmd(sc .. "go-datagrip"), { description = "Search digital brain" })
+hl.bind("SUPER + G", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"), { description = "Search digital brain" })
 
 hl.unbind("SUPER + SHIFT + G")
 o.bind("SUPER + SHIFT + G", "Toggle window grouping", hl.dsp.group.toggle())
@@ -15,7 +15,7 @@ o.bind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
 hl.unbind("SUPER + P")
 hl.bind("SUPER + P", hl.dsp.exec_cmd(sc .. "gopass-autotype"), { description = "Gopass autotype" })
 hl.bind("SUPER + I", hl.dsp.exec_cmd(sc .. "snippets-yank"), { description = "Snippets yank" })
-hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files"), { description = "Snippets files" })
+hl.bind("SUPER + SHIFT + I", hl.dsp.exec_cmd(sc .. "snippets-files-tofi"), { description = "Snippets files" })
 
 hl.bind("SUPER + B", hl.dsp.exec_cmd(sc .. "bookmarks-web -s"), { description = "Search bookmarks" })
 hl.unbind("SUPER + SHIFT + B")

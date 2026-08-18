@@ -1,0 +1,24 @@
+#!/bin/bash
+
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/snippets-files-tofi.lock"
+
+if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+  pkill -x tofi
+  exit 0
+fi
+
+echo $$ > "${lock_file}"
+trap 'rm -f "${lock_file}"' EXIT
+
+hypr-switch-en
+
+base_dir="$HOME/.local/src/datagrip"
+
+selection="$(fd . --type f --follow "${base_dir}" \
+  | sed -En "s#^${base_dir}/##p" \
+  | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "File")"
+
+[[ -n "${selection}" ]] || exit 0
+
+content="$(cat "${base_dir}/${selection}")"
+printf '%s' "${content}" | wl-copy -n

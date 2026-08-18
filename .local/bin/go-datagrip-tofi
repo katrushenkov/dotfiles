@@ -1,0 +1,73 @@
+#!/bin/bash
+
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/datagrip-go-tofi.lock"
+
+if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+  pkill -x tofi
+  exit 0
+fi
+
+echo $$ > "${lock_file}"
+trap 'rm -f "${lock_file}"' EXIT
+
+hypr-switch-en
+
+datagrip_dir="$HOME/.local/src/datagrip"
+anima_dir="$HOME/.local/src/anima"
+cache_file="$HOME/.cache/go-datagrip"
+
+if [[ -s "${cache_file}" ]]; then
+  # Cache built by go-datagrip-cache: skip the fd walk and the per-item -d
+  # check, just strip the base dir prefix back off and hand the rest
+  # straight to the menu.
+  selection="$(sed -E "s#^${datagrip_dir}/##; s#^${anima_dir}/##" "${cache_file}" \
+    | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "Go")"
+else
+  skip_dirs=(2ch-scripts unnecessary sc tips)
+
+  fd_exclude_args=()
+  for d in "${skip_dirs[@]}"; do
+    fd_exclude_args+=(--exclude "${d}")
+  done
+
+  list_entries() {
+    local base="$1"
+    fd . --follow "${fd_exclude_args[@]}" "${base}" | sed -En "s#^${base}/##p"
+    for d in "${skip_dirs[@]}"; do
+      [[ -d "${base}/${d}" ]] && echo "${d}"
+    done
+  }
+
+  selection="$(
+    { list_entries "${datagrip_dir}"; list_entries "${anima_dir}"; } \
+      | sort -u \
+      | while read -r item; do
+          if [[ -d "${datagrip_dir}/${item}" || -d "${anima_dir}/${item}" ]]; then
+            echo "📁 ${item}/"
+          else
+            echo "📄 ${item}"
+          fi
+        done \
+      | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "Go"
+  )"
+fi
+
+[[ -n "${selection}" ]] || exit 0
+
+if [[ -s "${cache_file}" ]]; then
+  item="$(sed -E 's/\/$//' <<< "${selection}")"
+else
+  item="$(sed -E 's/^[^ ]* //; s/\/$//' <<< "${selection}")"
+fi
+
+if [[ -e "${datagrip_dir}/${item}" ]]; then
+  item="${datagrip_dir}/${item}"
+else
+  item="${anima_dir}/${item}"
+fi
+
+if [[ -d "${item}" ]]; then
+  omarchy launch terminal nnn "${item}"
+else
+  omarchy launch terminal nvim "${item}"
+fi
