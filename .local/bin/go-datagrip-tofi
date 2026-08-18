@@ -1,9 +1,9 @@
 #!/bin/bash
 
-lock_file="${XDG_RUNTIME_DIR:-/tmp}/datagrip-go.lock"
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/datagrip-go-tofi.lock"
 
 if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
-  omarchy-menu close
+  pkill -x tofi
   exit 0
 fi
 
@@ -18,17 +18,11 @@ cache_file="$HOME/.cache/go-datagrip"
 
 if [[ -s "${cache_file}" ]]; then
   # Cache built by go-datagrip-cache: skip the fd walk and the per-item -d
-  # check, just strip the base dir prefix back off (full paths for both
-  # trees combined push the JSON payload past the kernel's 128K single-arg
-  # limit that omarchy-menu-select's IPC call hits) and hand the rest
+  # check, just strip the base dir prefix back off and hand the rest
   # straight to the menu.
   selection="$(sed -E "s#^${datagrip_dir}/##; s#^${anima_dir}/##" "${cache_file}" \
-    | omarchy-menu-select "Go" -- --width 1792 --height 720)"
+    | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "Go")"
 else
-  # omarchy-menu-select passes the whole option list as a single exec argument,
-  # which hits Linux's per-argument size limit (128K) once the tree gets large.
-  # These directories are too big to flatten recursively; keep them as a single
-  # entry each and let nnn handle browsing inside them.
   skip_dirs=(2ch-scripts unnecessary sc tips)
 
   fd_exclude_args=()
@@ -54,7 +48,7 @@ else
             echo "📄 ${item}"
           fi
         done \
-      | omarchy-menu-select "Go" -- --width 1792 --height 720
+      | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "Go"
   )"
 fi
 
