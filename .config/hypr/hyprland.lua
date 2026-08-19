@@ -28,3 +28,8 @@ require("default.hypr.toggles")
 -- Add any other personal Hyprland configuration below.
 o.window("vivaldi", { workspace = "2" })
 o.window("telegram", { workspace = "3" })
+
+-- go-datagrip-tofi: open its terminal floating, centered, at 80% of the screen.
+o.window("org.omarchy.datagrip-go", { float = true })
+o.window("org.omarchy.datagrip-go", { center = true })
+o.window("org.omarchy.datagrip-go", { size = { "(monitor_w*0.8)", "(monitor_h*0.8)" } })

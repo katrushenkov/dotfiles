@@ -67,7 +67,7 @@ else
 fi
 
 if [[ -d "${item}" ]]; then
-  omarchy launch terminal nnn "${item}"
+  setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.datagrip-go --title="DataGrip Go" --dir="${item}" -- nnn "${item}"
 else
-  omarchy launch terminal nvim "${item}"
+  setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.datagrip-go --title="DataGrip Go" --dir="$(dirname -- "${item}")" -- nvim "${item}"
 fi
