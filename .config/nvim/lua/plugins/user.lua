@@ -69,7 +69,7 @@ return {
     version = "2.*",
     dependencies = "saghen/blink.download",
     keys = {
-      { "<leader>k", function() require("kubectl").toggle({ tab = true }) end, desc = "Kubectl" },
+      { "<leader>kc", function() require("kubectl").toggle({ tab = true }) end, desc = "Kubectl" },
       { "<leader>ka", "<cmd>Kubectl apply<cr>", desc = "Kubectl Apply (buffer)" },
       {
         "<leader>kd",
