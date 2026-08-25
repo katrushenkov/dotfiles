@@ -6,8 +6,8 @@ font-size = 14
 
 fuzzy-match = true
 
-width = 1792
-height = 720
+width = 80%
+height = 80%
 corner-radius = 12
 border-width = 2
 outline-width = 1
