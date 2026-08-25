@@ -100,6 +100,11 @@ hl.unbind("SUPER + CTRL + l")
 o.bind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
 o.bind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
 
+o.bind("SUPER + SHIFT + ALT + h", "Move workspace to left monitor", hl.dsp.workspace.move({ monitor = "l" }))
+o.bind("SUPER + SHIFT + ALT + l", "Move workspace to right monitor", hl.dsp.workspace.move({ monitor = "r" }))
+o.bind("SUPER + SHIFT + ALT + k", "Move workspace to up monitor", hl.dsp.workspace.move({ monitor = "u" }))
+o.bind("SUPER + SHIFT + ALT + j", "Move workspace to down monitor", hl.dsp.workspace.move({ monitor = "d" }))
+
 o.bind("ALT + h", "Move grouped window focus left", hl.dsp.group.prev())
 o.bind("ALT + l", "Move grouped window focus right", hl.dsp.group.next())
 
