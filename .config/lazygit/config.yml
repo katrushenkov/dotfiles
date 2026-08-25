@@ -4,6 +4,8 @@ gui:
       - magenta
     inactiveBorderColor:
       - white
+os:
+  editPreset: nvim
 customCommands:
   - key: O
     context: commits
