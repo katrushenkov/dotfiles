@@ -5,7 +5,7 @@ return {
     enabled = true,
     version = false,
     opts = {
-      dashboard = { enabled = true, sections = { { text = "" } } },
+      dashboard = { enabled = false, sections = { { text = "" } } },
       styles = {
         dashboard = {
           wo = {
