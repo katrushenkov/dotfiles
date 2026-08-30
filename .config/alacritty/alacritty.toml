@@ -4,7 +4,6 @@
 import = ["~/.local/state/omarchy/current/theme/alacritty.toml"]
 live_config_reload = true
 
-
 [bell]
 animation = "EaseOutExpo"
 color = "0xffffff"
