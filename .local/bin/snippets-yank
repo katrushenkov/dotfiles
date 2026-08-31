@@ -7,7 +7,8 @@ if [[ "${OS}" == "Linux"* ]]; then
   lock_file="${XDG_RUNTIME_DIR:-/tmp}/snippets-yank.lock"
 
   if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
-    omarchy-menu close
+    # omarchy-menu close
+    pkill -x tofi
     exit 0
   fi
 
@@ -18,8 +19,12 @@ if [[ "${OS}" == "Linux"* ]]; then
 
   selection="$(rg -v '^#|^$' ~/.local/src/datagrip/snippets \
     | expand -t 4 \
-    | omarchy-menu-select "Snippet" -- --width 1792 --height 720 \
+    | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "" --fuzzy-match false \
     | awk -F ' #' '{print $1}')"
+  # selection="$(rg -v '^#|^$' ~/.local/src/datagrip/snippets \
+  #   | expand -t 4 \
+  #   | omarchy-menu-select "Snippet" -- --width 1792 --height 720 \
+  #   | awk -F ' #' '{print $1}')"
 
   [[ -n "${selection}" ]] || exit 0
 
