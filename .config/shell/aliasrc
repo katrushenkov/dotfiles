@@ -1,7 +1,12 @@
 #!/bin/sh
 
+# Computed once and reused below instead of forking `uname` / `command -v nvim`
+# multiple times while this file is sourced on every shell startup.
+_os="$(uname)"
+_nvim_path="$(command -v nvim)"
+
 # Use neovim for vim if present.
-[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
+[ -x "$_nvim_path" ] && alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
 
 # sudo not required for some system commands
 for command in mount umount sv pacman updatedb su shutdown poweroff reboot; do
@@ -30,7 +35,7 @@ alias \
   #prompt if deleting more than 3 files at a time
   #(this has saved my ass more times than you would think)
   # BSD rm (macOS) understands -v/-I but not --preserve-root
-if rm --version >/dev/null 2>&1; then
+if [ "$_os" = "Linux" ]; then
   alias rm="rm -vI --preserve-root"
 else
   alias rm="rm -vI"
@@ -82,7 +87,7 @@ alias \
   df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h" \
   free="free -mht" \
   dtfmt='date "+%Y-%m-%d %A %T %Z"' \
-  shell-logged-in-time="echo -e $(date +'%H:%M')" \
+  shell-logged-in-time='echo -e $(date +"%H:%M")' \
   mute="pamixer -m" \
   unmute="pamixer -u" \
   netprocs="lsof -P -i -n" \
@@ -213,7 +218,7 @@ alias ports='sudo netstat -tulanp'
 #    kill -9 $(lsof -t -i:$1)
 #}
 
-if [[ $(uname) == "Linux" ]] ; then
+if [ "$_os" = "Linux" ]; then
   alias zathura='zathura-sandbox'
   alias yi="yay -S"
   alias yn="yay -S --noconfirm"
@@ -284,7 +289,7 @@ generateqr () {
   printf '%s' "$@" | curl -F-=\<- qrenco.de
 }
 
-if [ -x "$(command -v nvim)" ]; then
+if [ -x "$_nvim_path" ]; then
   man() {
       nvim -c "Man $*" -c "only"
   }
@@ -379,11 +384,13 @@ grib() {
 }
 
 # macos
-if [[ $(uname) == "Darwin" ]] ; then
+if [ "$_os" = "Darwin" ]; then
   alias cleanup-ds-store="find . -type f -name '*.DS_Store' -ls -delete"
   alias brew-update='brew update; brew upgrade; brew autoremove; brew cleanup --prune=1'
   alias sleep="pmset sleep now"
 fi
+
+unset _os _nvim_path
 
 # kubectl
 alias k="kubectl"
