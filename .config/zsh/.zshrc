@@ -23,13 +23,23 @@ zstyle ':completion:*' menu select
 zmodload zsh/complist
 _comp_options+=(globdots) # include hidden files
 
-# Cache compinit once per day
+# Cache compinit once per day.
+# Uses zsh's own glob qualifiers (mh+24 = "modified more than 24h ago") instead of
+# shelling out to `stat`, whose flags differ between GNU (Linux) and BSD (macOS) —
+# portable across both without any external command.
+# Note: globbing must happen outside `[[ ]]` (it performs no pathname expansion),
+# hence collecting the match into an array first.
 zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-if [[ -f "$zcompdump" && "$(date +'%j')" == "$(stat -f '%Sm' -t '%j' "$zcompdump" 2>/dev/null)" ]]; then
-    compinit -C
+zcompdump_stale=(${~zcompdump}(N.mh+24))
+if [[ -f "$zcompdump" && ${#zcompdump_stale} -eq 0 ]]; then
+    compinit -C -d "$zcompdump"
 else
     compinit -d "$zcompdump"
+    # compinit only rewrites the dump (bumping its mtime) when fpath actually
+    # changed; without this, an unchanged dump never "ages out" of full compinit.
+    touch "$zcompdump" 2>/dev/null
 fi
+unset zcompdump_stale
 
 # Auto-quote URLs (&, ?, ~ etc.) when typed or pasted
 autoload -Uz url-quote-magic bracketed-paste-magic
