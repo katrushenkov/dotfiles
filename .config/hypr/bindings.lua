@@ -58,7 +58,9 @@ o.bind("XF86Launch7", "TODO (CapsLock+M)", hl.dsp.exec_cmd("TODO: command for Ca
 
 -- keyd [capsmode]: e = f17, f = f18, k = f19 (F19 keeps its literal keysym,
 -- unlike F13-F18 which xkb remaps to XF86Tools/XF86LaunchN):
-o.bind("XF86Launch8", "TODO (CapsLock+E)", hl.dsp.exec_cmd("TODO: command for CapsLock+E"))
+--
+o.bind("XF86Launch8", "Emacs (CapsLock+E)",
+  "omarchy-launch-or-focus " .. o.shell_quote("^Emacs$") .. " " .. o.shell_quote(o.launch("emacsclient -c -a ''")))
 o.bind("XF86Launch9", "TODO (CapsLock+F)", hl.dsp.exec_cmd("TODO: command for CapsLock+F"))
 o.bind("F19", "TODO (CapsLock+K)", hl.dsp.exec_cmd("TODO: command for CapsLock+K"))
 
