@@ -64,6 +64,7 @@ alias \
   trem="transmission-remote" \
   sdn="shutdown -h now" \
   e='$EDITOR' \
+  ec='emacsclient -t' \
   lg="lazygit" \
   kx="kubectx" \
   k="kubectl"
