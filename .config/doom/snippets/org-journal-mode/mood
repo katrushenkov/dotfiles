@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: quick mood line
+# key: mood
+# --
+Mood: $1/5 — $2
+$0

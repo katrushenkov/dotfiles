@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: org-contacts entry
+# key: contact
+# --
+* $1 :$2:
+:PROPERTIES:
+:EMAIL: $3
+:PHONE: $4
+:BIRTHDAY: $5
+:ADDRESS: $6
+:NOTE: $7
+:END:
+$0

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: daily entry (mood/weather/gratitude/focus)
+# key: daily
+# --
+Mood: $1/5
+Weather: $2
+
+Dayli notes:
+- $3
+- $4
+- $5
+
+Tomorrow focus: $6
+$0

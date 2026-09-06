@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: TODO with schedule
+# key: todo
+# --
+* TODO $1
+SCHEDULED: <${2:`(format-time-string "%Y-%m-%d %a")`}>
+$0
