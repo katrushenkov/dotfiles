@@ -10,7 +10,11 @@ hl.config({
 --     kb_options = "compose:caps,grp:alts_toggle",
        -- caps:escape removed: CapsLock remapping is now handled by keyd
        -- (tap = Escape, hold+G = F13 -> browser), see /etc/keyd/default.conf
-       kb_options = "grp:ctrl_shift_toggle",
+       -- grp:ctrl_shift_toggle removed: conflicted with Emacs's C-S-RET (and
+       -- any other Ctrl+Shift chord). Layout switching now goes through
+       -- CapsLock+Space instead (keyd space=f24 -> Hyprland F24 bind ->
+       -- hypr-switch-layout, see bindings.lua). Uncomment to go back:
+       -- kb_options = "grp:ctrl_shift_toggle",
 --
 --     -- Use a specific keyboard variant if needed (e.g. intl for international keyboards).
 --     kb_variant = "intl",

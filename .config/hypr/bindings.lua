@@ -64,6 +64,14 @@ o.bind("XF86Launch8", "Emacs (CapsLock+E)",
 o.bind("XF86Launch9", "TODO (CapsLock+F)", hl.dsp.exec_cmd("TODO: command for CapsLock+F"))
 o.bind("F19", "TODO (CapsLock+K)", hl.dsp.exec_cmd("TODO: command for CapsLock+K"))
 
+-- keyd [capsmode]: space = f24 (added). F20-F23 are NOT free like F19 —
+-- xkb's inet(evdev) symbols hardcode them to XF86AudioMicMute/TouchpadToggle/
+-- TouchpadOn/TouchpadOff ("historical mappings that must not be removed").
+-- F20 was tried first and silently triggered mic-mute instead. F24 is the
+-- next one that keeps its literal keysym in the base group (confirmed in
+-- /usr/share/X11/xkb/symbols/inet) and isn't bound to anything else.
+o.bind("F24", "Switch keyboard layout (CapsLock+Space)", hl.dsp.exec_cmd(sc .. "hypr-switch-layout"))
+
 o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
 
 o.bind("ALT + RETURN", "Pypr toggle term", hl.dsp.exec_cmd("pypr toggle term"))
