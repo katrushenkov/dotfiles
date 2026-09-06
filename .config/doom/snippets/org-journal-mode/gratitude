@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: gratitude list
+# key: gratitude
+# --
+Gratitude notes:
+- $1
+- $2
+- $3
+$0
