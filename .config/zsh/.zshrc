@@ -50,6 +50,12 @@ zle -N bracketed-paste bracketed-paste-magic
 bindkey -v
 export KEYTIMEOUT=1
 
+# Ctrl+Left / Ctrl+Right = move by word (foot sends xterm-style CSI 1;5C/1;5D)
+bindkey -M viins '^[[1;5C' vi-forward-word
+bindkey -M viins '^[[1;5D' vi-backward-word
+bindkey -M vicmd '^[[1;5C' vi-forward-word
+bindkey -M vicmd '^[[1;5D' vi-backward-word
+
 # Use vim keys in tab complete menu
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
