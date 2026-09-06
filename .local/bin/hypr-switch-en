@@ -4,6 +4,13 @@ OS="$(uname -s)"
 
 if [[ "${OS}" == "Linux"* ]]; then
 
+  # Long-lived callers (e.g. the Emacs daemon) can outlive a Hyprland
+  # restart and keep a stale HYPRLAND_INSTANCE_SIGNATURE from their own
+  # inherited environment, pointing at a socket that no longer exists.
+  # Always resolve the currently-live instance from disk instead of
+  # trusting whatever was inherited.
+  export HYPRLAND_INSTANCE_SIGNATURE="$(ls -t "/run/user/$(id -u)/hypr/" 2>/dev/null | head -n1)"
+
   read -r kbd idx < <(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | "\(.name) \(.active_layout_index)"' | head -n1)
 
   [[ "$idx" != "0" ]] && hyprctl -q switchxkblayout "$kbd" 0
