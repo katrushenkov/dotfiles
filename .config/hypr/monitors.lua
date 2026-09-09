@@ -13,8 +13,9 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = omarchy
 -- Explicit scale = 1 (not "auto"): GDK_SCALE is forced to 2 globally above,
 -- so GTK apps would render 2x too large/blurry on these non-HiDPI panels
 -- if Hyprland's own auto-scale picked something other than 2.
-hl.monitor({ output = "DP-1", mode = "2560x1440@144", position = "auto-left", scale = 1, transform = 0 })
-hl.monitor({ output = "HDMI-A-1", mode = "1920x1080", position = "auto-right", scale = 1, transform = 3 })
+hl.monitor({ output = "eDP-1", mode = "2880x1800@120", position = "auto-left", scale = 1, transform = 0 })
+hl.monitor({ output = "DP-1", mode = "2560x1440@144", position = "auto-left", scale = 1.2, transform = 0 })
+hl.monitor({ output = "HDMI-A-1", mode = "1920x1080", position = "auto-right", scale = 1.2, transform = 3 })
 
 -- Portrait/rotated secondary monitor (transform: 1 = 90°, 3 = 270°).
 -- hl.monitor({ output = "DP-2", mode = "preferred", position = "auto", scale = 1, transform = 1 })
