@@ -406,16 +406,18 @@ Similar to org-capture-like behavior."
 ;;; --- Omarchy integration (merged 2026-09-04) ---
 ;; ~/.config/emacs is now this Doom install itself (the omarchy-emacs AUR
 ;; package's own init.el/omarchy.el shim were moved aside to
-;; ~/.config/emacs.omarchy-backup.20260904-230348). Loading the same shim
-;; here gives Doom live theme + font sync with the system Omarchy theme,
-;; exactly like the stock profile had. This overrides the doom-font/
-;; doom-variable-pitch-font/doom-unicode-font set above — that's intentional,
-;; font sync was requested too. `omarchy-restart-emacs` (invoked by the
-;; theme-set/font-set hooks) reloads ~/.config/emacs/omarchy.el directly on
-;; every theme/font change, so it doesn't need Doom to still be running this
-;; block after startup — this call only handles the initial sync.
+;; ~/.config/emacs.omarchy-backup.20260904-230348). $DOOMDIR/+omarchy.el
+;; loads that shim itself (for its helper functions/vars), then advice-overrides
+;; `omarchy-apply-theme'/`omarchy-apply-font' with Doom-aware versions (custom
+;; `omarchy-doom' theme, pgtk-corrected font sizing, and untangling the stock
+;; `delete-trailing-whitespace' hook from Doom's own whitespace handling) —
+;; loading the bare shim directly, as this used to, skips all of that and
+;; silently falls back to the stock plain `omarchy' theme instead. The advice
+;; is installed on the symbol, so it survives `omarchy-restart-emacs' (invoked
+;; by the theme-set/font-set hooks) reloading ~/.config/emacs/omarchy.el later
+;; — this call only needs to run once, at startup.
 ;;
 ;; omarchy-emacs may overwrite ~/.config/emacs/init.el and/or
 ;; ~/.config/emacs/omarchy.el on an AUR upgrade (`omarchy-emacs-setup`
 ;; re-run); watch for that and re-apply this merge if it happens.
-(load (expand-file-name "omarchy.el" doom-emacs-dir) 'noerror)
+(load! "+omarchy")
