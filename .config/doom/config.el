@@ -278,6 +278,36 @@
   (define-key org-super-agenda-header-map "H" #'org-agenda-do-date-earlier)
   (define-key org-super-agenda-header-map "S" #'org-agenda-filter-remove-all))
 
+;; Extends org-modern's styling to source-block indentation guides. Purely
+;; visual, complements the org-modern already enabled via the org +pretty
+;; flag in init.el. org-startup-indented is t (Doom default), so
+;; org-indent-mode always runs in org buffers and this hook always fires.
+(use-package! org-modern-indent
+  :hook (org-indent-mode . org-modern-indent-mode))
+
+;; Reveal emphasis markers/links/sub-superscripts when the cursor is on
+;; them, hide them otherwise — complements org-modern (org +pretty), which
+;; hides that same syntax by default and would otherwise make it invisible
+;; to edit. org-appear-delay 0: evil motions jump discretely between
+;; objects rather than moving the cursor continuously like typing, so the
+;; default 0.7s debounce (meant to avoid flicker while typing/scrolling
+;; character-by-character) only adds latency here — reveal immediately.
+(use-package! org-appear
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autoemphasis t
+        org-appear-autolinks t
+        org-appear-autosubmarkers t
+        org-appear-delay 0))
+
+;; Archive completed tasks into a single dated tree instead of one
+;; "<file>_archive" per source file. "datetree/" as the heading part of
+;; org-archive-location is special-cased by org-archive.el: it files the
+;; entry under the archive's own date tree (by CLOSED time, or now) instead
+;; of a flat list. Lives in a subdirectory, not org-directory's top level, so
+;; it stays out of org-agenda-files per the non-recursive scan (see CLAUDE.md).
+(setq org-archive-location (concat org-directory "archive/archive.org::datetree/"))
+
 ;; Auto-reset checkboxes in a repeating TODO's subtree when it repeats, so
 ;; recurring checklists (review.org) come back unchecked instead of showing
 ;; last time's progress. Verified: without this, checkboxes stay checked.
@@ -376,6 +406,13 @@ Similar to org-capture-like behavior."
                "** %^{Title}\n%i%?" :jump-to-captured t)))
      )
 
+;; deft (:ui deft module, enabled in init.el): incremental fuzzy search over
+;; note filenames+content, bound to "SPC n d" by Doom's own default module
+;; config — nothing to bind here. deft-recursive t so it also reaches
+;; journal/ and archive/, not just org-directory's top level.
+(setq deft-directory org-directory
+      deft-recursive t)
+
 (map! "<f5>" #'deadgrep)
 
 ;; `;x' toggles the scratch buffer. Note this shadows evil's `;' (repeat
@@ -458,6 +495,18 @@ Similar to org-capture-like behavior."
 ;; instead of registering them one at a time. Runs automatically the first
 ;; time SPC p p or similar is used (`projectile-auto-discover' defaults to t).
 (setq projectile-project-search-path '("~/.local/src/"))
+
+;; kubel: kubectl-in-Emacs. Edit a resource's YAML buffer and hit `C-c C-c'
+;; to `kubectl apply' it; `?' in the overview lists all other bindings.
+(use-package! kubel
+  :commands (kubel)
+  :config
+  (setq kubel-use-namespace-list t)
+  (require 'kubel-evil))
+
+(map! :leader
+      (:prefix "o"
+       :desc "Kubel" "k" #'kubel))
 
 ;;; --- Omarchy integration (merged 2026-09-04) ---
 ;; ~/.config/emacs is now this Doom install itself (the omarchy-emacs AUR
