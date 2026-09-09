@@ -9,7 +9,16 @@
 (setq which-key-idle-delay 0.0
       which-key-idle-secondary-delay 0.0)
 
-(setq default-directory "~/.local/src/datagrip/")
+(setq-default default-directory "~/.local/src/datagrip/")
+
+;; The dashboard buffer (shown in every new `emacsclient -c' frame) is
+;; created before this file loads, with `default-directory' inherited from
+;; the daemon's own startup cwd ($HOME — the systemd unit sets no
+;; WorkingDirectory) — `setq-default' above doesn't reach its already-set
+;; buffer-local value. `+dashboard-pwd-policy' as a fixed string pins it
+;; directly instead of relying on the "last visited file/project" fallback
+;; chain (see `+dashboard--pwd').
+(setq +dashboard-pwd-policy "~/.local/src/datagrip/")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -67,6 +76,13 @@
 ;; *.org files (not recursive).
 (setq org-agenda-files (list org-directory
                               "~/.local/src/datagrip/org/journal/"))
+
+;; `SPC m A' (org-archive-subtree) files everything into one consolidated,
+;; date-tree-organized archive instead of scattering a `<file>_archive'
+;; sibling next to every source file. ".archive/" being a subdirectory
+;; already keeps it out of org-agenda-files/org-refile-targets (non-recursive
+;; scan) without any extra exclusion needed.
+(setq org-archive-location (concat org-directory ".archive/archive.org::datetree/"))
 
 (map! :leader
       (:prefix "n"
@@ -207,7 +223,19 @@
         appt-delete-window-function #'ignore)
   (appt-activate 1)
   (defun +org-refresh-appt ()
-    (org-agenda-to-appt t))
+    (org-agenda-to-appt t)
+    ;; `org-agenda-to-appt' opens the `diary' file as a normal buffer and
+    ;; never closes it. Since this runs on every startup/every 10min, that
+    ;; buffer ends up the most recently touched one in the buffer list —
+    ;; which `quit-window' (dashboard's "q", inherited from `special-mode')
+    ;; falls back to on a fresh frame with no window history. Hide it like
+    ;; an internal buffer instead (nobody edits `diary' directly, see its
+    ;; note in org/CLAUDE.md) — renaming doesn't affect its file
+    ;; association, just excludes it from `other-buffer'/buffer-switching.
+    (when-let* ((buf (get-file-buffer diary-file)))
+      (with-current-buffer buf
+        (unless (string-prefix-p " " (buffer-name))
+          (rename-buffer (concat " " (buffer-name)) t)))))
   (+org-refresh-appt)
   (run-at-time nil (* 10 60) #'+org-refresh-appt)
   (add-hook 'org-capture-after-finalize-hook #'+org-refresh-appt))
@@ -349,6 +377,34 @@ Similar to org-capture-like behavior."
      )
 
 (map! "<f5>" #'deadgrep)
+
+;; `;x' toggles the scratch buffer. Note this shadows evil's `;' (repeat
+;; last f/F/t/T search) — accepted tradeoff, that binding isn't used here.
+(map! :n ";x" #'doom/toggle-scratch-buffer)
+
+;; `;e' opens the current file in the system default editor, in its own
+;; terminal window (running a TUI editor inside an Emacs term.el buffer broke
+;; rendering — nested TUI-in-TUI fights over the terminal).
+;;
+;; NOT going through `omarchy-launch-editor'/`omarchy-launch-tui': both hop
+;; through `uwsm-app', whose daemon (`uwsm aux app-daemon') proved flaky when
+;; tested from a shell here — "Timed out trying to write to
+;; /run/user/1000/uwsm-app-daemon-in!" and, once the daemon was up, a pty
+;; write failure — silently, since Emacs's `start-process' had nowhere to
+;; show that stderr. `xdg-terminal-exec' alone (no uwsm dependency) reliably
+;; opened a new terminal window in the same testing.
+(defun +open-file-in-editor ()
+  "Open the current buffer's file in the default editor, in its own window."
+  (interactive)
+  (let* ((file (or (buffer-file-name) (user-error "Buffer is not visiting a file")))
+         (editor-file (expand-file-name "~/.local/state/omarchy/defaults/editor"))
+         (editor (if (file-readable-p editor-file)
+                     (string-trim (with-temp-buffer
+                                    (insert-file-contents editor-file)
+                                    (buffer-string)))
+                   "nvim")))
+    (start-process "term-editor" nil "xdg-terminal-exec" "-e" editor file)))
+(map! :n ";e" #'+open-file-in-editor)
 
 ;; `SPC b d' (kill-current-buffer) only asks yes/no "kill anyway?" for a
 ;; modified buffer — no option to save first. Ask that explicitly instead.
