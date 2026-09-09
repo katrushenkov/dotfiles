@@ -85,15 +85,16 @@ zle-line-init() {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # foot: mark command output boundaries so pipe-command-output knows what to pipe.
-autoload -Uz add-zsh-hook
-foot_cmd_start() { echo -ne '\e]133;C\e\\' }
-foot_cmd_end()   { echo -ne '\e]133;D\e\\' }
-add-zsh-hook preexec foot_cmd_start
-add-zsh-hook precmd foot_cmd_end
+# Disabled: TERMINAL is ghostty, not foot, and this OSC 133 hook was causing
+# a stray "%" (zsh's PROMPT_EOL_MARK) to appear before the first prompt.
+# autoload -Uz add-zsh-hook
+# foot_cmd_start() { echo -ne '\e]133;C\e\\' }
+# foot_cmd_end()   { echo -ne '\e]133;D\e\\' }
+# add-zsh-hook preexec foot_cmd_start
+# add-zsh-hook precmd foot_cmd_end
 
 n () {
     if [ -n "$NNNLVL" ] && [ "${NNNLVL:-0}" -ge 1 ]; then
