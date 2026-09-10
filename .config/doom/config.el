@@ -20,6 +20,20 @@
 ;; chain (see `+dashboard--pwd').
 (setq +dashboard-pwd-policy "~/.local/src/datagrip/")
 
+;; Drop the Doom Emacs ASCII banner from the dashboard. `+dashboard-widget-banner'
+;; inserts the ASCII art text first and then, in a graphical frame, overlays
+;; `fancy-splash-image' on top of that same text region — so nil'ing the
+;; ASCII-art function (rather than removing the widget from
+;; `+dashboard-functions') takes the graphical logo down with it too, not
+;; just the ASCII fallback. The other widgets (shortcuts, footer, loaded-in
+;; time) are unaffected.
+(setq +dashboard-ascii-banner-fn nil)
+
+;; Drop the GitHub-icon line too — that's the whole of `+dashboard-widget-footer'
+;; (just an octoface icon/link to github.com/doomemacs), so remove the widget
+;; from `+dashboard-functions' entirely rather than blanking its content.
+(setq +dashboard-functions (remove '+dashboard-widget-footer +dashboard-functions))
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -52,13 +66,13 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/.local/src/datagrip/org/")
+(setq org-directory "~/.local/src/datagrip/")
 ;;(setq org-directory "~/org/")
 
 (use-package org-contacts
   :ensure nil
   :after org
-  :custom (org-contacts-files '("~/.local/src/datagrip/org/contacts.org"))
+  :custom (org-contacts-files '("~/.local/src/datagrip/contacts.org"))
   :config
   ;; org-contacts' "@Name" completion-at-point only activates in modes listed
   ;; here, checked against `major-mode' — org-journal-mode doesn't match even
@@ -75,7 +89,7 @@
 ;; org-contacts birthdays. Directories are scanned for their top-level
 ;; *.org files (not recursive).
 (setq org-agenda-files (list org-directory
-                              "~/.local/src/datagrip/org/journal/"))
+                              "~/.local/src/datagrip/journal/"))
 
 ;; `SPC m A' (org-archive-subtree) files everything into one consolidated,
 ;; date-tree-organized archive instead of scattering a `<file>_archive'
@@ -83,6 +97,44 @@
 ;; already keeps it out of org-agenda-files/org-refile-targets (non-recursive
 ;; scan) without any extra exclusion needed.
 (setq org-archive-location (concat org-directory ".archive/archive.org::datetree/"))
+
+;; "f" capture template: quick notes into their own top-level file
+;; (flant.org), separate from the general notes.org. Lives at org-directory's
+;; top level, so org-agenda-files' non-recursive scan (see above) picks it up
+;; automatically. Every entry is tagged :flant: up front — baked into the
+;; template text rather than via `%^g' (which would prompt every time) since
+;; it should always apply here. Still just an ordinary org tag string once
+;; inserted, so extra tags can be added on top: type more `:tag:'s right
+;; next to it before finalizing, or `SPC m q' (`org-set-tags-command') for
+;; the usual completing prompt — either sees :flant: as already set and adds
+;; to it rather than replacing it.
+;;
+;; `alist-get'+`setf' (same pattern as the "j" journal override below)
+;; instead of `add-to-list': "f" isn't a Doom-default key, so `add-to-list'
+;; would still work the first time, but it matches by `equal' on the whole
+;; entry — re-editing the template text later (as just happened) makes it no
+;; longer `equal' to what's already in the list, so add-to-list prepends a
+;; second "f" entry instead of replacing the first. `org-capture' still picks
+;; the front one (correct, since add-to-list prepends), so it isn't silently
+;; broken, but it leaves a stale duplicate sitting behind it — confusing to
+;; debug later. `alist-get'+`setf' always replaces the "f" entry in place.
+(after! org
+  (setf (alist-get "f" org-capture-templates nil nil #'equal)
+        '("Flant" entry
+          (file+headline "flant.org" "Inbox")
+          "* TODO %? :flant:\n%i\n%a" :prepend t)))
+
+;; Let `:w'/`:wq'/`:x' finalize a capture (like `C-c C-c'), not just save (or
+;; save-and-close) the buffer — `save-buffer' on a capture buffer doesn't file
+;; the entry into its target or clean up the capture state. Buffer-local:
+;; makes `evil-ex-commands' local first (`evil--add-to-alist' then mutates
+;; that local copy via `setq'), so this only shadows these commands inside
+;; capture buffers, not globally.
+(add-hook 'org-capture-mode-hook
+          (defun +org-capture-evil-w-finalizes-h ()
+            (setq-local evil-ex-commands (copy-alist evil-ex-commands))
+            (dolist (cmd '("w[rite]" "wq" "x[it]"))
+              (evil-ex-define-cmd cmd #'org-capture-finalize))))
 
 (map! :leader
       (:prefix "n"
@@ -92,6 +144,30 @@
         :desc "New entry on date" "d" #'org-journal-new-date-entry
         :desc "Search"            "s" #'org-journal-search
         :desc "Open calendar"     "c" #'calendar)))
+
+;; `SPC Q' takes over the "quit/session" menu that `SPC q' used to open (see
+;; Doom's default `+evil-bindings.el' — restart/quit/save-session/etc, still
+;; reachable the same way, just one key over). Freed from being a prefix,
+;; `SPC q' becomes a direct leaf binding for "Delete frame" (was `SPC q f').
+;; `lookup-key' grabs the existing quit/session keymap before the second
+;; `map!' entry overwrites what "q" points to — order matters here.
+(map! :leader
+      :desc "Quit/session" "Q" (lookup-key doom-leader-map (kbd "q"))
+      :desc "Delete frame" "q" #'delete-frame)
+
+;; `f' in normal state jumps via avy (timer-based char search, labels on
+;; every match on screen) instead of evil's native "find char on this line".
+;; Was already available unprefixed as `gs /' (see evil-easymotion config);
+;; this just makes it the default `f'.
+;;
+;; Caveat: this replaces `f' as an evil *motion*, not just a standalone
+;; command — `evil-avy-goto-char-timer' jumps point directly and doesn't
+;; return a motion range, so operator-pending uses of `f' (`df', `cf', `yf',
+;; …) stop working. If that's needed, rebind to an `evilem-create'-wrapped
+;; version of `evil-find-char' instead (see the `gs a'/`gs A' pattern above)
+;; — that stays operator-compatible since it re-runs the real motion after
+;; the avy jump picks a target character.
+(map! :n "f" #'evil-avy-goto-char-timer)
 
 ;; Mirror org-journal's raw calendar-mode-map bindings (],[,j m/r/d/n — always
 ;; active once org-journal loads, regardless of leader keys) as a discoverable
@@ -230,7 +306,7 @@
     ;; which `quit-window' (dashboard's "q", inherited from `special-mode')
     ;; falls back to on a fresh frame with no window history. Hide it like
     ;; an internal buffer instead (nobody edits `diary' directly, see its
-    ;; note in org/CLAUDE.md) — renaming doesn't affect its file
+    ;; note in org-notes.md) — renaming doesn't affect its file
     ;; association, just excludes it from `other-buffer'/buffer-switching.
     (when-let* ((buf (get-file-buffer diary-file)))
       (with-current-buffer buf
@@ -305,7 +381,7 @@
 ;; org-archive-location is special-cased by org-archive.el: it files the
 ;; entry under the archive's own date tree (by CLOSED time, or now) instead
 ;; of a flat list. Lives in a subdirectory, not org-directory's top level, so
-;; it stays out of org-agenda-files per the non-recursive scan (see CLAUDE.md).
+;; it stays out of org-agenda-files per the non-recursive scan (see org-notes.md).
 (setq org-archive-location (concat org-directory "archive/archive.org::datetree/"))
 
 ;; Auto-reset checkboxes in a repeating TODO's subtree when it repeats, so
@@ -347,11 +423,17 @@
 
  (use-package org-journal
      :ensure t
-     :defer t
+     :demand t
      :init
      :custom
      (org-journal-prefix-key "C-c j ")
-     (org-journal-dir "~/.local/src/datagrip/org/journal/")
+     (org-journal-dir "~/.local/src/datagrip/journal/")
+     ;; Default is `find-file-other-window', which always splits the current
+     ;; window to open the journal entry — if that window (or another one)
+     ;; already shows the journal buffer, you end up looking at it twice.
+     ;; Plain `find-file' reuses an existing window on that buffer instead of
+     ;; forcing a split.
+     (org-journal-find-file-fn #'find-file)
      ;;(org-journal-date-format "%Y %m %B %d, %A")
      (org-journal-date-format "[%Y-%m-%d]:")
      (org-journal-file-type 'monthly)
@@ -361,7 +443,9 @@
      ;;(org-journal-time-prefix "- ")
      ;;(org-journal-time-format "%R ")  ;; heading + time: "** 14:30 text"
      ;;(org-journal-time-prefix "** ")
-     (org-journal-time-format "")      ;; heading, no time (current): "** text"
+     ;;(org-journal-time-format "")      ;; heading, no time: "** text"
+     ;;(org-journal-time-prefix "** ")
+     (org-journal-time-format "[%Y-%m-%d %a] ")  ;; heading + standard inactive timestamp (current): "** [2026-09-09 Wed] text"
      (org-journal-time-prefix "** ")
      ;; Speeds up calendar-heavy operations (SPC n j c, mark/search) — org-journal
      ;; caches which dates have entries instead of re-scanning files each time.
@@ -383,28 +467,76 @@ Similar to org-capture-like behavior."
        (kill-buffer-and-window))
      (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
 
+     ;; Same reasoning as the org-capture `:w'/`:wq'/`:x' override above:
+     ;; without this, evil's `:w' just calls plain `save-buffer' here, so the
+     ;; journal window/buffer stays open after "finishing" an entry — only
+     ;; `C-x C-s' (bound just above) closed it. Buffer-local, via a local copy
+     ;; of `evil-ex-commands', so this doesn't touch `:w' anywhere else.
+     (add-hook 'org-journal-mode-hook
+               (defun +org-journal-evil-w-saves-and-exits-h ()
+                 (setq-local evil-ex-commands (copy-alist evil-ex-commands))
+                 (dolist (cmd '("w[rite]" "wq" "x[it]"))
+                   (evil-ex-define-cmd cmd #'org-journal-save-entry-and-exit))))
+
      ;; org-journal only binds C-c j {f,b,j,s} inside `org-journal-mode-map',
      ;; i.e. once you're already in a journal buffer. That leaves no way to
      ;; enter the journal from anywhere else, so bind the entry points globally
      ;; too.
      (map! "C-c j j" #'org-journal-new-entry
            "C-c j s" #'org-journal-search)
-
-     ;; Doom's default "j" org-capture template writes into a separate
-     ;; journal.org via datetree, which would fork journal entries away from
-     ;; org-journal's own monthly files. Route it through org-journal instead
-     ;; (recipe from the org-journal README's org-capture integration section)
-     ;; so `SPC X j' and `C-c j j' land in the same place.
-     (defun +org-journal-capture-location ()
-       (org-journal-new-entry t)
-       (unless (eq org-journal-file-type 'daily)
-         (org-narrow-to-subtree))
-       (goto-char (point-max)))
-     (after! org
-       (setf (alist-get "j" org-capture-templates nil nil #'equal)
-             '("Journal entry" plain (function +org-journal-capture-location)
-               "** %^{Title}\n%i%?" :jump-to-captured t)))
      )
+
+;; Doom's default "j" org-capture template writes into a separate journal.org
+;; via datetree, which would fork journal entries away from org-journal's own
+;; monthly files. Route it through org-journal instead (recipe from the
+;; org-journal README's org-capture integration section) so `SPC X j' and
+;; `C-c j j' land in the same place.
+;;
+;; Deliberately OUTSIDE `use-package org-journal's `:config': org-journal is
+;; `:demand t' now (loads unconditionally at startup, see above) specifically
+;; so this override is always in place before any capture runs — but it used
+;; to be `:defer t', and this override used to live inside `:config' too,
+;; which only runs once some org-journal command is actually called. Verified
+;; that gap was real: some entries landed in journal.org because capture ran
+;; before org-journal's :config had a chance to install the override. Keeping
+;; the override out here as well costs nothing and doesn't reintroduce that
+;; failure mode if `:demand' ever reverts to `:defer' again.
+(defun +org-journal-capture-location ()
+  ;; `org-capture-place-template' always pops up its OWN window afterward,
+  ;; on an indirect clone of whatever buffer we leave current here (see
+  ;; `org-capture-place-template' in org-capture.el: `pop-to-buffer' on an
+  ;; `org-capture-get-indirect-buffer' result, unconditionally, regardless of
+  ;; capture target type). `org-journal-new-entry' — via `org-journal-find-file-fn'
+  ;; — normally ALSO switches to/displays the monthly file itself. Do both and
+  ;; you get two windows on the same content: the plain buffer (from here) and
+  ;; the indirect CAPTURE- buffer (from org-capture) — a real duplicate,
+  ;; since window-reuse logic keys off buffer identity and an indirect buffer
+  ;; doesn't count as "already showing" its base buffer. Locally rebinding to
+  ;; a non-displaying opener avoids that: just set the buffer current, let
+  ;; org-capture's own pop-to-buffer be the only thing that shows a window.
+  ;; (Direct `org-journal-new-entry' calls — `SPC n j j', `C-c j j' — don't go
+  ;; through org-capture at all, so they still use the global
+  ;; `org-journal-find-file-fn' (`find-file') set above and display normally.)
+  ;; PREFIX (t) also tells `org-journal-new-entry' to skip its own auto
+  ;; timestamp heading, leaving just the day's subtree — the "j" capture
+  ;; template below supplies the `**' heading (and its own timestamp) itself.
+  (let ((org-journal-find-file-fn (lambda (file) (set-buffer (find-file-noselect file)))))
+    (org-journal-new-entry t))
+  (unless (eq org-journal-file-type 'daily)
+    (org-narrow-to-subtree))
+  (goto-char (point-max)))
+;; No `%^{Title}' prompt: type the title straight into the heading via `%?'
+;; instead. `%^{...}' escapes are filled in `org-capture-fill-template' by
+;; inserting the raw, not-yet-substituted template text into a scratch buffer
+;; literally named "*Capture*" and prompting there (see `org-capture.el') —
+;; while that prompt is up, that scratch buffer (still showing unexpanded
+;; escapes, `%?' included) is genuinely visible in a window. Harmless — it's
+;; wrapped in `save-window-excursion' and never reaches the saved entry — but
+;; skipping the separate prompt avoids the extra window/flash entirely.
+(after! org
+  (setf (alist-get "j" org-capture-templates nil nil #'equal)
+        '("Journal entry" plain (function +org-journal-capture-location)
+          "** %<[%Y-%m-%d %a]> %?\n%i")))
 
 ;; deft (:ui deft module, enabled in init.el): incremental fuzzy search over
 ;; note filenames+content, bound to "SPC n d" by Doom's own default module

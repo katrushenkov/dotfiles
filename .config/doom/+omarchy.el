@@ -63,6 +63,13 @@ Re-run after every upstream reload, since loading omarchy.el re-adds them."
   "Reload Omarchy's palette and re-apply `doom-theme'.
 Overrides `omarchy-apply-theme', so Omarchy's theme-set hook drives Doom."
   (interactive)
+  ;; Guard against running before config.el's own `(setq doom-theme nil)'
+  ;; has been superseded by this file's `(setq doom-theme +omarchy-theme)'
+  ;; below (observed during `doom sync', which can load/eval this file out
+  ;; of its normal config.el-then-+omarchy.el order) — without this,
+  ;; `doom-theme' can still be nil here and `load-theme' below signals
+  ;; "Invalid theme name `nil'".
+  (setq doom-theme (or doom-theme +omarchy-theme))
   (+omarchy-load-colors)
   (+omarchy--tidy)
   ;; Upstream's own shim calls the (at that point still unadvised)
