@@ -122,26 +122,64 @@
   (setf (alist-get "f" org-capture-templates nil nil #'equal)
         '("Flant" entry
           (file+headline "flant.org" "Inbox")
-          "* TODO %? :flant:\n%i\n%a" :prepend t)))
+          "* TODO %? :flant:\n%i" :prepend t)))
 
 ;; Doom's default "n"/"pn"/"on" (notes / project-local notes / centralized
 ;; project notes) templates prefix every entry with a `%u'/`%U' timestamp.
 ;; Strip that — just the heading text, no date/time — while leaving the
-;; rest of each template (target file, `%i'/`%a' body, `:prepend') as-is.
+;; rest of each template (target file, `%i' body, `:prepend') as-is.
+;; `%a' (link to wherever capture was invoked from) dropped too, same as in
+;; every other template below — see the comment above the "t"/"pt"/"pc"/
+;; "ot"/"oc" overrides for why.
 (after! org
   (setf (alist-get "n" org-capture-templates nil nil #'equal)
         '("Personal notes" entry
           (file+headline +org-capture-notes-file "Inbox")
-          "* %?\n%i\n%a" :prepend t))
+          "* %?\n%i" :prepend t))
   (setf (alist-get "pn" org-capture-templates nil nil #'equal)
         '("Project-local notes" entry
           (file+headline +org-capture-project-notes-file "Inbox")
-          "* %?\n%i\n%a" :prepend t))
+          "* %?\n%i" :prepend t))
   (setf (alist-get "on" org-capture-templates nil nil #'equal)
         '("Project notes" entry
           (function +org-capture-central-project-notes-file)
-          "* %?\n %i\n %a"
+          "* %?\n %i"
           :heading "Notes"
+          :prepend t)))
+
+;; Drop `%a' — a link back to wherever capture was invoked from — from every
+;; remaining Doom-default template ("t" personal todo, and the project
+;; variants "pt"/"pc"/"ot"/"oc"). Whether that link actually turns into
+;; anything visible depends on the buffer capture was invoked from (see
+;; `org-store-link' in org-capture.el: file buffers and org-mode headings
+;; get a real link, buffers with no store-link handler like `*scratch*' or
+;; a shell get silently nothing) — inconsistent enough to just never insert
+;; it. "n"/"pn"/"on"/"f"/"j" already don't include `%a' in their own
+;; overrides above/below.
+(after! org
+  (setf (alist-get "t" org-capture-templates nil nil #'equal)
+        '("Personal todo" entry
+          (file+headline +org-capture-todo-file "Inbox")
+          "* [ ] %?\n%i" :prepend t))
+  (setf (alist-get "pt" org-capture-templates nil nil #'equal)
+        '("Project-local todo" entry
+          (file+headline +org-capture-project-todo-file "Inbox")
+          "* TODO %?\n%i" :prepend t))
+  (setf (alist-get "pc" org-capture-templates nil nil #'equal)
+        '("Project-local changelog" entry
+          (file+headline +org-capture-project-changelog-file "Unreleased")
+          "* %U %?\n%i" :prepend t))
+  (setf (alist-get "ot" org-capture-templates nil nil #'equal)
+        '("Project todo" entry
+          (function +org-capture-central-project-todo-file)
+          "* TODO %?\n %i"
+          :heading "Tasks"
+          :prepend nil))
+  (setf (alist-get "oc" org-capture-templates nil nil #'equal)
+        '("Project changelog" entry
+          (function +org-capture-central-project-changelog-file)
+          "* %U %?\n %i"
+          :heading "Changelog"
           :prepend t)))
 
 ;; Let `:w'/`:wq'/`:x' finalize a capture (like `C-c C-c'), not just save (or
@@ -155,6 +193,17 @@
             (setq-local evil-ex-commands (copy-alist evil-ex-commands))
             (dolist (cmd '("w[rite]" "wq" "x[it]"))
               (evil-ex-define-cmd cmd #'org-capture-finalize))))
+
+;; Leftover which-key popup after invoking capture via a leader-key sequence
+;; (e.g. `SPC X j'): Doom's ui/popup module advises `org-capture-place-template'
+;; to temporarily redefine `delete-window'/`delete-other-windows' to no-ops
+;; for that call's duration (`+popup--suppress-delete-other-windows-a', so org
+;; doesn't monopolize the frame). which-key's side-window popup closes via
+;; `quit-windows-on' -> `delete-window' (`which-key--hide-buffer-side-window'
+;; in which-key.el) — if that close happens to land inside the same window,
+;; it's swallowed and the popup is left on screen. Force it closed once the
+;; capture buffer exists, regardless of whether the earlier close succeeded.
+(add-hook 'org-capture-mode-hook #'which-key--hide-popup-ignore-command)
 
 (map! :leader
       (:prefix "n"
@@ -639,6 +688,16 @@ created entry."
 ;; new client frame (stock Emacs server.el, keybinding shown is whatever's
 ;; currently bound to `delete-frame'). Uncomment to silence it.
 ;;(setq server-client-instructions nil)
+
+;; Omarchy's SUPER+V ("Universal paste") sends Ctrl+Shift+V specifically to
+;; Emacs windows (see the `active_window_is_emacs' branch in
+;; ~/.config/hypr/bindings.lua), because neither of the obvious stand-ins
+;; works here: plain C-v is scroll-down, and evil rebinds C-y to
+;; `evil-copy-from-above' in insert state. C-S-v is unbound in every evil
+;; state (checked normal/insert/visual/motion + minibuffer), so bind it
+;; globally to plain `yank', which already pulls from the system clipboard
+;; over the kill-ring via `select-enable-clipboard' (t by default).
+(map! "C-S-v" #'yank)
 
 ;; Force the keyboard layout back to English whenever leaving insert or
 ;; ex/command-line state (mirrors the InsertLeave/CmdlineLeave autocmds in
