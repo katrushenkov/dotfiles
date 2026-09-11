@@ -459,24 +459,49 @@
      ;; deleting it without asking.
      (org-journal-carryover-delete-empty-journal 'ask)
      :config
+     ;; Non-nil only in buffers where a new entry was actually inserted via
+     ;; `org-journal-new-entry' (`SPC n j j' / `C-c j j') — set by the hook
+     ;; below. Stays nil when the journal file is opened directly for
+     ;; ordinary editing (e.g. `find-file' on a monthly file), so that saving
+     ;; there behaves like a normal buffer instead of closing the window.
+     (defvar-local +org-journal-close-on-save nil)
+     (add-hook 'org-journal-after-entry-create-hook
+               (defun +org-journal-mark-close-on-save-h ()
+                 (setq +org-journal-close-on-save t)))
+
      (defun org-journal-save-entry-and-exit ()
-       "Save the buffer of the current day's entry and kill the window.
-Similar to org-capture-like behavior."
+       "Save the buffer. If it holds a freshly created entry (see
+`+org-journal-close-on-save'), also kill the window — capture-like.
+Otherwise just save, leaving the window open for normal editing."
+       (interactive)
+       (save-buffer)
+       (when +org-journal-close-on-save
+         (kill-buffer-and-window)))
+     (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
+
+     (defun +org-journal-save-and-quit ()
+       "Save the buffer and kill the window, unconditionally.
+Standard `:wq'/`:x' semantics — unlike plain `:w' (`org-journal-save-entry-and-exit'),
+these always quit the window, whether or not the buffer holds a freshly
+created entry."
        (interactive)
        (save-buffer)
        (kill-buffer-and-window))
-     (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
 
      ;; Same reasoning as the org-capture `:w'/`:wq'/`:x' override above:
      ;; without this, evil's `:w' just calls plain `save-buffer' here, so the
      ;; journal window/buffer stays open after "finishing" an entry — only
      ;; `C-x C-s' (bound just above) closed it. Buffer-local, via a local copy
      ;; of `evil-ex-commands', so this doesn't touch `:w' anywhere else.
+     ;; `:w' defers to `org-journal-save-entry-and-exit' (closes only for a
+     ;; freshly created entry, see `+org-journal-close-on-save' above); `:wq'
+     ;; and `:x' always close, matching their standard save-and-quit meaning.
      (add-hook 'org-journal-mode-hook
                (defun +org-journal-evil-w-saves-and-exits-h ()
                  (setq-local evil-ex-commands (copy-alist evil-ex-commands))
-                 (dolist (cmd '("w[rite]" "wq" "x[it]"))
-                   (evil-ex-define-cmd cmd #'org-journal-save-entry-and-exit))))
+                 (evil-ex-define-cmd "w[rite]" #'org-journal-save-entry-and-exit)
+                 (dolist (cmd '("wq" "x[it]"))
+                   (evil-ex-define-cmd cmd #'+org-journal-save-and-quit))))
 
      ;; org-journal only binds C-c j {f,b,j,s} inside `org-journal-mode-map',
      ;; i.e. once you're already in a journal buffer. That leaves no way to
