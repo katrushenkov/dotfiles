@@ -127,3 +127,43 @@ o.bind("ALT + SHIFT + F", "Move window to firefox workspace", hl.dsp.window.move
 o.bind("ALT + Right", "Volume up", "omarchy-audio-output-volume raise", { locked = true, repeating = true })
 o.bind("ALT + Left", "Volume down", "omarchy-audio-output-volume lower", { locked = true, repeating = true })
 
+-- Universal paste (SUPER+V) in Emacs: default/hypr/bindings/clipboard.lua
+-- sends Ctrl+V to any non-terminal window, but Emacs binds that to
+-- scroll-down, not yank, so paste silently did nothing there. Redirect to
+-- Ctrl+Shift+V for Emacs windows specifically — bound in
+-- ~/.config/doom/config.el to plain `yank', which is the one paste-like
+-- command evil leaves alone in every state. Re-checks the terminal branch
+-- too (see clipboard.lua) since this replaces the whole binding.
+local function send_key_once(mods, key)
+  return function()
+    hl.dispatch(hl.dsp.send_key_state({ mods = mods, key = key, state = "down" }))
+    hl.timer(function()
+      hl.dispatch(hl.dsp.send_key_state({ mods = mods, key = key, state = "up" }))
+    end, { timeout = 50, type = "oneshot" })
+  end
+end
+
+local function active_window_is_terminal()
+  local window = hl.get_active_window()
+  if not window then
+    return false
+  end
+  for _, tag in ipairs(window.tags or {}) do
+    if tag:gsub("%*$", "") == "terminal" then
+      return true
+    end
+  end
+  return false
+end
+
+o.rebind("SUPER + V", "Universal paste", function()
+  local window = hl.get_active_window()
+  if window and window.class == "emacs" then
+    send_key_once("CTRL SHIFT", "V")()
+  elseif active_window_is_terminal() then
+    send_key_once("SHIFT", "Insert")()
+  else
+    send_key_once("CTRL", "V")()
+  end
+end)
+
