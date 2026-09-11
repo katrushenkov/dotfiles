@@ -386,7 +386,8 @@ return {
       { "<leader>go", function() Snacks.gitbrowse() end,           desc = "Git Browse (open in browser)" },
       -- Grep
       { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
-      { "<leader>sg", LazyVim.pick("live_grep"),                   desc = "Grep (Root Dir)" },
+      { "<leader>sg", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
+      { "<leader>sG", LazyVim.pick("live_grep"),                   desc = "Grep (Root Dir)" },
       { "<leader>sw", LazyVim.pick("grep_word"),                   desc = "Visual selection or word (Root Dir)", mode = { "n", "x" } },
       { "<leader>sW", LazyVim.pick("grep_word", { root = false }), desc = "Visual selection or word (cwd)", mode = { "n", "x" } },
       -- search
