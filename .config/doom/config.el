@@ -124,6 +124,26 @@
           (file+headline "flant.org" "Inbox")
           "* TODO %? :flant:\n%i\n%a" :prepend t)))
 
+;; Doom's default "n"/"pn"/"on" (notes / project-local notes / centralized
+;; project notes) templates prefix every entry with a `%u'/`%U' timestamp.
+;; Strip that — just the heading text, no date/time — while leaving the
+;; rest of each template (target file, `%i'/`%a' body, `:prepend') as-is.
+(after! org
+  (setf (alist-get "n" org-capture-templates nil nil #'equal)
+        '("Personal notes" entry
+          (file+headline +org-capture-notes-file "Inbox")
+          "* %?\n%i\n%a" :prepend t))
+  (setf (alist-get "pn" org-capture-templates nil nil #'equal)
+        '("Project-local notes" entry
+          (file+headline +org-capture-project-notes-file "Inbox")
+          "* %?\n%i\n%a" :prepend t))
+  (setf (alist-get "on" org-capture-templates nil nil #'equal)
+        '("Project notes" entry
+          (function +org-capture-central-project-notes-file)
+          "* %?\n %i\n %a"
+          :heading "Notes"
+          :prepend t)))
+
 ;; Let `:w'/`:wq'/`:x' finalize a capture (like `C-c C-c'), not just save (or
 ;; save-and-close) the buffer — `save-buffer' on a capture buffer doesn't file
 ;; the entry into its target or clean up the capture state. Buffer-local:
@@ -375,14 +395,6 @@
         org-appear-autolinks t
         org-appear-autosubmarkers t
         org-appear-delay 0))
-
-;; Archive completed tasks into a single dated tree instead of one
-;; "<file>_archive" per source file. "datetree/" as the heading part of
-;; org-archive-location is special-cased by org-archive.el: it files the
-;; entry under the archive's own date tree (by CLOSED time, or now) instead
-;; of a flat list. Lives in a subdirectory, not org-directory's top level, so
-;; it stays out of org-agenda-files per the non-recursive scan (see org-notes.md).
-(setq org-archive-location (concat org-directory "archive/archive.org::datetree/"))
 
 ;; Auto-reset checkboxes in a repeating TODO's subtree when it repeats, so
 ;; recurring checklists (review.org) come back unchecked instead of showing
