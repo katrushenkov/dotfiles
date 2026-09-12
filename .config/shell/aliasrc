@@ -409,6 +409,9 @@ alias klo="kubectl logs -f"
 alias kn="kubectl get nodes"
 alias kpv="kubectl get pv"
 alias kpvc="kubectl get pvc"
+alias kds='kubectl describe'
+alias krm='kubectl delete'
+alias kns='kubectl config set-context --current --namespace'
 
 # docker
 alias di='docker images'
