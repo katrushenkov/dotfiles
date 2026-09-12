@@ -734,7 +734,11 @@ created entry."
 
 (map! :leader
       (:prefix "o"
-       :desc "Kubel" "k" #'kubel))
+       :desc "Kubel" "k" #'kubel
+       :desc "Org capture" "c" #'org-capture)
+      (:prefix "s"
+       :desc "Grep (cwd)"       "g" #'+default/search-cwd
+       :desc "Grep (project)"   "G" #'+default/search-project))
 
 ;;; --- Omarchy integration (merged 2026-09-04) ---
 ;; ~/.config/emacs is now this Doom install itself (the omarchy-emacs AUR
