@@ -285,7 +285,7 @@
 ;; encrypted — the heading title and any properties stay in plaintext, so
 ;; don't put anything sensitive in the title itself.
 (after! org-crypt
-  (setq org-crypt-key "katrushenkov@gmail.com"))
+  (setq org-crypt-key user-mail-address))
 
 (after! org
   (map! :map org-mode-map
