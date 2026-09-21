@@ -7,6 +7,10 @@
           "id": "omarchy.indicators"
         },
         {
+          "id": "omacom.elsewhen",
+          "zones": "Vladivostok|Asia/Vladivostok, Los Angeles|America/Los_Angeles, New York|America/New_York, London|Europe/London, Dubai|Asia/Dubai"
+        },
+        {
           "id": "omarchy.clock",
           "format": "ddd d MMM HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
