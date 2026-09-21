@@ -7,6 +7,10 @@
           "id": "omarchy.indicators"
         },
         {
+          "id": "omacom.elsewhen",
+          "zones": "Vladivostok|Asia/Vladivostok, Dubai|Asia/Dubai, Moscow|Europe/Moscow"
+        },
+        {
           "id": "omarchy.clock",
           "format": "ddd d MMM HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
@@ -17,9 +21,6 @@
         },
         {
           "id": "omarchy.weather"
-        },
-        {
-          "id": "kdk.omavless"
         }
       ],
       "left": [
