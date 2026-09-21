@@ -212,3 +212,6 @@
 ;; If you're a dark-mode user who suffers from the "flash of white Emacs" when
 ;; you first open Emacs, uncomment this (and adjust the color as you like).
 ;; (add-to-list 'initial-frame-alist '(background-color . "#000000"))
+
+;; (setq doom-leader-key ";")
+;(setq      doom-leader-alt-key ";")
