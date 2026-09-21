@@ -422,6 +422,7 @@ return {
       { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 
       { "<leader>r",  function() Snacks.picker.resume() end,                desc = "Snacks Resume" },
+      { "<leader>'",  function() Snacks.picker.resume() end,                desc = "Snacks Resume" },
       { "<C-E>",      function() Snacks.image.health() end,                 desc = "Image Health" },
       { "<C-H>",      function() Snacks.zen.zen() end,                      desc = "Toggle Zen Mode" },
     },
