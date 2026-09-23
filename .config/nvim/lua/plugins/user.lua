@@ -129,10 +129,6 @@ return {
       },
       workspaces = {
         {
-          name = "anima",
-          path = "$HOME/.local/src/anima",
-        },
-        {
           name = "datagrip",
           path = "$HOME/.local/src/datagrip",
         },
