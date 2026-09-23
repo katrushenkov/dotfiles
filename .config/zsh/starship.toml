@@ -5,7 +5,20 @@
 add_newline = true
 
 command_timeout = 200
-format = "[$directory$git_branch$git_status]($style)$character"
+format = "$username$hostname[$directory$git_branch$git_status]($style)$character"
+
+[username]
+style_user = "bold yellow"
+style_root = "bold red"
+format = "[$user]($style)"
+disabled = false
+
+[hostname]
+ssh_only = true
+trim_at = ""
+format = "[@$hostname]($style) "
+style = "bold green"
+disabled = false
 
 [character]
 error_symbol = "[✗](bold cyan)"
