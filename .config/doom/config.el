@@ -316,6 +316,24 @@
           (todo "WAIT" ((org-agenda-overriding-header "Waiting on")))
           (todo "PROJ" ((org-agenda-overriding-header "Projects")))))))
 
+;; evil-collection's org-agenda "v" submenu only carries the day/week/month/
+;; year range picker (those specific letters collide with evil's own
+;; normal-state bindings, which is why evil-collection moved them under a
+;; prefix) — it drops the rest of vanilla org's `v'-prefixed toggles,
+;; archives-mode included. Restore both variants: "v a" (org-agenda-
+;; archives-mode, toggles nil/'trees — only entries still physically in the
+;; source file under an :ARCHIVE: tag) and "v A" (the `with-files' form,
+;; toggles in/out `t' — also pulls in each file's actual archive location).
+;; Only "v A" finds anything archived via `SPC m A' (org-archive-subtree),
+;; since that command moves the entry out to the file named in #+ARCHIVE /
+;; `org-archive-location' rather than leaving an :ARCHIVE:-tagged tree
+;; behind — confirmed live: searching tag "work" found nothing until
+;; toggled to `t' via "v A", which pulled in .archive/flant-archive.org.
+(after! org-agenda
+  (map! :map org-agenda-mode-map
+        :n "v a" #'org-agenda-archives-mode
+        :n "v A" (cmd! (org-agenda-archives-mode 'files))))
+
 ;; Desktop notifications for timed reminders. No separate file needed — any
 ;; heading with a SCHEDULED/DEADLINE timestamp that includes a time (e.g.
 ;; "SCHEDULED: <2026-09-06 Sun 15:00>"), anywhere in org-agenda-files, gets
