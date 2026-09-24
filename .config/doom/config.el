@@ -98,31 +98,31 @@
 ;; scan) without any extra exclusion needed.
 (setq org-archive-location (concat org-directory ".archive/archive.org::datetree/"))
 
-;; "f" capture template: quick notes into their own top-level file
+;; "w" capture template: quick notes into their own top-level file
 ;; (flant.org), separate from the general notes.org. Lives at org-directory's
 ;; top level, so org-agenda-files' non-recursive scan (see above) picks it up
-;; automatically. Every entry is tagged :flant: up front — baked into the
+;; automatically. Every entry is tagged :work: up front — baked into the
 ;; template text rather than via `%^g' (which would prompt every time) since
 ;; it should always apply here. Still just an ordinary org tag string once
 ;; inserted, so extra tags can be added on top: type more `:tag:'s right
 ;; next to it before finalizing, or `SPC m q' (`org-set-tags-command') for
-;; the usual completing prompt — either sees :flant: as already set and adds
+;; the usual completing prompt — either sees :work: as already set and adds
 ;; to it rather than replacing it.
 ;;
 ;; `alist-get'+`setf' (same pattern as the "j" journal override below)
-;; instead of `add-to-list': "f" isn't a Doom-default key, so `add-to-list'
+;; instead of `add-to-list': "w" isn't a Doom-default key, so `add-to-list'
 ;; would still work the first time, but it matches by `equal' on the whole
 ;; entry — re-editing the template text later (as just happened) makes it no
 ;; longer `equal' to what's already in the list, so add-to-list prepends a
-;; second "f" entry instead of replacing the first. `org-capture' still picks
+;; second "w" entry instead of replacing the first. `org-capture' still picks
 ;; the front one (correct, since add-to-list prepends), so it isn't silently
 ;; broken, but it leaves a stale duplicate sitting behind it — confusing to
-;; debug later. `alist-get'+`setf' always replaces the "f" entry in place.
+;; debug later. `alist-get'+`setf' always replaces the "w" entry in place.
 (after! org
-  (setf (alist-get "f" org-capture-templates nil nil #'equal)
-        '("Flant" entry
+  (setf (alist-get "w" org-capture-templates nil nil #'equal)
+        '("Work" entry
           (file+headline "flant.org" "Inbox")
-          "* TODO %? :flant:\n%i" :prepend t)))
+          "* TODO %? :work:\n%i" :prepend t)))
 
 ;; Doom's default "n"/"pn"/"on" (notes / project-local notes / centralized
 ;; project notes) templates prefix every entry with a `%u'/`%U' timestamp.
@@ -268,13 +268,12 @@
 ;;        ;; letters, so it doesn't double up as a box behind the emoji.
 ;;        org-modern-priority-faces nil))
 
-;; GTD-style context tags. @personal/@flant/@errand are mutually exclusive
+;; GTD-style context tags. personal/work are mutually exclusive
 ;; (:startgroup/:endgroup); call/read are free-standing.
 (setq org-tag-alist
       '((:startgroup)
-        ("@personal" . ?a)
-        ("@flant" . ?f)
-        ("@errand" . ?e)
+        ("personal" . ?p)
+        ("work" . ?w)
         (:endgroup)
         ("call" . ?c)
         ("read" . ?r)
@@ -310,9 +309,8 @@
          ((agenda "" ((org-agenda-span 1)))
           (todo "TODO|PROJ|STRT"
                 ((org-agenda-overriding-header "Active tasks")))))
-        ("h" "@personal tasks" tags-todo "@personal")
-        ("w" "@flant tasks" tags-todo "@flant")
-        ("e" "@errand tasks" tags-todo "@errand")
+        ("h" "personal tasks" tags-todo "personal")
+        ("w" "work tasks" tags-todo "work")
         ("r" "Review: week ahead + stuck items"
          ((agenda "" ((org-agenda-span 7)))
           (todo "WAIT" ((org-agenda-overriding-header "Waiting on")))
@@ -398,9 +396,8 @@
           (:name "High priority" :priority "A")
           (:name "Waiting" :todo "WAIT")
           (:name "Projects" :todo "PROJ")
-          (:name "@flant" :tag "@flant")
-          (:name "@personal" :tag "@personal")
-          (:name "@errand" :tag "@errand")))
+          (:name "work" :tag "work")
+          (:name "personal" :tag "personal")))
   (org-super-agenda-mode)
   ;; org-super-agenda-header-map is `(copy-keymap org-agenda-mode-map)' — a
   ;; raw, non-evil-aware copy — attached as a text-property `keymap' on every
@@ -529,6 +526,18 @@
      (add-hook 'org-journal-after-entry-create-hook
                (defun +org-journal-mark-close-on-save-h ()
                  (setq +org-journal-close-on-save t)))
+
+     ;; `org-journal-new-entry' inserts the heading + timestamp and leaves
+     ;; point right after it (ready to type), but doesn't touch evil state —
+     ;; the buffer stays in normal-state, so typing immediately does nothing
+     ;; (or runs normal-state commands) until `i'/`a' is pressed by hand, and
+     ;; the normal-state block cursor sits on the last inserted char, making
+     ;; it look like it's still sitting on/before the date instead of ready
+     ;; for input after it. Drop straight into insert-state at point.
+     (add-hook 'org-journal-after-entry-create-hook
+               (defun +org-journal-enter-insert-state-h ()
+                 (when (bound-and-true-p evil-mode)
+                   (evil-insert-state))))
 
      (defun org-journal-save-entry-and-exit ()
        "Save the buffer. If it holds a freshly created entry (see
