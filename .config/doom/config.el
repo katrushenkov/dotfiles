@@ -268,11 +268,11 @@
 ;;        ;; letters, so it doesn't double up as a box behind the emoji.
 ;;        org-modern-priority-faces nil))
 
-;; GTD-style context tags. @anima/@work/@errand are mutually exclusive
+;; GTD-style context tags. @personal/@work/@errand are mutually exclusive
 ;; (:startgroup/:endgroup); call/read are free-standing.
 (setq org-tag-alist
       '((:startgroup)
-        ("@anima" . ?a)
+        ("@personal" . ?a)
         ("@work" . ?f)
         ("@errand" . ?e)
         (:endgroup)
@@ -310,7 +310,7 @@
          ((agenda "" ((org-agenda-span 1)))
           (todo "TODO|PROJ|STRT"
                 ((org-agenda-overriding-header "Active tasks")))))
-        ("h" "@anima tasks" tags-todo "@anima")
+        ("h" "@personal tasks" tags-todo "@personal")
         ("w" "@work tasks" tags-todo "@work")
         ("e" "@errand tasks" tags-todo "@errand")
         ("r" "Review: week ahead + stuck items"
@@ -399,7 +399,7 @@
           (:name "Waiting" :todo "WAIT")
           (:name "Projects" :todo "PROJ")
           (:name "@work" :tag "@work")
-          (:name "@anima" :tag "@anima")
+          (:name "@personal" :tag "@personal")
           (:name "@errand" :tag "@errand")))
   (org-super-agenda-mode)
   ;; org-super-agenda-header-map is `(copy-keymap org-agenda-mode-map)' — a
