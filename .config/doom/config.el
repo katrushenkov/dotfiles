@@ -664,6 +664,25 @@ created entry."
 ;; last f/F/t/T search) — accepted tradeoff, that binding isn't used here.
 (map! :n ";x" #'doom/toggle-scratch-buffer)
 
+;; Scratch buffers have no file, so plain `:w' just errors ("Please specify a
+;; file name"). Make `:w', `:wq' and `:x' all persist the scratch (the same
+;; save Doom does on kill/quit) and close its window — same buffer-local
+;; `evil-ex-commands' trick as the org-journal override above.
+(defun +scratch-save-and-close ()
+  "Persist the current scratch buffer and close its window."
+  (interactive)
+  (doom-persist-scratch-buffer-h)
+  (quit-window))
+
+(defun +scratch-evil-w-saves-and-closes-h ()
+  (when (memq (current-buffer) (bound-and-true-p doom-scratch-buffers))
+    (setq-local evil-ex-commands (copy-alist evil-ex-commands))
+    (dolist (cmd '("w[rite]" "wq" "x[it]"))
+      (evil-ex-define-cmd cmd #'+scratch-save-and-close))))
+(add-hook 'doom-scratch-buffer-created-hook #'+scratch-evil-w-saves-and-closes-h)
+;; Changing the scratch's major mode wipes buffer-locals; re-apply after it.
+(add-hook 'after-change-major-mode-hook #'+scratch-evil-w-saves-and-closes-h)
+
 ;; `;e' opens the current file in the system default editor, in its own
 ;; terminal window (running a TUI editor inside an Emacs term.el buffer broke
 ;; rendering — nested TUI-in-TUI fights over the terminal).
