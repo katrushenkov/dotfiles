@@ -694,9 +694,15 @@ created entry."
   "Offer to save a modified file-visiting buffer before killing it."
   (interactive)
   (when (and (buffer-modified-p) (buffer-file-name))
-    (when (y-or-n-p "Save before killing? ")
-      (save-buffer)))
-  ;; We've already decided; skip Emacs's own now-redundant "kill anyway?".
+    (if (y-or-n-p "Save before killing? ")
+        (save-buffer)
+      ;; "n" = discard. The "Buffer modified; kill anyway?" prompt is asked
+      ;; by `kill-buffer' itself (C side, `kill-buffer--possibly-save') for
+      ;; any modified file buffer — `kill-buffer-query-functions' doesn't
+      ;; cover it, so clear the modified flag to skip it.
+      (set-buffer-modified-p nil)))
+  ;; We've already decided; skip the remaining query functions (e.g. the
+  ;; "buffer has a running process" one).
   (let ((kill-buffer-query-functions nil))
     (kill-current-buffer)))
 (map! :leader "b d" #'+smart-kill-buffer
