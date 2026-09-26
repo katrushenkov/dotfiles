@@ -1,7 +1,6 @@
 # You can add comments to these files with #
 D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 aa	/mnt/main/audio
-ani	${GIT_PROJECTS_DIR:-$HOME/.local/src}/anima
 an  /mnt/angar
 bb	/mnt/main/books
 bu	/mnt/main/backup
