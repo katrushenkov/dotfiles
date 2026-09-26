@@ -64,6 +64,27 @@ o.bind("F19", "TODO (CapsLock+K)", hl.dsp.exec_cmd("TODO: command for CapsLock+K
 -- /usr/share/X11/xkb/symbols/inet) and isn't bound to anything else.
 o.bind("F24", "Switch keyboard layout (CapsLock+Space)", hl.dsp.exec_cmd(sc .. "hypr-switch-layout"))
 
+-- keyd [capsmode]: d = shop (F-keys are exhausted; keyd's "prog1-4" are just
+-- aliases for f21-f24, so "prog3" silently sent F23 = XF86TouchpadOff).
+-- KEY_SHOP maps to XF86Shop in xkb's inet(evdev) and is otherwise unused.
+o.bind("XF86Shop", "Command palette (CapsLock+D)", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
+
+-- Spare keycodes for future CapsLock+<key> chords (keysyms verified with
+-- `xkbcli compile-keymap`, none bound elsewhere). To use one: add
+-- `<letter> = <keyd name>` to [capsmode] in /etc/keyd/default.conf
+-- (`keyd check` it, then `sudo keyd reload`) and uncomment the bind here.
+--
+--   keyd name   evdev code        xkb keysym
+--   finance     KEY_FINANCE 219   XF86Finance
+--   sport       KEY_SPORT   220   XF86Game
+--   connect     KEY_CONNECT 218   XF86Go
+--   chat        KEY_CHAT    216   XF86Messenger
+--
+-- o.bind("XF86Finance", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
+-- o.bind("XF86Game", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
+-- o.bind("XF86Go", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
+-- o.bind("XF86Messenger", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
+
 o.bind("ALT + RETURN", "Pypr toggle term", hl.dsp.exec_cmd("pypr toggle term"))
 
 o.bind("ALT + E", "Emojis", hl.dsp.exec_cmd("omarchy-shell shell toggle local.emojis"))
