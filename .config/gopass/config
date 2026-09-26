@@ -1,2 +1,5 @@
 [mounts]
-	path = "$HOME/.local/share/password-store"
+	path = $HOME/.local/share/password-store
+[core]
+	autopush = false
+	autosync = false
