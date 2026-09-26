@@ -124,6 +124,23 @@
           (file+headline "flant.org" "Inbox")
           "* TODO %? :work:\n%i" :prepend t)))
 
+;; "b" capture template: append a read book to books.org (converted from the
+;; Book sheet of axel.xls — one heading per book, :AUTHOR:/:YEAR: properties,
+;; plus :NOTE: on a few). A relative file name resolves against
+;; `org-directory', same as "flant.org" above. `%^{AUTHOR}p' prompts via
+;; `org-read-property-value', which completes from AUTHOR values already in
+;; the file, and creates the :PROPERTIES: drawer itself. Leaving the YEAR
+;; prompt empty still writes an empty `:YEAR:' line — harmless, column view
+;; just shows a blank. Add :NOTE: afterwards with `C-c C-x p' if needed.
+;; Appended (no :prepend) to keep the file's order. :immediate-finish since
+;; everything comes from the prompts — no capture buffer left to type into.
+(after! org
+  (setf (alist-get "b" org-capture-templates nil nil #'equal)
+        '("Book" entry
+          (file "books.org")
+          "* %^{Название}\n%^{AUTHOR}p%^{YEAR}p"
+          :immediate-finish t)))
+
 ;; Doom's default "n"/"pn"/"on" (notes / project-local notes / centralized
 ;; project notes) templates prefix every entry with a `%u'/`%U' timestamp.
 ;; Strip that — just the heading text, no date/time — while leaving the
