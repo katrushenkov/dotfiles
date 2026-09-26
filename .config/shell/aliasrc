@@ -169,7 +169,7 @@ alias yta-opus='yt-dlp --no-playlist -c -x --audio-format opus --output "%(title
 alias yta-vorbis='yt-dlp -c -x --audio-format vorbis --output "%(title)s.%(ext)s"'
 alias yta-wav='yt-dlp -c -x --audio-format wav --output "%(title)s.%(ext)s"'
 alias ytv-best='yt-dlp -c -f bestvideo+bestaudio --output "%(title)s.%(ext)s" '
-alias ytv-360='yt-dlp -c -f 18 --output "%(title)s.%(ext)s"'
+alias ytv='yt-dlp -c -f "bv*[height<=360][ext=mp4]+ba[ext=m4a]/b[height<=360]" --merge-output-format mp4 --output "%(title)s.%(ext)s"'
 alias yta='yt-dlp -c -x -f ba --audio-format opus --output "%(title)s.%(ext)s"'
 alias ytt="yt-dlp --no-download --write-thumbnail "
 

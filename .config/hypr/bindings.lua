@@ -92,9 +92,6 @@ o.bind("SUPER + SHIFT + L", "Swap window to the right", hl.dsp.window.swap({ dir
 o.bind("SUPER + SHIFT + K", "Swap window up", hl.dsp.window.swap({ direction = "u" }))
 o.bind("SUPER + SHIFT + J", "Swap window down", hl.dsp.window.swap({ direction = "d" }))
 
-o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
-o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))
-
 o.bind("SUPER + BACKSLASH", "Toggle window split", hl.dsp.layout("togglesplit"))
 
 o.bind("SUPER + Z", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
@@ -166,4 +163,31 @@ o.rebind("SUPER + V", "Universal paste", function()
     send_key_once("CTRL", "V")()
   end
 end)
+
+o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
+o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))
+
+-- ALT+J/ALT+K also happen to be org-mode's move-subtree-down/up (M-j/M-k,
+-- see evil org bindings in ~/.config/doom/config.el), but that's unreachable
+-- here since Hyprland grabs the chord first. Using `SPC m s j`/`SPC m s k`
+-- in Emacs instead for now (doesn't need WM forwarding at all). Re-enable
+-- this if the localleader path turns out to be too slow:
+--
+-- o.bind("ALT + J", "Next workspace", function()
+--   local window = hl.get_active_window()
+--   if window and window.class == "emacs" then
+--     send_key_once("ALT", "J")()
+--   else
+--     hl.dispatch(hl.dsp.focus({ workspace = "e+1" }))
+--   end
+-- end)
+--
+-- o.bind("ALT + K", "Previous workspace", function()
+--   local window = hl.get_active_window()
+--   if window and window.class == "emacs" then
+--     send_key_once("ALT", "K")()
+--   else
+--     hl.dispatch(hl.dsp.focus({ workspace = "e-1" }))
+--   end
+-- end)
 

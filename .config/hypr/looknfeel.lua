@@ -48,3 +48,13 @@ hl.config({
 --     column_width = 0.97,
 --   },
 -- })
+
+-- https://wiki.hypr.land/Configuring/Basics/Variables/#misc
+hl.config({
+  misc = {
+    -- Variable refresh rate: 0 = off, 1 = always, 2 = fullscreen only,
+    -- 3 = fullscreen with video/game content. eDP-1 supports 30-120 Hz,
+    -- so a static screen drops its refresh rate and saves battery.
+    vrr = 1,
+  },
+})
