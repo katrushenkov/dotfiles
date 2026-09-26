@@ -13,16 +13,14 @@ trap 'rm -f "${lock_file}"' EXIT
 hypr-switch-en
 
 datagrip_dir="$HOME/.local/src/datagrip"
-anima_dir="$HOME/.local/src/anima"
 cache_file="$HOME/.cache/go-datagrip"
 
 if [[ -s "${cache_file}" ]]; then
   # Cache built by go-datagrip-cache: skip the fd walk and the per-item -d
-  # check, just strip the base dir prefix back off (full paths for both
-  # trees combined push the JSON payload past the kernel's 128K single-arg
-  # limit that omarchy-menu-select's IPC call hits) and hand the rest
-  # straight to the menu.
-  selection="$(sed -E "s#^${datagrip_dir}/##; s#^${anima_dir}/##" "${cache_file}" \
+  # check, just strip the base dir prefix back off (full paths push the JSON
+  # payload past the kernel's 128K single-arg limit that omarchy-menu-select's
+  # IPC call hits) and hand the rest straight to the menu.
+  selection="$(sed -E "s#^${datagrip_dir}/##" "${cache_file}" \
     | omarchy-menu-select "Go" -- --width 1792 --height 720)"
 else
   # omarchy-menu-select passes the whole option list as a single exec argument,
@@ -45,10 +43,10 @@ else
   }
 
   selection="$(
-    { list_entries "${datagrip_dir}"; list_entries "${anima_dir}"; } \
+    list_entries "${datagrip_dir}" \
       | sort -u \
       | while read -r item; do
-          if [[ -d "${datagrip_dir}/${item}" || -d "${anima_dir}/${item}" ]]; then
+          if [[ -d "${datagrip_dir}/${item}" ]]; then
             echo "📁 ${item}/"
           else
             echo "📄 ${item}"
@@ -66,11 +64,7 @@ else
   item="$(sed -E 's/^[^ ]* //; s/\/$//' <<< "${selection}")"
 fi
 
-if [[ -e "${datagrip_dir}/${item}" ]]; then
-  item="${datagrip_dir}/${item}"
-else
-  item="${anima_dir}/${item}"
-fi
+item="${datagrip_dir}/${item}"
 
 if [[ -d "${item}" ]]; then
   omarchy launch terminal nnn "${item}"
