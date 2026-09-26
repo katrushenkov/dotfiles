@@ -98,31 +98,31 @@
 ;; scan) without any extra exclusion needed.
 (setq org-archive-location (concat org-directory ".archive/archive.org::datetree/"))
 
-;; "f" capture template: quick notes into their own top-level file
+;; "w" capture template: quick notes into their own top-level file
 ;; (flant.org), separate from the general notes.org. Lives at org-directory's
 ;; top level, so org-agenda-files' non-recursive scan (see above) picks it up
-;; automatically. Every entry is tagged :flant: up front — baked into the
+;; automatically. Every entry is tagged :work: up front — baked into the
 ;; template text rather than via `%^g' (which would prompt every time) since
 ;; it should always apply here. Still just an ordinary org tag string once
 ;; inserted, so extra tags can be added on top: type more `:tag:'s right
 ;; next to it before finalizing, or `SPC m q' (`org-set-tags-command') for
-;; the usual completing prompt — either sees :flant: as already set and adds
+;; the usual completing prompt — either sees :work: as already set and adds
 ;; to it rather than replacing it.
 ;;
 ;; `alist-get'+`setf' (same pattern as the "j" journal override below)
-;; instead of `add-to-list': "f" isn't a Doom-default key, so `add-to-list'
+;; instead of `add-to-list': "w" isn't a Doom-default key, so `add-to-list'
 ;; would still work the first time, but it matches by `equal' on the whole
 ;; entry — re-editing the template text later (as just happened) makes it no
 ;; longer `equal' to what's already in the list, so add-to-list prepends a
-;; second "f" entry instead of replacing the first. `org-capture' still picks
+;; second "w" entry instead of replacing the first. `org-capture' still picks
 ;; the front one (correct, since add-to-list prepends), so it isn't silently
 ;; broken, but it leaves a stale duplicate sitting behind it — confusing to
-;; debug later. `alist-get'+`setf' always replaces the "f" entry in place.
+;; debug later. `alist-get'+`setf' always replaces the "w" entry in place.
 (after! org
-  (setf (alist-get "f" org-capture-templates nil nil #'equal)
-        '("Flant" entry
+  (setf (alist-get "w" org-capture-templates nil nil #'equal)
+        '("Work" entry
           (file+headline "flant.org" "Inbox")
-          "* TODO %? :flant:\n%i" :prepend t)))
+          "* TODO %? :work:\n%i" :prepend t)))
 
 ;; Doom's default "n"/"pn"/"on" (notes / project-local notes / centralized
 ;; project notes) templates prefix every entry with a `%u'/`%U' timestamp.
@@ -268,13 +268,12 @@
 ;;        ;; letters, so it doesn't double up as a box behind the emoji.
 ;;        org-modern-priority-faces nil))
 
-;; GTD-style context tags. @anima/@flant/@errand are mutually exclusive
+;; GTD-style context tags. personal/work are mutually exclusive
 ;; (:startgroup/:endgroup); call/read are free-standing.
 (setq org-tag-alist
       '((:startgroup)
-        ("@anima" . ?a)
-        ("@flant" . ?f)
-        ("@errand" . ?e)
+        ("personal" . ?p)
+        ("work" . ?w)
         (:endgroup)
         ("call" . ?c)
         ("read" . ?r)
@@ -310,13 +309,30 @@
          ((agenda "" ((org-agenda-span 1)))
           (todo "TODO|PROJ|STRT"
                 ((org-agenda-overriding-header "Active tasks")))))
-        ("h" "@anima tasks" tags-todo "@anima")
-        ("w" "@flant tasks" tags-todo "@flant")
-        ("e" "@errand tasks" tags-todo "@errand")
+        ("h" "personal tasks" tags-todo "personal")
+        ("w" "work tasks" tags-todo "work")
         ("r" "Review: week ahead + stuck items"
          ((agenda "" ((org-agenda-span 7)))
           (todo "WAIT" ((org-agenda-overriding-header "Waiting on")))
           (todo "PROJ" ((org-agenda-overriding-header "Projects")))))))
+
+;; evil-collection's org-agenda "v" submenu only carries the day/week/month/
+;; year range picker (those specific letters collide with evil's own
+;; normal-state bindings, which is why evil-collection moved them under a
+;; prefix) — it drops the rest of vanilla org's `v'-prefixed toggles,
+;; archives-mode included. Restore both variants: "v a" (org-agenda-
+;; archives-mode, toggles nil/'trees — only entries still physically in the
+;; source file under an :ARCHIVE: tag) and "v A" (the `with-files' form,
+;; toggles in/out `t' — also pulls in each file's actual archive location).
+;; Only "v A" finds anything archived via `SPC m A' (org-archive-subtree),
+;; since that command moves the entry out to the file named in #+ARCHIVE /
+;; `org-archive-location' rather than leaving an :ARCHIVE:-tagged tree
+;; behind — confirmed live: searching tag "work" found nothing until
+;; toggled to `t' via "v A", which pulled in .archive/flant-archive.org.
+(after! org-agenda
+  (map! :map org-agenda-mode-map
+        :n "v a" #'org-agenda-archives-mode
+        :n "v A" (cmd! (org-agenda-archives-mode 'files))))
 
 ;; Desktop notifications for timed reminders. No separate file needed — any
 ;; heading with a SCHEDULED/DEADLINE timestamp that includes a time (e.g.
@@ -398,9 +414,8 @@
           (:name "High priority" :priority "A")
           (:name "Waiting" :todo "WAIT")
           (:name "Projects" :todo "PROJ")
-          (:name "@flant" :tag "@flant")
-          (:name "@anima" :tag "@anima")
-          (:name "@errand" :tag "@errand")))
+          (:name "work" :tag "work")
+          (:name "personal" :tag "personal")))
   (org-super-agenda-mode)
   ;; org-super-agenda-header-map is `(copy-keymap org-agenda-mode-map)' — a
   ;; raw, non-evil-aware copy — attached as a text-property `keymap' on every
@@ -482,95 +497,108 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
- (use-package org-journal
-     :ensure t
-     :demand t
-     :init
-     :custom
-     (org-journal-prefix-key "C-c j ")
-     (org-journal-dir "~/.local/src/datagrip/journal/")
-     ;; Default is `find-file-other-window', which always splits the current
-     ;; window to open the journal entry — if that window (or another one)
-     ;; already shows the journal buffer, you end up looking at it twice.
-     ;; Plain `find-file' reuses an existing window on that buffer instead of
-     ;; forcing a split.
-     (org-journal-find-file-fn #'find-file)
-     ;;(org-journal-date-format "%Y %m %B %d, %A")
-     (org-journal-date-format "[%Y-%m-%d]:")
-     (org-journal-file-type 'monthly)
-     (org-journal-file-format "%Y-%m")
-     ;; Entry style options — uncomment one pair, comment the others:
-     ;;(org-journal-time-format "")     ;; bullet, no time: "- text"
-     ;;(org-journal-time-prefix "- ")
-     ;;(org-journal-time-format "%R ")  ;; heading + time: "** 14:30 text"
-     ;;(org-journal-time-prefix "** ")
-     ;;(org-journal-time-format "")      ;; heading, no time: "** text"
-     ;;(org-journal-time-prefix "** ")
-     (org-journal-time-format "[%Y-%m-%d %a] ")  ;; heading + standard inactive timestamp (current): "** [2026-09-09 Wed] text"
-     (org-journal-time-prefix "** ")
-     ;; Speeds up calendar-heavy operations (SPC n j c, mark/search) — org-journal
-     ;; caches which dates have entries instead of re-scanning files each time.
-     (org-journal-enable-cache t)
-     ;; Title every new monthly file, consistent with todo.org/notes.org/etc.
-     (org-journal-file-header "#+TITLE: Journal %Y-%m\n")
-     ;; Don't drag clock-log history forward onto carried-over TODOs.
-     (org-journal-skip-carryover-drawers '("LOGBOOK"))
-     ;; Prompt to delete a day's entry if carrying its items forward empties it,
-     ;; instead of silently leaving an empty stub heading (default) or silently
-     ;; deleting it without asking.
-     (org-journal-carryover-delete-empty-journal 'ask)
-     :config
-     ;; Non-nil only in buffers where a new entry was actually inserted via
-     ;; `org-journal-new-entry' (`SPC n j j' / `C-c j j') — set by the hook
-     ;; below. Stays nil when the journal file is opened directly for
-     ;; ordinary editing (e.g. `find-file' on a monthly file), so that saving
-     ;; there behaves like a normal buffer instead of closing the window.
-     (defvar-local +org-journal-close-on-save nil)
-     (add-hook 'org-journal-after-entry-create-hook
-               (defun +org-journal-mark-close-on-save-h ()
-                 (setq +org-journal-close-on-save t)))
+;; `:demand t': load eagerly (not lazily like Doom's own org-journal config) so
+;; the calendar has org-journal's entry marks and raw `calendar-mode-map' keys
+;; (],[,j m/r/d/n) from the start — they're only installed once it loads.
+;; Startup cost is paid once per daemon, so it's negligible here.
+(use-package! org-journal
+  :demand t
+  :custom
+  (org-journal-prefix-key "C-c j ")
+  (org-journal-dir "~/.local/src/datagrip/journal/")
+  ;; Default is `find-file-other-window', which always splits the current
+  ;; window to open the journal entry — if that window (or another one)
+  ;; already shows the journal buffer, you end up looking at it twice.
+  ;; Plain `find-file' reuses an existing window on that buffer instead of
+  ;; forcing a split.
+  (org-journal-find-file-fn #'find-file)
+  ;;(org-journal-date-format "%Y %m %B %d, %A")
+  (org-journal-date-format "[%Y-%m-%d]:")
+  (org-journal-file-type 'monthly)
+  (org-journal-file-format "%Y-%m")
+  ;; Entry style options — uncomment one pair, comment the others:
+  ;;(org-journal-time-format "")     ;; bullet, no time: "- text"
+  ;;(org-journal-time-prefix "- ")
+  ;;(org-journal-time-format "%R ")  ;; heading + time: "** 14:30 text"
+  ;;(org-journal-time-prefix "** ")
+  ;;(org-journal-time-format "")      ;; heading, no time: "** text"
+  ;;(org-journal-time-prefix "** ")
+  (org-journal-time-format "[%Y-%m-%d %a] ")  ;; heading + standard inactive timestamp (current): "** [2026-09-09 Wed] text"
+  (org-journal-time-prefix "** ")
+  ;; Speeds up calendar-heavy operations (SPC n j c, mark/search) — org-journal
+  ;; caches which dates have entries instead of re-scanning files each time.
+  (org-journal-enable-cache t)
+  ;; Title every new monthly file, consistent with todo.org/notes.org/etc.
+  (org-journal-file-header "#+TITLE: Journal %Y-%m\n")
+  ;; Don't drag clock-log history forward onto carried-over TODOs.
+  (org-journal-skip-carryover-drawers '("LOGBOOK"))
+  ;; Prompt to delete a day's entry if carrying its items forward empties it,
+  ;; instead of silently leaving an empty stub heading (default) or silently
+  ;; deleting it without asking.
+  (org-journal-carryover-delete-empty-journal 'ask)
+  :config
+  ;; Non-nil only in buffers where a new entry was actually inserted via
+  ;; `org-journal-new-entry' (`SPC n j j' / `C-c j j') — set by the hook
+  ;; below. Stays nil when the journal file is opened directly for
+  ;; ordinary editing (e.g. `find-file' on a monthly file), so that saving
+  ;; there behaves like a normal buffer instead of closing the window.
+  (defvar-local +org-journal-close-on-save nil)
+  (add-hook 'org-journal-after-entry-create-hook
+            (defun +org-journal-mark-close-on-save-h ()
+              (setq +org-journal-close-on-save t)))
 
-     (defun org-journal-save-entry-and-exit ()
-       "Save the buffer. If it holds a freshly created entry (see
+  ;; `org-journal-new-entry' inserts the heading + timestamp and leaves
+  ;; point right after it (ready to type), but doesn't touch evil state —
+  ;; the buffer stays in normal-state, so typing immediately does nothing
+  ;; (or runs normal-state commands) until `i'/`a' is pressed by hand, and
+  ;; the normal-state block cursor sits on the last inserted char, making
+  ;; it look like it's still sitting on/before the date instead of ready
+  ;; for input after it. Drop straight into insert-state at point.
+  (add-hook 'org-journal-after-entry-create-hook
+            (defun +org-journal-enter-insert-state-h ()
+              (when (bound-and-true-p evil-mode)
+                (evil-insert-state))))
+
+  (defun org-journal-save-entry-and-exit ()
+    "Save the buffer. If it holds a freshly created entry (see
 `+org-journal-close-on-save'), also kill the window — capture-like.
 Otherwise just save, leaving the window open for normal editing."
-       (interactive)
-       (save-buffer)
-       (when +org-journal-close-on-save
-         (kill-buffer-and-window)))
-     (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
+    (interactive)
+    (save-buffer)
+    (when +org-journal-close-on-save
+      (kill-buffer-and-window)))
+  (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
 
-     (defun +org-journal-save-and-quit ()
-       "Save the buffer and kill the window, unconditionally.
+  (defun +org-journal-save-and-quit ()
+    "Save the buffer and kill the window, unconditionally.
 Standard `:wq'/`:x' semantics — unlike plain `:w' (`org-journal-save-entry-and-exit'),
 these always quit the window, whether or not the buffer holds a freshly
 created entry."
-       (interactive)
-       (save-buffer)
-       (kill-buffer-and-window))
+    (interactive)
+    (save-buffer)
+    (kill-buffer-and-window))
 
-     ;; Same reasoning as the org-capture `:w'/`:wq'/`:x' override above:
-     ;; without this, evil's `:w' just calls plain `save-buffer' here, so the
-     ;; journal window/buffer stays open after "finishing" an entry — only
-     ;; `C-x C-s' (bound just above) closed it. Buffer-local, via a local copy
-     ;; of `evil-ex-commands', so this doesn't touch `:w' anywhere else.
-     ;; `:w' defers to `org-journal-save-entry-and-exit' (closes only for a
-     ;; freshly created entry, see `+org-journal-close-on-save' above); `:wq'
-     ;; and `:x' always close, matching their standard save-and-quit meaning.
-     (add-hook 'org-journal-mode-hook
-               (defun +org-journal-evil-w-saves-and-exits-h ()
-                 (setq-local evil-ex-commands (copy-alist evil-ex-commands))
-                 (evil-ex-define-cmd "w[rite]" #'org-journal-save-entry-and-exit)
-                 (dolist (cmd '("wq" "x[it]"))
-                   (evil-ex-define-cmd cmd #'+org-journal-save-and-quit))))
+  ;; Same reasoning as the org-capture `:w'/`:wq'/`:x' override above:
+  ;; without this, evil's `:w' just calls plain `save-buffer' here, so the
+  ;; journal window/buffer stays open after "finishing" an entry — only
+  ;; `C-x C-s' (bound just above) closed it. Buffer-local, via a local copy
+  ;; of `evil-ex-commands', so this doesn't touch `:w' anywhere else.
+  ;; `:w' defers to `org-journal-save-entry-and-exit' (closes only for a
+  ;; freshly created entry, see `+org-journal-close-on-save' above); `:wq'
+  ;; and `:x' always close, matching their standard save-and-quit meaning.
+  (add-hook 'org-journal-mode-hook
+            (defun +org-journal-evil-w-saves-and-exits-h ()
+              (setq-local evil-ex-commands (copy-alist evil-ex-commands))
+              (evil-ex-define-cmd "w[rite]" #'org-journal-save-entry-and-exit)
+              (dolist (cmd '("wq" "x[it]"))
+                (evil-ex-define-cmd cmd #'+org-journal-save-and-quit))))
 
-     ;; org-journal only binds C-c j {f,b,j,s} inside `org-journal-mode-map',
-     ;; i.e. once you're already in a journal buffer. That leaves no way to
-     ;; enter the journal from anywhere else, so bind the entry points globally
-     ;; too.
-     (map! "C-c j j" #'org-journal-new-entry
-           "C-c j s" #'org-journal-search)
-     )
+  ;; org-journal only binds C-c j {f,b,j,s} inside `org-journal-mode-map',
+  ;; i.e. once you're already in a journal buffer. That leaves no way to
+  ;; enter the journal from anywhere else, so bind the entry points globally
+  ;; too.
+  (map! "C-c j j" #'org-journal-new-entry
+        "C-c j s" #'org-journal-search))
 
 ;; Doom's default "j" org-capture template writes into a separate journal.org
 ;; via datetree, which would fork journal entries away from org-journal's own
@@ -578,15 +606,10 @@ created entry."
 ;; org-journal README's org-capture integration section) so `SPC X j' and
 ;; `C-c j j' land in the same place.
 ;;
-;; Deliberately OUTSIDE `use-package org-journal's `:config': org-journal is
-;; `:demand t' now (loads unconditionally at startup, see above) specifically
-;; so this override is always in place before any capture runs — but it used
-;; to be `:defer t', and this override used to live inside `:config' too,
-;; which only runs once some org-journal command is actually called. Verified
-;; that gap was real: some entries landed in journal.org because capture ran
-;; before org-journal's :config had a chance to install the override. Keeping
-;; the override out here as well costs nothing and doesn't reintroduce that
-;; failure mode if `:demand' ever reverts to `:defer' again.
+;; Deliberately OUTSIDE `use-package! org-journal's `:config' (under `after!
+;; org' instead), so it doesn't depend on when org-journal loads: when it
+;; lived in `:config' of a deferred org-journal, captures that ran before
+;; the first org-journal command landed in journal.org.
 (defun +org-journal-capture-location ()
   ;; `org-capture-place-template' always pops up its OWN window afterward,
   ;; on an indirect clone of whatever buffer we leave current here (see
@@ -637,6 +660,25 @@ created entry."
 ;; last f/F/t/T search) — accepted tradeoff, that binding isn't used here.
 (map! :n ";x" #'doom/toggle-scratch-buffer)
 
+;; Scratch buffers have no file, so plain `:w' just errors ("Please specify a
+;; file name"). Make `:w', `:wq' and `:x' all persist the scratch (the same
+;; save Doom does on kill/quit) and close its window — same buffer-local
+;; `evil-ex-commands' trick as the org-journal override above.
+(defun +scratch-save-and-close ()
+  "Persist the current scratch buffer and close its window."
+  (interactive)
+  (doom-persist-scratch-buffer-h)
+  (quit-window))
+
+(defun +scratch-evil-w-saves-and-closes-h ()
+  (when (memq (current-buffer) (bound-and-true-p doom-scratch-buffers))
+    (setq-local evil-ex-commands (copy-alist evil-ex-commands))
+    (dolist (cmd '("w[rite]" "wq" "x[it]"))
+      (evil-ex-define-cmd cmd #'+scratch-save-and-close))))
+(add-hook 'doom-scratch-buffer-created-hook #'+scratch-evil-w-saves-and-closes-h)
+;; Changing the scratch's major mode wipes buffer-locals; re-apply after it.
+(add-hook 'after-change-major-mode-hook #'+scratch-evil-w-saves-and-closes-h)
+
 ;; `;e' opens the current file in the system default editor, in its own
 ;; terminal window (running a TUI editor inside an Emacs term.el buffer broke
 ;; rendering — nested TUI-in-TUI fights over the terminal).
@@ -667,9 +709,15 @@ created entry."
   "Offer to save a modified file-visiting buffer before killing it."
   (interactive)
   (when (and (buffer-modified-p) (buffer-file-name))
-    (when (y-or-n-p "Save before killing? ")
-      (save-buffer)))
-  ;; We've already decided; skip Emacs's own now-redundant "kill anyway?".
+    (if (y-or-n-p "Save before killing? ")
+        (save-buffer)
+      ;; "n" = discard. The "Buffer modified; kill anyway?" prompt is asked
+      ;; by `kill-buffer' itself (C side, `kill-buffer--possibly-save') for
+      ;; any modified file buffer — `kill-buffer-query-functions' doesn't
+      ;; cover it, so clear the modified flag to skip it.
+      (set-buffer-modified-p nil)))
+  ;; We've already decided; skip the remaining query functions (e.g. the
+  ;; "buffer has a running process" one).
   (let ((kill-buffer-query-functions nil))
     (kill-current-buffer)))
 (map! :leader "b d" #'+smart-kill-buffer

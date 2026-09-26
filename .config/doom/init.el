@@ -166,8 +166,7 @@
          ;;+roam
          +dragndrop        ; Exporting org to whatever you want
          ;;+present          ; Emacs for presentations
-         +crypt            ; encrypt entries tagged :crypt: with GPG
-         +plus-contrib)
+         +crypt)           ; encrypt entries tagged :crypt: with GPG
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
