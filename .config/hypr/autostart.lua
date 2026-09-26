@@ -1,3 +1,3 @@
 -- Extra autostart processes.
 -- o.launch_on_start("my-service")
-o.launch_on_start("uwsm-app -- pypr")
+o.launch_on_start("pypr")
