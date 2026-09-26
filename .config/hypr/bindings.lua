@@ -1,46 +1,38 @@
 local sc = os.getenv("HOME") .. "/.local/bin/"
 
-hl.unbind("SUPER + G")
-o.bind("SUPER + G", "Search digital brain", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"))
+o.rebind("SUPER + G", "Search digital brain", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"))
 
 hl.unbind("SUPER + SHIFT + G")
 o.bind("ALT + G", "Toggle window grouping", hl.dsp.group.toggle())
 o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move({ out_of_group = true }))
 
 
-hl.unbind("SUPER + A")
-o.bind("SUPER + A", "Linkhandler", hl.dsp.exec_cmd(sc .. "linkhandler"))
+o.rebind("SUPER + A", "Linkhandler", hl.dsp.exec_cmd(sc .. "linkhandler"))
 
-hl.unbind("SUPER + D")
-o.bind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
+o.rebind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
 
-hl.unbind("SUPER + P")
-o.bind("SUPER + P", "Gopass autotype", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
+o.rebind("SUPER + P", "Gopass autotype", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
 o.bind("SUPER + I", "Snippets yank", hl.dsp.exec_cmd(sc .. "snippets-yank"))
 o.bind("SUPER + SHIFT + I", "Snippets files" , hl.dsp.exec_cmd(sc .. "snippets-files-tofi"))
 
 o.bind("SUPER + B", "Search bookmarks", hl.dsp.exec_cmd(sc .. "bookmarks-web -s"))
-hl.unbind("SUPER + SHIFT + B")
-o.bind("SUPER + SHIFT + B", "Search bookmarks by tag", hl.dsp.exec_cmd(sc .. "bookmarks-web -st"))
+o.rebind("SUPER + SHIFT + B", "Search bookmarks by tag", hl.dsp.exec_cmd(sc .. "bookmarks-web -st"))
 
 o.bind("SUPER + F1", "Keybindings", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
 o.bind("SUPER + E", "Command palette", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
 
-hl.unbind("SUPER + S")
 hl.unbind("SUPER + ALT + S")
-o.bind("SUPER + S", "Connect via ssh", hl.dsp.exec_cmd(sc .. "go-ssh"))
+o.rebind("SUPER + S", "Connect via ssh", hl.dsp.exec_cmd(sc .. "go-ssh"))
 
 -- hl.bind("SUPER + E", hl.dsp.exec_cmd(sc .. "edit-configs"), { description = "Edit confgs" })
 
 -- o.bind("SUPER + M", hl.dsp.exec_cmd("mousepad"))
-o.bind("SUPER + M"," floating term", hl.dsp.exec_cmd("omarchy-launch-floating-terminal-with-presentation"))
+o.bind("SUPER + M", "Floating term", hl.dsp.exec_cmd("omarchy-launch-floating-terminal-with-presentation"))
 -- o.bind("SUPER + N", hl.dsp.exec_cmd("$terminal n"))
 
-hl.unbind("SUPER + T")
-o.bind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
+o.rebind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
 
-hl.unbind("SUPER + W")
-o.bind("SUPER + W", "Browser", { focus = "vivaldi", launch = "omarchy-launch-browser" })
+o.rebind("SUPER + W", "Browser", { focus = "vivaldi", launch = "omarchy-launch-browser" })
 
 -- Physical CapsLock+G (remapped via keyd, see /etc/keyd/default.conf: hold
 -- CapsLock + G sends the KEY_F13 evdev code, since tapping CapsLock alone
@@ -72,20 +64,15 @@ o.bind("F19", "TODO (CapsLock+K)", hl.dsp.exec_cmd("TODO: command for CapsLock+K
 -- /usr/share/X11/xkb/symbols/inet) and isn't bound to anything else.
 o.bind("F24", "Switch keyboard layout (CapsLock+Space)", hl.dsp.exec_cmd(sc .. "hypr-switch-layout"))
 
-o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
-
 o.bind("ALT + RETURN", "Pypr toggle term", hl.dsp.exec_cmd("pypr toggle term"))
 
 o.bind("ALT + E", "Emojis", hl.dsp.exec_cmd("omarchy-shell shell toggle local.emojis"))
 
 -- Move focus with mainMod + [H, L, K, J]
-hl.unbind("SUPER + L")
-hl.unbind("SUPER + K")
-hl.unbind("SUPER + J")
 o.bind("SUPER + H", "Focus on left window", hl.dsp.focus({ direction = "l" }))
-o.bind("SUPER + L", "Focus on right window", hl.dsp.focus({ direction = "r" }))
-o.bind("SUPER + K", "Focus on above window", hl.dsp.focus({ direction = "u" }))
-o.bind("SUPER + J", "Focus on below window", hl.dsp.focus({ direction = "d" }))
+o.rebind("SUPER + L", "Focus on right window", hl.dsp.focus({ direction = "r" }))
+o.rebind("SUPER + K", "Focus on above window", hl.dsp.focus({ direction = "u" }))
+o.rebind("SUPER + J", "Focus on below window", hl.dsp.focus({ direction = "d" }))
 
 o.bind("SUPER + SHIFT + H", "Swap window to the left", hl.dsp.window.swap({ direction = "l" }))
 o.bind("SUPER + SHIFT + L", "Swap window to the right", hl.dsp.window.swap({ direction = "r" }))
@@ -102,10 +89,8 @@ o.bind("ALT + SHIFT + l", "Move window to group on right", hl.dsp.window.move({ 
 o.bind("ALT + SHIFT + k", "Move window to group on top", hl.dsp.window.move({ into_group = "u" }))
 o.bind("ALT + SHIFT + j", "Move window to group on bottom", hl.dsp.window.move({ into_group = "d" }))
 
-hl.unbind("SUPER + CTRL + h")
-hl.unbind("SUPER + CTRL + l")
-o.bind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
-o.bind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
+o.rebind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
+o.rebind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
 
 o.bind("SUPER + SHIFT + ALT + h", "Move workspace to left monitor", hl.dsp.workspace.move({ monitor = "l" }))
 o.bind("SUPER + SHIFT + ALT + l", "Move workspace to right monitor", hl.dsp.workspace.move({ monitor = "r" }))
