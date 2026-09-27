@@ -1,0 +1,60 @@
+#!/bin/bash
+# tofi-grep-notes - fuzzy-search every line of the datagrip notes, open the hit in nvim.
+#
+# Usage: tofi-grep-notes [-a] [-y]
+#   -a  include the dirs skipped by default (backup, unnecessary, sc, cache)
+#   -y  copy the selected line's text instead of opening it
+
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/tofi-grep-notes.lock"
+
+if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+  pkill -x tofi
+  exit 0
+fi
+
+echo $$ > "${lock_file}"
+trap 'rm -f "${lock_file}"' EXIT
+
+all=false
+yank=false
+while getopts "ay" opt; do
+  case "$opt" in
+    a) all=true ;;
+    y) yank=true ;;
+    *) exit 2 ;;
+  esac
+done
+
+hypr-switch-en
+
+datagrip_dir="$HOME/.local/src/datagrip"
+
+rg_args=(--line-number --no-heading --color never --max-columns 250 --max-columns-preview -v '^\s*$' -g '!*.json')
+if ! $all; then
+  for d in backup unnecessary sc cache; do
+    rg_args+=(-g "!/${d}/")
+  done
+fi
+
+selection="$(cd "${datagrip_dir}" && rg "${rg_args[@]}" \
+  | tofi-dmenu -t everforest -p "Grep")"
+
+[[ -n "${selection}" ]] || exit 0
+
+# "path:line:text" - split on the first ":<digits>:".
+file="$(sed -E 's/:[0-9]+:.*$//' <<< "${selection}")"
+rest="${selection#"${file}:"}"
+line="${rest%%:*}"
+text="${rest#*:}"
+
+if $yank; then
+  printf '%s' "${text}" | wl-copy -n
+  notify-send "Copied" "${text:0:80}"
+  exit 0
+fi
+
+item="${datagrip_dir}/${file}"
+[[ -f "${item}" ]] || { notify-send "tofi-grep-notes" "File not found: ${file}"; exit 1; }
+
+setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.datagrip-go --title="DataGrip Grep" \
+  --dir="$(dirname -- "${item}")" -- nvim "+${line}" "${item}"

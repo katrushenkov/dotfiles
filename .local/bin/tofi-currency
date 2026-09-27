@@ -1,0 +1,223 @@
+#!/bin/bash
+# tofi-currency - currency converter in a tofi loop.
+#
+# Queries: "100 usd", "100$ rub", "100usd в руб", "1.5k eur в cny thb",
+#          "2,5 тыс eur rub", "usd/rub", "€20", "0.01 btc", "1 000 000 krw rub", "usd"
+#   amount defaults to 1, source to USD; no target = every currency in FAVORITES.
+#   Space-grouped digits are one number: "2 100 usd" is 2100 USD.
+# Enter on a "= ..." line copies the number; on a "› ..." line reruns that query.
+# Enter on typed text converts it; Esc quits.
+#
+# Rates: fawazahmed0/currency-api (daily, 340+ currencies incl. crypto),
+# cached for 6h in ~/.cache/tofi-currency. qalc's own updater relies on ECB,
+# which is unreachable here, so its rates go stale.
+#
+# Usage: tofi-currency [query]
+
+FAVORITES=(rub usd eur cny usdt btc thb krw)
+DEFAULT_FROM="usd"
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/tofi-currency"
+rates_file="${cache_dir}/usd.json"
+history_file="${XDG_STATE_HOME:-$HOME/.local/state}/tofi-currency-history"
+history_max=20
+
+rates_valid() {
+  jq -e '.usd.rub | numbers' "${1:-${rates_file}}" >/dev/null 2>&1
+}
+
+fetch_rates() {
+  local url tmp
+  tmp="$(mktemp "${rates_file}.XXXXXX")" || return 1
+  for url in \
+    "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json" \
+    "https://latest.currency-api.pages.dev/v1/currencies/usd.json"; do
+    if curl -fsS -m 5 -o "${tmp}" "${url}" 2>/dev/null && rates_valid "${tmp}"; then
+      chmod 644 "${tmp}"
+      mv "${tmp}" "${rates_file}"
+      return 0
+    fi
+  done
+  rm -f "${tmp}"
+  return 1
+}
+
+normalize_currency() {
+  case "$1" in
+    '$'|usd|dollar*|доллар*|бакс*) echo usd ;;
+    '€'|eur|euro*|евро) echo eur ;;
+    '₽'|р|руб*|rub|rur) echo rub ;;
+    '¥'|'元'|cny|rmb|юан*) echo cny ;;
+    '£'|gbp|фунт*) echo gbp ;;
+    '₿'|btc|биткоин*|биток*) echo btc ;;
+    usdt|tether|тезер*) echo usdt ;;
+    '฿'|thb|бат*) echo thb ;;
+    '₩'|krw|вон*) echo krw ;;
+    '₸'|kzt|тенге) echo kzt ;;
+    '円'|jpy|иен*|йен*) echo jpy ;;
+    *) echo "$1" ;;
+  esac
+}
+
+# Round for display: 2 decimals, more for tiny values (crypto).
+format_amount() {
+  awk -v v="$1" 'BEGIN {
+    v += 0
+    a = v < 0 ? -v : v
+    if (a == 0) { print "0"; exit }
+    d = a >= 1 ? 2 : int(-log(a) / log(10)) + 4
+    if (d > 10) d = 10
+    s = sprintf("%.*f", d, v)
+    if (a < 1) { sub(/0+$/, "", s); sub(/\.$/, "", s) }
+    print s
+  }'
+}
+
+# Space-separated thousands, for display only (stripped again on copy).
+group_digits() {
+  sed -E ':a; s/^([0-9]+)([0-9]{3})/\1 \2/; ta' <<< "$1"
+}
+
+multiply() {
+  awk -v a="$1" -v m="$2" 'BEGIN { printf "%.15g\n", a * m }'
+}
+
+# Prints result lines for a query, or "! ..." error lines.
+convert() {
+  local query="$1" amount="" from="" token cur out
+  local -a tokens targets=()
+
+  # Lowercase; decimal commas to dots; join space-grouped thousands; then
+  # split glued symbols/units ("100$", "€20", "100usd", "1.5k") and turn
+  # separators ("usd/rub", "usd->rub", "usd, eur", "руб.") into spaces.
+  query="$(sed -E '
+    s/([0-9]),([0-9])/\1.\2/g
+    :a; s/([0-9]) ([0-9]{3})\b/\1\2/; ta
+    s/([0-9])([$€₽¥£₿฿₩₸元円])/\1 \2/g
+    s/([$€₽¥£₿฿₩₸元円])([0-9])/\1 \2/g
+    s/([0-9])([a-zа-яё])/\1 \2/g
+    s/->|→|[\/,;:=]/ /g
+    s/([a-zа-яё])[.!?]+( |$)/\1\2/g
+  ' <<< "${query,,}")"
+
+  # read -a splits without glob expansion, so "*" stays a literal token.
+  read -ra tokens <<< "${query}"
+  (( ${#tokens[@]} > 0 )) || return 0
+
+  for token in "${tokens[@]}"; do
+    case "${token}" in
+      to|in|into|в|во|на) continue ;;
+      k|к|тыс) [[ -n "${amount}" ]] && { amount="$(multiply "${amount}" 1000)"; continue; } ;;
+      m|м|млн) [[ -n "${amount}" ]] && { amount="$(multiply "${amount}" 1000000)"; continue; } ;;
+    esac
+    if [[ -z "${amount}" && "${token}" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+      amount="${token}"
+      continue
+    fi
+    cur="$(normalize_currency "${token}")"
+    if [[ -z "${from}" ]]; then
+      from="${cur}"
+    else
+      targets+=("${cur}")
+    fi
+  done
+
+  amount="${amount:-1}"
+  from="${from:-${DEFAULT_FROM}}"
+  if (( ${#targets[@]} == 0 )); then
+    for cur in "${FAVORITES[@]}"; do
+      [[ "${cur}" != "${from}" ]] && targets+=("${cur}")
+    done
+  fi
+
+  # Everything after --args is a positional string, so the file goes first.
+  out="$(jq -r --arg from "${from}" --arg amount "${amount}" \
+    '.usd as $r
+     | ($r + {usd: 1}) as $rates
+     | if ($rates[$from] | type) != "number" then "! неизвестная валюта: \($from)"
+       else $ARGS.positional[]
+         | . as $to
+         | if ($rates[$to] | type) != "number" then "! неизвестная валюта: \($to)"
+           else "\($to)\t\(($amount | tonumber) / $rates[$from] * $rates[$to])"
+           end
+       end' \
+    "${rates_file}" --args "${targets[@]}" 2>/dev/null)" || { echo "! ошибка чтения курсов"; return 0; }
+
+  while IFS=$'\t' read -r cur value; do
+    if [[ "${cur}" == "!"* ]]; then
+      echo "${cur}"
+      continue
+    fi
+    printf '= %s %s   ‹%s %s›\n' "$(group_digits "$(format_amount "${value}")")" "${cur^^}" \
+      "$(group_digits "${amount}")" "${from^^}"
+  done <<< "${out}"
+}
+
+remember() {
+  { printf '› %s\n' "$1"; grep -vxF "› $1" "${history_file}" | head -n $((history_max - 1)); } > "${history_file}.tmp"
+  mv "${history_file}.tmp" "${history_file}"
+}
+
+# Runs a query: sets $results, and keeps it in history if anything converted.
+run_query() {
+  local query
+  query="$(sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//; s/[[:space:]]+/ /g' <<< "$1")"
+  [[ -n "${query}" ]] || return 0
+  results="$(convert "${query}")"
+  grep -q '^= ' <<< "${results}" && remember "${query}"
+}
+
+main() {
+  local lock_file="${XDG_RUNTIME_DIR:-/tmp}/tofi-currency.lock"
+  local rates_date prompt selection value age_days
+
+  if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+    pkill -x tofi
+    exit 0
+  fi
+
+  echo $$ > "${lock_file}"
+  trap 'rm -f "${lock_file}"' EXIT
+
+  mkdir -p "${cache_dir}" "$(dirname -- "${history_file}")"
+  touch "${history_file}"
+
+  # No usable cache: wait for rates. Stale cache: use it now, refresh for next time.
+  if ! rates_valid; then
+    fetch_rates || { notify-send "tofi-currency" "Не удалось загрузить курсы"; exit 1; }
+  elif [[ -n "$(find "${rates_file}" -mmin +360)" ]]; then
+    fetch_rates >/dev/null 2>&1 &
+    disown
+  fi
+
+  rates_date="$(jq -r '.date // "?"' "${rates_file}")"
+  prompt="курс ${rates_date} › "
+  age_days=$(( ( $(date +%s) - $(date -d "${rates_date}" +%s 2>/dev/null || date +%s) ) / 86400 ))
+  (( age_days > 3 )) && prompt="⚠ курс ${rates_date} › "
+
+  results=""
+  [[ -n "$*" ]] && run_query "$*"
+
+  while true; do
+    # prefix matching: typed queries never start with "= ", "! " or "› ", so
+    # they fall through as raw input instead of selecting an existing line.
+    selection="$({ [[ -n "${results}" ]] && printf '%s\n' "${results}"; cat "${history_file}"; } \
+      | tofi-dmenu -r -a prefix -W 900 -H 460 -p "${prompt}")"
+    [[ -n "${selection}" ]] || exit 0
+
+    case "${selection}" in
+      "= "*)
+        value="$(sed -E 's/^= ([0-9 .]+) .*/\1/; s/ //g' <<< "${selection}")"
+        printf '%s' "${value}" | wl-copy -n
+        notify-send "Copied" "${selection#= }"
+        exit 0
+        ;;
+      "! "*) ;;
+      "› "*) run_query "${selection#› }" ;;
+      *) run_query "${selection}" ;;
+    esac
+  done
+}
+
+# Only run when executed, so tests can source the functions.
+[[ "${BASH_SOURCE[0]}" == "$0" ]] && main "$@"
