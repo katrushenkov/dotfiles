@@ -20,7 +20,7 @@ if [[ -s "${cache_file}" ]]; then
   # check, just strip the base dir prefix back off and hand the rest
   # straight to the menu.
   selection="$(sed -E "s#^${datagrip_dir}/##" "${cache_file}" \
-    | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "Go")"
+    | tofi-dmenu -t everforest -p "Go")"
 else
   skip_dirs=(2ch-scripts unnecessary sc tips)
 
@@ -47,7 +47,7 @@ else
             echo "📄 ${item}"
           fi
         done \
-      | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "Go"
+      | tofi-dmenu -t everforest -p "Go"
   )"
 fi
 

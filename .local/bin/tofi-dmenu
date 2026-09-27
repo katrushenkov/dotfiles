@@ -1,0 +1,78 @@
+#!/bin/bash
+# tofi-dmenu - dmenu-style wrapper around tofi-rs.
+#
+# tofi-rs only takes prompt text and window size from a theme file, so this
+# writes a patched copy of the theme (cached in $XDG_RUNTIME_DIR) and execs tofi.
+#
+# Usage: ... | tofi-dmenu [-p prompt] [-t theme] [-W width] [-H height] [-a algorithm] [-r]
+#   -p  prompt text
+#   -t  theme name from ~/.config/tofi/themes/ (default: omarchy)
+#   -W  window width, logical px
+#   -H  window height, logical px
+#   -a  matching algorithm: fuzzy (default), normal, prefix
+#   -r  raw input: print typed text even when nothing matches
+
+set -euo pipefail
+
+prompt=""
+theme="omarchy"
+width=""
+height=""
+algorithm="fuzzy"
+config="$HOME/.config/tofi/dmenu.toml"
+
+while getopts "p:t:W:H:a:r" opt; do
+  case "$opt" in
+    p) prompt="$OPTARG" ;;
+    t) theme="$OPTARG" ;;
+    W) width="$OPTARG" ;;
+    H) height="$OPTARG" ;;
+    a) algorithm="$OPTARG" ;;
+    r) config="$HOME/.config/tofi/dmenu-raw.toml" ;;
+    *) exit 2 ;;
+  esac
+done
+
+theme_file="$HOME/.config/tofi/themes/${theme}.toml"
+[[ -f "$theme_file" ]] || { echo "tofi-dmenu: theme not found: $theme_file" >&2; exit 1; }
+
+# TOML basic string: escape backslashes and double quotes.
+toml_prompt="${prompt//\\/\\\\}"
+toml_prompt="\"${toml_prompt//\"/\\\"}\""
+
+cache_dir="${XDG_RUNTIME_DIR:-/tmp}/tofi-dmenu"
+key="$( { cat "$theme_file"; printf '%s\0' "$prompt" "$width" "$height"; } | md5sum | cut -c1-16)"
+patched="$cache_dir/${theme}-${key}.toml"
+
+if [[ ! -f "$patched" ]]; then
+  mkdir -p "$cache_dir"
+  # Set key=value inside [section], replacing an existing key or adding it
+  # at the end of that section.
+  P="$toml_prompt" W="$width" H="$height" awk '
+    BEGIN { prompt = ENVIRON["P"]; width = ENVIRON["W"]; height = ENVIRON["H"] }
+    function flush_missing() {
+      if (section == "prompt" && !done_prompt) { print "text = " prompt; done_prompt = 1 }
+      if (section == "window" && width != "" && !done_width) { print "width = " width; done_width = 1 }
+      if (section == "window" && height != "" && !done_height) { print "height = " height; done_height = 1 }
+    }
+    /^[[:space:]]*\[[^]]+\]/ {
+      flush_missing()
+      section = $0
+      gsub(/^[[:space:]]*\[|\].*$/, "", section)
+      print
+      next
+    }
+    section == "prompt" && /^[[:space:]]*text[[:space:]]*=/ { print "text = " prompt; done_prompt = 1; next }
+    section == "window" && width != "" && /^[[:space:]]*width[[:space:]]*=/ { print "width = " width; done_width = 1; next }
+    section == "window" && height != "" && /^[[:space:]]*height[[:space:]]*=/ { print "height = " height; done_height = 1; next }
+    { print }
+    END {
+      flush_missing()
+      if (!done_prompt) { print "[prompt]"; print "text = " prompt }
+    }
+  ' "$theme_file" > "$patched.tmp"
+  mv "$patched.tmp" "$patched"
+fi
+
+# tofi-rs logs to stdout; silence it so warnings never leak into the selection.
+RUST_LOG=off exec tofi --config "$config" --theme "$patched" --mode dmenu --algorithm "$algorithm"
