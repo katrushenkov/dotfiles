@@ -2,13 +2,18 @@ setopt +o nomatch # fix for yt-dlp aliases
 setopt autocd     # automatically cd into typed directory.
 setopt interactive_comments
 setopt HIST_IGNORE_SPACE
-setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS # drop older duplicate when a command is re-run
 setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY          # !! / !$ expand into the line instead of running at once
+setopt EXTENDED_HISTORY     # store start time and duration
+setopt INC_APPEND_HISTORY   # write each command immediately, not on shell exit
 setopt no_flow_control
 
 # History in cache directory
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 # Drop duplicate PATH entries (profile appends ~/.local/bin, which env-bootstrap already added).
