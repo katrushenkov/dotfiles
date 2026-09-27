@@ -23,7 +23,6 @@ typeset -U path PATH
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal"
 
 # Basic auto/tab complete:
 autoload -Uz compinit
@@ -106,7 +105,10 @@ zle-line-init() {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+# Use beam shape cursor for each new prompt.
+autoload -Uz add-zsh-hook
+_cursor_beam() { echo -ne '\e[5 q' }
+add-zsh-hook preexec _cursor_beam
 
 # foot: mark command output boundaries so pipe-command-output knows what to pipe.
 # Disabled: TERMINAL is ghostty, not foot, and this OSC 133 hook was causing
@@ -191,6 +193,9 @@ bindkey -M visual '^[[P' vi-delete
 
 export STARSHIP_CONFIG="${ZDOTDIR}/starship.toml"
 eval "$(starship init zsh)"
+
+# Personal overrides last, so their bindkeys survive `bindkey -v` above.
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal"
 
 # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
