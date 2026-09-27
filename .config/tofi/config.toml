@@ -1,0 +1,14 @@
+# tofi-rs config (behavior only; visuals live in themes/)
+# Switch look per call: tofi --theme ~/.config/tofi/themes/<name>.toml
+
+[base]
+mode = "drun"
+theme = "omarchy.toml"
+terminal = "xdg-terminal-exec"
+
+[matching]
+algorithm = "fuzzy"
+require = true
+
+[history]
+history = true

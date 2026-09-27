@@ -1,0 +1,12 @@
+# tofi-rs config for free-text input: prints whatever was typed, even without a match.
+
+[base]
+mode = "dmenu"
+theme = "omarchy.toml"
+
+[matching]
+algorithm = "fuzzy"
+require = false
+
+[history]
+history = false

@@ -1,0 +1,51 @@
+# tofi-rs theme: nordic (ported from ~/.config/tofi/config_nordic)
+
+[prompt]
+text = "> "
+padding = 6
+
+[results]
+count = 0
+spacing = 4
+mode = "vertical"
+
+[text]
+color = "#d8dee9"
+prompt_color = "#81a1c1"
+input_color = "#d8dee9"
+match_color = "#aeb3bb"
+selection_color = "#88c0d0"
+selection_match_color = "#ebcb8b"
+
+[font]
+name = "JetBrainsMono Nerd Font"
+size = 14
+hint = true
+
+# Sizes are logical px for 1440x900 (eDP-1 @2x): tofi-rs scales "%" by the output's
+# physical size, so percentages come out doubled on HiDPI.
+[window]
+anchor = "center"
+width = 1152
+height = 720
+background_color = "#2e3440f2"
+border_width = 2
+border_color = "#88c0d0"
+outline_width = 1
+outline_color = "#3b4252"
+corner_radius = 12
+padding_top = 16
+padding_bottom = 16
+padding_left = 20
+padding_right = 20
+clip_to_padding = true
+scale = true
+
+[cursor]
+hide = true
+
+[input]
+cursor = true
+cursor_style = "bar"
+cursor_color = "#88c0d0"
+cursor_thickness = 2

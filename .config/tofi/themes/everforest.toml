@@ -1,0 +1,51 @@
+# tofi-rs theme: everforest (ported from ~/.config/tofi/config_everforest)
+
+[prompt]
+text = "> "
+padding = 6
+
+[results]
+count = 0
+spacing = 4
+mode = "vertical"
+
+[text]
+color = "#d3c6aa"
+prompt_color = "#a7c080"
+input_color = "#d3c6aa"
+match_color = "#9da9a0"
+selection_color = "#a7c080"
+selection_match_color = "#e69875"
+
+[font]
+name = "JetBrainsMono Nerd Font"
+size = 14
+hint = true
+
+# Sizes are logical px for 1440x900 (eDP-1 @2x): tofi-rs scales "%" by the output's
+# physical size, so percentages come out doubled on HiDPI.
+[window]
+anchor = "center"
+width = 1152
+height = 720
+background_color = "#2d353bf2"
+border_width = 2
+border_color = "#a7c080"
+outline_width = 1
+outline_color = "#232a2e"
+corner_radius = 12
+padding_top = 16
+padding_bottom = 16
+padding_left = 20
+padding_right = 20
+clip_to_padding = true
+scale = true
+
+[cursor]
+hide = true
+
+[input]
+cursor = true
+cursor_style = "bar"
+cursor_color = "#a7c080"
+cursor_thickness = 2

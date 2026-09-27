@@ -1,0 +1,12 @@
+# tofi-rs config for piping: printf 'a\nb\n' | tofi -c ~/.config/tofi/dmenu.toml
+
+[base]
+mode = "dmenu"
+theme = "omarchy.toml"
+
+[matching]
+algorithm = "fuzzy"
+require = true
+
+[history]
+history = false
