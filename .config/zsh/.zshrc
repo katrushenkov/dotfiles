@@ -15,6 +15,7 @@ setopt no_flow_control
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+typeset +x HISTFILE  # if exported, child bash writes (and truncates) it
 
 # Drop duplicate PATH entries.
 typeset -U path PATH
