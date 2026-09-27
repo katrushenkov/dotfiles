@@ -2,7 +2,7 @@ local sc = os.getenv("HOME") .. "/.local/bin/"
 
 o.rebind("SUPER + G", "Search digital brain", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"))
 
-hl.unbind("SUPER + SHIFT + G")
+o.rebind("SUPER + SHIFT + G", "Grep digital brain", hl.dsp.exec_cmd(sc .. "tofi-grep-notes"))
 o.bind("ALT + G", "Toggle window grouping", hl.dsp.group.toggle())
 o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move({ out_of_group = true }))
 
