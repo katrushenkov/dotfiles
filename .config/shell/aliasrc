@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Computed once, reused below.
-_os="$(uname)"
-_nvim_path="$(command -v nvim)"
+case $OSTYPE in linux*) _os=Linux ;; darwin*) _os=Darwin ;; esac
+_nvim_path=$commands[nvim]
 
 # Use neovim for vim if present.
 [ -x "$_nvim_path" ] && alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"

@@ -166,7 +166,7 @@ export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|l
 # export NNN_FCOLORS="AAAAE631BBBBCCCCDDDD9999"
 
 # use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
-[[ $(uname) == "Linux" ]] && export NNN_TRASH=2 || export NNN_TRASH="trash" 
+[[ $OSTYPE == linux* ]] && export NNN_TRASH=2 || export NNN_TRASH="trash"
 
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
