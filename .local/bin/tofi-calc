@@ -1,0 +1,60 @@
+#!/bin/bash
+# tofi-calc - qalc calculator in a tofi loop.
+#
+# Type an expression + Enter: tofi reopens with "= result" on top.
+# Enter on empty input copies the highlighted result; Esc quits.
+# "ans" in an expression is replaced with the latest result.
+#
+# Usage: tofi-calc [expression]
+
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/tofi-calc.lock"
+
+if [[ -f "${lock_file}" ]] && kill -0 "$(<"${lock_file}")" 2>/dev/null; then
+  pkill -x tofi
+  exit 0
+fi
+
+echo $$ > "${lock_file}"
+trap 'rm -f "${lock_file}"' EXIT
+
+history_file="${XDG_STATE_HOME:-$HOME/.local/state}/tofi-calc-history"
+history_max=30
+mkdir -p "$(dirname -- "${history_file}")"
+touch "${history_file}"
+
+# qalc prints U+2212 for minus; apps and qalc's own input want ASCII.
+ascii_minus() { sed 's/−/-/g'; }
+
+last_result() {
+  sed -nE '1s/^= (.*)   ‹.*›$/\1/p' "${history_file}"
+}
+
+calculate() {
+  local expr="$1" ans result
+  ans="$(last_result)"
+  [[ -n "${ans}" ]] && expr="$(sed -E "s/\bans\b/(${ans//\//\\/})/g" <<< "${expr}")"
+
+  result="$(qalc -t -- "${expr}" 2>&1 | tail -n 1 | ascii_minus)"
+  [[ -n "${result}" ]] || result="?"
+
+  { printf '= %s   ‹%s›\n' "${result}" "$1"; head -n $((history_max - 1)) "${history_file}"; } > "${history_file}.tmp"
+  mv "${history_file}.tmp" "${history_file}"
+}
+
+[[ -n "$1" ]] && calculate "$*"
+
+while true; do
+  # prefix matching: a typed expression never starts with "= ", so it falls
+  # through as raw input instead of selecting an old result.
+  selection="$(tofi-dmenu -r -a prefix -p "calc: " < "${history_file}")"
+  [[ -n "${selection}" ]] || exit 0
+
+  if [[ "${selection}" == "= "* ]]; then
+    result="$(sed -E 's/^= (.*)   ‹.*›$/\1/' <<< "${selection}")"
+    printf '%s' "${result}" | wl-copy -n
+    notify-send "Copied" "${result}"
+    exit 0
+  fi
+
+  calculate "${selection}"
+done
