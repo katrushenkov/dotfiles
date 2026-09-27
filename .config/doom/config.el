@@ -769,8 +769,15 @@ created entry."
 ;; ~/.config/nvim/lua/config/autocmds.lua), reusing the same script.
 ;; `evil-normal-state-entry-hook' fires on the way back to Normal state from
 ;; any of insert, visual or ex — covering both nvim autocmds in one hook.
+;; But the hook is global: every freshly created buffer (eldoc, lsp, flymake,
+;; corfu popups, process buffers, Doom's idle incremental loading...) also
+;; runs it via `evil-initialize-state', which switched the layout mid-typing.
+;; So only react to a real state change (`evil-previous-state' is nil for a
+;; brand-new buffer) in the buffer actually shown in the selected window.
 (defun +evil-switch-to-english-layout-h ()
-  (start-process "hypr-switch-en" nil (expand-file-name "~/.local/bin/hypr-switch-en")))
+  (when (and evil-previous-state
+             (eq (current-buffer) (window-buffer (selected-window))))
+    (start-process "hypr-switch-en" nil (expand-file-name "~/.local/bin/hypr-switch-en"))))
 (add-hook 'evil-normal-state-entry-hook #'+evil-switch-to-english-layout-h)
 
 ;; Hide line numbers while in zen mode (SPC t z / SPC t Z) and restore them
