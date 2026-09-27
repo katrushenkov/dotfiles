@@ -1,5 +1,5 @@
 #!/bin/bash
-# audio-out - pick the default audio output from a tofi-rs menu.
+# tofi-audio-out - pick the default audio output from a tofi-rs menu.
 #
 # Lists sinks whose ports aren't all "not available" (hides unplugged HDMI),
 # marks the current default, then switches via omarchy-audio-output-set-default
