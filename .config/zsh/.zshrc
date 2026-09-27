@@ -53,6 +53,8 @@ else
     touch "$zcompdump" 2>/dev/null
 fi
 unset zcompdump_stale
+# Sourcing picks up the compiled .zwc automatically when it's newer than the dump.
+[[ "$zcompdump.zwc" -nt "$zcompdump" ]] || zcompile "$zcompdump"
 # After compinit: it resets _comp_options.
 _comp_options+=(globdots) # include hidden files
 
@@ -177,7 +179,16 @@ bindkey '^G' fzf-cd-widget
 
 bindkey -s '^n' 'n\n'
 
-eval "$(fzf --zsh)"
+# Cache init scripts instead of forking the tool on every start;
+# regenerated when the binary is updated.
+_cached_init() {  # <name> <binary> <command...>
+    local f="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/$1.zsh" bin=$commands[$2]
+    shift 2
+    [[ -s "$f" && "$f" -nt "$bin" ]] || "$@" >| "$f"
+    source "$f"
+}
+
+_cached_init fzf fzf fzf --zsh
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
@@ -187,7 +198,8 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 export STARSHIP_CONFIG="${ZDOTDIR}/starship.toml"
-eval "$(starship init zsh)"
+_cached_init starship starship starship init zsh --print-full-init
+unfunction _cached_init
 
 # Personal overrides last, so their bindkeys survive `bindkey -v` above.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal"
