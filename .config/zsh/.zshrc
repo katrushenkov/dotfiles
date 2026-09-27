@@ -11,6 +11,9 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
+# Drop duplicate PATH entries (profile appends ~/.local/bin, which env-bootstrap already added).
+typeset -U path PATH
+
 # Load aliases and shortcuts if existent
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"

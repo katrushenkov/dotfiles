@@ -2,7 +2,8 @@
 
 # zsh profile file. Runs on login. Environmental variables are set here.
 
-export PATH="$PATH:$(find -L ~/.local/bin -type d | paste -sd ':' -)"
+# Hidden subdirs (e.g. .crush, .crush/logs) are pruned: they hold data, not executables.
+export PATH="$PATH:$(find -L ~/.local/bin -name '.*' -prune -o -type d -print | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 
 export EDITOR="nvim"
