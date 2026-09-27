@@ -1,4 +1,4 @@
-setopt +o nomatch # fix for yt-dlp aliases
+unsetopt nomatch  # fix for yt-dlp aliases
 setopt autocd     # automatically cd into typed directory.
 setopt interactive_comments
 setopt HIST_IGNORE_SPACE
@@ -16,7 +16,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
-# Drop duplicate PATH entries (profile appends ~/.local/bin, which env-bootstrap already added).
+# Drop duplicate PATH entries.
 typeset -U path PATH
 
 # Load aliases and shortcuts if existent
@@ -41,24 +41,18 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:kill:*' menu yes select
 zmodload zsh/complist
 
-# Cache compinit once per day.
-# Uses zsh's own glob qualifiers (mh+24 = "modified more than 24h ago") instead of
-# shelling out to `stat`, whose flags differ between GNU (Linux) and BSD (macOS) —
-# portable across both without any external command.
-# Note: globbing must happen outside `[[ ]]` (it performs no pathname expansion),
-# hence collecting the match into an array first.
+# Full compinit at most once per day; glob qualifier mh+24 avoids forking stat.
 zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 zcompdump_stale=(${~zcompdump}(N.mh+24))
 if [[ -f "$zcompdump" && ${#zcompdump_stale} -eq 0 ]]; then
     compinit -C -d "$zcompdump"
 else
     compinit -d "$zcompdump"
-    # compinit only rewrites the dump (bumping its mtime) when fpath actually
-    # changed; without this, an unchanged dump never "ages out" of full compinit.
+    # compinit rewrites the dump only when fpath changed; keep it ageing.
     touch "$zcompdump" 2>/dev/null
 fi
 unset zcompdump_stale
-# Must come after compinit: compinit resets _comp_options, dropping anything added earlier.
+# After compinit: it resets _comp_options.
 _comp_options+=(globdots) # include hidden files
 
 # Auto-quote URLs (&, ?, ~ etc.) when typed or pasted
