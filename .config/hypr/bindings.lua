@@ -9,7 +9,7 @@ o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move(
 
 o.rebind("SUPER + A", "Linkhandler", hl.dsp.exec_cmd(sc .. "linkhandler"))
 
-o.rebind("SUPER + D", "Omarchy menu", "omarchy-menu toggle apps")
+o.rebind("SUPER + D", "Omarchy menu", { menu = "apps" })
 
 o.rebind("SUPER + P", "Gopass autotype", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
 o.bind("SUPER + I", "Snippets yank", hl.dsp.exec_cmd(sc .. "snippets-yank"))
