@@ -23,8 +23,19 @@ typeset -U path PATH
 # Basic auto/tab complete:
 autoload -Uz compinit
 zstyle ':completion:*' menu select
+# Case-insensitive, then partial-word (foo-b<Tab> → foo-bar), then substring match.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{cyan}-- %d --%f'
+zstyle ':completion:*:warnings' format '%F{red}-- no matches --%f'
+zstyle ':completion:*' squeeze-slashes true
+# Cache results of slow completers (pacman/yay, kubectl, docker…).
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:*:kill:*' menu yes select
 zmodload zsh/complist
-_comp_options+=(globdots) # include hidden files
 
 # Cache compinit once per day.
 # Uses zsh's own glob qualifiers (mh+24 = "modified more than 24h ago") instead of
@@ -43,6 +54,8 @@ else
     touch "$zcompdump" 2>/dev/null
 fi
 unset zcompdump_stale
+# Must come after compinit: compinit resets _comp_options, dropping anything added earlier.
+_comp_options+=(globdots) # include hidden files
 
 # Auto-quote URLs (&, ?, ~ etc.) when typed or pasted
 autoload -Uz url-quote-magic bracketed-paste-magic
