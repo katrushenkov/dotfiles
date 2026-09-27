@@ -16,7 +16,7 @@ base_dir="$HOME/.local/src/datagrip"
 
 selection="$(fd . --type f --follow "${base_dir}" \
   | sed -En "s#^${base_dir}/##p" \
-  | tofi --config "$HOME/.config/tofi/config_everforest" --prompt-text "File")"
+  | tofi-dmenu -t everforest -p "File")"
 
 [[ -n "${selection}" ]] || exit 0
 

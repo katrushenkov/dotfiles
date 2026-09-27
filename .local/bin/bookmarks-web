@@ -10,7 +10,7 @@ get_existing_tags() {
 }
 
 text_input() {
-	echo "" | tofi
+	tofi-dmenu -r -p "$1: " </dev/null
 }
 
 add_bookmark() {
