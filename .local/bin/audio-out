@@ -1,0 +1,44 @@
+#!/bin/bash
+# audio-out - pick the default audio output from a tofi-rs menu.
+#
+# Lists sinks whose ports aren't all "not available" (hides unplugged HDMI),
+# marks the current default, then switches via omarchy-audio-output-set-default
+# so active streams move along with it.
+
+set -euo pipefail
+
+# Skip the physical sink an active speaker tuning fronts, same as
+# omarchy-audio-output-switch: choosing it would bypass the tuning.
+fronted=$(omarchy-audio-tuning fronted-sink 2>/dev/null || true)
+current=$(timeout 2 pactl get-default-sink 2>/dev/null || true)
+
+sinks=$(timeout 2 pactl -f json list sinks |
+  jq -r --arg fronted "$fronted" --arg current "$current" '.[]
+    | select((.ports | length == 0) or ([.ports[]? | .availability != "not available"] | any))
+    | select($fronted == "" or .name != $fronted)
+    | [(if .name == $current then "●" else "○" end),
+       (.description // .properties."device.description" // .name),
+       (.index | tostring),
+       .name]
+    | @tsv')
+
+if [[ -z $sinks ]]; then
+  omarchy-osd -m "No audio devices found"
+  exit 1
+fi
+
+# Menu lines are "<mark> <description>"; line number maps back to the sink.
+selection=$(cut -f1,2 <<<"$sinks" | tr '\t' ' ' |
+  tofi-dmenu -p "Audio out: " -W 700 -H 300) || exit 0
+[[ -n $selection ]] || exit 0
+
+line=$(cut -f1,2 <<<"$sinks" | tr '\t' ' ' | grep -nxF -- "$selection" | head -1 | cut -d: -f1)
+[[ -n $line ]] || exit 0
+
+IFS=$'\t' read -r _ description index name < <(sed -n "${line}p" <<<"$sinks")
+
+if [[ $name != "$current" ]]; then
+  omarchy-audio-output-set-default "$index" "$name"
+fi
+
+omarchy-osd -i volume-high -m "$description"
