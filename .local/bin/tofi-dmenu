@@ -74,5 +74,10 @@ if [[ ! -f "$patched" ]]; then
   mv "$patched.tmp" "$patched"
 fi
 
+# Without --output the compositor picks a monitor, often not the focused one.
+output_args=()
+output="$(hyprctl monitors -j 2>/dev/null | jq -r '.[] | select(.focused) | .name' 2>/dev/null || true)"
+[[ -n "$output" ]] && output_args=(--output "$output")
+
 # tofi-rs logs to stdout; silence it so warnings never leak into the selection.
-RUST_LOG=off exec tofi --config "$config" --theme "$patched" --mode dmenu --algorithm "$algorithm"
+RUST_LOG=off exec tofi --config "$config" --theme "$patched" --mode dmenu --algorithm "$algorithm" "${output_args[@]}"
