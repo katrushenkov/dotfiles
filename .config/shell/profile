@@ -6,8 +6,6 @@
 export PATH="$PATH:$(find -L ~/.local/bin -name '.*' -prune -o -type d -print | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 
-export EDITOR="nvim"
-export TERMINAL=xdg-terminal-exec
 export BROWSER="vivaldi"
 export KUBE_EDITOR="nvim"
 
