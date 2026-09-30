@@ -1,97 +1,64 @@
 #!/bin/bash
 
 main_file="$HOME/.local/src/datagrip/bookmarks-web.txt"
+browser="vivaldi"
 
 hypr-switch-en
 
-get_existing_tags() {
-	local file="$1"
-	[ -f "$file" ] && cut -d'|' -f 3- "$file" | tr ' ' '\n' | grep -E '^#\w+$|^\w+$' | sort -u || true
-}
+# tofi-dmenu opens on the focused monitor by itself (--output).
+menu() { tofi-dmenu -p "$1: " -W "${2:-1400}" -H "${3:-600}"; }
+text_input() { tofi-dmenu -r -p "$1: " </dev/null; }
 
-text_input() {
-	tofi-dmenu -r -p "$1: " </dev/null
+format_lines() { awk -F'|' 'NF {printf "%-50s %-30s %s\n", $1, $2, $3}'; }
+
+pick_and_open() {
+	local url
+	url=$(format_lines | menu "$1" 1792 720 | awk '{print $1}')
+	[ -n "$url" ] && "$browser" "$url"
 }
 
 add_bookmark() {
-	local file="$1" url="$2" name="$3"
+	local url="$1" name="$2" tags
 
-	if grep -q "^${url// /\\ } " "$file" 2>/dev/null; then
+	if grep -qF "$url " "$main_file" 2>/dev/null; then
 		notify-send "Oops" "Bookmark already exists"
 		return 1
 	fi
 
-	local bookmarkline="$url | $name |"
-	local tags="dummy"
-
-	while [ -n "$tags" ]; do
-		tags=$(get_existing_tags "$file" | omarchy-menu-select "add tags" -- --width 1400 --height 500 2>/dev/null || true)
-		[ -z "$tags" ] && break
-		bookmarkline+=" $tags"
+	local line="$url | $name |"
+	while tags=$(cut -d'|' -f3- "$main_file" 2>/dev/null | tr ' ' '\n' | grep -E '^#?\w+$' | sort -u | menu "add tags") && [ -n "$tags" ]; do
+		line+=" $tags"
 	done
 
-	echo "$bookmarkline" >> "$file"
+	echo "$line" >> "$main_file"
 	notify-send "✓ Bookmark Added" "$url"
-}
-
-search_and_open() {
-	local file="$1" browser="${2:-vivaldi}"
-	local selection
-
-	selection=$(grep -v "^$" "$file" 2>/dev/null | \
-		awk -F'|' '{printf "%-50s %-30s %s\n", $1, $2, $3}' | \
-		omarchy-menu-select "Bookmark" -- --width 1792 --height 720 2>/dev/null | \
-		awk '{print $1}' || true)
-
-	[ -n "$selection" ] && "$browser" "$selection"
-}
-
-search_by_tag() {
-	local file="$1" browser="${2:-vivaldi}"
-	local tag
-
-	# Get all unique tags in #tag format
-	tag=$(grep -oh '#\w\+' "$file" | sort -u | sed 's/^#//' | \
-		omarchy-menu-select "select tag" -- --width 1400 --height 600 2>/dev/null || true)
-
-	if [ -z "$tag" ]; then
-		return
-	fi
-
-	local result
-	result=$(grep "#$tag" "$file" | \
-		awk -F'|' '{printf "%-50s %-30s %s\n", $1, $2, $3}' | \
-		omarchy-menu-select "tag: $tag" -- --width 1792 --height 720 2>/dev/null | \
-		awk '{print $1}' || true)
-
-	[ -n "$result" ] && "$browser" "$result"
 }
 
 case $1 in
 	-a|--add)
 		url=$(wl-paste)
 		name=$(text_input "add name")
-		[ -n "$name" ] && add_bookmark "$main_file" "$url" "$name"
-		;;
-	-s|--search)
-		search_and_open "$main_file" "vivaldi"
-		;;
-	-st|--search-tag)
-		search_by_tag "$main_file" "vivaldi"
+		[ -n "$name" ] && add_bookmark "$url" "$name"
 		;;
 	-am|--add-manual)
 		url=$(text_input "add bookmark")
-		[ -n "$url" ] && name=$(text_input "add name") && add_bookmark "$main_file" "$url" "$name"
+		[ -n "$url" ] && name=$(text_input "add name") && [ -n "$name" ] && add_bookmark "$url" "$name"
+		;;
+	-s|--search)
+		pick_and_open "Bookmark" < "$main_file"
+		;;
+	-st|--search-tag)
+		tag=$(grep -oh '#\w\+' "$main_file" | sort -u | sed 's/^#//' | menu "select tag")
+		[ -n "$tag" ] && grep "#$tag\b" "$main_file" | pick_and_open "tag: $tag"
 		;;
 	*)
-		cat << EOF
+		cat << USAGE
 Usage: bookmarks-web [option]
 
-Options:
-  -a, --add         Add from clipboard
-  -s, --search      Search and open
-  -st, --search-tag Search by tag and open
-  -am, --add-manual Manually add bookmark
-EOF
+  -a,  --add         Add from clipboard
+  -am, --add-manual  Manually add bookmark
+  -s,  --search      Search and open
+  -st, --search-tag  Search by tag and open
+USAGE
 		;;
 esac
