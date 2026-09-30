@@ -830,3 +830,36 @@ created entry."
 ;; ~/.config/emacs/omarchy.el on an AUR upgrade (`omarchy-emacs-setup`
 ;; re-run); watch for that and re-apply this merge if it happens.
 (load! "+omarchy")
+
+(defun my/org-author-refresh ()
+  "Show :AUTHOR: property after org headings (display-only overlay)."
+  (interactive)
+  (remove-overlays (point-min) (point-max) 'my-org-author t)
+  (org-with-wide-buffer
+   (goto-char (point-min))
+   (while (re-search-forward org-heading-regexp nil t)
+     (when-let ((author (org-entry-get (point) "AUTHOR")))
+       (let ((ov (make-overlay (1- (line-end-position)) (line-end-position))))
+         (overlay-put ov 'my-org-author t)
+         (overlay-put ov 'after-string
+                      (propertize (concat "  — " author) 'face 'shadow)))))))
+
+(define-minor-mode my/org-author-mode
+  "Show author after book name."
+  :lighter " Auth"
+  (if my/org-author-mode
+      (progn (my/org-author-refresh)
+             (add-hook 'after-save-hook #'my/org-author-refresh nil t))
+    (remove-overlays (point-min) (point-max) 'my-org-author t)
+    (remove-hook 'after-save-hook #'my/org-author-refresh t)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (when (and buffer-file-name
+                       (string= (file-name-nondirectory buffer-file-name) "books.org"))
+              (my/org-author-mode 1))))
+
+;; org-lint flags :AUTHOR:/:TITLE: etc. in property drawers as "misspelled
+;; export option" (suggests EXPORT_AUTHOR). They're used as plain metadata here.
+(after! flycheck
+  (add-to-list 'flycheck-org-lint-disabled-checkers 'misspelled-export-option))
