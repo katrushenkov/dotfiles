@@ -285,6 +285,12 @@
 ;;        ;; letters, so it doesn't double up as a box behind the emoji.
 ;;        org-modern-priority-faces nil))
 
+;; Show timestamps as plain text instead of org-modern's badges: the badge
+;; uses the 0.8-height org-modern-label face, so a date in a table cell
+;; renders narrower than its text and shifts the column bars (see 0me.org).
+(after! org-modern
+  (setq org-modern-timestamp nil))
+
 ;; GTD-style context tags. personal/work are mutually exclusive
 ;; (:startgroup/:endgroup); call/read are free-standing.
 (setq org-tag-alist
@@ -861,5 +867,9 @@ created entry."
 
 ;; org-lint flags :AUTHOR:/:TITLE: etc. in property drawers as "misspelled
 ;; export option" (suggests EXPORT_AUTHOR). They're used as plain metadata here.
-(after! flycheck
-  (add-to-list 'flycheck-org-lint-disabled-checkers 'misspelled-export-option))
+;; flycheck's org-lint checker calls (org-lint) with all of org-lint--checkers
+;; and has no disable list of its own, so drop the checker there.
+(after! org-lint
+  (setq org-lint--checkers
+        (seq-remove (lambda (c) (eq (org-lint-checker-name c) 'misspelled-export-option))
+                    org-lint--checkers)))
