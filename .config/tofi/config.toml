@@ -7,7 +7,7 @@ theme = "omarchy.toml"
 terminal = "xdg-terminal-exec"
 
 [matching]
-algorithm = "fuzzy"
+algorithm = "normal"
 require = true
 
 [history]
