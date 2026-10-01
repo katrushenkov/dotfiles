@@ -6,14 +6,14 @@ browser="vivaldi"
 hypr-switch-en
 
 # tofi-dmenu opens on the focused monitor by itself (--output).
-menu() { tofi-dmenu -p "$1: " -W "${2:-1400}" -H "${3:-600}"; }
+menu() { tofi-dmenu -p "$1: " -W "${2:-800}" -H "${3:-300}"; }
 text_input() { tofi-dmenu -r -p "$1: " </dev/null; }
 
 format_lines() { awk -F'|' 'NF {printf "%-50s %-30s %s\n", $1, $2, $3}'; }
 
 pick_and_open() {
 	local url
-	url=$(format_lines | menu "$1" 1792 720 | awk '{print $1}')
+	url=$(format_lines | menu "$1" 1200 720 | awk '{print $1}')
 	[ -n "$url" ] && "$browser" "$url"
 }
 
