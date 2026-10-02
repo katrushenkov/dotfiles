@@ -38,7 +38,7 @@ o.rebind("SUPER + W", "Browser", { focus = "vivaldi", launch = "omarchy-launch-b
 -- CapsLock + G sends the KEY_F13 evdev code, since tapping CapsLock alone
 -- still sends Escape). The default xkb keymap maps that keycode to the
 -- keysym XF86Tools rather than F13, so we bind on that instead.
-o.bind("XF86Tools", "Browser (CapsLock+G)", { focus = "vivaldi", launch = "omarchy-launch-browser" })
+o.bind("XF86Tools", "Search digital brain (CapsLock+G)", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"))
 o.bind("XF86Launch5", "TODO (CapsLock+V)", { focus = "vivaldi", launch = "omarchy-launch-browser" })
 
 -- More CapsLock+<key> chords, same mechanism (see /etc/keyd/default.conf
