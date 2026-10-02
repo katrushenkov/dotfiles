@@ -107,6 +107,13 @@ autoload -Uz add-zsh-hook
 _cursor_beam() { echo -ne '\e[5 q' }
 add-zsh-hook preexec _cursor_beam
 
+# Stray "%" on terminal open: PROMPT_SP pads the line to $COLUMNS, and when
+# Hyprland resizes the new window mid-way the padding wraps, leaving "%" behind.
+# Nothing to protect before the first command, so enable it only after one.
+unsetopt prompt_sp
+_enable_prompt_sp() { setopt prompt_sp; add-zsh-hook -d preexec _enable_prompt_sp; unfunction _enable_prompt_sp }
+add-zsh-hook preexec _enable_prompt_sp
+
 # foot: mark command output boundaries so pipe-command-output knows what to pipe.
 # Disabled: TERMINAL is ghostty, not foot, and this OSC 133 hook was causing
 # a stray "%" (zsh's PROMPT_EOL_MARK) to appear before the first prompt.
