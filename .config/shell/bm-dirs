@@ -2,6 +2,7 @@
 D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
 aa	/mnt/main/audio
 an  /mnt/angar
+pl  /mnt/angar/plex
 bb	/mnt/main/books
 bu	/mnt/main/backup
 cac ${XDG_CACHE_HOME:-$HOME/.cache}
