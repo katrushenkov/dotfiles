@@ -17,6 +17,11 @@ set -uo pipefail
 # launchd's bare PATH -- no path_helper, so no /opt/homebrew/bin.
 PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
 
+# fzf look and behaviour shared by every picker; targets add only their own
+# flags (prompt, preview, --no-sort). Appended, so a user's own
+# FZF_DEFAULT_OPTS is kept and these win where they overlap.
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact --cycle --reverse --info=inline --bind=ctrl-/:toggle-preview"
+
 POPUP_CONFIG="${POPUP_CONFIG:-$HOME/.config/wezterm/popup.lua}"
 PASTE_DELAY="${PASTE_DELAY:-0.15}"
 do_paste=1
@@ -26,13 +31,17 @@ last_clip=""
 
 # stderr is discarded when launched from a GUI app, so also surface failures
 # as a notification -- otherwise the popup just silently never appears.
-die() {
-    printf '%s: %s\n' "${0##*/}" "$1" >&2
+notify() {
     osascript - "$1" >/dev/null 2>&1 <<'EOF'
 on run argv
     display notification (item 1 of argv) with title "terminal-picker"
 end run
 EOF
+}
+
+die() {
+    printf '%s: %s\n' "${0##*/}" "$1" >&2
+    notify "$1"
     exit 1
 }
 
@@ -70,48 +79,6 @@ WEZTERM_BIN="$(readlink -f -- "${WEZTERM_BIN:-$(command -v wezterm)}")" \
     || die "wezterm not found in PATH"
 [[ -x "$WEZTERM_BIN" ]] || die "wezterm not executable: $WEZTERM_BIN"
 
-result_file="$(mktemp "${TMPDIR:-/tmp}/terminal-picker.XXXXXX")"
-trap 'rm -f "$result_file"' EXIT
-
-read -r prev_pid prev_bundle prev_win_x prev_win_y <<<"$(osascript <<'EOF'
-tell application "System Events"
-    set p to first application process whose frontmost is true
-    set winPos to {-1, -1}
-    -- System Events windows have no stable id, so pin down *which* window of
-    -- the process was frontmost by position -- restoring by pid/app alone
-    -- lets macOS pick any window of that app (wrong one when e.g. several
-    -- Kitty/WezTerm windows are open across spaces).
-    try
-        set winPos to position of front window of p
-    end try
-    return ((unix id of p) as text) & " " & (bundle identifier of p) & " " & (item 1 of winPos) & " " & (item 2 of winPos)
-end tell
-EOF
-)"
-
-# OmniWM (this box's tiling WM) can stack several windows of the same app in
-# one tabbed column -- they all report the same pid/position to System Events,
-# so AppleScript can't tell them apart and restores whichever one happened to
-# be first. Ask the WM itself which window is really focused when its IPC
-# (omniwmctl, ~/.config/omniwm/settings.toml ipcEnabled) is reachable.
-prev_omni_id=""
-if command -v omniwmctl >/dev/null 2>&1; then
-    prev_omni_id="$(omniwmctl query focused-window --format json 2>/dev/null \
-        | jq -r '.result.payload.window.id // empty' 2>/dev/null)"
-fi
-
-# POSIX single-quoting, so the command is parsed the same by bash and zsh.
-quote() { printf "'%s'" "${1//\'/\'\\\'\'}"; }
-
-# Run through the login shell, not a hardcoded bash: exports live in the user's
-# own startup files (~/.zprofile here) and scripts expect the same environment
-# they get in a terminal. GUI launchers give us none of it.
-inner=""
-for arg in "$target" "$@"; do
-    inner+="$(quote "$arg") "
-done
-inner+="> $(quote "$result_file")"
-
 # macOS doesn't let an app launched from the background (Hammerspoon's hs.task)
 # take focus by itself: the popup shows up but keystrokes keep going to the old
 # window. Wait for the popup's window and focus it explicitly.
@@ -131,14 +98,86 @@ focus_popup() {
     done
 }
 
+# One popup at a time: a second hotkey press while a picker is open brings the
+# open popup back to front instead of stacking another one on top of it.
+lock_dir="${TMPDIR:-/tmp}/terminal-picker.lock"
+if ! mkdir "$lock_dir" 2>/dev/null; then
+    owner="$(cat "$lock_dir/pid" 2>/dev/null)"
+    if [[ -n "$owner" ]] && kill -0 "$owner" 2>/dev/null; then
+        popup="$(cat "$lock_dir/popup" 2>/dev/null)"
+        [[ -n "$popup" ]] && kill -0 "$popup" 2>/dev/null && focus_popup "$popup"
+        exit 0
+    fi
+    # No pid yet: the owner is between mkdir and writing it. Only a lock that
+    # has stayed like that for a while is stale.
+    if [[ -z "$owner" ]] && (( $(date +%s) - $(stat -f %m "$lock_dir" 2>/dev/null || echo 0) < 5 )); then
+        exit 0
+    fi
+    rm -rf "$lock_dir"
+    mkdir "$lock_dir" 2>/dev/null || exit 0
+fi
+printf '%s' "$$" >"$lock_dir/pid"
+
+work_dir="$(mktemp -d "${TMPDIR:-/tmp}/terminal-picker.XXXXXX")"
+trap 'rm -rf "$work_dir" "$lock_dir"' EXIT
+result_file="$work_dir/result"
+err_file="$work_dir/stderr"
+status_file="$work_dir/status"
+
+# Remember the focused window to come back to. OmniWM (this box's tiling WM)
+# answers instantly and is exact: it can stack several windows of the same app
+# in one tabbed column, and they all report the same pid/position to System
+# Events. The System Events query costs 100-200 ms, so it only runs without
+# OmniWM's IPC (omniwmctl, ~/.config/omniwm/settings.toml ipcEnabled).
+prev_omni_id="" prev_pid="" prev_win_x="" prev_win_y=""
+if command -v omniwmctl >/dev/null 2>&1; then
+    read -r prev_omni_id prev_pid prev_win_x prev_win_y <<<"$(
+        omniwmctl query focused-window --format json 2>/dev/null \
+            | jq -r '.result.payload.window // empty
+                     | "\(.id) \(.pid) \(.frame.x // -1) \(.frame.y // -1)"' 2>/dev/null)"
+fi
+if [[ -z "$prev_omni_id" ]]; then
+    read -r prev_pid prev_win_x prev_win_y <<<"$(osascript <<'EOF'
+tell application "System Events"
+    set p to first application process whose frontmost is true
+    set winPos to {-1, -1}
+    -- System Events windows have no stable id, so pin down *which* window of
+    -- the process was frontmost by position -- restoring by pid/app alone
+    -- lets macOS pick any window of that app (wrong one when e.g. several
+    -- Kitty/WezTerm windows are open across spaces).
+    try
+        set winPos to position of front window of p
+    end try
+    return ((unix id of p) as text) & " " & (item 1 of winPos) & " " & (item 2 of winPos)
+end tell
+EOF
+)"
+fi
+
+# POSIX single-quoting, so the command is parsed the same by bash and zsh.
+quote() { printf "'%s'" "${1//\'/\'\\\'\'}"; }
+
+# Run through the login shell, not a hardcoded bash: exports live in the user's
+# own startup files (~/.zprofile here) and scripts expect the same environment
+# they get in a terminal. GUI launchers give us none of it.
+# stderr and the exit status go to files too: the popup closes as soon as the
+# target exits, so its error message would otherwise never be seen.
+inner=""
+for arg in "$target" "$@"; do
+    inner+="$(quote "$arg") "
+done
+inner+="> $(quote "$result_file") 2> $(quote "$err_file"); echo \$? > $(quote "$status_file")"
+
 # fzf writes its UI to /dev/tty, so redirecting stdout keeps the popup usable.
 "$WEZTERM_BIN" --config-file "$POPUP_CONFIG" start --always-new-process \
     -- "${SHELL:-/bin/bash}" -lc "$inner" >/dev/null 2>&1 &
 popup_pid=$!
+printf '%s' "$popup_pid" >"$lock_dir/popup"
 focus_popup "$popup_pid"
 wait "$popup_pid"
 
 result="$(< "$result_file")"
+status="$(cat "$status_file" 2>/dev/null)"
 
 restore_focus() {
     (( do_restore )) || return 0
@@ -167,6 +206,18 @@ end run
 EOF
 }
 
+# Empty status: the popup was closed by hand. 130 is Esc/Ctrl-C in fzf, and
+# a bare 1 with nothing on stderr is fzf's "no match" -- both are a cancel.
+if [[ -n "$status" && "$status" != 0 && "$status" != 130 ]]; then
+    err="$(sed $'s/\x1b\\[[0-9;]*[a-zA-Z]//g' "$err_file" 2>/dev/null \
+        | grep -v '^[[:space:]]*$' | tail -n 3)"
+    if [[ -n "$err" || "$status" != 1 ]]; then
+        restore_focus
+        notify "${err:-${target##*/} exited with status $status}"
+        exit 1
+    fi
+fi
+
 [[ -n "$result" ]] || { restore_focus; exit 0; }
 
 # A target that wants the selection opened rather than pasted emits
@@ -178,7 +229,9 @@ fi
 
 send_paste() {
     sleep "$PASTE_DELAY"
-    osascript -e 'tell application "System Events" to keystroke "v" using command down' \
+    # key code 9 is V; `keystroke "v"` looks the letter up in the active
+    # layout and sends nothing (or the wrong key) under Russian.
+    osascript -e 'tell application "System Events" to key code 9 using command down' \
         >/dev/null 2>&1
 }
 
