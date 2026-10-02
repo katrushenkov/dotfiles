@@ -1,0 +1,7 @@
+[Unit]
+Description=Merge upstream Omarchy into fork and push
+
+[Service]
+Type=oneshot
+Environment=SSH_AUTH_SOCK=%t/gnupg/S.gpg-agent.ssh
+ExecStart=%h/.local/bin/omarchy-upstream-sync
