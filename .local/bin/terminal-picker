@@ -112,9 +112,31 @@ for arg in "$target" "$@"; do
 done
 inner+="> $(quote "$result_file")"
 
+# macOS doesn't let an app launched from the background (Hammerspoon's hs.task)
+# take focus by itself: the popup shows up but keystrokes keep going to the old
+# window. Wait for the popup's window and focus it explicitly.
+focus_popup() {
+    local pid="$1" id i
+    for ((i = 0; i < 60; i++)); do
+        if command -v omniwmctl >/dev/null 2>&1; then
+            id="$(omniwmctl query windows --format json 2>/dev/null \
+                | jq -r --argjson pid "$pid" \
+                    'first(.result.payload.windows[] | select(.pid == $pid) | .id) // empty' 2>/dev/null)"
+            [[ -n "$id" ]] && omniwmctl window focus "$id" >/dev/null 2>&1 && return 0
+        elif osascript -e "tell application \"System Events\" to set frontmost of \
+                (first application process whose unix id is $pid) to true" >/dev/null 2>&1; then
+            return 0
+        fi
+        sleep 0.05
+    done
+}
+
 # fzf writes its UI to /dev/tty, so redirecting stdout keeps the popup usable.
 "$WEZTERM_BIN" --config-file "$POPUP_CONFIG" start --always-new-process \
-    -- "${SHELL:-/bin/bash}" -lc "$inner" >/dev/null 2>&1
+    -- "${SHELL:-/bin/bash}" -lc "$inner" >/dev/null 2>&1 &
+popup_pid=$!
+focus_popup "$popup_pid"
+wait "$popup_pid"
 
 result="$(< "$result_file")"
 
@@ -146,6 +168,13 @@ EOF
 }
 
 [[ -n "$result" ]] || { restore_focus; exit 0; }
+
+# A target that wants the selection opened rather than pasted emits
+# "#!open <path>": open it and leave focus with whatever app it brings up.
+if [[ "$result" == "#!open "* ]]; then
+    open -- "${result#"#!open "}"
+    exit 0
+fi
 
 send_paste() {
     sleep "$PASTE_DELAY"
