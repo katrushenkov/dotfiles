@@ -21,7 +21,7 @@ USERKEY="user"
 
 die() { printf '%s: %s\n' "${0##*/}" "$1" >&2; exit 1; }
 
-pick() { fzf --reverse --no-sort --prompt="$1> "; }
+pick() { fzf --exact --cycle --reverse --no-sort --prompt="$1> "; }
 
 # First "key: value" line for the given key, value only.
 field_value() {
