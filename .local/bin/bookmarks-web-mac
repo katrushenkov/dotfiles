@@ -42,7 +42,7 @@ columns() {
     }' "$@"
 }
 
-pick() { fzf --reverse --no-sort --prompt="$1> "; }
+pick() { fzf --exact --cycle --reverse --no-sort --prompt="$1> "; }
 
 open_url() {
     if [[ -n "$browser" && -d "/Applications/$browser.app" ]]; then

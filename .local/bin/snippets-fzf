@@ -3,6 +3,6 @@
 set -euo pipefail
 
 /opt/homebrew/bin/rg -v '^#|^$' ~/.local/src/datagrip/snippets \
-    | fzf --no-sort --reverse --prompt='snippet> ' \
+    | fzf --exact --cycle --no-sort --reverse --prompt='snippet> ' \
           --delimiter=' #' --with-nth=1.. \
     | awk -F ' #' '{printf "%s", $1}'
