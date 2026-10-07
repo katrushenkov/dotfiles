@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodically merge upstream Omarchy into fork
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=3h
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target
