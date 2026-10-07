@@ -127,8 +127,8 @@ o.bind("ALT + l", "Move grouped window focus right", hl.dsp.group.next())
 o.bind("ALT + F", "Toggle firefox workspace", hl.dsp.workspace.toggle_special("firefox"))
 o.bind("ALT + SHIFT + F", "Move window to firefox workspace", hl.dsp.window.move({ workspace = "special:firefox", follow = false }))
 
-o.bind("ALT + Right", "Volume up", "omarchy-audio-output-volume raise", { locked = true, repeating = true })
-o.bind("ALT + Left", "Volume down", "omarchy-audio-output-volume lower", { locked = true, repeating = true })
+-- o.bind("ALT + Right", "Volume up", "omarchy-audio-output-volume raise", { locked = true, repeating = true })
+-- o.bind("ALT + Left", "Volume down", "omarchy-audio-output-volume lower", { locked = true, repeating = true })
 
 -- Universal paste (SUPER+V) in Emacs: default/hypr/bindings/clipboard.lua
 -- sends Ctrl+V to any non-terminal window, but Emacs binds that to
