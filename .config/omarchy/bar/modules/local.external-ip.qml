@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import Quickshell.Io
 
 Item {
@@ -9,6 +10,14 @@ Item {
   property var settings
 
   property string ipText: "…"
+  property string ruIp: ""
+  property string comIp: ""
+
+  // On narrow screens (e.g. a portrait monitor) the left section runs into
+  // the centered clock, so show only the ru address there.
+  readonly property int compactBelow: settings && settings.compactBelow ? settings.compactBelow : 1300
+  readonly property var hostWindow: root.QsWindow.window
+  readonly property bool compact: hostWindow ? hostWindow.width < compactBelow : false
   property bool fetching: false
   property bool notifyOnResult: false
 
@@ -44,6 +53,8 @@ Item {
           if (line.indexOf("ru:") === 0) ru = line.slice(3).trim() || "N/A"
           else if (line.indexOf("com:") === 0) com = line.slice(4).trim() || "N/A"
         })
+        root.ruIp = ru
+        root.comIp = com
         root.ipText = "ru: " + ru + " com: " + com
         root.fetching = false
         if (root.notifyOnResult) {
@@ -75,7 +86,7 @@ Item {
   Text {
     id: label
     anchors.centerIn: parent
-    text: root.ipText
+    text: root.compact && !root.fetching && root.ruIp ? root.ruIp : root.ipText
     color: bar ? bar.foreground : "white"
     font.family: bar ? bar.fontFamily : "monospace"
     font.pixelSize: 12
@@ -86,7 +97,7 @@ Item {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onClicked: root.refresh(true)
-    onEntered: if (bar) bar.showTooltip(root, "ip.flant.ru / ip.flant.com — click to refresh")
+    onEntered: if (bar) bar.showTooltip(root, (root.compact ? root.ipText + "\n" : "") + "ip.flant.ru / ip.flant.com — click to refresh")
     onExited: if (bar) bar.hideTooltip(root)
   }
 }
