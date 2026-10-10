@@ -318,14 +318,11 @@
          :desc "Encrypt all entries in buffer" "E" #'org-encrypt-entries
          :desc "Decrypt all entries in buffer" "D" #'org-decrypt-entries)))
 
-;; Pull org-contacts birthdays into the agenda via the classic diary sexp
-;; mechanism (org-contacts has no native agenda integration of its own).
-(setq diary-file (expand-file-name "diary" org-directory)
-      org-agenda-include-diary t
-      ;; org-agenda-include-diary also pulls in Emacs' generic (US/Christian/
-      ;; etc.) holiday list by default — e.g. "Labor Day" showed up in agenda
-      ;; unasked. All that was wanted here is org-contacts-anniversaries.
-      calendar-holidays nil)
+;; org-contacts birthdays reach the agenda via `%%(org-contacts-anniversaries)'
+;; sexp lines under "* Годовщины" in contacts.org itself — org-agenda
+;; evaluates `%%' sexps in any org-agenda-files entry. Deliberately no
+;; Emacs `diary' file: appt reads `diary-file' on startup/each new day, which
+;; evaluated those sexps and left contacts.org open as a stray buffer.
 
 (setq org-agenda-custom-commands
       '(("d" "Day: agenda + active tasks"
@@ -407,19 +404,7 @@
         appt-delete-window-function #'ignore)
   (appt-activate 1)
   (defun +org-refresh-appt ()
-    (org-agenda-to-appt t)
-    ;; `org-agenda-to-appt' opens the `diary' file as a normal buffer and
-    ;; never closes it. Since this runs on every startup/every 10min, that
-    ;; buffer ends up the most recently touched one in the buffer list —
-    ;; which `quit-window' (dashboard's "q", inherited from `special-mode')
-    ;; falls back to on a fresh frame with no window history. Hide it like
-    ;; an internal buffer instead (nobody edits `diary' directly, see its
-    ;; note in org-notes.md) — renaming doesn't affect its file
-    ;; association, just excludes it from `other-buffer'/buffer-switching.
-    (when-let* ((buf (get-file-buffer diary-file)))
-      (with-current-buffer buf
-        (unless (string-prefix-p " " (buffer-name))
-          (rename-buffer (concat " " (buffer-name)) t)))))
+    (org-agenda-to-appt t))
   (+org-refresh-appt)
   (run-at-time nil (* 10 60) #'+org-refresh-appt)
   (add-hook 'org-capture-after-finalize-hook #'+org-refresh-appt))
