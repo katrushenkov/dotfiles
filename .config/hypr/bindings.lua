@@ -54,7 +54,8 @@ o.bind("XF86Launch7", "TODO (CapsLock+M)", hl.dsp.exec_cmd("TODO: command for Ca
 o.bind("XF86Launch8", "Emacs (CapsLock+E)",
   "omarchy-launch-or-focus " .. o.shell_quote("^Emacs$") .. " " .. o.shell_quote(o.launch("emacsclient -c -a ''")))
 o.bind("XF86Launch9", "TODO (CapsLock+F)", hl.dsp.exec_cmd("TODO: command for CapsLock+F"))
-o.bind("F19", "TODO (CapsLock+K)", hl.dsp.exec_cmd("TODO: command for CapsLock+K"))
+o.bind("XF86Finance", "Next workspace (CapsLock+J)", hl.dsp.focus({ workspace = "e+1" }))
+o.bind("F19", "Previous workspace (CapsLock+K)", hl.dsp.focus({ workspace = "e-1" }))
 
 -- keyd [capsmode]: space = f24 (added). F20-F23 are NOT free like F19 —
 -- xkb's inet(evdev) symbols hardcode them to XF86AudioMicMute/TouchpadToggle/
@@ -75,12 +76,10 @@ o.bind("XF86Shop", "Command palette (CapsLock+D)", hl.dsp.exec_cmd("omarchy-menu
 -- (`keyd check` it, then `sudo keyd reload`) and uncomment the bind here.
 --
 --   keyd name   evdev code        xkb keysym
---   finance     KEY_FINANCE 219   XF86Finance
 --   sport       KEY_SPORT   220   XF86Game
 --   connect     KEY_CONNECT 218   XF86Go
 --   chat        KEY_CHAT    216   XF86Messenger
 --
--- o.bind("XF86Finance", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
 -- o.bind("XF86Game", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
 -- o.bind("XF86Go", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
 -- o.bind("XF86Messenger", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
