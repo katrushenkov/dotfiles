@@ -15,10 +15,11 @@ vim.keymap.set("n", "zm", "zM") -- close all
 vim.keymap.set("n", "zc", "zM") -- close all
 vim.keymap.set("n", ";z", "za")
 
-vim.keymap.set({'n', 'v'}, '<C-b>', function()
-    vim.cmd('nohlsearch')
-    vim.fn.clearmatches()
-end, { desc = 'Clear matches' })
+-- TODO: use other keymap
+-- vim.keymap.set({'n', 'v'}, '<C-b>', function()
+--     vim.cmd('nohlsearch')
+--     vim.fn.clearmatches()
+-- end, { desc = 'Clear matches' })
 
 vim.keymap.set({ "n" }, ";q", ":qa!<cr>", { silent = true, desc = "Quit without save" })
 
