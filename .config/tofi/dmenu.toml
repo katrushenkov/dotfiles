@@ -5,7 +5,7 @@ mode = "dmenu"
 theme = "omarchy.toml"
 
 [matching]
-algorithm = "fuzzy"
+algorithm = "normal"
 require = true
 
 [history]
