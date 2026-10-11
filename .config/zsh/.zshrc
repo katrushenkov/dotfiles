@@ -190,11 +190,13 @@ bindkey '^G' fzf-cd-widget
 bindkey -s '^n' 'n\n'
 
 # Cache init scripts instead of forking the tool on every start;
-# regenerated when the binary is updated.
+# regenerated when the binary is updated. Compiled to .zwc, which
+# `source` picks up automatically when it's newer than the script.
 _cached_init() {  # <name> <binary> <command...>
     local f="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/$1.zsh" bin=$commands[$2]
     shift 2
     [[ -s "$f" && "$f" -nt "$bin" ]] || "$@" >| "$f"
+    [[ "$f.zwc" -nt "$f" ]] || zcompile "$f"
     source "$f"
 }
 
@@ -208,8 +210,19 @@ bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
 export STARSHIP_CONFIG="${ZDOTDIR}/starship.toml"
-_cached_init starship starship starship init zsh --print-full-init
-unfunction _cached_init
+# Bake PROMPT2 into the cache: the stock init forks starship for it on every start.
+_starship_init() {
+    starship init zsh --print-full-init | sed '/^PROMPT2=/d'
+    print -r -- "PROMPT2=${(qq)$(starship prompt --continuation)}"
+}
+# The baked PROMPT2 depends on the config too.
+[[ "$STARSHIP_CONFIG" -nt "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/starship.zsh" ]] &&
+    rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/starship.zsh"
+_cached_init starship starship _starship_init
+unfunction _cached_init _starship_init
+# starship.toml has no right_format, so RPROMPT is always empty, yet it
+# forks starship on every prompt and vi-mode switch. Drop it if you add one.
+RPROMPT=''
 
 # Personal overrides last, so their bindkeys survive `bindkey -v` above.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal"
