@@ -96,7 +96,7 @@ alias \
   #alias dirsize="du -hd 0"   #Измеряет размер директории, в которой находитесь
   #alias contsize="du -hd 1"  #Измеряет размер всех директорий в директории, в которой находитесь
 
-alias grep='grep --color=auto -iE'
+alias grep='rg -i'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias xzegrep='xzegrep --color=auto'
