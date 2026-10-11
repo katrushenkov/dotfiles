@@ -12,6 +12,7 @@ Item {
   property string ipText: "…"
   property string ruIp: ""
   property string comIp: ""
+  property string hosts: ""
 
   // On narrow screens (e.g. a portrait monitor) the left section runs into
   // the centered clock, so show only the ru address there.
@@ -43,7 +44,8 @@ Item {
 
   Process {
     id: ipProcess
-    command: ["bash", "-c", "echo \"ru:$(curl -fs --max-time 3 ip.work.ru)\"; echo \"com:$(curl -fs --max-time 3 ip.work.com)\""]
+    // Lookup hosts come from an untracked env file (IP_HOST_RU, IP_HOST_COM).
+    command: ["bash", "-c", ". \"$HOME/.config/omarchy/external-ip.env\" 2>/dev/null; echo \"hosts:${IP_HOST_RU} / ${IP_HOST_COM}\"; echo \"ru:$([ -n \"$IP_HOST_RU\" ] && curl -fs --max-time 3 \"$IP_HOST_RU\")\"; echo \"com:$([ -n \"$IP_HOST_COM\" ] && curl -fs --max-time 3 \"$IP_HOST_COM\")\""]
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
@@ -52,6 +54,7 @@ Item {
         text.split("\n").forEach(function(line) {
           if (line.indexOf("ru:") === 0) ru = line.slice(3).trim() || "N/A"
           else if (line.indexOf("com:") === 0) com = line.slice(4).trim() || "N/A"
+          else if (line.indexOf("hosts:") === 0) root.hosts = line.slice(6).trim()
         })
         root.ruIp = ru
         root.comIp = com
@@ -97,7 +100,7 @@ Item {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onClicked: root.refresh(true)
-    onEntered: if (bar) bar.showTooltip(root, (root.compact ? root.ipText + "\n" : "") + "ip.work.ru / ip.work.com — click to refresh")
+    onEntered: if (bar) bar.showTooltip(root, (root.compact ? root.ipText + "\n" : "") + root.hosts + " — click to refresh")
     onExited: if (bar) bar.hideTooltip(root)
   }
 }

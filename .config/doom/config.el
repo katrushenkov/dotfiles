@@ -99,7 +99,7 @@
 (setq org-archive-location (concat org-directory ".archive/archive.org::datetree/"))
 
 ;; "w" capture template: quick notes into their own top-level file
-;; (work.org), separate from the general notes.org. Lives at org-directory's
+;; (`my/work-org-file'), separate from the general notes.org. Lives at org-directory's
 ;; top level, so org-agenda-files' non-recursive scan (see above) picks it up
 ;; automatically. Every entry is tagged :work: up front — baked into the
 ;; template text rather than via `%^g' (which would prompt every time) since
@@ -118,16 +118,21 @@
 ;; the front one (correct, since add-to-list prepends), so it isn't silently
 ;; broken, but it leaves a stale duplicate sitting behind it — confusing to
 ;; debug later. `alist-get'+`setf' always replaces the "w" entry in place.
+;;
+;; The real file name is machine-local: private.el (untracked, loaded at the
+;; top) may `defvar' it first, which this default then leaves alone.
+(defvar my/work-org-file "work.org"
+  "Top-level org file for the \"w\" capture template.")
 (after! org
   (setf (alist-get "w" org-capture-templates nil nil #'equal)
-        '("Work" entry
-          (file+headline "work.org" "Inbox")
+        `("Work" entry
+          (file+headline ,my/work-org-file "Inbox")
           "* TODO %? :work:\n%i" :prepend t)))
 
 ;; "b" capture template: append a read book to books.org (converted from the
 ;; Book sheet of axel.xls — one heading per book, :AUTHOR:/:YEAR: properties,
 ;; plus :NOTE: on a few). A relative file name resolves against
-;; `org-directory', same as "work.org" above. `%^{AUTHOR}p' prompts via
+;; `org-directory', same as `my/work-org-file' above. `%^{AUTHOR}p' prompts via
 ;; `org-read-property-value', which completes from AUTHOR values already in
 ;; the file, and creates the :PROPERTIES: drawer itself. Leaving the YEAR
 ;; prompt empty still writes an empty `:YEAR:' line — harmless, column view
@@ -348,7 +353,7 @@
 ;; since that command moves the entry out to the file named in #+ARCHIVE /
 ;; `org-archive-location' rather than leaving an :ARCHIVE:-tagged tree
 ;; behind — confirmed live: searching tag "work" found nothing until
-;; toggled to `t' via "v A", which pulled in .archive/work-archive.org.
+;; toggled to `t' via "v A", which pulled in the work file's .archive/*-archive.org.
 (after! org-agenda
   (map! :map org-agenda-mode-map
         :n "v a" #'org-agenda-archives-mode

@@ -3,6 +3,11 @@
 bmdirs="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs"
 bmfiles="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files"
 
+# Machine-local bookmarks (untracked) are appended to bm-dirs.
+bmdirs_all="$(mktemp)"
+trap 'rm -f "$bmdirs_all"' EXIT
+cat "$bmdirs" "$bmdirs.local" 2>/dev/null > "$bmdirs_all"
+
 # Output locations. Unactivated progs should go to /dev/null.
 shell_shortcuts="${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 zsh_named_dirs="${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
@@ -21,7 +26,7 @@ printf "# zsh named dirs\n" > "$zsh_named_dirs"
 #printf(\"rm \${XDG_CACHE_HOME:-\$HOME/.cache}/nnn/bookmarks/*\") >> \"$nnn_shortcuts\" ;
 
 # Format the `directories` file in the correct syntax and sent it to all three configs.
-eval "echo \"$(cat "$bmdirs")\"" | \
+eval "echo \"$(cat "$bmdirs_all")\"" | \
 #printf(\"%s=\42cd %s && ls -a\42 \\\\\n\",\$1,\$2)   >> \"$shell_shortcuts\" ;
 awk "!/^\s*#/ && !/^\s*\$/ {gsub(\"\\\s*#.*$\",\"\");
 	printf(\"%s=\42cd %s && n\42 \\\\\n\",\$1,\$2)   >> \"$shell_shortcuts\" ;
@@ -35,7 +40,7 @@ sh $nnn_shortcuts
 rm $nnn_shortcuts
 
 # create bookmarks for yazi
-shortcuts-yazi "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs" "${XDG_CONFIG_HOME:-$HOME/.config}/yazi/bookmarks.toml" 
+shortcuts-yazi "$bmdirs_all" "${XDG_CONFIG_HOME:-$HOME/.config}/yazi/bookmarks.toml" 
 
 # Format the `files` file in the correct syntax and sent it to both configs.
 eval "echo \"$(cat "$bmfiles")\"" | \
