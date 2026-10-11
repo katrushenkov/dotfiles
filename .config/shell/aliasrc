@@ -49,7 +49,6 @@ alias \
   ll="eza -lAh --icons --tree --level=1" \
   lll="stat -c '%A %a %n' *" \
   l="ls -Fh" \
-  lm='ls -m' \
   lr='ls -lRh' \
   l.='ls -AF -d .*' \
   l..='eza -d .* --color=auto' \
@@ -139,7 +138,7 @@ alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME st
 alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME add'
 alias last='git log --oneline --graph --decorate --all'
 
-alias pls='sudo $(fc -ln -1)'
+alias pls='sudo zsh -c "$(fc -ln -1)"'
 
 alias za="zathura --fork"
 alias f="find . | grep "
@@ -152,8 +151,8 @@ alias weatherfull='curl wttr.in/cmb'
 #alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
 alias mpvl='mpv --loop'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias pscpu='ps -eo pcpu,pid,user,args --sort=-pcpu'
+alias pscpu10='ps -eo pcpu,pid,user,args --sort=-pcpu | head -11'
 #alias pscgroups='ps xawf -eo pid,user,cgroup,args'
 
 alias more="less -Ri"
@@ -248,7 +247,7 @@ if [ "$_os" = "Linux" ]; then
   #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 
   ## To see if a command is aliased, a file, or a built-in command
-  alias checkcommand="type -t"
+  alias checkcommand="whence -w"
 fi
 
 alias wg='wget -O /dev/null'
@@ -323,7 +322,7 @@ alias -g CP='|wl-copy'
 
 ## Search running processes
 alias p="ps aux | grep "
-alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
+alias topcpu="ps -eo pcpu,pid,user,args --sort=-pcpu | head -11"
 #alias ps='ps auxf'
 
 ## Count all files (recursively) in the current folder
