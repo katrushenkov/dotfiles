@@ -106,8 +106,9 @@ o.bind("SUPER + N", "Toggle workspace layout", "omarchy-hyprland-workspace-layou
 
 o.bind("ALT + SHIFT + h", "Move window to group on left", hl.dsp.window.move({ into_group = "l" }))
 o.bind("ALT + SHIFT + l", "Move window to group on right", hl.dsp.window.move({ into_group = "r" }))
-o.bind("ALT + SHIFT + k", "Move window to group on top", hl.dsp.window.move({ into_group = "u" }))
-o.bind("ALT + SHIFT + j", "Move window to group on bottom", hl.dsp.window.move({ into_group = "d" }))
+-- Freed for herdr next/prev workspace (alt+shift+j/k)
+-- o.bind("ALT + SHIFT + k", "Move window to group on top", hl.dsp.window.move({ into_group = "u" }))
+-- o.bind("ALT + SHIFT + j", "Move window to group on bottom", hl.dsp.window.move({ into_group = "d" }))
 
 o.rebind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
 o.rebind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
