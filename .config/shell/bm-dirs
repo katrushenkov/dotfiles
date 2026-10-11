@@ -14,7 +14,7 @@ cfw ${XDG_CONFIG_HOME:-$HOME/.config}/waybar
 cfh ${XDG_CONFIG_HOME:-$HOME/.config}/hypr
 dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
-lc  ${XDG_DATA_HOME:-$HOME/.local}
+lc  $HOME/.local
 gr  ${GIT_PROJECTS_DIR:-$HOME/.local/src}/datagrip
 kc  $HOME/.kube/configs
 h   $HOME
