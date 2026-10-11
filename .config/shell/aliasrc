@@ -2,10 +2,9 @@
 
 # Computed once, reused below.
 case $OSTYPE in linux*) _os=Linux ;; darwin*) _os=Darwin ;; esac
-_nvim_path=$commands[nvim]
 
-# Use neovim for vim if present.
-[ -x "$_nvim_path" ] && alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
+# Use neovim for vim.
+alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
 
 # sudo not required for some system commands
 for command in mount umount sv pacman updatedb su shutdown poweroff reboot; do
@@ -377,7 +376,7 @@ if [ "$_os" = "Darwin" ]; then
   alias sleep="pmset sleep now"
 fi
 
-unset _os _nvim_path
+unset _os
 
 # kubectl
 alias k="kubectl"
