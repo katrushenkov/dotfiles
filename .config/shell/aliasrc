@@ -135,7 +135,7 @@ alias dots='lg -w $HOME -g $HOME/.local/src/dotfiles/'
 alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME diff'
 alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME status -uno'
 alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME add'
-alias last='git log --oneline --graph --decorate --all'
+alias glast='git log --oneline --graph --decorate --all'
 
 alias pls='sudo zsh -c "$(fc -ln -1)"'
 
