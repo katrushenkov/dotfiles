@@ -4,5 +4,5 @@
 .config/zsh/.zcompdump
 .local/bin/ksm/
 FUNDING.yml
-LICENCE
+LICENSE
 README.md
