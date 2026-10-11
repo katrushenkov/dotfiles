@@ -283,8 +283,8 @@ generateqr () {
   printf '%s' "$@" | curl -F-=\<- qrenco.de
 }
 
-alias -g nu='2>/dev/null'
-alias -g le='|less'
+alias -g NU='2>/dev/null'
+alias -g LE='|less'
 alias -g L='|less +G'
 alias -g '...'='../..'
 alias -g '....'='../../..'
