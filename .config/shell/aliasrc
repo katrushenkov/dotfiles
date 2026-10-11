@@ -93,7 +93,7 @@ alias \
 alias grep='rg -i'
 alias xzgrep='xzgrep --color=auto'
 alias zgrep='zgrep --color=auto'
-alias hgrep="history|grep"
+alias hgrep="fc -l 1 | grep"
 alias gc="grep -c"
 alias gw="grep -w"
 
