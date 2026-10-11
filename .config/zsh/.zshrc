@@ -200,6 +200,14 @@ _cached_init() {  # <name> <binary> <command...>
     source "$f"
 }
 
+# fzf walker: don't follow symlinks (nnn/bookmarks link into /mnt), skip caches.
+# --walker-skip replaces fzf's default list (.git,node_modules), so keep those.
+# Per-widget --walker comes after FZF_DEFAULT_OPTS and overrides the widgets' built-in "follow".
+_fzf_skip='--walker-skip=.git,node_modules,.cache'
+export FZF_DEFAULT_OPTS=${FZF_DEFAULT_OPTS:-"--walker=file,hidden $_fzf_skip"}     # plain fzf, ^F
+export FZF_CTRL_T_OPTS=${FZF_CTRL_T_OPTS:-"--walker=file,dir,hidden $_fzf_skip"}  # ^X
+export FZF_ALT_C_OPTS=${FZF_ALT_C_OPTS:-"--walker=dir,hidden $_fzf_skip"}         # ^G
+unset _fzf_skip
 _cached_init fzf fzf fzf --zsh
 
 # Edit line in vim with ctrl-e:
