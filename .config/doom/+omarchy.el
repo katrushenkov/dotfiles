@@ -19,6 +19,11 @@
 ;; when the hook reloads omarchy.el — the sync keeps working across upgrades.
 ;;
 ;; The actual colors come from $DOOMDIR/themes/omarchy-doom-theme.el.
+;;
+;; ~/.config/emacs is the Doom install itself; omarchy-emacs's own
+;; init.el/omarchy.el were moved to ~/.config/emacs.omarchy-backup.20260904-230348.
+;; An AUR upgrade (`omarchy-emacs-setup') may overwrite ~/.config/emacs/init.el
+;; or omarchy.el again — re-check this integration if that happens.
 
 (defvar +omarchy-shim-file (expand-file-name "~/.config/emacs/omarchy.el")
   "Path to the omarchy-emacs shim, which loads the packaged integration.")
@@ -63,20 +68,11 @@ Re-run after every upstream reload, since loading omarchy.el re-adds them."
   "Reload Omarchy's palette and re-apply `doom-theme'.
 Overrides `omarchy-apply-theme', so Omarchy's theme-set hook drives Doom."
   (interactive)
-  ;; Guard against running before config.el's own `(setq doom-theme nil)'
-  ;; has been superseded by this file's `(setq doom-theme +omarchy-theme)'
-  ;; below (observed during `doom sync', which can load/eval this file out
-  ;; of its normal config.el-then-+omarchy.el order) — without this,
-  ;; `doom-theme' can still be nil here and `load-theme' below signals
-  ;; "Invalid theme name `nil'".
+  ;; `doom sync' can eval this before `doom-theme' is set below.
   (setq doom-theme (or doom-theme +omarchy-theme))
   (+omarchy-load-colors)
   (+omarchy--tidy)
-  ;; Upstream's own shim calls the (at that point still unadvised)
-  ;; `omarchy-apply-theme' unconditionally the moment it's loaded, above —
-  ;; before this advice even exists to intercept it — which enables its own
-  ;; plain `omarchy' theme. So `custom-enabled-themes' can't be trusted to
-  ;; already hold `doom-theme': clear anything else out before (re)applying.
+  ;; Upstream already enabled its plain `omarchy' theme on load; drop it.
   (dolist (theme custom-enabled-themes)
     (unless (eq theme doom-theme)
       (disable-theme theme)))
@@ -128,11 +124,8 @@ Overrides `omarchy-apply-font', so Omarchy's font-set hook drives Doom."
 (when (boundp 'omarchy-theme-directory)
   (add-to-list 'load-path omarchy-theme-directory))
 
-;; Force our own theme/font now rather than trusting Doom's own startup
-;; theme-loading to paper over upstream's eager self-applied `omarchy' theme
-;; above — empirically it doesn't (once a theme is enabled, Doom's own
-;; init-theme step is a no-op), so without this the daemon boots into plain
-;; `omarchy' every time and only a manual (+omarchy-apply-theme) fixes it.
+;; Apply now: Doom's own startup theme step is a no-op once upstream has
+;; enabled a theme, so it wouldn't replace `omarchy'.
 (+omarchy-apply-theme)
 (+omarchy-apply-font)
 
