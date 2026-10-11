@@ -20,6 +20,9 @@ typeset +x HISTFILE  # if exported, child bash writes (and truncates) it
 # Drop duplicate PATH entries.
 typeset -U path PATH
 
+# Read man pages in neovim (keeps `man -k`, `man 5 x` working, unlike a man() wrapper).
+export MANPAGER='nvim +Man!'
+
 # Load aliases and shortcuts if existent
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"

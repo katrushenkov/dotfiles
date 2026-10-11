@@ -283,12 +283,6 @@ generateqr () {
   printf '%s' "$@" | curl -F-=\<- qrenco.de
 }
 
-if [ -x "$_nvim_path" ]; then
-  man() {
-      nvim -c "Man $*" -c "only"
-  }
-fi
-
 alias -g nu='2>/dev/null'
 alias -g le='|less'
 alias -g L='|less +G'
