@@ -193,7 +193,12 @@ bindkey -s '^n' 'n\n'
 # regenerated when the binary is updated. Compiled to .zwc, which
 # `source` picks up automatically when it's newer than the script.
 _cached_init() {  # <name> <binary> <command...>
-    local f="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/$1.zsh" bin=$commands[$2]
+    local f="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/$1.zsh" bin
+    # Look up one command without hashing all of PATH (~3 ms): HASH_LIST_ALL
+    # fills the whole table, HASH_DIRS hashes every dir searched up to the hit.
+    # Scoped to an anonymous function: localoptions here would also revert
+    # options set by the sourced scripts (starship's prompt_subst).
+    () { setopt localoptions no_hash_list_all no_hash_dirs; bin=$commands[$1] } $2
     shift 2
     [[ -s "$f" && "$f" -nt "$bin" ]] || "$@" >| "$f"
     [[ "$f.zwc" -nt "$f" ]] || zcompile "$f"
