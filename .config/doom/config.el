@@ -3,7 +3,7 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-(load! "private.el" doom-user-dir t)
+(load! "private.el" "~/.local/src/datagrip/private/" t)
 
 ;; Show the which-key popup almost immediately instead of waiting.
 (setq which-key-idle-delay 0.0
@@ -119,7 +119,7 @@
 ;; broken, but it leaves a stale duplicate sitting behind it — confusing to
 ;; debug later. `alist-get'+`setf' always replaces the "w" entry in place.
 ;;
-;; The real file name is machine-local: private.el (untracked, loaded at the
+;; The real file name is machine-local: datagrip/private/private.el (loaded at the
 ;; top) may `defvar' it first, which this default then leaves alone.
 (defvar my/work-org-file "work.org"
   "Top-level org file for the \"w\" capture template.")

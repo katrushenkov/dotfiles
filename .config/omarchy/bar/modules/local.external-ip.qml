@@ -44,8 +44,9 @@ Item {
 
   Process {
     id: ipProcess
-    // Lookup hosts come from an untracked env file (IP_HOST_RU, IP_HOST_COM).
-    command: ["bash", "-c", ". \"$HOME/.config/omarchy/external-ip.env\" 2>/dev/null; echo \"hosts:${IP_HOST_RU} / ${IP_HOST_COM}\"; echo \"ru:$([ -n \"$IP_HOST_RU\" ] && curl -fs --max-time 3 \"$IP_HOST_RU\")\"; echo \"com:$([ -n \"$IP_HOST_COM\" ] && curl -fs --max-time 3 \"$IP_HOST_COM\")\""]
+    // Lookup hosts (IP_HOST_RU, IP_HOST_COM) come from the untracked
+    // ~/.local/src/datagrip/private/external-ip.env.
+    command: ["bash", "-c", ". \"$HOME/.local/src/datagrip/private/external-ip.env\" 2>/dev/null; echo \"hosts:${IP_HOST_RU} / ${IP_HOST_COM}\"; echo \"ru:$([ -n \"$IP_HOST_RU\" ] && curl -fs --max-time 3 \"$IP_HOST_RU\")\"; echo \"com:$([ -n \"$IP_HOST_COM\" ] && curl -fs --max-time 3 \"$IP_HOST_COM\")\""]
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
