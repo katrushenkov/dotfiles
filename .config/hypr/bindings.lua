@@ -70,17 +70,18 @@ o.bind("F24", "Switch keyboard layout (CapsLock+Space)", hl.dsp.exec_cmd(sc .. "
 -- KEY_SHOP maps to XF86Shop in xkb's inet(evdev) and is otherwise unused.
 o.bind("XF86Shop", "Command palette (CapsLock+D)", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
 
+-- keyd [capsmode]: a = sport (KEY_SPORT -> XF86Game).
+o.bind("XF86Game", "Herdr (CapsLock+A)", { tui = "herdr", focus = true })
+
 -- Spare keycodes for future CapsLock+<key> chords (keysyms verified with
 -- `xkbcli compile-keymap`, none bound elsewhere). To use one: add
 -- `<letter> = <keyd name>` to [capsmode] in /etc/keyd/default.conf
 -- (`keyd check` it, then `sudo keyd reload`) and uncomment the bind here.
 --
 --   keyd name   evdev code        xkb keysym
---   sport       KEY_SPORT   220   XF86Game
 --   connect     KEY_CONNECT 218   XF86Go
 --   chat        KEY_CHAT    216   XF86Messenger
 --
--- o.bind("XF86Game", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
 -- o.bind("XF86Go", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
 -- o.bind("XF86Messenger", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
 
