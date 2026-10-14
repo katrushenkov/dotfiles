@@ -12,8 +12,8 @@ o.rebind("SUPER + A", "Linkhandler", hl.dsp.exec_cmd(sc .. "linkhandler"))
 o.rebind("SUPER + D", "Omarchy menu", { menu = "apps" })
 
 o.rebind("SUPER + P", "Gopass autotype", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
-o.bind("SUPER + I", "Snippets yank", hl.dsp.exec_cmd(sc .. "snippets-yank"))
-o.bind("SUPER + SHIFT + I", "Snippets files" , hl.dsp.exec_cmd(sc .. "snippets-files-tofi"))
+o.rebind("SUPER + I", "Snippets yank", hl.dsp.exec_cmd(sc .. "snippets-yank"))
+o.rebind("SUPER + SHIFT + I", "Snippets files" , hl.dsp.exec_cmd(sc .. "snippets-files-tofi"))
 
 o.bind("SUPER + B", "Search bookmarks", hl.dsp.exec_cmd(sc .. "bookmarks-web -s"))
 o.rebind("SUPER + SHIFT + B", "Search bookmarks by tag", hl.dsp.exec_cmd(sc .. "bookmarks-web -st"))
