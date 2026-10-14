@@ -11,9 +11,11 @@ if [[ "${OS}" == "Linux"* ]]; then
   # trusting whatever was inherited.
   export HYPRLAND_INSTANCE_SIGNATURE="$(ls -t "/run/user/$(id -u)/hypr/" 2>/dev/null | head -n1)"
 
-  read -r kbd idx < <(hyprctl devices -j | jq -r '.keyboards | .[] | select(.main == true) | "\(.name) \(.active_layout_index)"' | head -n1)
-
-  [[ "$idx" != "0" ]] && hyprctl -q switchxkblayout "$kbd" 0
+  # Reset every keyboard, not just the main one: omarchy-input-method cycle
+  # (CapsLock+Space) reads the furthest-advanced device, so a device left on
+  # another layout would make the next switch a no-op.
+  hyprctl devices -j | jq -e '.keyboards | any(.active_layout_index != 0)' >/dev/null \
+    && hyprctl -q switchxkblayout all 0
 
 elif [[ "${OS}" == "Darwin"* ]]; then
 

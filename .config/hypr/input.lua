@@ -13,7 +13,7 @@ hl.config({
        -- grp:ctrl_shift_toggle removed: conflicted with Emacs's C-S-RET (and
        -- any other Ctrl+Shift chord). Layout switching now goes through
        -- CapsLock+Space instead (keyd space=f24 -> Hyprland F24 bind ->
-       -- hypr-switch-layout, see bindings.lua). Uncomment to go back:
+       -- omarchy-input-method cycle, see bindings.lua). Uncomment to go back:
        -- kb_options = "grp:ctrl_shift_toggle",
 --
 --     -- Use a specific keyboard variant if needed (e.g. intl for international keyboards).

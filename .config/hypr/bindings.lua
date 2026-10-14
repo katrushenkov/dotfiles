@@ -63,7 +63,9 @@ o.bind("F19", "Previous workspace (CapsLock+K)", hl.dsp.focus({ workspace = "e-1
 -- F20 was tried first and silently triggered mic-mute instead. F24 is the
 -- next one that keeps its literal keysym in the base group (confirmed in
 -- /usr/share/X11/xkb/symbols/inet) and isn't bound to anything else.
-o.bind("F24", "Switch keyboard layout (CapsLock+Space)", hl.dsp.exec_cmd(sc .. "hypr-switch-layout"))
+-- Omarchy's own switcher moves every keyboard to the same index, so the
+-- seat never drifts (hypr-switch-layout only moved the main one; kept unbound).
+o.rebind("F24", "Switch keyboard layout (CapsLock+Space)", "omarchy-input-method cycle")
 
 -- keyd [capsmode]: d = shop (F-keys are exhausted; keyd's "prog1-4" are just
 -- aliases for f21-f24, so "prog3" silently sent F23 = XF86TouchpadOff).
