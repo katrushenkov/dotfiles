@@ -18,6 +18,13 @@
 
 (setq display-line-numbers-type t)
 
+;; Frame padding matching Omarchy's window gaps.
+(add-to-list 'default-frame-alist '(internal-border-width . 8))
+
+(setq-default delete-by-moving-to-trash t)  ; dired deletes go to the freedesktop trash
+(setq scroll-margin 3
+      evil-want-fine-undo t)
+
 (setq org-directory "~/.local/src/datagrip/")
 
 (use-package! org-contacts
@@ -396,7 +403,9 @@
        :desc "Org capture" "c" #'org-capture)
       (:prefix "s"
        :desc "Grep (cwd)"     "g" #'+default/search-cwd
-       :desc "Grep (project)" "G" #'+default/search-project))
+       :desc "Grep (project)" "G" #'+default/search-project)
+      (:prefix "t"
+       :desc "Re-sync Omarchy theme" "o" #'+omarchy-apply-theme))
 
 (after! org
   (map! :map org-mode-map
