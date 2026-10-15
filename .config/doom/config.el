@@ -2,7 +2,7 @@
 ;; Rationale for the non-obvious bits below lives in
 ;; ~/.local/src/datagrip/sc/doom/CLAUDE.md.
 
-(load! "private.el" "~/.local/src/datagrip/private/" t)
+(load! "private.el" "~/.local/src/datagrip/private/configs/" t)
 
 (setq which-key-idle-delay 0.0
       which-key-idle-secondary-delay 0.0)
