@@ -3,11 +3,11 @@
 bmdirs="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs"
 bmfiles="${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files"
 
-# Machine-local bookmarks (untracked, datagrip/private/bm-dirs.local) are
+# Machine-local bookmarks (untracked, datagrip/private/configs/bm-dirs.local) are
 # appended to bm-dirs.
 bmdirs_all="$(mktemp)"
 trap 'rm -f "$bmdirs_all"' EXIT
-cat "$bmdirs" "${GIT_PROJECTS_DIR:-$HOME/.local/src}/datagrip/private/bm-dirs.local" 2>/dev/null > "$bmdirs_all"
+cat "$bmdirs" "${GIT_PROJECTS_DIR:-$HOME/.local/src}/datagrip/private/configs/bm-dirs.local" 2>/dev/null > "$bmdirs_all"
 
 # Output locations. Unactivated progs should go to /dev/null.
 shell_shortcuts="${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"

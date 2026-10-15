@@ -45,8 +45,8 @@ Item {
   Process {
     id: ipProcess
     // Lookup hosts (IP_HOST_RU, IP_HOST_COM) come from the untracked
-    // ~/.local/src/datagrip/private/external-ip.env.
-    command: ["bash", "-c", ". \"$HOME/.local/src/datagrip/private/external-ip.env\" 2>/dev/null; echo \"hosts:${IP_HOST_RU} / ${IP_HOST_COM}\"; echo \"ru:$([ -n \"$IP_HOST_RU\" ] && curl -fs --max-time 3 \"$IP_HOST_RU\")\"; echo \"com:$([ -n \"$IP_HOST_COM\" ] && curl -fs --max-time 3 \"$IP_HOST_COM\")\""]
+    // ~/.local/src/datagrip/private/configs/external-ip.env.
+    command: ["bash", "-c", ". \"$HOME/.local/src/datagrip/private/configs/external-ip.env\" 2>/dev/null; echo \"hosts:${IP_HOST_RU} / ${IP_HOST_COM}\"; echo \"ru:$([ -n \"$IP_HOST_RU\" ] && curl -fs --max-time 3 \"$IP_HOST_RU\")\"; echo \"com:$([ -n \"$IP_HOST_COM\" ] && curl -fs --max-time 3 \"$IP_HOST_COM\")\""]
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
