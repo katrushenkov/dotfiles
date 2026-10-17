@@ -84,6 +84,7 @@ alias \
   mute="pamixer -m" \
   unmute="pamixer -u" \
   netprocs="lsof -P -i -n" \
+  cal="cal -Y" \
   dd='dd status=progress' \
   sha1='openssl sha1' \
   dirsize="du -sh"
