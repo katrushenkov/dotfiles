@@ -371,6 +371,16 @@
   (setq kubel-use-namespace-list t)
   (require 'kubel-evil))
 
+;; Doom limits the first snipe to the current line; search the whole screen.
+(after! evil-snipe
+  (setq evil-snipe-scope 'visible
+        evil-snipe-repeat-scope 'visible
+        evil-snipe-spillover-scope 'visible))
+
+;; Snappier label popup for `f' (avy-goto-char-timer); default is 0.5s.
+(after! avy
+  (setq avy-timeout-seconds 0.3))
+
 ;;; Keybindings
 
 ;; Daemon: closing the last frame must not kill Emacs, and no prompt.
