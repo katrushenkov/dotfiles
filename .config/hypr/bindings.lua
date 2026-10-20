@@ -111,8 +111,7 @@ o.bind("SUPER + N", "Toggle workspace layout", "omarchy-hyprland-workspace-layou
 -- o.bind("ALT + SHIFT + l", "Move window to group on right", hl.dsp.window.move({ into_group = "r" }))
 -- o.bind("ALT + SHIFT + k", "Move window to group on top", hl.dsp.window.move({ into_group = "u" }))
 -- o.bind("ALT + SHIFT + j", "Move window to group on bottom", hl.dsp.window.move({ into_group = "d" }))
-o.bind("ALT + SHIFT + h", "Move grouped window focus left", hl.dsp.group.prev())
-o.bind("ALT + SHIFT + l", "Move grouped window focus right", hl.dsp.group.next())
+-- ALT+SHIFT+h/l (grouped window focus): see below, next to send_key_once.
 
 o.rebind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
 o.rebind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
@@ -170,6 +169,21 @@ o.rebind("SUPER + V", "Universal paste", function()
     send_key_once("CTRL", "V")()
   end
 end)
+
+-- ALT+SHIFT+h/l: grouped window focus, except in Emacs, which gets the
+-- keys itself (M-H/M-L = promote/demote org subtree, ~/.config/doom/config.el).
+local function group_focus_or_emacs(key, dispatcher)
+  return function()
+    local window = hl.get_active_window()
+    if window and window.class == "emacs" then
+      send_key_once("ALT SHIFT", key)()
+    else
+      hl.dispatch(dispatcher)
+    end
+  end
+end
+o.bind("ALT + SHIFT + h", "Move grouped window focus left (Emacs: promote)", group_focus_or_emacs("h", hl.dsp.group.prev()))
+o.bind("ALT + SHIFT + l", "Move grouped window focus right (Emacs: demote)", group_focus_or_emacs("l", hl.dsp.group.next()))
 
 o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
 o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))

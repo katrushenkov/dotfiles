@@ -447,6 +447,12 @@
          :desc "Encrypt all entries in buffer" "E" #'org-encrypt-entries
          :desc "Decrypt all entries in buffer" "D" #'org-decrypt-entries)))
 
+;; M-H/M-L (promote/demote subtree) come from evil-org; M-J/M-K move the subtree.
+(after! evil-org
+  (map! :map evil-org-mode-map
+        :nv "M-J" #'org-metadown
+        :nv "M-K" #'org-metaup))
+
 ;; evil-collection drops vanilla's `v a'/`v A'. Only `v A' shows entries
 ;; archived with `SPC m A' (they move to the archive file).
 (after! org-agenda
