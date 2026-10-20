@@ -107,11 +107,12 @@ o.bind("SUPER + BACKSLASH", "Toggle window split", hl.dsp.layout("togglesplit"))
 o.bind("SUPER + Z", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 o.bind("SUPER + N", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
 
-o.bind("ALT + SHIFT + h", "Move window to group on left", hl.dsp.window.move({ into_group = "l" }))
-o.bind("ALT + SHIFT + l", "Move window to group on right", hl.dsp.window.move({ into_group = "r" }))
--- Freed for herdr next/prev workspace (alt+shift+j/k)
+-- o.bind("ALT + SHIFT + h", "Move window to group on left", hl.dsp.window.move({ into_group = "l" }))
+-- o.bind("ALT + SHIFT + l", "Move window to group on right", hl.dsp.window.move({ into_group = "r" }))
 -- o.bind("ALT + SHIFT + k", "Move window to group on top", hl.dsp.window.move({ into_group = "u" }))
 -- o.bind("ALT + SHIFT + j", "Move window to group on bottom", hl.dsp.window.move({ into_group = "d" }))
+o.bind("ALT + SHIFT + h", "Move grouped window focus left", hl.dsp.group.prev())
+o.bind("ALT + SHIFT + l", "Move grouped window focus right", hl.dsp.group.next())
 
 o.rebind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
 o.rebind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
@@ -123,9 +124,6 @@ o.bind("SUPER + SHIFT + ALT + j", "Move workspace to down monitor", hl.dsp.works
 
 o.bind("SUPER + SHIFT + CTRL + l", "Move window to next monitor", hl.dsp.window.move({ monitor = "+1" }))
 o.bind("SUPER + SHIFT + CTRL + h", "Move window to previous monitor", hl.dsp.window.move({ monitor = "-1" }))
-
-o.bind("ALT + h", "Move grouped window focus left", hl.dsp.group.prev())
-o.bind("ALT + l", "Move grouped window focus right", hl.dsp.group.next())
 
 o.bind("ALT + F", "Toggle firefox workspace", hl.dsp.workspace.toggle_special("firefox"))
 o.bind("ALT + SHIFT + F", "Move window to firefox workspace", hl.dsp.window.move({ workspace = "special:firefox", follow = false }))
@@ -175,28 +173,4 @@ end)
 
 o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
 o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))
-
--- ALT+J/ALT+K also happen to be org-mode's move-subtree-down/up (M-j/M-k,
--- see evil org bindings in ~/.config/doom/config.el), but that's unreachable
--- here since Hyprland grabs the chord first. Using `SPC m s j`/`SPC m s k`
--- in Emacs instead for now (doesn't need WM forwarding at all). Re-enable
--- this if the localleader path turns out to be too slow:
---
--- o.bind("ALT + J", "Next workspace", function()
---   local window = hl.get_active_window()
---   if window and window.class == "emacs" then
---     send_key_once("ALT", "J")()
---   else
---     hl.dispatch(hl.dsp.focus({ workspace = "e+1" }))
---   end
--- end)
---
--- o.bind("ALT + K", "Previous workspace", function()
---   local window = hl.get_active_window()
---   if window and window.class == "emacs" then
---     send_key_once("ALT", "K")()
---   else
---     hl.dispatch(hl.dsp.focus({ workspace = "e-1" }))
---   end
--- end)
 
