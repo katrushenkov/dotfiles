@@ -22,7 +22,7 @@ if [[ -s "${cache_file}" ]]; then
   selection="$(sed -E "s#^${datagrip_dir}/##" "${cache_file}" \
     | tofi-dmenu -t everforest -p "Go")"
 else
-  skip_dirs=(2ch-scripts unnecessary sc tips)
+  skip_dirs=(2ch-scripts unnecessary sc)
 
   fd_exclude_args=()
   for d in "${skip_dirs[@]}"; do
