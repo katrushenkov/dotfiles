@@ -157,7 +157,12 @@
   ;; Cancel the previous timer so config reloads don't stack them.
   (when (timerp +org-appt-timer) (cancel-timer +org-appt-timer))
   (setq +org-appt-timer (run-at-time nil (* 10 60) #'+org-refresh-appt))
-  (add-hook 'org-capture-after-finalize-hook #'+org-refresh-appt))
+  (add-hook 'org-capture-after-finalize-hook #'+org-refresh-appt)
+  ;; Refresh after saving any agenda file, deferred to idle so :w stays instant.
+  (add-hook 'after-save-hook
+            (defun +org-refresh-appt-on-save-h ()
+              (when (and (derived-mode-p 'org-mode) (org-agenda-file-p))
+                (run-with-idle-timer 1 nil #'+org-refresh-appt)))))
 
 (use-package! org-super-agenda
   :after org-agenda
@@ -360,6 +365,17 @@
   (let ((kill-buffer-query-functions nil))
     (kill-current-buffer)))
 
+(defun +dired-toggle ()
+  "Jump to the current file in dired; from dired, return to where we came from."
+  (interactive)
+  (if (derived-mode-p 'dired-mode)
+      (let ((origin (window-parameter nil '+dired-origin)))
+        (if (buffer-live-p origin)
+            (switch-to-buffer origin)
+          (quit-window)))
+    (set-window-parameter nil '+dired-origin (current-buffer))
+    (dired-jump)))
+
 ;; Back to the English layout on returning to normal state (as in nvim).
 ;; `evil-previous-state' is nil for freshly created buffers, which also run
 ;; this hook; only react in the buffer actually on screen.
@@ -404,6 +420,7 @@
 (map! :leader
       "b d" #'+smart-kill-buffer
       "b k" #'+smart-kill-buffer
+      :desc "Toggle dired" "e" #'+dired-toggle
       (:prefix "n"
        :desc "Find contact"   "b" #'org-contacts
        :desc "Open org index" "i" (cmd! (find-file (expand-file-name "index.org" org-directory)))
