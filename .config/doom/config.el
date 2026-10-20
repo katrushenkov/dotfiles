@@ -203,6 +203,10 @@
         (seq-remove (lambda (c) (eq (org-lint-checker-name c) 'misspelled-export-option))
                     org-lint--checkers)))
 
+;; No flycheck in org: frees C-c ! (inactive timestamp); org-lint stays manual.
+(after! flycheck
+  (setq flycheck-global-modes '(not org-mode org-journal-mode)))
+
 ;;; Journal
 
 ;; :demand so the calendar has entry marks and org-journal's keys from the start.
