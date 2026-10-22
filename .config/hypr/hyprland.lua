@@ -27,7 +27,7 @@ require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
 o.window("emacs", { workspace = "1" })
-o.window("vivaldi", { workspace = "2" })
+o.window("vivaldi.*", { workspace = "2" })
 o.window("org.omarchy.herdr", { workspace = "3" })
 o.window("telegram", { workspace = "4" })
 
