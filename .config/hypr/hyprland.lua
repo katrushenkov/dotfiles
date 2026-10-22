@@ -29,7 +29,7 @@ require("default.hypr.toggles")
 o.window("emacs", { workspace = "1" })
 o.window("vivaldi.*", { workspace = "2" })
 o.window("org.omarchy.herdr", { workspace = "3" })
-o.window("telegram", { workspace = "4" })
+o.window("org.telegram.desktop", { workspace = "4" })
 
 -- go-datagrip-tofi: open its terminal floating, centered, at 80% of the screen.
 o.window("org.omarchy.datagrip-go", { float = true, center = true, size = { "(monitor_w*0.8)", "(monitor_h*0.8)" } })
