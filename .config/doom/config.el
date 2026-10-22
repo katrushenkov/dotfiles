@@ -85,7 +85,7 @@
               "* %U %?\n %i" :heading "Changelog" :prepend t)
              ;; Routed through org-journal so captures land in the monthly files.
              ("j" "Journal entry" plain (function +org-journal-capture-location)
-              "** %<[%Y-%m-%d %a]> %?\n%i")))
+              "** %?\n%i")))
     (setf (alist-get (car tpl) org-capture-templates nil nil #'equal)
           (cdr tpl))))
 
@@ -224,7 +224,7 @@
   (org-journal-date-format "[%Y-%m-%d]:")
   (org-journal-file-type 'monthly)
   (org-journal-file-format "%Y-%m")
-  (org-journal-time-format "[%Y-%m-%d %a] ")  ; "** [2026-09-09 Wed] text"
+  (org-journal-time-format "")  ; "** text", no date/time prefix
   (org-journal-time-prefix "** ")
   (org-journal-enable-cache t)
   (org-journal-file-header "#+TITLE: Journal %Y-%m\n")
