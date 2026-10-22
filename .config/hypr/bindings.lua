@@ -3,10 +3,6 @@ local sc = os.getenv("HOME") .. "/.local/bin/"
 o.rebind("SUPER + G", "Search digital brain", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"))
 
 o.rebind("SUPER + SHIFT + G", "Grep digital brain", hl.dsp.exec_cmd(sc .. "tofi-grep-notes"))
-o.bind("ALT + G", "Toggle window grouping", hl.dsp.group.toggle())
-o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move({ out_of_group = true }))
-
-
 o.rebind("SUPER + A", "Linkhandler", hl.dsp.exec_cmd(sc .. "linkhandler"))
 
 o.rebind("SUPER + D", "Omarchy menu", { menu = "apps" })
@@ -127,9 +123,6 @@ o.bind("SUPER + SHIFT + CTRL + h", "Move window to previous monitor", hl.dsp.win
 o.bind("ALT + F", "Toggle firefox workspace", hl.dsp.workspace.toggle_special("firefox"))
 o.bind("ALT + SHIFT + F", "Move window to firefox workspace", hl.dsp.window.move({ workspace = "special:firefox", follow = false }))
 
--- o.bind("ALT + Right", "Volume up", "omarchy-audio-output-volume raise", { locked = true, repeating = true })
--- o.bind("ALT + Left", "Volume down", "omarchy-audio-output-volume lower", { locked = true, repeating = true })
-
 -- Universal paste (SUPER+V) in Emacs: default/hypr/bindings/clipboard.lua
 -- sends Ctrl+V to any non-terminal window, but Emacs binds that to
 -- scroll-down, not yank, so paste silently did nothing there. Redirect to
@@ -184,6 +177,8 @@ local function group_focus_or_emacs(key, dispatcher)
 end
 o.bind("ALT + SHIFT + h", "Move grouped window focus left (Emacs: promote)", group_focus_or_emacs("h", hl.dsp.group.prev()))
 o.bind("ALT + SHIFT + l", "Move grouped window focus right (Emacs: demote)", group_focus_or_emacs("l", hl.dsp.group.next()))
+o.bind("ALT + G", "Toggle window grouping", hl.dsp.group.toggle())
+o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move({ out_of_group = true }))
 
 o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
 o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))
