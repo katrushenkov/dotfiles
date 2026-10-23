@@ -147,10 +147,10 @@ alias pscpu10='ps -eo pcpu,pid,user,args --sort=-pcpu | head -11'
 alias more="less -Ri"
 
 # youtube-dl
-alias yta-aac='yt-dlp -c -x --audio-format aac --output "%(title)s.%(ext)s"'
+alias yta-aac='yt-dlp -c -f "ba[ext=m4a]" --output "%(title)s.%(ext)s"'
 alias yta-best='yt-dlp -c -x --audio-format best --output "%(title)s.%(ext)s"'
 alias yta-flac='yt-dlp -c -x --audio-format flac --output "%(title)s.%(ext)s"'
-alias yta-m4a='yt-dlp -c -x --audio-format m4a --output "%(title)s.%(ext)s"'
+alias yta-m4a='yt-dlp -c -f "ba[ext=m4a]" --output "%(title)s.%(ext)s"'
 alias yta-mp3='yt-dlp -c -x --audio-format mp3 --output "%(title)s.%(ext)s"'
 alias yta-opus='yt-dlp --no-playlist -c -x --audio-format opus --output "%(title)s.%(ext)s" '
 alias yta-vorbis='yt-dlp -c -x --audio-format vorbis --output "%(title)s.%(ext)s"'
