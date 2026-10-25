@@ -61,7 +61,8 @@ case "${1:-}" in
     -st|--search-tag)
         tag="$(grep -oh '#[[:alnum:]_]\+' "$bookmarks" | sort -u | pick tag)" || exit 0
         [[ -n "$tag" ]] || exit 0
-        selection="$(grep -F -- "$tag" "$bookmarks" | columns - | pick "$tag")" || exit 0
+        # Whole tag only, so #ksm does not also match #ksm2
+        selection="$(grep -E -- "${tag}([^[:alnum:]_]|\$)" "$bookmarks" | columns - | pick "$tag")" || exit 0
         ;;
     -h|--help|'')
         usage; exit 0
