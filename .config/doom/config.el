@@ -70,7 +70,7 @@
               "* %?\n %i" :heading "Notes" :prepend t)
              ("t" "Personal todo" entry
               (file+headline +org-capture-todo-file "Inbox")
-              "* [ ] %?\n%i" :prepend t)
+              "* TODO %?\n%i" :prepend t)
              ("pt" "Project-local todo" entry
               (file+headline +org-capture-project-todo-file "Inbox")
               "* TODO %?\n%i" :prepend t)
@@ -121,7 +121,9 @@
 
 ;; :crypt: encrypts the body only — the heading title stays plaintext.
 (after! org-crypt
-  (setq org-crypt-key user-mail-address))
+  (setq org-crypt-key user-mail-address
+        ;; Drop auto-save before decrypting without the y/n prompt.
+        org-crypt-disable-auto-save t))
 
 ;; Birthdays come from `%%(org-contacts-anniversaries)' in contacts.org;
 ;; deliberately no diary file (appt would leave contacts.org open).
