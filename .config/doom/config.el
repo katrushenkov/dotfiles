@@ -115,6 +115,10 @@
         ("read" . ?r)
         ("crypt" . ?x)))
 
+;; Doom's popup hack undersizes the tag window on first use with Org 9.8.
+(after! org
+  (advice-remove #'org-fast-tag-selection #'+popup--org-fix-popup-window-shrinking-a))
+
 ;; :crypt: encrypts the body only — the heading title stays plaintext.
 (after! org-crypt
   (setq org-crypt-key user-mail-address))
