@@ -403,10 +403,6 @@
         evil-snipe-repeat-scope 'visible
         evil-snipe-spillover-scope 'visible))
 
-;; Snappier label popup for `f' (avy-goto-char-timer); default is 0.5s.
-(after! avy
-  (setq avy-timeout-seconds 0.3))
-
 ;;; Keybindings
 
 ;; Daemon: closing the last frame must not kill Emacs, and no prompt.
@@ -414,7 +410,7 @@
 
 (map! "<f5>"    #'deadgrep
       "C-S-v"   #'yank                       ; Omarchy SUPER+V sends this to Emacs
-      :n "f"    #'evil-avy-goto-char-timer   ; NB: breaks df/cf/yf
+      :n "f"    #'evil-avy-goto-char-2
       :n ";x"   #'doom/toggle-scratch-buffer ; shadows evil's `;'
       :n ";e"   #'+open-file-in-editor)
 
