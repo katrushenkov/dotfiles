@@ -7,11 +7,9 @@ sort_sensitive = false
 linemode = "size_and_mtime"
 
 [opener]
-extract = []
 play = [
-	{ run = "mpv %s", orphan = true, for = "unix", desc = "Open with MPV"},
-  { run = 'mpv "$@"', orphan = true, for = "unix", desc = "Open with MPV" },
-  { run = 'vlc "file://$0"', orphan = true, for = "unix", desc = "Open with VLC" }
+	{ run = "mpv %s", orphan = true, for = "unix", desc = "Open with MPV" },
+	{ run = "vlc %s", orphan = true, for = "unix", desc = "Open with VLC" },
 ]
 edit = [
 	{ run = "$EDITOR %s", block = true, for = "unix" },
@@ -38,3 +36,13 @@ prepend_rules = [
 [preview]
 wrap = "yes"
 image_quality = 50
+
+[[plugin.prepend_fetchers]]
+group = "git"
+url = "*"
+run = "git"
+
+[[plugin.prepend_fetchers]]
+group = "git"
+url = "*/"
+run = "git"

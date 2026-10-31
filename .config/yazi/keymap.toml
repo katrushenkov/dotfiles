@@ -2,7 +2,6 @@
 prepend_keymap = [
   { on = [ "l" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file"},
   { on = [ "!" ], run = 'shell "$SHELL" --block', desc = "Open $SHELL here"},
-  { on = [ "<Esc>" ], run = 'close', desc = "Cancel input"},
   { on = [ "<Space>", "m" ], run = "plugin mount", desc = "Displays mount dialog"},
   { on = [ "<Space>", 's'], run  = "plugin what-size", desc = "Calc size of selection or cwd" },
   { on = [ "<Space>", '<S-s>'], run  = "plugin what-size --args='--clipboard'", desc = "Calc size of selection or cwd" },
@@ -24,7 +23,7 @@ prepend_keymap = [
   { on = "<S-l>", desc = "Move to the tab on the left", run = "tab_switch 1 --relative" },
   { on = "<S-h>", desc = "Move to the tab on the right", run = "tab_switch -1 --relative" },
   { on = ["c", 'm'], desc = "Change file mod", run = "plugin chmod"},
-  { on = ["<Space>", 'c'], desc = "Compress file", run = "plugin ouch" },
+  { on = ["<Space>", 'c'], desc = "Compress file", run = "plugin compress" },
 
   #  # gvfs plugin
   #  { on = [ "M", "m" ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },

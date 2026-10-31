@@ -135,5 +135,5 @@ function Linemode:size_and_mtime()
 end
 
 
-dofile(os.getenv("HOME") .. "/.config/yazi/bookmarks.toml")
+dofile(os.getenv("HOME") .. "/.config/yazi/bunny.lua")
 
