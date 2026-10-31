@@ -117,6 +117,9 @@ return {
     lazy = false,
     opts = {
       legacy_commands = false,
+      frontmatter = {
+        enabled = false,
+      },
       ui = {
         enable = false,
       },
