@@ -11,3 +11,4 @@
 ;; "k", since "k" moves up).
 (package! kubel
   :recipe (:files (:defaults "kubel-evil.el")))
+(package! dired-narrow)

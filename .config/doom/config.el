@@ -382,6 +382,12 @@
     (set-window-parameter nil '+dired-origin (current-buffer))
     (dired-jump)))
 
+;; Live filter of the listing; `g r' brings everything back.
+(use-package! dired-narrow
+  :after dired
+  :config
+  (map! :map dired-mode-map :n "/" #'dired-narrow))
+
 ;; Back to the English layout on returning to normal state (as in nvim).
 ;; `evil-previous-state' is nil for freshly created buffers, which also run
 ;; this hook; only react in the buffer actually on screen.
