@@ -411,8 +411,14 @@
 (map! "<f5>"    #'deadgrep
       "C-S-v"   #'yank                       ; Omarchy SUPER+V sends this to Emacs
       :n "f"    #'evil-avy-goto-char-2
+      :n "gs l" #'evil-avy-goto-line
+      :n "gs ." #'avy-resume
       :n ";x"   #'doom/toggle-scratch-buffer ; shadows evil's `;'
       :n ";e"   #'+open-file-in-editor)
+
+;; Labels on minibuffer candidates (like `f' in the nvim snacks picker).
+(after! vertico
+  (map! :map vertico-map "C-'" #'vertico-quick-jump))
 
 ;; Order matters: grab the old `SPC q' keymap before rebinding "q".
 (map! :leader
