@@ -421,6 +421,14 @@
       :map evil-snipe-override-local-mode-map
       :v "f" #'evil-avy-goto-char-2)
 
+(defun +consult-org-open-todos ()
+  "Jump to an open task heading in the current file (any non-done keyword)."
+  (interactive)
+  (consult-org-heading "/!"))
+
+(map! :after org :map org-mode-map :localleader
+      :desc "Open tasks" "g t" #'+consult-org-open-todos)
+
 ;; Labels on minibuffer candidates (like `f' in the nvim snacks picker).
 (after! vertico
   (map! :map vertico-map
