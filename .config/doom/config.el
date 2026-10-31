@@ -416,6 +416,11 @@
       :n ";x"   #'doom/toggle-scratch-buffer ; shadows evil's `;'
       :n ";e"   #'+open-file-in-editor)
 
+;; `f' with labels in visual too; evil-snipe's override map outranks `:n'.
+(map! :after evil-snipe
+      :map evil-snipe-override-local-mode-map
+      :v "f" #'evil-avy-goto-char-2)
+
 ;; Labels on minibuffer candidates (like `f' in the nvim snacks picker).
 (after! vertico
   (map! :map vertico-map "C-'" #'vertico-quick-jump))
