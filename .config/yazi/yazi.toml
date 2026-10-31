@@ -23,7 +23,7 @@ open = [
 
 [open]
 #	{ run = "xdg-open %s", desc = "Open" },
-rules = [
+prepend_rules = [
 	{ mime = "text/*", use = "edit" },
 	{ mime = "video/*", use = "play" },
 	{ mime = "audio/*", use = "play" },
