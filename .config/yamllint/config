@@ -1,0 +1,21 @@
+# Global yamllint config; a project-level .yamllint overrides it.
+extends: default
+
+rules:
+  document-start: disable
+  line-length: disable
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  # GitHub Actions `on:` key and k8s/ansible yes/no values
+  truthy:
+    check-keys: false
+    level: warning
+  # both k8s styles: list items indented or flush with the parent key
+  indentation:
+    spaces: consistent
+    indent-sequences: whatever
+  empty-lines:
+    max: 2
+  new-line-at-end-of-file: enable
+  trailing-spaces: enable
