@@ -423,7 +423,9 @@
 
 ;; Labels on minibuffer candidates (like `f' in the nvim snacks picker).
 (after! vertico
-  (map! :map vertico-map "C-'" #'vertico-quick-jump))
+  (map! :map vertico-map
+        "C-'"  #'vertico-quick-jump     ; move to the labelled candidate
+        "C-\"" #'vertico-quick-exit))  ; C-S-' : pick it right away
 
 ;; Order matters: grab the old `SPC q' keymap before rebinding "q".
 (map! :leader
