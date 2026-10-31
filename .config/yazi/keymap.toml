@@ -12,6 +12,7 @@ prepend_keymap = [
 
   # ";" leader
   { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
+  { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
 
   { on = ["n", "d"], desc = "Create dir", run = "create --dir" },
 
@@ -56,12 +57,14 @@ prepend_keymap = [
 
 ]
 append_keymap = [
-  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'blobdrop -b \"$@\"'" },
+  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'ripdrag -x -a -n %s' --orphan" },
   { on = ["c", 'k'], desc = "Send using KDE Connect", run = "plugin kdeconnect-send"}
 ]
 
 [pick]
 prepend_keymap = [
+  { on = "<C-k>", run = "arrow -1", desc = "Previous option" },
+  { on = "<C-j>", run = "arrow 1",  desc = "Next option" },
   { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" }, # open file & close yazi
 ]
 
