@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Doom Emacs with the macOS DOOMDIR (shared ~/.config/doom + mac patches).
+#
+#   doom-mac            launch Emacs.app (or focus it if already running)
+#   doom-mac <cmd...>   run the doom CLI, e.g. `doom-mac sync`
+set -euo pipefail
+
+export DOOMDIR="$HOME/.local/src/datagrip/private/configs/doom-mac"
+# The bundled libgccjit maps Darwin 27 to macOS 18 and clang rejects
+# -mmacosx-version-min=18.0, which breaks native compilation.
+export MACOSX_DEPLOYMENT_TARGET=26.0
+
+if (( $# )); then
+    exec "$HOME/.config/emacs/bin/doom" "$@"
+fi
+exec open -a /Applications/Emacs.app --env "DOOMDIR=$DOOMDIR" \
+    --env "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
