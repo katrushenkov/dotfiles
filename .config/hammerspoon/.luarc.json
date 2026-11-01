@@ -1,0 +1,12 @@
+{
+  "diagnostics": {
+    "globals": [
+      "hs",
+      "spoon",
+      "autoreload",
+      "hyperF18",
+      "textChooser",
+      "pasteText"
+    ]
+  }
+}
