@@ -9,7 +9,7 @@
 #   -t  theme name from ~/.config/tofi/themes/ (default: omarchy)
 #   -W  window width, logical px
 #   -H  window height, logical px
-#   -a  matching algorithm: fuzzy (default), normal, prefix
+#   -a  matching algorithm: normal (default), prefix, fuzzy
 #   -r  raw input: print typed text even when nothing matches
 
 set -euo pipefail
@@ -18,7 +18,7 @@ prompt=""
 theme="omarchy"
 width=""
 height=""
-algorithm="fuzzy"
+algorithm="normal"
 config="$HOME/.config/tofi/dmenu.toml"
 
 while getopts "p:t:W:H:a:r" opt; do
