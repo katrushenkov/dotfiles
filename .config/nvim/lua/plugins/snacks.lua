@@ -8,7 +8,7 @@ return {
       dashboard = { enabled = false, sections = { { text = "" } } },
       -- treesitter injections + conceal_lines hang nvim 0.12 on big markdown
       -- (draw.md, ~750KB); bigfile ft skips treesitter/LSP, keeps regex syntax
-      bigfile = { size = 512 * 1024 },
+      bigfile = { size = 512 * 1024, notify = false },
       styles = {
         dashboard = {
           wo = {
