@@ -22,9 +22,8 @@ o.rebind("SUPER + S", "Connect via ssh", hl.dsp.exec_cmd(sc .. "go-ssh"))
 
 -- hl.bind("SUPER + E", hl.dsp.exec_cmd(sc .. "edit-configs"), { description = "Edit confgs" })
 
--- o.bind("SUPER + M", hl.dsp.exec_cmd("mousepad"))
-o.bind("SUPER + M", "Floating term", hl.dsp.exec_cmd("omarchy-launch-floating-terminal-with-presentation"))
--- o.bind("SUPER + N", hl.dsp.exec_cmd("$terminal n"))
+o.bind("SUPER + M", "Floating term", hl.dsp.exec_cmd("uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal"))
+-- o.bind("SUPER + N", "N in terminal", "omarchy-launch-terminal yazi")
 
 o.rebind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
 
@@ -50,8 +49,8 @@ o.bind("XF86Launch7", "TODO (CapsLock+M)", hl.dsp.exec_cmd("TODO: command for Ca
 o.bind("XF86Launch8", "Emacs (CapsLock+E)",
   "omarchy-launch-or-focus " .. o.shell_quote("^Emacs$") .. " " .. o.shell_quote(o.launch("emacsclient -c -a ''")))
 o.bind("XF86Launch9", "TODO (CapsLock+F)", hl.dsp.exec_cmd("TODO: command for CapsLock+F"))
-o.bind("XF86Finance", "Next workspace (CapsLock+J)", hl.dsp.focus({ workspace = "e+1" }))
-o.bind("F19", "Previous workspace (CapsLock+K)", hl.dsp.focus({ workspace = "e-1" }))
+o.bind("XF86Finance", "Next workspace (CapsLock+J)", hl.dsp.focus({ workspace = "m+1" }))
+o.bind("F19", "Previous workspace (CapsLock+K)", hl.dsp.focus({ workspace = "m-1" }))
 
 -- keyd [capsmode]: space = f24 (added). F20-F23 are NOT free like F19 —
 -- xkb's inet(evdev) symbols hardcode them to XF86AudioMicMute/TouchpadToggle/
@@ -112,10 +111,10 @@ o.bind("SUPER + N", "Toggle workspace layout", "omarchy-hyprland-workspace-layou
 o.rebind("SUPER + CTRL + l", "Focus on next monitor", hl.dsp.focus({ monitor = "+1" }))
 o.rebind("SUPER + CTRL + h", "Focus on previous monitor", hl.dsp.focus({ monitor = "-1" }))
 
-o.bind("SUPER + SHIFT + ALT + h", "Move workspace to left monitor", hl.dsp.workspace.move({ monitor = "l" }))
-o.bind("SUPER + SHIFT + ALT + l", "Move workspace to right monitor", hl.dsp.workspace.move({ monitor = "r" }))
-o.bind("SUPER + SHIFT + ALT + k", "Move workspace to up monitor", hl.dsp.workspace.move({ monitor = "u" }))
-o.bind("SUPER + SHIFT + ALT + j", "Move workspace to down monitor", hl.dsp.workspace.move({ monitor = "d" }))
+o.bind("SUPER + SHIFT + ALT + h", "Move workspace to left monitor", o.workspaces.move_to_monitor("l"))
+o.bind("SUPER + SHIFT + ALT + l", "Move workspace to right monitor", o.workspaces.move_to_monitor("r"))
+o.bind("SUPER + SHIFT + ALT + k", "Move workspace to up monitor", o.workspaces.move_to_monitor("u"))
+o.bind("SUPER + SHIFT + ALT + j", "Move workspace to down monitor", o.workspaces.move_to_monitor("d"))
 
 o.bind("SUPER + SHIFT + CTRL + l", "Move window to next monitor", hl.dsp.window.move({ monitor = "+1" }))
 o.bind("SUPER + SHIFT + CTRL + h", "Move window to previous monitor", hl.dsp.window.move({ monitor = "-1" }))
@@ -180,6 +179,6 @@ o.bind("ALT + SHIFT + l", "Move grouped window focus right (Emacs: demote)", gro
 o.bind("ALT + G", "Toggle window grouping", hl.dsp.group.toggle())
 o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move({ out_of_group = true }))
 
-o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
-o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))
+o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "m+1" }))
+o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "m-1" }))
 

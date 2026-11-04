@@ -26,10 +26,66 @@ require("hypr.autostart")
 require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
-o.window("emacs", { workspace = "1" })
-o.window("vivaldi.*", { workspace = "2" })
-o.window("org.omarchy.herdr", { workspace = "3" })
-o.window("org.telegram.desktop", { workspace = "4" })
+-- App -> workspace slot (1-10) on a preferred monitor. Workspaces are per
+-- monitor (default/hypr/monitor-workspaces.lua), so the real workspace id is
+-- computed from the monitor's block. If the preferred monitor isn't connected
+-- (e.g. on the laptop), the app goes to the same slot on the primary screen:
+-- the built-in panel, or else the first monitor. Rules are re-synced whenever
+-- monitors change, so the same file works on every machine.
+local app_workspaces = {
+  { class = "emacs",                slot = 1, monitor = "Xiaomi Corporation Mi Monitor" },
+  { class = "vivaldi.*",            slot = 2, monitor = "Xiaomi Corporation Mi Monitor" },
+  { class = "org.omarchy.herdr",    slot = 3, monitor = "Xiaomi Corporation Mi Monitor" },
+  { class = "org.telegram.desktop", slot = 4 }, -- primary screen everywhere
+}
+
+local function primary_monitor(monitors)
+  for _, m in ipairs(monitors) do
+    if m.name:match("^eDP") or m.name:match("^LVDS") or m.name:match("^DSI") then
+      return m
+    end
+  end
+  table.sort(monitors, function(a, b) return a.id < b.id end)
+  return monitors[1]
+end
+
+local function sync_app_workspaces(gone)
+  local monitors = {}
+  for _, m in ipairs(hl.get_monitors()) do
+    if not m.is_mirror and m.name ~= gone then
+      monitors[#monitors + 1] = m
+    end
+  end
+
+  for i, app in ipairs(app_workspaces) do
+    local target = nil
+    if app.monitor then
+      for _, m in ipairs(monitors) do
+        if (m.description or ""):find(app.monitor, 1, true) then
+          target = m
+        end
+      end
+    end
+    target = target or primary_monitor(monitors)
+
+    local id = target and o.workspaces.workspace_id(target, app.slot) or app.slot
+    hl.window_rule({
+      name = "personal-app-workspace-" .. i,
+      enabled = true,
+      match = { class = app.class },
+      workspace = tostring(id),
+    })
+  end
+end
+
+sync_app_workspaces()
+hl.on("hyprland.start", function() sync_app_workspaces() end)
+hl.on("config.reloaded", function() sync_app_workspaces() end)
+hl.on("monitor.added", function() sync_app_workspaces() end)
+hl.on("monitor.removed", function(monitor)
+  local name = monitor and monitor.name
+  hl.timer(function() sync_app_workspaces(name) end, { type = "oneshot", timeout = 1 })
+end)
 
 -- go-datagrip-tofi: open its terminal floating, centered, at 80% of the screen.
 o.window("org.omarchy.datagrip-go", { float = true, center = true, size = { "(monitor_w*0.8)", "(monitor_h*0.8)" } })
