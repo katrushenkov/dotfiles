@@ -105,6 +105,10 @@
 (after! org-modern
   (setq org-modern-timestamp nil))
 
+;; Timestamps without the weekday: <2026-11-05>, <2026-11-05 14:00>.
+(after! org
+  (setq org-timestamp-formats '("%Y-%m-%d" . "%Y-%m-%d %H:%M")))
+
 ;; personal/work are mutually exclusive.
 (setq org-tag-alist
       '((:startgroup)

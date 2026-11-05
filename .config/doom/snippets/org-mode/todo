@@ -3,5 +3,5 @@
 # key: todo
 # --
 * TODO $1
-SCHEDULED: <${2:`(format-time-string "%Y-%m-%d %a")`}>
+SCHEDULED: <${2:`(format-time-string "%Y-%m-%d")`}>
 $0
