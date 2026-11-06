@@ -4,6 +4,7 @@ prepend_keymap = [
   { on = [ "<Enter>" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file"},
   { on = [ "!" ], run = 'shell "$SHELL" --block', desc = "Open $SHELL here"},
   { on = [ "<Space>", "m" ], run = "plugin mount", desc = "Displays mount dialog"},
+  { on = [ "<Space>", "q" ], run = "quit", desc = "Quit yazi" },
   { on = [ "<Space>", 's'], run  = "plugin what-size", desc = "Calc size of selection or cwd" },
   { on = [ "<Space>", '<S-s>'], run  = "plugin what-size --args='--clipboard'", desc = "Calc size of selection or cwd" },
 
@@ -14,6 +15,8 @@ prepend_keymap = [
   # ";" leader
   { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
   { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
+  { on = [";", "r"], run = "shell 'lazygit' --block", desc = "Open lazygit in cwd" },
+  { on = [";", "d"], run = "shell 'nvim -d %s' --block", desc = "Diff selected files in nvim" },
 
   { on = "/", run = "plugin filter-open", desc = "Filter; Enter opens the hovered item" },
   { on = "f", run = "find --smart", desc = "Find next file" },
