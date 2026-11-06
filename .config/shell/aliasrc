@@ -8,7 +8,7 @@ alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
 
 se() {
   choice="$(find ~/.local/bin/ -mindepth 1 -exec basename {} \; | fzf)"
-  [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
+  [ -f "$HOME/.local/bin/$choice" ] && ${=EDITOR} "$HOME/.local/bin/$choice"
 }
 
 rand() {
@@ -55,7 +55,7 @@ alias \
   g="git" \
   trem="transmission-remote" \
   sdn="shutdown -h now" \
-  e='$EDITOR' \
+  e='${=EDITOR}' \
   ec='emacsclient -t' \
   lg="lazygit" \
   kx="kubectx" \
