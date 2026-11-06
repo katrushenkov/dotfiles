@@ -15,8 +15,6 @@ prepend_keymap = [
   { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
   { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
 
-  { on = ["n", "d"], desc = "Create dir", run = "create --dir" },
-
   { on = "b", run = [ "toggle", "arrow next" ], desc = "Toggle the current selection state" },
 
 	{ on = "<C-j>", run = "seek +2", desc = "Scroll preview" },
