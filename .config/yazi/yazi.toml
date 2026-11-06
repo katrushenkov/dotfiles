@@ -1,4 +1,5 @@
 [mgr]
+ratio = [0, 4, 3]
 show_hidden = true
 show_symlink = true
 sort_by = "natural"
