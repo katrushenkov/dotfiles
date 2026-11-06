@@ -41,7 +41,7 @@ sh $nnn_shortcuts
 rm $nnn_shortcuts
 
 # create bookmarks for yazi
-shortcuts-yazi "$bmdirs_all" "${XDG_CONFIG_HOME:-$HOME/.config}/yazi/bookmarks.toml" 
+shortcuts-yazi "$bmdirs_all" "${XDG_CONFIG_HOME:-$HOME/.config}/yazi/bunny.lua" 
 
 # Format the `files` file in the correct syntax and sent it to both configs.
 eval "echo \"$(cat "$bmfiles")\"" | \
