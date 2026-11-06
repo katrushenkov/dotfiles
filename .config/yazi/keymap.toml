@@ -15,6 +15,10 @@ prepend_keymap = [
   { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
   { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
 
+  { on = "/", run = "plugin filter-open", desc = "Filter; Enter opens the hovered item" },
+  { on = "f", run = "find --smart", desc = "Find next file" },
+  { on = "-", run = "back", desc = "Go back to the previous directory" },
+
   { on = "b", run = [ "toggle", "arrow next" ], desc = "Toggle the current selection state" },
 
 	{ on = "<C-j>", run = "seek +2", desc = "Scroll preview" },
@@ -56,29 +60,25 @@ prepend_keymap = [
 
 ]
 append_keymap = [
-  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'ripdrag -x -a -n %s' --orphan" },
-  { on = ["c", 'k'], desc = "Send using KDE Connect", run = "plugin kdeconnect-send"}
+  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'ripdrag -x -a -n %s' --orphan" }
 ]
 
 [pick]
 prepend_keymap = [
   { on = "<C-k>", run = "arrow -1", desc = "Previous option" },
   { on = "<C-j>", run = "arrow 1",  desc = "Next option" },
-  { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" }, # open file & close yazi
+  # { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" }, # open file & close yazi
 ]
 
 [input]
 
 # Real customizations over the yazi defaults (the rest of [input] now inherits stock keymap-default.toml)
 prepend_keymap = [
-	{ on = "B",         run = "backward --far",              desc = "Move back to the start of the current or previous WORD" },
-	{ on = "W",         run = "forward --far",               desc = "Move forward to the start of the next WORD" },
-	{ on = "E",         run = "forward --far --end-of-word", desc = "Move forward to the end of the current or next WORD" },
+	{ on = "<Esc>",     run = "close",                       desc = "Cancel input (no vim normal mode)" },
 	{ on = "<A-b>",     run = "backward",                    desc = "Move back to the start of the current or previous word" },
 	{ on = "<A-f>",     run = "forward --end-of-word",       desc = "Move forward to the end of the current or next word" },
 	{ on = "<C-Left>",  run = "backward",                    desc = "Move back to the start of the current or previous word" },
 	{ on = "<C-Right>", run = "forward --end-of-word",       desc = "Move forward to the end of the current or next word" },
-	{ on = "u",         run = "undo",                        desc = "Undo the last operation" },
 ]
 
 [help]
