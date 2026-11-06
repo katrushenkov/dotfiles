@@ -7,8 +7,8 @@ case $OSTYPE in linux*) _os=Linux ;; darwin*) _os=Darwin ;; esac
 alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
 
 se() {
-  choice="$(find ~/.local/bin/ -mindepth 1 -exec basename {} \; | fzf)"
-  [ -f "$HOME/.local/bin/$choice" ] && ${=EDITOR} "$HOME/.local/bin/$choice"
+  choice="$(find -L ~/.local/bin/ -mindepth 1 -type f -printf '%P\n' | sort | fzf)" || return
+  ${=EDITOR} "$HOME/.local/bin/$choice"
 }
 
 rand() {
