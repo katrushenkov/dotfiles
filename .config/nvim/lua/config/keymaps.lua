@@ -29,7 +29,7 @@ vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", vim.tbl_extend("force", opts, { d
 
 vim.keymap.set("n", ";g", function()
   require("snacks").picker.files({
-    cwd = vim.fn.expand("~/.config/nnn/bookmarks"),
+    cwd = vim.fn.expand("~/.local/share/bookmarks"),
     hidden = true,
     follow_symlinks = true,
     respect_gitignore = true,

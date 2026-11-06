@@ -26,7 +26,7 @@ else
   # omarchy-menu-select passes the whole option list as a single exec argument,
   # which hits Linux's per-argument size limit (128K) once the tree gets large.
   # These directories are too big to flatten recursively; keep them as a single
-  # entry each and let nnn handle browsing inside them.
+  # entry each and let yazi handle browsing inside them.
   skip_dirs=(2ch-scripts unnecessary sc tips)
 
   fd_exclude_args=()
@@ -67,7 +67,7 @@ fi
 item="${datagrip_dir}/${item}"
 
 if [[ -d "${item}" ]]; then
-  omarchy launch terminal nnn "${item}"
+  omarchy launch terminal yazi "${item}"
 else
   omarchy launch terminal nvim "${item}"
 fi

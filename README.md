@@ -18,7 +18,7 @@ Personal configuration files based on Luke Smith's voidrice.
 -    Terminal: kitty/foot
 -    Shell: zsh+starship
 -    Launcher: tofi
--    File manager: [nnn](https://github.com/jarun/nnn)
+-    File manager: [yazi](https://github.com/sxyazi/yazi)
 -    Music: kew
 -    Image viewer: imv
 -    Text editor: [neovim](https://github.com/neovim/neovim)
