@@ -2,6 +2,13 @@
 
 # zsh profile file. Runs on login. Environmental variables are set here.
 
+# macOS only: path_helper appends /opt/homebrew/bin after /usr/bin; put Homebrew
+# first so its python3/node win over the system ones (mason needs python3 >= 3.10).
+# No-op on Linux.
+if [[ "$OSTYPE" == darwin* && -x /opt/homebrew/bin/brew ]]; then
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Hidden subdirs (e.g. .crush, .crush/logs) are pruned: they hold data, not executables.
 export PATH="$PATH:$(find -L ~/.local/bin -name '.*' -prune -o -type d -print | paste -sd ':' -)"
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
