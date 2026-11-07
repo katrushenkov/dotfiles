@@ -17,6 +17,7 @@ prepend_keymap = [
   { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
   { on = [";", "r"], run = "shell 'lazygit' --block", desc = "Open lazygit in cwd" },
   { on = [";", "d"], run = "shell 'nvim -d %s' --block", desc = "Diff selected files in nvim" },
+  { on = [";", "x"], run = "plugin fzf-open", desc = "fzf search and open the chosen file" },
 
   { on = "/", run = "plugin filter-open", desc = "Filter; Enter opens the hovered item" },
   { on = "f", run = "find --smart", desc = "Find next file" },
