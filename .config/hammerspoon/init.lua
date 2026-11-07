@@ -50,7 +50,7 @@ hs.hotkey.bind({ "cmd" }, "F11", function()
 end)
 
 bindHyper("G", function()
-	run(picker, bin("file-search"))
+	run(picker, bin("go-datagrip-mac"))
 end)
 
 -- Doom Emacs с mac-конфигом: doom-mac задаёт DOOMDIR при запуске.
