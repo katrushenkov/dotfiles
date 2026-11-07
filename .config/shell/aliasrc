@@ -274,8 +274,8 @@ alias -g T='|tail'
 alias -g V='| nvim -'
 alias -g CP='|wl-copy'
 
-alias _='sudo'$
-alias _i='sudo -i'$
+alias _='sudo '
+alias _i='sudo -i'
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
 ## alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
@@ -369,7 +369,7 @@ alias kpvc="kubectl get pvc"
 alias kds='kubectl describe'
 alias krm='kubectl delete'
 alias kns='kubectl config set-context --current --namespace'
-alias kx="kubectx" \
+alias kx="kubectx"
 
 # docker
 alias di='docker images'
