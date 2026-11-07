@@ -23,7 +23,7 @@ notify() {
 open_repo=(--exec omarchy-launch-tui lazygit -p "$REPO")
 
 fail() {
-  notify critical "Синхронизация форка: ошибка" "$1" "${open_repo[@]}"
+  notify critical "Fork sync failed" "$1" "${open_repo[@]}"
   exit 1
 }
 
@@ -33,33 +33,33 @@ if ! flock -n 9; then
   exit 0
 fi
 
-cd "$REPO" || fail "Нет репозитория $REPO"
+cd "$REPO" || fail "Repository $REPO not found."
 
 if [[ -f $(git rev-parse --git-path MERGE_HEAD) ]]; then
-  notify normal "Синхронизация форка пропущена" "Незавершённый merge в $REPO: разреши конфликты и закоммить или сделай git merge --abort." "${open_repo[@]}"
+  notify normal "Fork sync skipped" "Unfinished merge in $REPO: resolve the conflicts and commit, or run git merge --abort." "${open_repo[@]}"
   exit 0
 fi
 
 current=$(git symbolic-ref --short -q HEAD)
 if [[ $current != "$BRANCH" ]]; then
-  notify normal "Синхронизация форка пропущена" "Текущая ветка «${current:-detached HEAD}», а не $BRANCH." "${open_repo[@]}"
+  notify normal "Fork sync skipped" "Current branch is '${current:-detached HEAD}', not $BRANCH." "${open_repo[@]}"
   exit 0
 fi
 
 if ! git diff --quiet || ! git diff --cached --quiet; then
-  notify normal "Синхронизация форка пропущена" "В $REPO есть незакоммиченные изменения." "${open_repo[@]}"
+  notify normal "Fork sync skipped" "$REPO has uncommitted changes." "${open_repo[@]}"
   exit 0
 fi
 
-git fetch --quiet origin || fail "Не удалось получить origin (сеть или SSH-ключ)."
-git fetch --quiet upstream || fail "Не удалось получить upstream (сеть?)."
+git fetch --quiet origin || fail "Could not fetch origin (network or SSH key)."
+git fetch --quiet upstream || fail "Could not fetch upstream (network?)."
 
 # Bring the local branch up to date with the fork first.
 if ! git merge-base --is-ancestor "origin/$BRANCH" HEAD; then
   if git merge-base --is-ancestor HEAD "origin/$BRANCH"; then
-    git merge --quiet --ff-only "origin/$BRANCH" || fail "Не удалось перемотать $BRANCH до origin/$BRANCH."
+    git merge --quiet --ff-only "origin/$BRANCH" || fail "Could not fast-forward $BRANCH to origin/$BRANCH."
   else
-    fail "Локальный $BRANCH и origin/$BRANCH разошлись — нужно свести вручную."
+    fail "Local $BRANCH and origin/$BRANCH have diverged; reconcile them manually."
   fi
 fi
 
@@ -67,9 +67,9 @@ if git merge-base --is-ancestor "$UPSTREAM_REF" HEAD; then
   # Nothing new upstream; still publish local commits the fork lacks.
   if (( $(git rev-list --count "origin/$BRANCH..HEAD") > 0 )); then
     if git push --quiet origin "$BRANCH"; then
-      notify low "Форк запушен" "Новых изменений в апстриме нет, локальные коммиты отправлены в origin."
+      notify low "Fork pushed" "No new upstream changes; local commits pushed to origin."
     else
-      fail "git push origin $BRANCH не прошёл."
+      fail "git push origin $BRANCH failed."
     fi
   else
     echo "Up to date with $UPSTREAM_REF"
@@ -85,17 +85,17 @@ if ! git merge --quiet --no-ff --no-edit -m "Merge $UPSTREAM_REF" "$UPSTREAM_REF
     count=$(wc -l <<<"$conflicts")
     list=$(head -5 <<<"$conflicts")
     (( count > 5 )) && list+=$'\n…'
-    notify critical "Конфликт при merge апстрима" "Файлов с конфликтами: $count. Разреши их вручную и закоммить:"$'\n'"$list" "${open_repo[@]}"
+    notify critical "Upstream merge conflict" "$count conflicted file(s). Resolve them manually and commit:"$'\n'"$list" "${open_repo[@]}"
     exit 1
   fi
   [[ -f $(git rev-parse --git-path MERGE_HEAD) ]] && git merge --abort
-  fail "git merge $UPSTREAM_REF не прошёл (см. journalctl --user -u omarchy-upstream-sync)."
+  fail "git merge $UPSTREAM_REF failed (see journalctl --user -u omarchy-upstream-sync)."
 fi
 
 if git push --quiet origin "$BRANCH"; then
-  notify normal "Апстрим вмерджен и запушен" "Новых коммитов из $UPSTREAM_REF: $new_commits."
+  notify normal "Upstream merged and pushed" "$new_commits new commit(s) from $UPSTREAM_REF."
 else
-  fail "Merge сделан локально ($new_commits коммитов), но git push origin $BRANCH не прошёл."
+  fail "Merged locally ($new_commits commit(s)), but git push origin $BRANCH failed."
 fi
 
 # The repo is the live OMARCHY_PATH, so new migrations may be waiting.
