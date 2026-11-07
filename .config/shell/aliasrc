@@ -54,12 +54,9 @@ alias \
 alias \
   g="git" \
   trem="transmission-remote" \
-  sdn="shutdown -h now" \
   e='${=EDITOR}' \
   ec='emacsclient -t' \
-  lg="lazygit" \
-  kx="kubectx" \
-  k="kubectl"
+  lg="lazygit"
 
 alias \
   ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
@@ -372,6 +369,7 @@ alias kpvc="kubectl get pvc"
 alias kds='kubectl describe'
 alias krm='kubectl delete'
 alias kns='kubectl config set-context --current --namespace'
+alias kx="kubectx" \
 
 # docker
 alias di='docker images'

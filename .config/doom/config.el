@@ -474,6 +474,7 @@
 (after! org
   (map! :map org-mode-map
         :localleader
+        :desc "Copy subtree" "s y" #'org-copy-subtree
         (:prefix ("x" . "crypt")
          :desc "Encrypt entry"                 "e" #'org-encrypt-entry
          :desc "Decrypt entry"                 "d" #'org-decrypt-entry
