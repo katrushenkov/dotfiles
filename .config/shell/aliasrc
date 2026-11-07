@@ -202,17 +202,12 @@ if [ "$_os" = "Linux" ]; then
   alias yi="yay -S"
   alias yn="yay -S --noconfirm"
   alias ys="yay"                # search with number selection
-  alias ysn="yay --noconfirm"
-  alias ycl="yay -Sc"            # partially clear cache
   alias yy="yay -Syy"           # mirrors sync
-  alias yr="yay -R"
-  alias yrn="yay -R --noconfirm"
   alias yl="yay -Q | grep"
   alias yayskip='yay -S --mflags --skipinteg' # skip integrity check
-  #alias pacman='sudo pacman --color auto'
   alias up='omarchy-update'
   alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # cleanup orphaned packages
-  alias clean="sudo pacman -Scc"
+  alias clean="sudo pacman -Scc" # cleanup pacman cache
   alias unlock="sudo rm /var/lib/pacman/db.lck"
   alias pkg_size="expac -H M '%m\t%n' | sort -h"
   # recent installed packages
@@ -282,13 +277,12 @@ alias -g T='|tail'
 alias -g V='| nvim -'
 alias -g CP='|wl-copy'
 
-#alias _='sudo'$
-#alias _i='sudo -i'$
+alias _='sudo'$
+alias _i='sudo -i'$
 
 ## So that sudo doesnt override aliases (doesnt work with flags)
-## alias sudo='sudo '
+## alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 ## alias doas='doas '
-#alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
 
 ## Search running processes
 alias p="ps aux | grep "
@@ -338,8 +332,6 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 
 # Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
-
-#alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
 
 #socks="ssh -D 8008 emerald -fN"
 
