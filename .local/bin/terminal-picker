@@ -4,10 +4,10 @@
 # its stdout to the clipboard and paste it into the window that was focused
 # before the popup opened.
 #
-#   terminal-picker.sh ~/.local/bin/snippets-fzf
-#   terminal-picker.sh --no-paste kubectl-ctx
-#   terminal-picker.sh --no-restore bookmarks-web-mac -s
-#   terminal-picker.sh --warm     # start the popup WezTerm ahead of time
+#   terminal-picker ~/.local/bin/snippets-fzf-mac
+#   terminal-picker --no-paste kubectl-ctx
+#   terminal-picker --no-restore bookmarks-web-mac -s
+#   terminal-picker --warm     # start the popup WezTerm ahead of time
 #
 # The target must print its result to stdout; its TUI must draw on /dev/tty
 # (fzf, gum, fzy and friends all do this by default).

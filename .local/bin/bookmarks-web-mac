@@ -6,7 +6,7 @@
 # Prints nothing to stdout, so run it with --no-restore -- the browser has to
 # keep focus once the popup closes:
 #
-#   terminal-picker.sh --no-restore bookmarks-web-mac -s
+#   terminal-picker-kitty --no-restore bookmarks-web-mac -s
 #
 # Bookmark file, one per line; name and tags are optional:
 #   https://example.com | some name | #tag #tag

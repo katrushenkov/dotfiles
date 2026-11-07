@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pick a snippet with fzf and print it to stdout. Meant to be run via terminal-picker.sh.
+# Pick a snippet with fzf and print it to stdout. Meant to be run via terminal-picker-kitty.
 set -euo pipefail
 
 /opt/homebrew/bin/rg -v '^#|^$' ~/.local/src/datagrip/snippets \

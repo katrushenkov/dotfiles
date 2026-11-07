@@ -3,7 +3,7 @@
 # Pick a gopass entry and one of its fields with fzf, print the value to stdout.
 # macOS port of gopass-autotype: no wtype, the wrapper does the pasting.
 #
-#   terminal-picker.sh --clear-after 45 gopass-fzf
+#   terminal-picker-kitty --clear-after 45 gopass-fzf-mac
 #
 # Entry layout is pass(1)'s: first line is the password, the rest are
 # "key: value" pairs.
