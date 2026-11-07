@@ -3,7 +3,7 @@
 # terminal-picker, but the popup is a kitty panel (kitten panel) instead of a
 # WezTerm window. Same options, same target protocol (#!autotype, #!open).
 #
-#   terminal-picker-kitty ~/.local/bin/snippets-fzf
+#   terminal-picker-kitty ~/.local/bin/snippets-fzf-mac
 #   terminal-picker-kitty --no-paste kubectl-ctx
 #   terminal-picker-kitty --no-restore bookmarks-web-mac -s
 #   terminal-picker-kitty --warm     # start the popup kitty ahead of time

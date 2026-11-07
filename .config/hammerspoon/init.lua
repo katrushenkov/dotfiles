@@ -60,11 +60,11 @@ bindHyper("E", function()
 end)
 
 bindHyper("I", function()
-	run(picker, bin("snippets-fzf"))
+	run(picker, bin("snippets-fzf-mac"))
 end)
 
 bindHyper("P", function()
-	run(picker, "--clear-after", "45", bin("gopass-fzf"))
+	run(picker, "--clear-after", "45", bin("gopass-fzf-mac"))
 end)
 
 -- Раскладки для Hyper+Space и Hyper+B (source ID не зависят от языка системы).
