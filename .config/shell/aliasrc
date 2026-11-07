@@ -54,12 +54,9 @@ alias \
 alias \
   g="git" \
   trem="transmission-remote" \
-  sdn="shutdown -h now" \
   e='${=EDITOR}' \
   ec='emacsclient -t' \
-  lg="lazygit" \
-  kx="kubectx" \
-  k="kubectl"
+  lg="lazygit"
 
 alias \
   ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
@@ -339,8 +336,6 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 # Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
 
-#alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
-
 #socks="ssh -D 8008 emerald -fN"
 
 grib() {
@@ -380,6 +375,7 @@ alias kpvc="kubectl get pvc"
 alias kds='kubectl describe'
 alias krm='kubectl delete'
 alias kns='kubectl config set-context --current --namespace'
+alias kx="kubectx" \
 
 # docker
 alias di='docker images'
