@@ -45,7 +45,6 @@ alias \
   lr='ls -lRh' \
   l.='ls -AF -d .*' \
   l..='eza -d .* --color=auto' \
-  lcd="cd" \
   rgg='rg --files --glob' \
   cat='bat --paging=never --style=plain'
 
