@@ -144,19 +144,20 @@ alias pscpu10='ps -eo pcpu,pid,user,args --sort=-pcpu | head -11'
 
 alias more="less -Ri"
 
-# youtube-dl
-alias yta-aac='yt-dlp -c -f "ba[ext=m4a]" --output "%(title)s.%(ext)s"'
-alias yta-best='yt-dlp -c -x --audio-format best --output "%(title)s.%(ext)s"'
-alias yta-flac='yt-dlp -c -x --audio-format flac --output "%(title)s.%(ext)s"'
-alias yta-m4a='yt-dlp -c -f "ba[ext=m4a]" --output "%(title)s.%(ext)s"'
-alias yta-mp3='yt-dlp -c -x --audio-format mp3 --output "%(title)s.%(ext)s"'
-alias yta-opus='yt-dlp --no-playlist -c -x --audio-format opus --output "%(title)s.%(ext)s" '
-alias yta-vorbis='yt-dlp -c -x --audio-format vorbis --output "%(title)s.%(ext)s"'
-alias yta-wav='yt-dlp -c -x --audio-format wav --output "%(title)s.%(ext)s"'
-alias ytv-best='yt-dlp -c -f bestvideo+bestaudio --output "%(title)s.%(ext)s" '
-alias ytv='yt-dlp -c -f "bv*[height<=360][ext=mp4]+ba[ext=m4a]/b[height<=360]" --merge-output-format mp4 --output "%(title)s.%(ext)s"'
-alias yta='yt-dlp -c -x -f ba --audio-format opus --output "%(title)s.%(ext)s"'
-alias ytt="yt-dlp --no-download --write-thumbnail "
+# yt-dlp: shared output template, single video even for &list= URLs
+# (append --yes-playlist to override); -c is already the default.
+yt() { yt-dlp --no-playlist -o '%(title)s.%(ext)s' "$@"; }
+alias yta='yt -x -f ba --audio-format opus'
+alias yta-best='yt -x'
+alias yta-m4a='yt -f "ba[ext=m4a]"'
+alias yta-flac='yt -x --audio-format flac'
+alias yta-mp3='yt -x --audio-format mp3'
+alias yta-opus='yt -x --audio-format opus'
+alias yta-vorbis='yt -x --audio-format vorbis'
+alias yta-wav='yt -x --audio-format wav'
+alias ytv='yt -f "bv*[height<=360][ext=mp4]+ba[ext=m4a]/b[height<=360]" --merge-output-format mp4'
+alias ytv-best='yt -f bestvideo+bestaudio'
+alias ytt='yt --no-download --write-thumbnail'
 
 # get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
