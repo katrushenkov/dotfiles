@@ -52,3 +52,19 @@ run = "git"
 group = "git"
 url = "*/"
 run = "git"
+
+# /mnt/main (sshfs): detect MIME by extension instead of running `file` on each file
+[[plugin.prepend_fetchers]]
+group = "mime"
+url = "/mnt/main/**"
+run = "mime-ext"
+prio = "high"
+
+# Video: no ffmpeg/ffprobe thumbnails or previews anywhere
+[[plugin.prepend_preloaders]]
+mime = "video/*"
+run = "nopreview"
+
+[[plugin.prepend_previewers]]
+mime = "video/*"
+run = "nopreview"
