@@ -34,7 +34,6 @@ else
   alias rm="rm -vI"
 fi
 alias \
-  ccat="highlight --out-format=ansi" \
   ip="ip -color=auto" \
   dus="du -h --max-depth=1 | sort -rh" \
   ls="eza -a --icons --group-directories-first" \
@@ -57,8 +56,7 @@ alias \
   lg="lazygit"
 
 alias \
-  ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
-  weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+  ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc'
 
 alias \
   lsblk="lsblk -f -o +SIZE,MODEL" \
@@ -82,10 +80,10 @@ alias \
   sha1='openssl sha1' \
   dirsize="du -sh"
 
-alias grep='rg -i'
+alias grep='grep --color=auto'
 alias xzgrep='xzgrep --color=auto'
 alias zgrep='zgrep --color=auto'
-alias hgrep="fc -l 1 | grep"
+alias hgrep="fc -l 1 | grep -i"
 alias gc="grep -c"
 alias gw="grep -w"
 
@@ -122,7 +120,7 @@ alias glast='git log --oneline --graph --decorate --all'
 alias pls='sudo zsh -c "$(fc -ln -1)"'
 
 alias za="zathura --fork"
-alias f="find . | grep "
+alias f="find . | grep -i "
 
 alias incognito='unset HISTFILE'
 alias temps='watch -n .1 sensors'
@@ -133,7 +131,6 @@ alias weatherfull='curl wttr.in/cmb'
 alias mpvl='mpv --loop'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias pscpu='ps -eo pcpu,pid,user,args --sort=-pcpu'
-alias pscpu10='ps -eo pcpu,pid,user,args --sort=-pcpu | head -11'
 #alias pscgroups='ps xawf -eo pid,user,cgroup,args'
 
 alias more="less -Ri"
@@ -189,7 +186,7 @@ if [ "$_os" = "Linux" ]; then
   alias yn="yay -S --noconfirm"
   alias ys="yay"                # search with number selection
   alias yy="yay -Syy"           # mirrors sync
-  alias yl="yay -Q | grep"
+  alias yl="yay -Q | grep -i"
   alias yayskip='yay -S --mflags --skipinteg' # skip integrity check
   alias up='omarchy-update'
   alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # cleanup orphaned packages
@@ -267,7 +264,7 @@ alias _='sudo '
 alias _i='sudo -i'
 
 ## Search running processes
-alias p="ps aux | grep "
+alias p="ps aux | grep -i "
 alias topcpu="ps -eo pcpu,pid,user,args --sort=-pcpu | head -11"
 #alias ps='ps auxf'
 
@@ -350,7 +347,6 @@ alias dr='docker run'
 alias db='docker build'
 alias dp='docker ps'
 alias dps="docker ps -a"
-alias di="docker images"
 alias drmi="docker rmi"
 alias drm="docker rm"
 alias dlast="docker ps -lq" # get last docker container id
