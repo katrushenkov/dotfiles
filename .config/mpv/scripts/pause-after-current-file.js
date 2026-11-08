@@ -9,7 +9,7 @@
 (function (mp) {
     var pause_after_current_file = false;
 
-    mp.add_key_binding("shift+s", function() {
+    mp.add_key_binding(null, "pause-after-current-file", function() {
         pause_after_current_file = !pause_after_current_file;
         mp.commandv(
             "show-text",
