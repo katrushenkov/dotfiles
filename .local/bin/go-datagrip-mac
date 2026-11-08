@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Pick a file in ~/.local/src/datagrip with fzf. Meant to be run via terminal-picker.
+#
+#   Enter   edit the file in nvim right here, in the popup
+#   Ctrl-O  print the path, terminal-picker pastes it into the previous window
+set -euo pipefail
+
+root="$HOME/.local/src/datagrip"
+cd "$root"
+
+# rg --files honours .gitignore and skips hidden files; newest first.
+# --tiebreak=index keeps that order among equal-score matches (with --exact
+# most of them tie, and the default tiebreak would prefer shorter paths).
+out="$(/opt/homebrew/bin/rg --no-config --files --sortr=modified \
+    | fzf --tiebreak=index --prompt='file> ' --expect=ctrl-o \
+          --header='enter: nvim · ctrl-o: paste path · ctrl-/: preview' \
+          --preview='bat --color=always --style=plain --line-range=:200 {}')" || exit 0
+
+key="$(sed -n 1p <<<"$out")"
+file="$(sed -n 2p <<<"$out")"
+[[ -n "$file" ]] || exit 0
+
+if [[ "$key" == ctrl-o ]]; then
+    printf '%s' "$root/$file"
+else
+    # stdout and stderr go to terminal-picker's files, so give nvim the tty.
+    # Nothing is printed: popup closes on :q and focus goes back.
+    exec /opt/homebrew/bin/nvim -- "$root/$file" </dev/tty >/dev/tty 2>/dev/tty
+fi

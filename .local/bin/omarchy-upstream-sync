@@ -1,0 +1,102 @@
+#!/bin/bash
+
+# Merge upstream Omarchy (basecamp/omarchy, branch quattro) into the fork's
+# master and push it to origin. Runs from omarchy-upstream-sync.timer.
+#
+# Conflicts are left in place for manual resolution; later runs skip until the
+# merge is committed or aborted.
+
+set -uo pipefail
+
+REPO="$HOME/.local/src/omarchy"
+BRANCH="master"
+UPSTREAM_REF="upstream/quattro"
+APP="Omarchy upstream sync"
+
+notify() {
+  local urgency=$1 headline=$2 body=${3:-}
+  shift 3
+  echo "$headline: $body"
+  omarchy-notification-send --app-name "$APP" -u "$urgency" "$headline" "$body" "$@" || true
+}
+
+open_repo=(--exec omarchy-launch-tui lazygit -p "$REPO")
+
+fail() {
+  notify critical "Fork sync failed" "$1" "${open_repo[@]}"
+  exit 1
+}
+
+exec 9>"${XDG_RUNTIME_DIR:-/tmp}/omarchy-upstream-sync.lock"
+if ! flock -n 9; then
+  echo "Another sync is running"
+  exit 0
+fi
+
+cd "$REPO" || fail "Repository $REPO not found."
+
+if [[ -f $(git rev-parse --git-path MERGE_HEAD) ]]; then
+  notify normal "Fork sync skipped" "Unfinished merge in $REPO: resolve the conflicts and commit, or run git merge --abort." "${open_repo[@]}"
+  exit 0
+fi
+
+current=$(git symbolic-ref --short -q HEAD)
+if [[ $current != "$BRANCH" ]]; then
+  notify normal "Fork sync skipped" "Current branch is '${current:-detached HEAD}', not $BRANCH." "${open_repo[@]}"
+  exit 0
+fi
+
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  notify normal "Fork sync skipped" "$REPO has uncommitted changes." "${open_repo[@]}"
+  exit 0
+fi
+
+git fetch --quiet origin || fail "Could not fetch origin (network or SSH key)."
+git fetch --quiet upstream || fail "Could not fetch upstream (network?)."
+
+# Bring the local branch up to date with the fork first.
+if ! git merge-base --is-ancestor "origin/$BRANCH" HEAD; then
+  if git merge-base --is-ancestor HEAD "origin/$BRANCH"; then
+    git merge --quiet --ff-only "origin/$BRANCH" || fail "Could not fast-forward $BRANCH to origin/$BRANCH."
+  else
+    fail "Local $BRANCH and origin/$BRANCH have diverged; reconcile them manually."
+  fi
+fi
+
+if git merge-base --is-ancestor "$UPSTREAM_REF" HEAD; then
+  # Nothing new upstream; still publish local commits the fork lacks.
+  if (( $(git rev-list --count "origin/$BRANCH..HEAD") > 0 )); then
+    if git push --quiet origin "$BRANCH"; then
+      notify low "Fork pushed" "No new upstream changes; local commits pushed to origin."
+    else
+      fail "git push origin $BRANCH failed."
+    fi
+  else
+    echo "Up to date with $UPSTREAM_REF"
+  fi
+  exit 0
+fi
+
+new_commits=$(git rev-list --count --no-merges "HEAD..$UPSTREAM_REF")
+
+if ! git merge --quiet --no-ff --no-edit -m "Merge $UPSTREAM_REF" "$UPSTREAM_REF"; then
+  conflicts=$(git diff --name-only --diff-filter=U)
+  if [[ -n $conflicts ]]; then
+    count=$(wc -l <<<"$conflicts")
+    list=$(head -5 <<<"$conflicts")
+    (( count > 5 )) && list+=$'\n…'
+    notify critical "Upstream merge conflict" "$count conflicted file(s). Resolve them manually and commit:"$'\n'"$list" "${open_repo[@]}"
+    exit 1
+  fi
+  [[ -f $(git rev-parse --git-path MERGE_HEAD) ]] && git merge --abort
+  fail "git merge $UPSTREAM_REF failed (see journalctl --user -u omarchy-upstream-sync)."
+fi
+
+if git push --quiet origin "$BRANCH"; then
+  notify normal "Upstream merged and pushed" "$new_commits new commit(s) from $UPSTREAM_REF."
+else
+  fail "Merged locally ($new_commits commit(s)), but git push origin $BRANCH failed."
+fi
+
+# The repo is the live OMARCHY_PATH, so new migrations may be waiting.
+omarchy-migrate-notify || true

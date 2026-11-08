@@ -123,59 +123,6 @@ add-zsh-hook preexec _enable_prompt_sp
 # add-zsh-hook preexec foot_cmd_start
 # add-zsh-hook precmd foot_cmd_end
 
-n () {
-    if [ -n "$NNNLVL" ] && [ "${NNNLVL:-0}" -ge 1 ]; then
-	      exit
-        #return
-    fi
-
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
-    command nnn "$@"
-
-    [ ! -f "$NNN_TMPFILE" ] || {
-        . "$NNN_TMPFILE"
-        command rm -f -- "$NNN_TMPFILE" > /dev/null
-    }
-}
-
-## TODO: ВОЗМОЖНО ЭТО УЖЕ НЕ НАДО ТАК КАК РАБОТАЕТ НАТИВНО - ПРОВЕРИТЬ
-## The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
-## If NNN_TMPFILE is set to a custom path, it must be exported for nnn to
-## see. To cd on quit only on ^G, remove the "-x" from both lines below,
-## without changing the paths.
-#if test -n "$XDG_CONFIG_HOME"
-#    set -x NNN_TMPFILE "$XDG_CONFIG_HOME/nnn/.lastd"
-#elseif
-#    set -x NNN_TMPFILE "$HOME/.config/nnn/.lastd"
-#fi
-
-nsel () {
-    tr '\0' '\n' < "${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection"
-}
-
-export NNN_OPTS='acdAHU'
-#export NNN_PLUG='p:mocplay;m:-_mediainfo $nnn;s:_smplayer -minigui $nnn*;a:-_mocp*;y:-_sync*;k:-_fuser -kiv $nnn*;t:-!|tree -ps;e:-_ewrap $nnn*'
-export NNN_PLUG='e:-!nvim*;o:finder;f:fzcd;x:fzopen;t:nmount;v:imgview;g:bookmarks;G:cdpath;i:preview-tabbed;w:preview-tui;c:getplugs;z:imgresize;d:diffs;b:boom;q:cdpath;p:imgresize;j:cdpath;h:dups;k:pskill;l:nmount;m:-!mediainfo $nnn;a:rsynccp;u:togglex;n:fzplug;r:!eval $(which lazygit)*;s:-!nvim "$(fd -e md | fzf)"*'
-export NNN_PAGER='less -Ri'
-#export NNN_PLUG_09='1:a;2:b'
-#export NNN_A2F='a:x;b:y'
-#export NNN_PLUG={$NNN_PLUG_09}';'{$NNN_PLUG_A2F}';'...
-#export NNN_PTERMINAL=kitty
-export NNN_OPENER=${XDG_CONFIG_HOME}/nnn/plugins/nuke
-#export NNN_BMS='a:/mnt/main/sync/anima;h:~;v:/mnt/main/vid;c:~/.config'
-export NNN_FIFO='/tmp/nnn.fifo' # temporary buffer for previews
-export NNN_SSHFS="sshfs -o follow_symlinks,reconnect,auto_cache"
-export NNN_SEL="$XDG_CONFIG_HOME/nnn/selection"
-export SPLIT='v' # to split Kitty vertically
-# export NNN_HELP="fastfetch"
-export NNN_PREFER_SELECTION=1
-export NNN_IDLE_TIMEOUT=900
-export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
-# export NNN_FCOLORS="AAAAE631BBBBCCCCDDDD9999"
-
-# use trash-cli [1] and gio trash [2] and macos "trash" instead of deleting
-[[ $OSTYPE == linux* ]] && export NNN_TRASH=2 || export NNN_TRASH="trash"
 
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
@@ -183,8 +130,6 @@ bindkey -s '^p' 'nvim -c "lua Snacks.picker.projects()"\n'
 
 bindkey '^X' fzf-file-widget
 bindkey '^G' fzf-cd-widget
-
-bindkey -s '^n' 'n\n'
 
 # Cache init scripts instead of forking the tool on every start;
 # regenerated when the binary is updated. Compiled to .zwc, which
@@ -202,7 +147,7 @@ _cached_init() {  # <name> <binary> <command...>
     source "$f"
 }
 
-# fzf walker: don't follow symlinks (nnn/bookmarks link into /mnt), skip caches.
+# fzf walker: don't follow symlinks (~/.local/share/bookmarks links into /mnt), skip caches.
 # --walker-skip replaces fzf's default list (.git,node_modules), so keep those.
 # Per-widget --walker comes after FZF_DEFAULT_OPTS and overrides the widgets' built-in "follow".
 _fzf_skip='--walker-skip=.git,node_modules,.cache'

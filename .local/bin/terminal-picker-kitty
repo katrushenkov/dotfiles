@@ -1,0 +1,378 @@
+#!/usr/bin/env bash
+#
+# terminal-picker, but the popup is a kitty panel (kitten panel) instead of a
+# WezTerm window. Same options, same target protocol (#!autotype, #!open).
+#
+#   terminal-picker-kitty ~/.local/bin/snippets-fzf-mac
+#   terminal-picker-kitty --no-paste kubectl-ctx
+#   terminal-picker-kitty --no-restore bookmarks-web-mac -s
+#   terminal-picker-kitty --warm     # start the popup kitty ahead of time
+#
+# A panel is drawn by kitty-quick-access.app, not by kitty.app: a separate
+# process from the main kitty, with its own bundle id and a non-standard window
+# that OmniWM leaves alone -- it floats without any appRule, and the main
+# kitty's windows keep tiling.
+#
+# The target must print its result to stdout; its TUI must draw on /dev/tty
+# (fzf, gum, fzy and friends all do this by default).
+
+set -uo pipefail
+
+# GUI launchers (Hammerspoon's `do shell script`, LaunchAgents) run us with
+# launchd's bare PATH -- no path_helper, so no /opt/homebrew/bin.
+PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
+
+# fzf look and behaviour shared by every picker; targets add only their own
+# flags (prompt, preview, --no-sort). Appended, so a user's own
+# FZF_DEFAULT_OPTS is kept and these win where they overlap.
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--exact --cycle --reverse --info=inline --bind=ctrl-/:toggle-preview"
+
+POPUP_CONFIG="${POPUP_CONFIG:-$HOME/.config/kitty/popup.conf}"
+POPUP_WIDTH_RATIO="${POPUP_WIDTH_RATIO:-0.65}"
+POPUP_HEIGHT_RATIO="${POPUP_HEIGHT_RATIO:-0.6}"
+# All panels open in one kitty process, found through this group's socket.
+INSTANCE_GROUP="terminal-picker"
+PASTE_DELAY="${PASTE_DELAY:-0.15}"
+do_paste=1
+do_restore=1
+clear_after=0
+do_warm=0
+last_clip=""
+
+# stderr is discarded when launched from a GUI app, so also surface failures
+# as a notification -- otherwise the popup just silently never appears.
+notify() {
+    osascript - "$1" >/dev/null 2>&1 <<'EOF'
+on run argv
+    display notification (item 1 of argv) with title "terminal-picker-kitty"
+end run
+EOF
+}
+
+die() {
+    printf '%s: %s\n' "${0##*/}" "$1" >&2
+    notify "$1"
+    exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --no-paste) do_paste=0; shift ;;
+        # For targets that act on the selection themselves (open a browser,
+        # focus a window). Yanking focus back would steal it from whatever the
+        # target just brought up.
+        --no-restore) do_restore=0; do_paste=0; shift ;;
+        # Put the old clipboard back after N seconds, so secrets don't linger.
+        --clear-after)
+            [[ "${2:-}" =~ ^[0-9]+$ ]] || die "--clear-after needs seconds"
+            clear_after="$2"; shift 2 ;;
+        # Only make sure the popup kitty is running (Hammerspoon calls this
+        # on load), so even the first picker skips the cold start.
+        --warm) do_warm=1; shift ;;
+        --) shift; break ;;
+        -*) die "unknown option: $1" ;;
+        *) break ;;
+    esac
+done
+
+[[ -r "$POPUP_CONFIG" ]] || die "popup config not found: $POPUP_CONFIG"
+
+KITTEN_BIN="$(command -v kitten)" || die "kitten not found in PATH"
+
+# kitten panel --single-instance keeps one process per --instance-group, and
+# that process quits as soon as its last panel closes. A hidden panel running
+# a never-ending sleep keeps it alive between pickers: a new panel in a running
+# process opens in ~50 ms, a cold start of kitty takes ~1 s.
+KEEPER_SOCK="$(getconf DARWIN_USER_CACHE_DIR 2>/dev/null)kitty-ipc-$(id -u)-panel-$INSTANCE_GROUP"
+
+# Prints the pid of the running popup kitty, fails if there is none.
+instance_pid() {
+    local pid
+    pid="$(pgrep -f -- "kitty-quick-access .*--instance-group=$INSTANCE_GROUP( |\$)" | head -n 1)"
+    [[ -n "$pid" && -S "$KEEPER_SOCK" ]] || return 1
+    printf '%s' "$pid"
+}
+
+# All of stdin, stdout and stderr detached: it outlives us, and hs.task must
+# not wait on it. Then wait for its socket: a panel started before that would
+# become an instance of its own (and quit with its window).
+start_keeper() {
+    local i
+    # Left behind if the previous keeper crashed; it would look ready at once.
+    rm -f "$KEEPER_SOCK"
+    (cd "$HOME" && exec "$KITTEN_BIN" panel -c "$POPUP_CONFIG" \
+        --single-instance --instance-group="$INSTANCE_GROUP" --start-as-hidden \
+        --edge=center-sized --columns=1px --lines=1px \
+        -- /bin/sleep 2147483647 </dev/null >/dev/null 2>&1) &
+    for ((i = 0; i < 100; i++)); do
+        instance_pid >/dev/null && return 0
+        sleep 0.05
+    done
+    return 1
+}
+
+if (( do_warm )); then
+    instance_pid >/dev/null || start_keeper || die "popup kitty did not start"
+    exit 0
+fi
+
+[[ $# -gt 0 ]] || die "usage: ${0##*/} [--no-paste] <script> [args...]"
+
+target="$1"; shift
+if [[ "$target" != */* ]]; then
+    target="$(command -v -- "$target")" || die "not found in PATH: $1"
+fi
+[[ -x "$target" ]] || die "not executable: $target"
+
+# Bring the open panel back to front (second hotkey press while it is open).
+# OmniWM doesn't manage panels, so go through System Events.
+focus_popup() {
+    osascript -e "tell application \"System Events\" to set frontmost of \
+        (first application process whose unix id is $1) to true" >/dev/null 2>&1
+}
+
+# One popup at a time: a second hotkey press while a picker is open brings the
+# open popup back to front instead of stacking another one on top of it.
+lock_dir="${TMPDIR:-/tmp}/terminal-picker-kitty.lock"
+if ! mkdir "$lock_dir" 2>/dev/null; then
+    owner="$(cat "$lock_dir/pid" 2>/dev/null)"
+    if [[ -n "$owner" ]] && kill -0 "$owner" 2>/dev/null; then
+        popup="$(cat "$lock_dir/popup" 2>/dev/null)"
+        [[ -n "$popup" ]] && kill -0 "$popup" 2>/dev/null && focus_popup "$popup"
+        exit 0
+    fi
+    # No pid yet: the owner is between mkdir and writing it. Only a lock that
+    # has stayed like that for a while is stale.
+    if [[ -z "$owner" ]] && (( $(date +%s) - $(stat -f %m "$lock_dir" 2>/dev/null || echo 0) < 5 )); then
+        exit 0
+    fi
+    rm -rf "$lock_dir"
+    mkdir "$lock_dir" 2>/dev/null || exit 0
+fi
+printf '%s' "$$" >"$lock_dir/pid"
+
+work_dir="$(mktemp -d "${TMPDIR:-/tmp}/terminal-picker-kitty.XXXXXX")"
+trap 'rm -rf "$work_dir" "$lock_dir"' EXIT
+result_file="$work_dir/result"
+err_file="$work_dir/stderr"
+status_file="$work_dir/status"
+
+# Remember the focused window to come back to. OmniWM (this box's tiling WM)
+# answers instantly and is exact: it can stack several windows of the same app
+# in one tabbed column, and they all report the same pid/position to System
+# Events. The System Events query costs 100-200 ms, so it only runs without
+# OmniWM's IPC (omniwmctl, ~/.config/omniwm/settings.toml ipcEnabled).
+prev_omni_id="" prev_pid="" prev_win_x="" prev_win_y=""
+if command -v omniwmctl >/dev/null 2>&1; then
+    read -r prev_omni_id prev_pid prev_win_x prev_win_y <<<"$(
+        omniwmctl query focused-window --format json 2>/dev/null \
+            | jq -r '.result.payload.window // empty
+                     | "\(.id) \(.pid) \(.frame.x // -1) \(.frame.y // -1)"' 2>/dev/null)"
+fi
+if [[ -z "$prev_omni_id" ]]; then
+    read -r prev_pid prev_win_x prev_win_y <<<"$(osascript <<'EOF'
+tell application "System Events"
+    set p to first application process whose frontmost is true
+    set winPos to {-1, -1}
+    -- System Events windows have no stable id, so pin down *which* window of
+    -- the process was frontmost by position -- restoring by pid/app alone
+    -- lets macOS pick any window of that app (wrong one when e.g. several
+    -- Kitty/WezTerm windows are open across spaces).
+    try
+        set winPos to position of front window of p
+    end try
+    return ((unix id of p) as text) & " " & (item 1 of winPos) & " " & (item 2 of winPos)
+end tell
+EOF
+)"
+fi
+
+# POSIX single-quoting, so the command is parsed the same by bash and zsh.
+quote() { printf "'%s'" "${1//\'/\'\\\'\'}"; }
+
+# Run through the login shell, not a hardcoded bash: exports live in the user's
+# own startup files (~/.zprofile here) and scripts expect the same environment
+# they get in a terminal. GUI launchers give us none of it.
+# stderr and the exit status go to files too: the popup closes as soon as the
+# target exits, so its error message would otherwise never be seen.
+# Don't rely on a panel of the running instance getting our environment rather
+# than the keeper's: pass FZF_DEFAULT_OPTS along explicitly.
+inner="export FZF_DEFAULT_OPTS=$(quote "$FZF_DEFAULT_OPTS"); "
+for arg in "$target" "$@"; do
+    inner+="$(quote "$arg") "
+done
+inner+="> $(quote "$result_file") 2> $(quote "$err_file"); echo \$? > $(quote "$status_file")"
+
+# Size the panel from the display OmniWM calls current (the one with the
+# focused window) and open it there; kitten panel and OmniWM name displays the
+# same way. Without OmniWM: a fixed size on whatever display kitty picks.
+popup_w=983 popup_h=589 output_name=""
+if command -v omniwmctl >/dev/null 2>&1; then
+    read -r disp_w disp_h output_name <<<"$(omniwmctl query displays --format json 2>/dev/null \
+        | jq -r 'first(.result.payload.displays[] | select(.isCurrent))
+                 | "\(.frame.width) \(.frame.height) \(.name)"' 2>/dev/null)"
+    if [[ "${disp_w:-}" =~ ^[0-9.]+$ && "${disp_h:-}" =~ ^[0-9.]+$ ]]; then
+        popup_w="$(awk -v d="$disp_w" -v r="$POPUP_WIDTH_RATIO" 'BEGIN { printf "%d", d * r }')"
+        popup_h="$(awk -v d="$disp_h" -v r="$POPUP_HEIGHT_RATIO" 'BEGIN { printf "%d", d * r }')"
+    fi
+fi
+
+# Cold start (nothing ran --warm, or the keeper died): bring the keeper up
+# first, so this panel joins it instead of becoming a short-lived instance.
+instance="$(instance_pid)" || { start_keeper && instance="$(instance_pid)"; } \
+    || die "popup kitty did not start"
+printf '%s' "$instance" >"$lock_dir/popup"
+
+output_opt=()
+[[ -n "$output_name" ]] && output_opt=(--output-name="$output_name")
+
+# Returns once the panel closes (the target exited, or it was closed by hand).
+# --focus-policy=exclusive makes the panel take keyboard focus by itself, even
+# when we were started from the background.
+# fzf writes its UI to /dev/tty, so redirecting stdout keeps the popup usable.
+(cd "$HOME" && exec "$KITTEN_BIN" panel -c "$POPUP_CONFIG" \
+    --single-instance --instance-group="$INSTANCE_GROUP" \
+    --wait-for-single-instance-window-close \
+    --edge=center-sized --columns="${popup_w}px" --lines="${popup_h}px" \
+    --layer=overlay --focus-policy=exclusive ${output_opt[@]+"${output_opt[@]}"} \
+    -- "${SHELL:-/bin/bash}" -lc "$inner" </dev/null >/dev/null 2>&1) &
+panel_pid=$!
+
+# kitten panel doesn't always return after its panel is gone (seen with kitty
+# 0.49.2 once its instance had crashed in AppKit), and a hung call would hold
+# the lock forever. Once the target has finished, give it 2 s, then stop
+# waiting.
+while kill -0 "$panel_pid" 2>/dev/null; do
+    if [[ -s "$status_file" ]]; then
+        for ((i = 0; i < 40; i++)); do
+            kill -0 "$panel_pid" 2>/dev/null || break
+            sleep 0.05
+        done
+        kill "$panel_pid" 2>/dev/null
+        break
+    fi
+    sleep 0.05
+done
+wait "$panel_pid" 2>/dev/null
+
+result="$(< "$result_file")"
+status="$(cat "$status_file" 2>/dev/null)"
+
+# "force": even with --no-restore -- when the target didn't bring up an app of
+# its own (cancel, error), there is nothing else that should have focus.
+restore_focus() {
+    (( do_restore )) || [[ "${1:-}" == force ]] || return 0
+    if [[ -n "$prev_omni_id" ]] && omniwmctl window focus "$prev_omni_id" >/dev/null 2>&1; then
+        return 0
+    fi
+    [[ -n "${prev_pid:-}" ]] || return 0
+    osascript - "$prev_pid" "${prev_win_x:--1}" "${prev_win_y:--1}" >/dev/null 2>&1 <<'EOF'
+on run argv
+    set targetPid to (item 1 of argv) as integer
+    set targetX to (item 2 of argv) as integer
+    set targetY to (item 3 of argv) as integer
+    tell application "System Events"
+        set procs to (every application process whose unix id is targetPid)
+        if (count of procs) > 0 then
+            set proc to item 1 of procs
+            set frontmost of proc to true
+            if targetX is not -1 then
+                try
+                    set focused of (first window of proc whose position is {targetX, targetY}) to true
+                end try
+            end if
+        end if
+    end tell
+end run
+EOF
+}
+
+# Empty status: the popup was closed by hand. 130 is Esc/Ctrl-C in fzf, and
+# a bare 1 with nothing on stderr is fzf's "no match" -- both are a cancel.
+if [[ -n "$status" && "$status" != 0 && "$status" != 130 ]]; then
+    err="$(sed $'s/\x1b\\[[0-9;]*[a-zA-Z]//g' "$err_file" 2>/dev/null \
+        | grep -v '^[[:space:]]*$' | tail -n 3)"
+    if [[ -n "$err" || "$status" != 1 ]]; then
+        restore_focus force
+        notify "${err:-${target##*/} exited with status $status}"
+        exit 1
+    fi
+fi
+
+[[ -n "$result" ]] || { restore_focus force; exit 0; }
+
+# A target that wants the selection opened rather than pasted emits
+# "#!open <path>": open it and leave focus with whatever app it brings up.
+if [[ "$result" == "#!open "* ]]; then
+    open -- "${result#"#!open "}"
+    exit 0
+fi
+
+send_paste() {
+    sleep "$PASTE_DELAY"
+    # key code 9 is V; `keystroke "v"` looks the letter up in the active
+    # layout and sends nothing (or the wrong key) under Russian.
+    osascript -e 'tell application "System Events" to key code 9 using command down' \
+        >/dev/null 2>&1
+}
+
+# Key codes rather than AppleScript key constants -- they don't depend on the
+# active keyboard layout.
+send_key() {
+    local code
+    case "$1" in
+        tab)          code=48 ;;
+        return|enter) code=36 ;;
+        space)        code=49 ;;
+        *)            return 0 ;;
+    esac
+    osascript -e "tell application \"System Events\" to key code $code" >/dev/null 2>&1
+}
+
+# A target that needs more than one paste (username <Tab> password) emits an
+# action script instead of a bare value: "#!autotype" followed by one command
+# per line. Values are base64 so they survive newlines and quoting untouched.
+#
+#   paste <base64>   put it on the clipboard and press cmd+V
+#   key tab|return|space
+#   delay <seconds>
+play_autotype() {
+    local line cmd arg
+    while IFS= read -r line; do
+        cmd="${line%% *}"
+        arg="${line#* }"
+        [[ "$arg" == "$line" ]] && arg=""
+        case "$cmd" in
+            paste)
+                last_clip="$(printf '%s' "$arg" | base64 -d)"
+                printf '%s' "$last_clip" | pbcopy
+                send_paste
+                ;;
+            key)   send_key "$arg" ;;
+            delay) sleep "$arg" ;;
+        esac
+    done < <(printf '%s\n' "$result" | tail -n +2)
+}
+
+(( clear_after )) && previous_clip="$(pbpaste)"
+
+if [[ "${result%%$'\n'*}" == "#!autotype" ]]; then
+    restore_focus
+    play_autotype
+else
+    last_clip="$result"
+    printf '%s' "$result" | pbcopy
+    restore_focus
+    (( do_paste )) && send_paste
+fi
+
+# Held in the subshell's memory, never on disk, and it outlives us. Only put the
+# old clipboard back if ours is still there -- otherwise we'd clobber whatever
+# the user copied in the meantime.
+if (( clear_after )); then
+    (
+        trap '' HUP
+        sleep "$clear_after"
+        [[ "$(pbpaste)" == "$last_clip" ]] && printf '%s' "$previous_clip" | pbcopy
+    ) >/dev/null 2>&1 &
+fi

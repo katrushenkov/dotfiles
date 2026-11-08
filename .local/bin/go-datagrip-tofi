@@ -62,7 +62,7 @@ fi
 item="${datagrip_dir}/${item}"
 
 if [[ -d "${item}" ]]; then
-  setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.datagrip-go --title="DataGrip Go" --dir="${item}" -- nnn "${item}"
+  setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.datagrip-go --title="DataGrip Go" --dir="${item}" -- yazi "${item}"
 else
   setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.datagrip-go --title="DataGrip Go" --dir="$(dirname -- "${item}")" -- nvim "${item}"
 fi

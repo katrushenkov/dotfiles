@@ -4,6 +4,7 @@ prepend_keymap = [
   { on = [ "<Enter>" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file"},
   { on = [ "!" ], run = 'shell "$SHELL" --block', desc = "Open $SHELL here"},
   { on = [ "<Space>", "m" ], run = "plugin mount", desc = "Displays mount dialog"},
+  { on = [ "<Space>", "q" ], run = "quit", desc = "Quit yazi" },
   { on = [ "<Space>", 's'], run  = "plugin what-size", desc = "Calc size of selection or cwd" },
   { on = [ "<Space>", '<S-s>'], run  = "plugin what-size --args='--clipboard'", desc = "Calc size of selection or cwd" },
 
@@ -14,16 +15,21 @@ prepend_keymap = [
   # ";" leader
   { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
   { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
+  { on = [";", "r"], run = "shell 'lazygit' --block", desc = "Open lazygit in cwd" },
+  { on = [";", "d"], run = "shell 'nvim -d %s' --block", desc = "Diff selected files in nvim" },
+  { on = [";", "x"], run = "plugin fzf-open", desc = "fzf search and open the chosen file" },
 
-  { on = ["n", "d"], desc = "Create dir", run = "create --dir" },
+  { on = "/", run = "plugin filter-open", desc = "Filter; Enter opens the hovered item" },
+  { on = "f", run = "find --smart", desc = "Find next file" },
+  { on = "-", run = "back", desc = "Go back to the previous directory" },
 
   { on = "b", run = [ "toggle", "arrow next" ], desc = "Toggle the current selection state" },
 
 	{ on = "<C-j>", run = "seek +2", desc = "Scroll preview" },
 	{ on = "<C-k>", run = "seek -2", desc = "Scroll preview" },
 
-  { on = "<S-l>", desc = "Move to the tab on the left", run = "tab_switch 1 --relative" },
-  { on = "<S-h>", desc = "Move to the tab on the right", run = "tab_switch -1 --relative" },
+  { on = "<S-l>", desc = "Move to the tab on the right", run = "tab_switch 1 --relative" },
+  { on = "<S-h>", desc = "Move to the tab on the left", run = "tab_switch -1 --relative" },
   { on = ["c", 'm'], desc = "Change file mod", run = "plugin chmod"},
   { on = ["<Space>", 'c'], desc = "Compress file", run = "plugin compress" },
 
@@ -58,29 +64,25 @@ prepend_keymap = [
 
 ]
 append_keymap = [
-  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'ripdrag -x -a -n %s' --orphan" },
-  { on = ["c", 'k'], desc = "Send using KDE Connect", run = "plugin kdeconnect-send"}
+  { on = ['c', 'v'], desc = "Drag selected files", run = "shell 'ripdrag -x -a -n %s' --orphan" }
 ]
 
 [pick]
 prepend_keymap = [
   { on = "<C-k>", run = "arrow -1", desc = "Previous option" },
   { on = "<C-j>", run = "arrow 1",  desc = "Next option" },
-  { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" }, # open file & close yazi
+  # { on = "<Enter>", run = [ "close --submit", "mgr:shell -- ya emit close --no-cwd-file" ], desc = "Submit the pick" }, # open file & close yazi
 ]
 
 [input]
 
 # Real customizations over the yazi defaults (the rest of [input] now inherits stock keymap-default.toml)
 prepend_keymap = [
-	{ on = "B",         run = "backward --far",              desc = "Move back to the start of the current or previous WORD" },
-	{ on = "W",         run = "forward --far",               desc = "Move forward to the start of the next WORD" },
-	{ on = "E",         run = "forward --far --end-of-word", desc = "Move forward to the end of the current or next WORD" },
+	{ on = "<Esc>",     run = "close",                       desc = "Cancel input (no vim normal mode)" },
 	{ on = "<A-b>",     run = "backward",                    desc = "Move back to the start of the current or previous word" },
 	{ on = "<A-f>",     run = "forward --end-of-word",       desc = "Move forward to the end of the current or next word" },
 	{ on = "<C-Left>",  run = "backward",                    desc = "Move back to the start of the current or previous word" },
 	{ on = "<C-Right>", run = "forward --end-of-word",       desc = "Move forward to the end of the current or next word" },
-	{ on = "u",         run = "undo",                        desc = "Undo the last operation" },
 ]
 
 [help]

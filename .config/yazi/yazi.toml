@@ -1,4 +1,5 @@
 [mgr]
+ratio = [0, 4, 3]
 show_hidden = true
 show_symlink = true
 sort_by = "natural"
@@ -20,7 +21,8 @@ edit = [
 	{ run = "$EDITOR %s", block = true, for = "macos" },
 ]
 open = [
-	{ run = "xdg-open %s", desc = "Open" },
+	{ run = "xdg-open %s", orphan = true, desc = "Open", for = "linux" },
+	{ run = "open %s", desc = "Open", for = "macos" },
 ]
 
 [open]

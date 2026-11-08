@@ -7,8 +7,8 @@ case $OSTYPE in linux*) _os=Linux ;; darwin*) _os=Darwin ;; esac
 alias vim="nvim" vimdiff="nvim -d" vi="nvim" v="nvim"
 
 se() {
-  choice="$(find ~/.local/bin/ -mindepth 1 -exec basename {} \; | fzf)"
-  [ -f "$HOME/.local/bin/$choice" ] && $EDITOR "$HOME/.local/bin/$choice"
+  choice="$(find -L ~/.local/bin/ -mindepth 1 -type f -printf '%P\n' | sort | fzf)" || return
+  ${=EDITOR} "$HOME/.local/bin/$choice"
 }
 
 rand() {
@@ -54,12 +54,9 @@ alias \
 alias \
   g="git" \
   trem="transmission-remote" \
-  sdn="shutdown -h now" \
-  e='$EDITOR' \
+  e='${=EDITOR}' \
   ec='emacsclient -t' \
-  lg="lazygit" \
-  kx="kubectx" \
-  k="kubectl"
+  lg="lazygit"
 
 alias \
   ref='shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc' \
@@ -202,17 +199,12 @@ if [ "$_os" = "Linux" ]; then
   alias yi="yay -S"
   alias yn="yay -S --noconfirm"
   alias ys="yay"                # search with number selection
-  alias ysn="yay --noconfirm"
-  alias ycl="yay -Sc"            # partially clear cache
   alias yy="yay -Syy"           # mirrors sync
-  alias yr="yay -R"
-  alias yrn="yay -R --noconfirm"
   alias yl="yay -Q | grep"
   alias yayskip='yay -S --mflags --skipinteg' # skip integrity check
-  #alias pacman='sudo pacman --color auto'
   alias up='omarchy-update'
   alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # cleanup orphaned packages
-  alias clean="sudo pacman -Scc"
+  alias clean="sudo pacman -Scc" # cleanup pacman cache
   alias unlock="sudo rm /var/lib/pacman/db.lck"
   alias pkg_size="expac -H M '%m\t%n' | sort -h"
   # recent installed packages
@@ -282,13 +274,8 @@ alias -g T='|tail'
 alias -g V='| nvim -'
 alias -g CP='|wl-copy'
 
-#alias _='sudo'$
-#alias _i='sudo -i'$
-
-## So that sudo doesnt override aliases (doesnt work with flags)
-## alias sudo='sudo '
-## alias doas='doas '
-#alias sudo='sudo '  # Dirty trick to force alias expansion in sudo
+alias _='sudo '
+alias _i='sudo -i'
 
 ## Search running processes
 alias p="ps aux | grep "
@@ -339,17 +326,7 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 # Freaking bash time is underpowered, and it's a no-op broken reserved word in zsh
 #alias time='command time'
 
-#alias vncviewer='vncviewer -DotWhenNoCursor -FullscreenSystemKeys'
-
 #socks="ssh -D 8008 emerald -fN"
-
-grib() {
-  if [[ -n "$1" ]]; then
-    git rebase -i HEAD~"$1"
-  else
-    git rebase -i --root
-  fi
-}
 
 # macos
 if [ "$_os" = "Darwin" ]; then
@@ -380,11 +357,12 @@ alias kpvc="kubectl get pvc"
 alias kds='kubectl describe'
 alias krm='kubectl delete'
 alias kns='kubectl config set-context --current --namespace'
+alias kx="kubectx"
 
 # docker
 alias di='docker images'
 alias dr='docker run'
-alias db='docker build' 
+alias db='docker build'
 alias dp='docker ps'
 alias dps="docker ps -a"
 alias di="docker images"
