@@ -169,13 +169,6 @@ alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 # receive the key of a developer
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
-# shutdown or reboot
-alias ssn="sudo shutdown now"
-alias sr="sudo reboot"
-alias sn="shutdown now"
-#alias rebootsafe='sudo shutdown -r now'
-#alias rebootforce='sudo shutdown -r -n now'
-
 alias userlist="cut -d: -f1 /etc/passwd"
 
 alias psa="ps auxf"
