@@ -333,26 +333,25 @@ fi
 unset _os
 
 # kubectl
-alias k="kubectl"
-alias ka="kubectl apply -f"
-alias kpa="kubectl patch -f"
-alias ked="kubectl edit"
-alias ksc="kubectl scale"
-alias kex="kubectl exec -i -t"
-alias kg="kubectl get"
-alias kga="kubectl get all"
-alias kgall="kubectl get all --all-namespaces"
-alias kinfo="kubectl cluster-info"
-alias kdesc="kubectl describe"
-alias ktp="kubectl top"
-alias klo="kubectl logs -f"
-alias kn="kubectl get nodes"
-alias kpv="kubectl get pv"
-alias kpvc="kubectl get pvc"
-alias kds='kubectl describe'
-alias krm='kubectl delete'
-alias kns='kubectl config set-context --current --namespace'
-alias kx="kubectx"
+alias k='kubectl'
+alias ka='k apply -f'
+alias kpa='k patch -f'
+alias ked='k edit'
+alias ksc='k scale'
+alias kex='k exec -it'
+alias kg='k get'
+alias kga='k get all'
+alias kgall='k get all -A'
+alias kinfo='k cluster-info'
+alias kds='k describe'
+alias ktp='k top'
+alias klo='k logs -f'
+alias kn='k get nodes'
+alias kpv='k get pv'
+alias kpvc='k get pvc'
+alias krm='k delete'
+alias kns='kubens'
+alias kx='kubectx'
 
 # docker
 alias di='docker images'
