@@ -320,10 +320,6 @@
 
 ;;; Misc
 
-;; Full-text fuzzy search over notes (SPC n d), including subdirectories.
-(setq deft-directory org-directory
-      deft-recursive t)
-
 (setq projectile-project-search-path '("~/.local/src/"))
 
 ;; Silences the warning on inserting the date snippet.
