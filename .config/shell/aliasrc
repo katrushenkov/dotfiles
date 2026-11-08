@@ -66,13 +66,11 @@ alias \
   lsblk="lsblk -f -o +SIZE,MODEL" \
   myip="dig +short myip.opendns.com @resolver1.opendns.com" \
   myip2="curl https://ipinfo.io/ip" \
-  myip3="curl -s ifconfig.me" \
-  myip4='curl ipinfo.io/ip'   \
+  myip3="curl -fsS ifconfig.me" \
+  myip4='curl -fsS ipinfo.io/ip'   \
   s="sudo -s" \
   c="clear" \
   clr="tput reset" \
-  q="exit" \
-  :q="exit" \
   dusort='du -hs * . | sort -h' \
   df="df --exclude-type=tmpfs --exclude-type=devtmpfs -h" \
   free="free -mht" \
