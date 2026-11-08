@@ -117,11 +117,12 @@ alias path2='echo -e ${PATH//:/\\n}'
 
 [[ $TERM == "xterm-kitty" ]] && alias ssh="kitty +kitten ssh"
 
-#alias dots='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME'
-alias dots='lg -w $HOME -g $HOME/.local/src/dotfiles/'
-alias ddiff='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME diff'
-alias ds='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME status -uno'
-alias da='/usr/bin/git --git-dir=$HOME/.local/src/dotfiles/ --work-tree=$HOME add'
+# Dotfiles bare repo. Untracked files hidden via repo config status.showUntrackedFiles=no.
+d() { /usr/bin/git --git-dir="$HOME/.local/src/dotfiles/" --work-tree="$HOME" "$@"; }
+alias dots='lazygit -g "$HOME/.local/src/dotfiles/" -w "$HOME"'
+alias ddiff='d diff'
+alias ds='d status'
+alias da='d add'
 alias glast='git log --oneline --graph --decorate --all'
 
 alias pls='sudo zsh -c "$(fc -ln -1)"'

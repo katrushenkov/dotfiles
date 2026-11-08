@@ -57,6 +57,7 @@ unset zcompdump_stale
 [[ "$zcompdump.zwc" -nt "$zcompdump" ]] || zcompile "$zcompdump"
 # After compinit: it resets _comp_options.
 _comp_options+=(globdots) # include hidden files
+compdef d=git # dotfiles wrapper from aliasrc
 
 # Auto-quote URLs (&, ?, ~ etc.) when typed or pasted
 autoload -Uz url-quote-magic bracketed-paste-magic
