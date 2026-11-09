@@ -181,17 +181,8 @@ unfunction _cached_init _starship_init
 RPROMPT=''
 
 # Personal overrides last, so their bindkeys survive `bindkey -v` above.
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zsh-personal"
+[ -f "$HOME/.local/src/datagrip/private/configs/.zsh-personal" ] && source "$HOME/.local/src/datagrip/private/configs/.zsh-personal"
 
-pve-up() {
-  wakeonlan 00:e0:4c:ad:f0:da
-  until ssh -o ConnectTimeout=2 -o BatchMode=yes -i ~/.ssh/proxmox-server root@192.168.0.105 true 2>/dev/null; do sleep 3; done
-  ls /mnt/main >/dev/null && echo "mounted"
-}
-pve-down() {
-  sudo systemctl stop mnt-main.mount
-  ssh -i ~/.ssh/proxmox-server root@192.168.0.105 poweroff
-}
 
 # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
