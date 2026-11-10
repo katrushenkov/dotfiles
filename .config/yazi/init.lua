@@ -137,3 +137,6 @@ end
 
 dofile(os.getenv("HOME") .. "/.config/yazi/bunny.lua")
 
+
+-- Hide the preview pane on startup; toggle it with <Space>p (toggle-pane plugin)
+require("toggle-pane"):entry("min-preview")

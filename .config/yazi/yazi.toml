@@ -65,6 +65,21 @@ prio = "high"
 mime = "video/*"
 run = "nopreview"
 
+# PDF: no background pdftoppm preloading of neighbours (avoids "unfinished tasks" on quit).
+# The built-in pdf previewer still renders the hovered file on demand.
+# [[plugin.prepend_preloaders]]
+# mime = "application/pdf"
+# run = "nopreview"
+
+# PDF: no pdftoppm preloading or previews anywhere
+[[plugin.prepend_preloaders]]
+mime = "application/pdf"
+run = "nopreview"
+
+[[plugin.prepend_previewers]]
+mime = "application/pdf"
+run = "nopreview"
+
 [[plugin.prepend_previewers]]
 mime = "video/*"
 run = "nopreview"
