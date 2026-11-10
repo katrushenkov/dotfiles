@@ -140,3 +140,6 @@ dofile(os.getenv("HOME") .. "/.config/yazi/bunny.lua")
 
 -- Hide the preview pane on startup; toggle it with <Space>p (toggle-pane plugin)
 require("toggle-pane"):entry("min-preview")
+
+-- Синхронизация yank (copy/cut) между инстансами yazi
+require("session"):setup({ sync_yanked = true })
