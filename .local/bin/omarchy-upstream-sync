@@ -57,7 +57,7 @@ git fetch --quiet upstream || fail "Could not fetch upstream (network?)."
 # Bring the local branch up to date with the fork first.
 if ! git merge-base --is-ancestor "origin/$BRANCH" HEAD; then
   if git merge-base --is-ancestor HEAD "origin/$BRANCH"; then
-    git merge --quiet --ff-only "origin/$BRANCH" || fail "Could not fast-forward $BRANCH to origin/$BRANCH."
+    git merge --quiet --no-progress --ff-only "origin/$BRANCH" || fail "Could not fast-forward $BRANCH to origin/$BRANCH."
   else
     fail "Local $BRANCH and origin/$BRANCH have diverged; reconcile them manually."
   fi
