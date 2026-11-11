@@ -23,7 +23,13 @@ local function entry()
 			local h = hovered()
 			ya.emit("escape", { filter = true })
 			if h then
-				ya.emit(h.is_dir and "enter" or "open", { h.url })
+				-- Clearing the filter keeps the same item hovered, so act on the hovered one
+				-- (`open` ignores a positional URL on yazi 26.9).
+				if h.is_dir then
+					ya.emit("enter", {})
+				else
+					ya.emit("open", { hovered = true })
+				end
 			end
 			break
 		else -- cancel / closed: keep the filter (a second <Esc> in the file list clears it)
