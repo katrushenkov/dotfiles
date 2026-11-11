@@ -25,7 +25,8 @@ local function entry()
 		ya.emit("cd", { url })
 	else
 		ya.emit("reveal", { url })
-		ya.emit("open", { hovered = true })
+		-- Pass the URL explicitly: the target directory may not be loaded yet, so "hovered" can be stale
+		ya.emit("open", { url })
 	end
 end
 

@@ -48,5 +48,10 @@ use = "yazi-rs/plugins:toggle-pane"
 rev = "70e0373"
 hash = "5b2fbef7d1513ce38ff72623a071a5e"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "1ef5fe0"
+hash = "b9b3ba0d1e0067fa0b729db184b85fdd"
+
 [flavor]
 deps = []
