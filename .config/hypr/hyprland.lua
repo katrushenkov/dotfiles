@@ -69,6 +69,11 @@ local function sync_app_workspaces(gone)
     target = target or primary_monitor(monitors)
 
     local id = target and o.workspaces.workspace_id(target, app.slot) or app.slot
+    -- A window rule naming a workspace that doesn't exist yet creates it on the
+    -- focused monitor, so pin the workspace itself to the target monitor.
+    if target then
+      hl.workspace_rule({ workspace = tostring(id), monitor = target.name })
+    end
     hl.window_rule({
       name = "personal-app-workspace-" .. i,
       enabled = true,
