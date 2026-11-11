@@ -18,6 +18,10 @@ listen = [
 edit = [
 	{ run = "$EDITOR %s", block = true, for = "unix" },
 ]
+# Image viewer: swayimg on the hovered image, with the rest of its directory loaded around it
+view = [
+	{ run = "swayimg -e 'swayimg.imagelist.adjacent = true; swayimg.imagelist.order = \"numeric\"' %s1", orphan = true, for = "linux", desc = "View in swayimg (whole directory)" },
+]
 open = [
 	{ run = "xdg-open %s", orphan = true, desc = "Open", for = "linux" },
 	{ run = "open %s", desc = "Open", for = "macos" },
@@ -29,6 +33,7 @@ prepend_rules = [
 	{ mime = "text/*", use = "edit" },
 	{ mime = "video/*", use = "play" },
 	{ mime = "audio/*", use = "listen" },
+	{ mime = "image/*", use = [ "view", "open", "reveal" ] },
 
 	# Multiple openers for a single rule
 	{ url = "*.html", use = [ "open", "edit" ] },
@@ -37,6 +42,9 @@ prepend_rules = [
 [preview]
 wrap = "yes"
 image_quality = 50
+# Smaller than the stock 600x900: less to scale and transmit per image
+max_width = 480
+max_height = 720
 
 [tasks]
 # Preload tasks never show up in the task list or the "unfinished tasks" quit prompt
@@ -45,28 +53,10 @@ suppress_preload = true
 [plugin]
 # No background thumbnailing of the visible page: previews are generated only for the
 # hovered file, and only while the preview pane is open (see plugins/lazy-preview.yazi).
+# <Space>t switches the thumbnail cache on for the session (plugins/on-demand.yazi).
 preloaders = []
 
-# Git status: never on /mnt (sshfs, ntfs-3g). First matching fetcher of a group wins.
-[[plugin.prepend_fetchers]]
-group = "git"
-url = "/mnt/**"
-run = "noop"
-
-[[plugin.prepend_fetchers]]
-group = "git"
-url = "/mnt/**/"
-run = "noop"
-
-[[plugin.prepend_fetchers]]
-group = "git"
-url = "*"
-run = "git"
-
-[[plugin.prepend_fetchers]]
-group = "git"
-url = "*/"
-run = "git"
+# Git status signs are off by default; <Space>g switches them on (plugins/on-demand.yazi).
 
 # /mnt/main (sshfs): MIME strictly by extension, never runs `file`.
 # Everywhere else: mime-ext (see init.lua) - extension database, `file` only for unknown names.
