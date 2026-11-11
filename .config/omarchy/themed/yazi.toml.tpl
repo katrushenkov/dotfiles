@@ -45,3 +45,10 @@ perm_exec  = { fg = "{{ cyan }}" }
 progress_label  = { bold = true }
 progress_normal = { fg = "{{ accent }}", bg = "{{ lighter_background }}" }
 progress_error  = { fg = "{{ red }}", bg = "{{ lighter_background }}" }
+
+[git]
+unstaged_sign  = "M "
+untracked_sign = "? "
+staged_sign    = "S "
+unstaged       = { fg = "{{ red }}", bold = true }
+deleted        = { fg = "{{ magenta }}" }
