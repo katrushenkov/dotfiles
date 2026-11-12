@@ -20,6 +20,7 @@ prepend_keymap = [
   { on = [";", ";"], run = "shell --interactive", desc = "Run a shell command" },
   { on = [";", "w"], run = "shell 'swayimg --gallery' --orphan", desc = "Open cwd images in swayimg gallery" },
   { on = [";", "r"], run = "shell 'lazygit' --block", desc = "Open lazygit in cwd" },
+  { on = [";", "e"], run = "shell 'nvim' --block", desc = "Open neovim in cwd" },
   { on = [";", "d"], run = "shell 'nvim -d %s' --block", desc = "Diff selected files in nvim" },
   { on = [";", "x"], run = "plugin fzf-open", desc = "fzf search and open the chosen file" },
   { on = [";", "a"], run = "shell 'file-roller %h' --orphan", desc = "Open archive in File Roller" },
