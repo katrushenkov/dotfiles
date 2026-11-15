@@ -6,6 +6,7 @@ o.rebind("SUPER + SHIFT + G", "Grep digital brain", hl.dsp.exec_cmd(sc .. "tofi-
 o.rebind("SUPER + A", "Linkhandler", hl.dsp.exec_cmd(sc .. "linkhandler"))
 
 o.rebind("SUPER + D", "Omarchy menu", { menu = "apps" })
+o.bind("SUPER + R", "Run (PATH executables)", hl.dsp.exec_cmd("tofi --mode run"))
 
 o.rebind("SUPER + P", "Gopass autotype", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
 o.rebind("SUPER + I", "Snippets yank", hl.dsp.exec_cmd(sc .. "snippets-yank"))
