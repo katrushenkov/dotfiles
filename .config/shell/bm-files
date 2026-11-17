@@ -2,13 +2,9 @@
 bf	${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files	# This file, a list of bookmarked files
 bd	${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs		# A list of bookmarked directories similar to this file
 
-cfzp $HOME/.local/src/datagrip/private/configs/.zsh-personal
-cfsp ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal
-
 cfz	$ZDOTDIR/.zshrc						                        # zsh (shell) config
-cfa	${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc		# aliases used by zsh (and potentially other shells)
+cfa	${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc		# aliases used by zsh
 cfp	${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile		# profile file for login settings for zsh
-cfm	${XDG_CONFIG_HOME:-$HOME/.config}/mutt/muttrc		  # mutt (email client) config
-cfn	${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/config	# newsboat (RSS reader)
-cfu	${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/urls		# RSS urls for newsboat
-cfX	${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler	# nsxiv (image viewer) key/script handler
+
+cfzp $HOME/.local/src/datagrip/private/configs/.zsh-personal
+cfsp $HOME/.local/src/datagrip/private/configs/.profile-personal

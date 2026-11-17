@@ -15,6 +15,7 @@ dl	/mnt/main/dl
 dt	${XDG_DATA_HOME:-$HOME/.local/share}
 lc  $HOME/.local
 gr  ${GIT_PROJECTS_DIR:-$HOME/.local/src}/datagrip
+ee  ${GIT_PROJECTS_DIR:-$HOME/.local/src}/compatibility-e2e-tests
 kc  $HOME/.kube/configs
 h   $HOME
 m   ${XDG_MUSIC_DIR:-$HOME/Music}
