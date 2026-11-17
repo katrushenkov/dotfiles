@@ -179,7 +179,3 @@ o.bind("ALT + SHIFT + h", "Move grouped window focus left (Emacs: promote)", gro
 o.bind("ALT + SHIFT + l", "Move grouped window focus right (Emacs: demote)", group_focus_or_emacs("l", hl.dsp.group.next()))
 o.bind("ALT + G", "Toggle window grouping", hl.dsp.group.toggle())
 o.bind("ALT + SHIFT + G", "Move active window out of group", hl.dsp.window.move({ out_of_group = true }))
-
-o.bind("ALT + J", "Next workspace", hl.dsp.focus({ workspace = "m+1" }))
-o.bind("ALT + K", "Previous workspace", hl.dsp.focus({ workspace = "m-1" }))
-
