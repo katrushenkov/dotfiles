@@ -414,6 +414,17 @@
 ;; Daemon: closing the last frame must not kill Emacs, and no prompt.
 (global-set-key [remap delete-frame] #'delete-frame)
 
+;; j/k as in LazyVim: screen lines without a count, real lines with one (5j).
+(after! evil
+  (evil-define-motion +evil-next-line-dwim (count)
+    :type exclusive
+    (if count (evil-next-line count) (evil-next-visual-line 1)))
+  (evil-define-motion +evil-previous-line-dwim (count)
+    :type exclusive
+    (if count (evil-previous-line count) (evil-previous-visual-line 1)))
+  (map! :nv "j" #'+evil-next-line-dwim
+        :nv "k" #'+evil-previous-line-dwim))
+
 (map! "<f5>"    #'deadgrep
       "C-S-v"   #'yank                       ; Omarchy SUPER+V sends this to Emacs
       :n "f"    #'evil-avy-goto-char-2
