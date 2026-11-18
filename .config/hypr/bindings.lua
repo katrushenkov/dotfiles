@@ -30,58 +30,21 @@ o.rebind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
 
 o.rebind("SUPER + W", "Browser", { focus = "vivaldi", launch = "omarchy-launch-browser" })
 
--- Physical CapsLock+G (remapped via keyd, see /etc/keyd/default.conf: hold
--- CapsLock + G sends the KEY_F13 evdev code, since tapping CapsLock alone
--- still sends Escape). The default xkb keymap maps that keycode to the
--- keysym XF86Tools rather than F13, so we bind on that instead.
 o.bind("XF86Tools", "Search digital brain (CapsLock+G)", hl.dsp.exec_cmd(sc .. "go-datagrip-tofi"))
 o.bind("XF86Launch5", "TODO (CapsLock+V)", { focus = "vivaldi", launch = "omarchy-launch-browser" })
-
--- More CapsLock+<key> chords, same mechanism (see /etc/keyd/default.conf
--- [capsmode] layer). Each keyd layer key sends a distinct evdev F-key code,
--- which the default xkb keymap turns into an XF86 keysym instead of the
--- literal Fxx name. Just replace the TODO command with whatever you want:
 o.bind("XF86Launch6", "Telegram (CapsLock+T)", { focus = "telegram", launch = "Telegram" })
 o.bind("XF86Launch7", "TODO (CapsLock+M)", hl.dsp.exec_cmd("TODO: command for CapsLock+M"))
-
--- keyd [capsmode]: e = f17, f = f18, k = f19 (F19 keeps its literal keysym,
--- unlike F13-F18 which xkb remaps to XF86Tools/XF86LaunchN):
---
 o.bind("XF86Launch8", "Emacs (CapsLock+E)",
   "omarchy-launch-or-focus " .. o.shell_quote("^Emacs$") .. " " .. o.shell_quote(o.launch("emacsclient -c -a ''")))
 o.bind("XF86Launch9", "TODO (CapsLock+F)", hl.dsp.exec_cmd("TODO: command for CapsLock+F"))
 o.bind("XF86Finance", "Next workspace (CapsLock+J)", hl.dsp.focus({ workspace = "m+1" }))
 o.bind("F19", "Previous workspace (CapsLock+K)", hl.dsp.focus({ workspace = "m-1" }))
-
--- keyd [capsmode]: space = f24 (added). F20-F23 are NOT free like F19 —
--- xkb's inet(evdev) symbols hardcode them to XF86AudioMicMute/TouchpadToggle/
--- TouchpadOn/TouchpadOff ("historical mappings that must not be removed").
--- F20 was tried first and silently triggered mic-mute instead. F24 is the
--- next one that keeps its literal keysym in the base group (confirmed in
--- /usr/share/X11/xkb/symbols/inet) and isn't bound to anything else.
--- Omarchy's own switcher moves every keyboard to the same index, so the
--- seat never drifts (hypr-switch-layout only moved the main one; kept unbound).
 o.rebind("F24", "Switch keyboard layout (CapsLock+Space)", "omarchy-input-method cycle")
-
--- keyd [capsmode]: d = shop (F-keys are exhausted; keyd's "prog1-4" are just
--- aliases for f21-f24, so "prog3" silently sent F23 = XF86TouchpadOff).
--- KEY_SHOP maps to XF86Shop in xkb's inet(evdev) and is otherwise unused.
 o.bind("XF86Shop", "Command palette (CapsLock+D)", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
-
--- keyd [capsmode]: a = sport (KEY_SPORT -> XF86Game).
 o.bind("XF86Game", "Herdr (CapsLock+A)", { tui = "herdr", focus = true })
-
--- Spare keycodes for future CapsLock+<key> chords (keysyms verified with
--- `xkbcli compile-keymap`, none bound elsewhere). To use one: add
--- `<letter> = <keyd name>` to [capsmode] in /etc/keyd/default.conf
--- (`keyd check` it, then `sudo keyd reload`) and uncomment the bind here.
---
---   keyd name   evdev code        xkb keysym
---   connect     KEY_CONNECT 218   XF86Go
---   chat        KEY_CHAT    216   XF86Messenger
---
--- o.bind("XF86Go", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
--- o.bind("XF86Messenger", "TODO (CapsLock+?)", hl.dsp.exec_cmd("TODO"))
+o.bind("XF86Go", "Terminal (CapsLock+Return)", o.launch_terminal())
+o.bind("XF86Messenger", "Snippets yank (CapsLock+I)", hl.dsp.exec_cmd(sc .. "snippets-yank"))
+o.bind("XF86Documents", "Gopass autotype (CapsLock+P)", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
 
 o.bind("ALT + RETURN", "Pypr toggle term", hl.dsp.exec_cmd("pypr toggle term"))
 
