@@ -33,6 +33,7 @@ if [ "$_os" = "Linux" ]; then
 else
   alias rm="rm -vI"
 fi
+
 alias \
   ip="ip -color=auto" \
   dus="du -h --max-depth=1 | sort -rh" \
@@ -125,13 +126,12 @@ alias f="find . | grep -i "
 alias incognito='unset HISTFILE'
 alias temps='watch -n .1 sensors'
 alias getip="curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
-alias weather='curl wttr.in/cmb?0'
-alias weatherfull='curl wttr.in/cmb'
-#alias weather='curl "wttr.in/<your city>?A,F,Q,2"''
+alias weather='curl "wttr.in/vladivostok?AFQ2"'
+alias weatherfull='curl wttr.in/vladivostok'
 alias mpvl='mpv --loop'
 alias enlarge_tmp='sudo mount -o remount,size=16G /tmp/'
 alias pscpu='ps -eo pcpu,pid,user,args --sort=-pcpu'
-#alias pscgroups='ps xawf -eo pid,user,cgroup,args'
+alias pscgroups='ps xawf -eo pid,user,cgroup,args'
 
 alias more="less -Ri"
 
@@ -162,9 +162,6 @@ alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
 alias userlist="cut -d: -f1 /etc/passwd"
 
-alias psa="ps auxf"
-alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
-
 # add new fonts
 alias update-fc='sudo fc-cache -fv'
 
@@ -176,9 +173,10 @@ alias vbm="sudo mount -t vboxsf -o rw,uid=1000,gid=1000 Public /home/$USER/Publi
 
 alias openports='netstat -nape --inet'
 alias ports='sudo netstat -tulanp'
-#killport(){
-#    kill -9 $(lsof -t -i:$1)
-#}
+
+killport(){
+    kill -9 $(lsof -t -i:$1)
+}
 
 if [ "$_os" = "Linux" ]; then
   alias zathura='zathura-sandbox'
@@ -196,10 +194,6 @@ if [ "$_os" = "Linux" ]; then
   # recent installed packages
   alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
   alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
-
-  #alias programs='pacman -Qe | grep -v "`pacman -Qqeg base-devel base`"'
-  #alias pack="clear && echo && echo -e '\e[1m\e[4m\e[93mINSTALLED PACKAGES SORTED BY SIZE - TOP 25\e[39m\e[0m' && pacman -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -hr | head -25 | sed 's/^/ /' | lolcat"
-  #alias pac="expac --timefmt='%F %T' '%l %n' | sort -n"
 
   ## To see if a command is aliased, a file, or a built-in command
   alias checkcommand="whence -w"
@@ -265,6 +259,8 @@ alias _i='sudo -i'
 
 ## Search running processes
 alias p="ps aux | grep -i "
+alias psa="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias topcpu="ps -eo pcpu,pid,user,args --sort=-pcpu | head -11"
 #alias ps='ps auxf'
 
