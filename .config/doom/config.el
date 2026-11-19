@@ -357,7 +357,10 @@
                      (string-trim (with-temp-buffer
                                     (insert-file-contents editor-file)
                                     (buffer-string)))
-                   "nvim")))
+                   "nvim"))
+         ;; Client frame's env first: the daemon may lack WAYLAND_DISPLAY.
+         (process-environment (append (frame-parameter nil 'environment)
+                                      process-environment)))
     (start-process "term-editor" nil "xdg-terminal-exec" "-e" editor file)))
 
 (defun +smart-kill-buffer ()
