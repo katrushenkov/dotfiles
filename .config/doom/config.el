@@ -464,6 +464,11 @@
     (if count (evil-previous-line count) (evil-previous-visual-line 1)))
   (map! :nv "j" #'+evil-next-line-dwim
         :nv "k" #'+evil-previous-line-dwim))
+;; Dashboard remaps only evil's own j/k commands to button navigation.
+(when (modulep! :ui dashboard)
+  (define-key! +dashboard-mode-map
+    [remap +evil-next-line-dwim]     #'forward-button
+    [remap +evil-previous-line-dwim] #'backward-button))
 
 (map! "<f5>"    #'deadgrep
       "C-S-v"   #'yank                       ; Omarchy SUPER+V sends this to Emacs
