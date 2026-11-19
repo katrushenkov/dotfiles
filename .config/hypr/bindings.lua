@@ -23,7 +23,7 @@ o.rebind("SUPER + S", "Connect via ssh", hl.dsp.exec_cmd(sc .. "go-ssh"))
 
 -- hl.bind("SUPER + E", hl.dsp.exec_cmd(sc .. "edit-configs"), { description = "Edit confgs" })
 
-o.bind("SUPER + M", "Floating term", hl.dsp.exec_cmd("uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal"))
+o.rebind("SUPER + M", "Floating term", hl.dsp.exec_cmd("uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal"))
 -- o.bind("SUPER + N", "N in terminal", "omarchy-launch-terminal yazi")
 
 o.rebind("SUPER + T", "File manager (cwd)", { omarchy = "nautilus-cwd" })
