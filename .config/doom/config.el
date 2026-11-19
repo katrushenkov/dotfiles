@@ -145,6 +145,15 @@
         ;; Drop auto-save before decrypting without the y/n prompt.
         org-crypt-disable-auto-save t))
 
+(defun +org-encrypt-entry-and-tag ()
+  "Tag the entry :crypt: so every save re-encrypts it, then encrypt it now."
+  (interactive)
+  (require 'org-crypt)
+  (save-excursion
+    (org-back-to-heading t)
+    (org-toggle-tag org-crypt-tag-matcher 'on))
+  (org-encrypt-entry))
+
 ;; Birthdays come from `%%(org-contacts-anniversaries)' in contacts.org;
 ;; deliberately no diary file (appt would leave contacts.org open).
 
@@ -514,7 +523,7 @@
         :localleader
         :desc "Copy subtree" "s y" #'org-copy-subtree
         (:prefix ("x" . "crypt")
-         :desc "Encrypt entry"                 "e" #'org-encrypt-entry
+         :desc "Encrypt entry (+ :crypt:)"     "e" #'+org-encrypt-entry-and-tag
          :desc "Decrypt entry"                 "d" #'org-decrypt-entry
          :desc "Encrypt all entries in buffer" "E" #'org-encrypt-entries
          :desc "Decrypt all entries in buffer" "D" #'org-decrypt-entries)))
