@@ -41,6 +41,22 @@
 ;; One date-tree archive; .archive/ is outside the non-recursive agenda scan.
 (setq org-archive-location (concat org-directory ".archive/archive.org::datetree/"))
 
+;; "datetree/" archives go under year/month, without the day level.
+(defadvice! +org-archive-month-tree-a (fn &rest args)
+  :around #'org-archive-subtree
+  (let* ((month-p nil)
+         (find-month (lambda (d &optional keep)
+                       (setq month-p t)
+                       (org-datetree-find-month-create d keep)))
+         (paste (symbol-function 'org-paste-subtree)))
+    (require 'org-datetree)
+    (cl-letf (((symbol-function 'org-datetree-find-date-create) find-month)
+              ((symbol-function 'org-paste-subtree)
+               (lambda (&optional level &rest rest)
+                 (apply paste (if (and month-p (natnump level)) (1- level) level)
+                        rest))))
+      (apply fn args))))
+
 ;;; Capture templates
 ;; `setf'+`alist-get' replaces entries in place (`add-to-list' would leave
 ;; stale duplicates after editing). `%a' and `%u'/`%U' prefixes are dropped
