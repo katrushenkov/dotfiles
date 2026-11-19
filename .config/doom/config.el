@@ -362,6 +362,18 @@
 ;; A major-mode change wipes buffer-locals; re-apply.
 (add-hook 'after-change-major-mode-hook #'+scratch-evil-w-saves-and-closes-h)
 
+;; Daemon may start before Hyprland exports these; take them from a GUI client frame.
+(defun +sync-session-env-from-frame-h ()
+  "Copy Wayland session vars missing in the daemon env from the new frame's env."
+  (when (display-graphic-p)
+    (dolist (var '("WAYLAND_DISPLAY" "XDG_SESSION_TYPE" "XDG_CURRENT_DESKTOP"))
+      (let ((env (default-toplevel-value 'process-environment))
+            (val (getenv var (selected-frame))))
+        (when (and val (not (stringp (getenv-internal var env))))
+          (set-default-toplevel-value
+           'process-environment (cons (concat var "=" val) env)))))))
+(add-hook 'server-after-make-frame-hook #'+sync-session-env-from-frame-h)
+
 ;; Opens in a new terminal via plain `xdg-terminal-exec' (not the uwsm-based
 ;; omarchy-launch-* wrappers, which proved flaky).
 (defun +open-file-in-editor ()
