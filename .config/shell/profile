@@ -11,6 +11,9 @@ fi
 
 # Hidden subdirs (e.g. .crush, .crush/logs) are pruned: they hold data, not executables.
 export PATH="$PATH:$(find -L ~/.local/bin -name '.*' -prune -o -type d -print | paste -sd ':' -)"
+_dg_bin="$HOME/.local/src/datagrip/private/bin"
+[[ -d "$_dg_bin" ]] && export PATH="$PATH:$(find -L "$_dg_bin" -name '.*' -prune -o -type d -print | paste -sd ':' -)"
+unset _dg_bin
 [[ "$PATH" == *"$HOME/bin:"* ]] || export PATH="$HOME/bin:$PATH"
 
 export EDITOR="${EDITOR:-nvim}"
