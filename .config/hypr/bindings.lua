@@ -46,6 +46,8 @@ o.bind("XF86Go", "Terminal (CapsLock+Return)", o.launch_terminal())
 o.bind("XF86Messenger", "Snippets yank (CapsLock+I)", hl.dsp.exec_cmd(sc .. "snippets-yank"))
 o.bind("XF86Documents", "Gopass autotype (CapsLock+P)", hl.dsp.exec_cmd(sc .. "gopass-autotype"))
 o.bind("XF86Mail", "Search bookmarks (CapsLock+B)", hl.dsp.exec_cmd(sc .. "bookmarks-web -s"))
+o.bind("XF86Phone", "Focus on left window (CapsLock+H)", hl.dsp.focus({ direction = "l" }))
+o.bind("XF86WWW", "Focus on right window (CapsLock+L)", hl.dsp.focus({ direction = "r" }))
 
 o.bind("ALT + RETURN", "Pypr toggle term", hl.dsp.exec_cmd("pypr toggle term"))
 
