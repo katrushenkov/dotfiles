@@ -141,4 +141,26 @@
 	<patterns>*.iso;*.ISO;*.tar.gz;*.TAR.GZ;*.zip;*.ZIP</patterns>
 	<other-files/>
 </action>
+<action>
+	<icon>transform-scale</icon>
+	<name>Resize…</name>
+	<submenu>Images</submenu>
+	<unique-id>1763700000000001-1</unique-id>
+	<command>$HOME/.local/bin/thunar-image-tool resize %F</command>
+	<description>Resize selected images (copies)</description>
+	<range>*</range>
+	<patterns>*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.webp;*.WEBP;*.gif;*.GIF;*.bmp;*.BMP;*.tif;*.tiff;*.TIF;*.TIFF;*.heic;*.HEIC;*.avif;*.AVIF</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>package-x-generic</icon>
+	<name>Compress…</name>
+	<submenu>Images</submenu>
+	<unique-id>1763700000000002-1</unique-id>
+	<command>$HOME/.local/bin/thunar-image-tool compress %F</command>
+	<description>Compress / convert selected images (copies)</description>
+	<range>*</range>
+	<patterns>*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.webp;*.WEBP;*.gif;*.GIF;*.bmp;*.BMP;*.tif;*.tiff;*.TIF;*.TIFF;*.heic;*.HEIC;*.avif;*.AVIF</patterns>
+	<image-files/>
+</action>
 </actions>

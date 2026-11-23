@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# Image resize/compress helper for Thunar custom actions.
+# Usage: thunar-image-tool resize|compress FILE...
+# Originals are never modified: results are written next to them with a suffix.
+set -u
+
+mode=${1:-}; shift || true
+[[ $# -eq 0 ]] && exit 0
+
+err() { zenity --error --title="Image tool" --text="$1" 2>/dev/null; exit 1; }
+human() { numfmt --to=iec --suffix=B "$1"; }
+
+case "$mode" in
+  resize)
+    choice=$(zenity --list --radiolist --title="Resize images" \
+      --text="Fit inside (aspect ratio kept, never upscaled):" \
+      --column="" --column="Size" --height=360 \
+      TRUE "1920px" FALSE "1280px" FALSE "1024px" FALSE "800px" \
+      FALSE "50%" FALSE "25%" FALSE "Custom…" 2>/dev/null) || exit 0
+    if [[ $choice == "Custom…" ]]; then
+      choice=$(zenity --entry --title="Resize images" \
+        --text="Longest side in px (e.g. 1600) or percent (e.g. 60%):" 2>/dev/null) || exit 0
+    fi
+    choice=${choice// /}
+    if [[ $choice =~ ^([0-9]+)px$ || $choice =~ ^([0-9]+)$ ]]; then
+      geom="${BASH_REMATCH[1]}x${BASH_REMATCH[1]}>"; suffix="_${BASH_REMATCH[1]}px"
+    elif [[ $choice =~ ^([0-9]+)%$ ]]; then
+      geom="${BASH_REMATCH[1]}%"; suffix="_${BASH_REMATCH[1]}pct"
+    else
+      err "Invalid size: $choice"
+    fi
+    ops=(-auto-orient -resize "$geom")
+    fmt=keep
+    ;;
+  compress)
+    q=$(zenity --scale --title="Compress images" --text="Quality (lower = smaller file):" \
+      --min-value=10 --max-value=100 --value=80 --step=5 2>/dev/null) || exit 0
+    fmt=$(zenity --list --radiolist --title="Compress images" --text="Output format:" \
+      --column="" --column="Format" --height=260 \
+      TRUE "Keep original" FALSE "JPEG" FALSE "WebP" FALSE "AVIF" 2>/dev/null) || exit 0
+    ops=(-auto-orient -strip -quality "$q" -define png:compression-level=9)
+    suffix="_q${q}"
+    case "$fmt" in JPEG) fmt=jpg ;; WebP) fmt=webp ;; AVIF) fmt=avif ;; *) fmt=keep ;; esac
+    ;;
+  *) echo "usage: $0 resize|compress FILE..." >&2; exit 2 ;;
+esac
+
+total=$#; i=0; before=0; after=0; failed=()
+(
+  for f in "$@"; do
+    i=$((i+1))
+    echo "# $(basename -- "$f")"
+    dir=$(dirname -- "$f"); base=$(basename -- "$f"); name=${base%.*}; ext=${base##*.}
+    [[ $fmt == keep ]] && outext=$ext || outext=$fmt
+    # JPEG has no alpha: flatten onto white
+    extra=(); [[ $outext =~ ^(jpe?g|JPE?G)$ ]] && extra=(-background white -alpha remove -alpha off)
+    out="$dir/$name$suffix.$outext"
+    n=1; while [[ -e $out ]]; do out="$dir/$name$suffix-$n.$outext"; n=$((n+1)); done
+    if magick "$f" "${ops[@]}" "${extra[@]}" "$out" 2>/dev/null; then
+      echo "OK $(stat -c%s -- "$f") $(stat -c%s -- "$out")" >&3
+    else
+      rm -f -- "$out"; echo "FAIL $base" >&3
+    fi
+    echo $((i*100/total))
+  done
+) 3>"${TMPDIR:-/tmp}/thunar-image-tool.$$" | zenity --progress --auto-close --title="Processing images" --percentage=0 2>/dev/null
+
+log="${TMPDIR:-/tmp}/thunar-image-tool.$$"
+ok=0
+while read -r st a b; do
+  if [[ $st == OK ]]; then ok=$((ok+1)); before=$((before+a)); after=$((after+b)); else failed+=("$a"); fi
+done < "$log"
+rm -f -- "$log"
+
+msg="$ok/$total done: $(human $before) → $(human $after)"
+(( ${#failed[@]} )) && msg+=$'\n'"Failed: ${failed[*]}"
+notify-send -i image-x-generic "Image ${mode}" "$msg"
