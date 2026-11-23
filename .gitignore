@@ -2,7 +2,6 @@
 .config/shell/shortcutrc
 .config/shell/zshnameddirrc
 .config/zsh/.zcompdump
-.local/bin/ksm/
 FUNDING.yml
 LICENSE
 README.md
