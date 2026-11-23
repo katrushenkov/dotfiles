@@ -49,4 +49,4 @@ export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/ripgreprc"
 
 [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && setsid -f $HOME/.local/bin/shortcuts >/dev/null 2>&1
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile-personal"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/.profile-personal" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/.profile-personal"
