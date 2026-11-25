@@ -6,6 +6,7 @@ gui:
       - white
 os:
   editPreset: nvim
+notARepository: quit
 customCommands:
   - key: O
     context: commits
