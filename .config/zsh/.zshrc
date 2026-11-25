@@ -183,6 +183,5 @@ RPROMPT=''
 # Personal overrides last, so their bindkeys survive `bindkey -v` above.
 [ -f "$HOME/.local/src/datagrip/private/configs/.zsh-personal" ] && source "$HOME/.local/src/datagrip/private/configs/.zsh-personal"
 
-
 # Load syntax highlighting; should be last.
 # source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
