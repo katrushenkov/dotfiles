@@ -1,4 +1,31 @@
 #!/bin/bash
+#
+# Выбор сниппета из ~/.local/src/datagrip/snippets.
+#
+# Использование:
+#   snippets-yank          выбрать сниппет и вставить его в активное окно
+#                          (содержимое буфера обмена после вставки восстанавливается)
+#   snippets-yank -c       только скопировать сниппет в буфер обмена (без вставки)
+#
+# Переменные окружения:
+#   SNIPPETS_RESTORE_DELAY  пауза перед восстановлением буфера, сек (по умолчанию 0.3)
+
+copy_only=0
+case "${1:-}" in
+  -c | --copy) copy_only=1 ;;
+  -h | --help)
+    sed -n '3,12p' "$0" | sed 's/^# \{0,1\}//'
+    exit 0
+    ;;
+  "") ;;
+  *)
+    echo "Unknown option: $1" >&2
+    exit 1
+    ;;
+esac
+
+restore_delay="${SNIPPETS_RESTORE_DELAY:-0.3}"
+snippets_file=~/.local/src/datagrip/snippets
 
 OS="$(uname -s)"
 
@@ -13,42 +40,84 @@ if [[ "${OS}" == "Linux"* ]]; then
   fi
 
   echo $$ > "${lock_file}"
-  trap 'rm -f "${lock_file}"' EXIT
+  clip_backup=""
+  trap 'rm -f "${lock_file}" ${clip_backup:+"${clip_backup}"}' EXIT
 
   hypr-switch-en
 
-  selection="$(rg --no-config -v '^#|^$' ~/.local/src/datagrip/snippets \
+  selection="$(rg --no-config -v '^#|^$' "${snippets_file}" \
     | expand -t 4 \
     | tofi-dmenu -t gruvbox -p "" -a normal \
     | awk -F ' #' '{print $1}')"
-  # selection="$(rg --no-config -v '^#|^$' ~/.local/src/datagrip/snippets \
+  # selection="$(rg --no-config -v '^#|^$' "${snippets_file}" \
   #   | expand -t 4 \
   #   | omarchy-menu-select "Snippet" -- --width 1792 --height 720 \
   #   | awk -F ' #' '{print $1}')"
 
   [[ -n "${selection}" ]] || exit 0
 
+  if (( copy_only )); then
+    printf '%s' "${selection}" | wl-copy -n
+    exit 0
+  fi
+
+  # Сохраняем текущее содержимое буфера (с учётом MIME-типа: текст, картинка и т.п.)
+  clip_type=""
+  if types="$(wl-paste --list-types 2>/dev/null)" && [[ -n "${types}" ]]; then
+    if grep -qx 'image/png' <<<"${types}"; then
+      clip_type='image/png'
+    elif grep -qx 'text/plain;charset=utf-8' <<<"${types}"; then
+      clip_type='text/plain;charset=utf-8'
+    elif grep -qx 'text/plain' <<<"${types}"; then
+      clip_type='text/plain'
+    else
+      clip_type="$(head -n1 <<<"${types}")"
+    fi
+    clip_backup="$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/snippets-yank.clip.XXXXXX")"
+    wl-paste -n -t "${clip_type}" >"${clip_backup}" 2>/dev/null || clip_type=""
+  fi
+
   printf '%s' "${selection}" | wl-copy -n
 
   sleep 0.15
   wtype -M shift -k Insert -m shift 2>/dev/null || true
 
+  # Даём приложению время забрать данные из буфера, затем восстанавливаем
+  sleep "${restore_delay}"
+  if [[ -n "${clip_type}" ]]; then
+    wl-copy -t "${clip_type}" <"${clip_backup}"
+  else
+    wl-copy --clear
+  fi
+
 elif [[ "${OS}" == "Darwin"* ]]; then
 
   previous_app=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')
 
-  /opt/homebrew/bin/rg --no-config -v '^#' ~/.local/src/datagrip/snippets | grep -v "^$" | $HOME/.local/bin/dmenu-raycast | awk -F ' #' '{printf "%s", $1}' | pbcopy -
+  selection="$(/opt/homebrew/bin/rg --no-config -v '^#|^$' "${snippets_file}" \
+    | "$HOME/.local/bin/dmenu-raycast" \
+    | awk -F ' #' '{printf "%s", $1}')"
 
   #/opt/homebrew/bin/rg --no-config -v '^#' ~/.local/src/datagrip/snippets | /opt/homebrew/bin/choose -w 80% -n 20 -u -z -b fabd2f -c 427b58 -s 17 <&0 | pbcopy -
 
-# Возвращаем фокус к предыдущему приложению
-osascript <<EOF
-tell application "$previous_app"
-    activate
-end tell
-tell application "System Events"
-            keystroke "v" using command down
-end tell
-EOF
+  # Возвращаем фокус к предыдущему приложению
+  osascript -e "tell application \"${previous_app}\" to activate"
+
+  [[ -n "${selection}" ]] || exit 0
+
+  if (( copy_only )); then
+    printf '%s' "${selection}" | pbcopy
+    exit 0
+  fi
+
+  # Сохраняем текущее (текстовое) содержимое буфера
+  clip_backup="$(pbpaste; printf x)"
+  clip_backup="${clip_backup%x}"
+
+  printf '%s' "${selection}" | pbcopy
+  osascript -e 'tell application "System Events" to keystroke "v" using command down'
+
+  sleep "${restore_delay}"
+  printf '%s' "${clip_backup}" | pbcopy
 
 fi
