@@ -75,6 +75,11 @@
               (file "books.org")
               "* %^{Название}\n%^{AUTHOR}p%^{YEAR}p"
               :immediate-finish t)
+             ;; Timed SCHEDULED → appt desktop notification.
+             ("r" "Reminder" entry
+              (file "reminders.org")
+              "* TODO %^{Напоминание}\nSCHEDULED: %^T"
+              :immediate-finish t)
              ("n" "Personal notes" entry
               (file+headline +org-capture-notes-file "Inbox")
               "* %?\n%i" :prepend t)
@@ -180,8 +185,10 @@
         appt-audible nil)
   (defun +org-appt-notify (_min-to-app _new-time appt-msg)
     (dolist (msg (ensure-list appt-msg))
+      ;; Drop the agenda tag column (inherited tags render as ":personal::").
+      (setq msg (replace-regexp-in-string "[ \t]+:[^ \t]+:[ \t]*\\'" "" msg))
       (call-process "omarchy-notification-send" nil 0 nil
-                    "--app-name" "Emacs" "-u" "normal" "-g" "󰢌"
+                    "--app-name" "Emacs" "-u" "normal" "--sticky" "-g" "󰢌"
                     "Напоминание" msg)))
   (setq appt-disp-window-function #'+org-appt-notify
         appt-delete-window-function #'ignore)
